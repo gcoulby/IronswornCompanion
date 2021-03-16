@@ -25,6 +25,7 @@ import OracleEditor from "./components/oracleEditor";
 import Acknowledgements from "./components/acknowledgements";
 import EnterTheFray from "./components/enterTheFray";
 import DataManager from "./components/dataManagement";
+import Assets from "./components/assets";
 
 //TODO: Asset builder events
 //TODO: Asset Importer
@@ -1612,6 +1613,10 @@ class App extends Component {
                     }
                     onProgressRollClicked={this.handleOnProgressRollClicked}
                   />
+                </Route>
+
+                <Route exact path="/assets">
+                  <Assets assets={this.state.assets} />
                 </Route>
 
                 <Route exact path="/roll">

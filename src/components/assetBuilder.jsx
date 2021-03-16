@@ -12,6 +12,10 @@ class AssetBuilder extends Component {
   render() {
     return (
       <React.Fragment>
+        <div className="alert alert-secondary">
+          This page is still under development. It is not yet possible to
+          add/edit assets and tracks have not yet been implemented.
+        </div>
         <h1 className="print-hide">Asset Builder</h1>
         <div className="row print-hide">
           {/* <div className="col-3"> */}
