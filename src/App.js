@@ -1401,6 +1401,12 @@ class App extends Component {
                   <h3 id="site-title">IRONSWORN</h3>
                   <h1 id="site-subtitle">COMPANION</h1>
                   <div id="bg-image"></div>
+                  <div className="alert alert-danger">
+                    This application is still heavilly under development and is
+                    live only to demonstrate functionality and receive feedback.
+                    As a result, it is unlikely that save files created in this
+                    version of the application will work in future versions.
+                  </div>
                 </Route>
                 <Route path="/characters">
                   <Characters
