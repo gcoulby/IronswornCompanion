@@ -2,6 +2,7 @@
   "name": "ironsworn",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://gcoulby.github.io/IronswornCompanion",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
@@ -31,7 +32,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && move build docs",
+    "build": "rmdir docs /s && react-scripts build && move build docs",
     "webpack-start": "webpack-dev-server --mode development --open --hot",
     "webpack-build": "webpack --mode production",
     "test": "react-scripts test",
