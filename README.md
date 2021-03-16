@@ -344,4 +344,7 @@ There were several content developers from the Ironsworn community that deserve 
 
 This app was created by Graham Coulby to serve as a holistic digital companion for the Ironsworn tabletop RPG. This app was not designed to replace the official rules nor was it designed to supersede the work done by Shawn Tomkin.
 
-[<img src="http://localhost:3000/img/gc_logoai.svg" alt="img" style="zoom:50%;" />](https://creativecommons.org/licenses/by/4.0/)
+
+
+[![img](https://i.imgur.com/SIbTgYU.png)](https://grahamcoulby.co.uk/)
+
