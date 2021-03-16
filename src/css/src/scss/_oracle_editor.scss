@@ -1,0 +1,42 @@
+#oracle_editor {
+  textarea {
+    background-image: linear-gradient(white 50%, #e2e2e2 50%);
+    background-size: 100% 4rem;
+    // border: 1px solid #ccc;
+    font-size: 20px;
+    width: 100%;
+    height: 50vh;
+    line-height: 2rem;
+    margin: 0 auto;
+    padding: 4px 8px;
+    font-family: "Modesto";
+    background-attachment: local;
+    white-space: nowrap;
+    overflow-wrap: normal !important;
+    overflow-x: scroll !important;
+  }
+}
+
+input.disabled {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  color: gray;
+  background: $light;
+  cursor: pointer;
+}
+
+input.disabled:focus {
+  border: 1px solid #ced4da !important;
+  box-shadow: none !important;
+  color: transparent !important;
+  text-shadow: 0px 0px 0px $secondary !important;
+}
+
+// .click_capture {
+//   position: absolute;
+//   left: 0;
+//   right: 0;
+//   top: 0;
+//   bottom: 0;
+// }

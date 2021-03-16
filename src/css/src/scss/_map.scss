@@ -1,0 +1,80 @@
+#mapid {
+  height: 792px;
+  width: 100%;
+}
+
+.leaflet-container {
+  background: $dark !important;
+}
+
+.onoffswitch {
+  position: relative;
+  width: 133px;
+  margin-bottom: 1em;
+}
+.onoffswitch-checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.onoffswitch-label {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+}
+.onoffswitch-inner {
+  display: block;
+  width: 200%;
+  margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before,
+.onoffswitch-inner:after {
+  display: block;
+  float: left;
+  width: 50%;
+  height: 40px;
+  padding: 6px;
+  line-height: 26px;
+  font-size: 14px;
+  color: white;
+  font-family: Trebuchet, Arial, sans-serif;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.onoffswitch-inner:before {
+  content: "Bond Forged";
+  padding-left: 10px;
+  background-color: $dark;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 3px;
+}
+.onoffswitch-inner:after {
+  content: "No Bond";
+  padding-right: 10px;
+  background-color: #ffffff;
+  color: grey;
+  text-align: right;
+}
+.onoffswitch-switch {
+  display: block;
+  width: 25px;
+  margin: 0px;
+  background: $dark;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 108px;
+  transition: all 0.3s ease-in 0s;
+  border-radius: 3px;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+  margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+  right: 0px;
+}

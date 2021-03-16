@@ -1,0 +1,15 @@
+/* FONT PATH
+ * -------------------------- */
+
+@font-face {
+  font-family: "RPGAwesome";
+  src: url("#{$ra-font-path}/rpgawesome-webfont.eot");
+  src: url("#{$ra-font-path}/rpgawesome-webfont.eot")
+      format("embedded-opentype"),
+    url("#{$ra-font-path}/rpgawesome-webfont.woff") format("woff"),
+    url("#{$ra-font-path}/rpgawesome-webfont.ttf") format("truetype");
+  // url('#{$ra-font-path}/rpgawesome-webfont.svg?v=#{$ra-version}#rpg-awesome') format('svg');
+  //src: url('#{$ra-font-path}/RPGAwesome.otf') format('opentype'); // used when developing fonts
+  font-weight: normal;
+  font-style: normal;
+}

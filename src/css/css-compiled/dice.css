@@ -1,0 +1,509 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700");
+*, *:before, *:after {
+  font-family: "Roboto", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #1E1E1E;
+  font-size: 10px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  min-height: 100vh;
+}
+
+.dice-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+  justify-content: space-around;
+  min-width: 7rem;
+}
+
+.button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  border: 0;
+  margin: 1rem;
+  padding: 1rem 0.25rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  max-height: 12rem;
+  min-height: 7rem;
+}
+
+.button--d4 {
+  border: 0;
+  position: relative;
+  color: #EA113B;
+}
+
+.button--d4 svg * {
+  stroke: #EA113B;
+  fill: none;
+  stroke-width: 4;
+  stroke-miterlimit: 10;
+}
+
+.button--d4:before, .button--d4:after {
+  transition: 0.5s ease;
+  display: block;
+  content: " ";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.button--d4:before {
+  z-index: 1;
+  top: -0.2rem;
+  left: 0.2rem;
+  border: 3px solid #EA113B;
+}
+
+.button--d4:after {
+  z-index: -1;
+  top: 0.2rem;
+  left: -0.2rem;
+  border: 3px solid #a30c29;
+}
+
+.button--d4:hover:before, .button--d4:hover:after {
+  top: 0rem;
+  left: 0rem;
+}
+
+.button--d6 {
+  border: 0;
+  position: relative;
+  color: #e89440;
+}
+
+.button--d6 svg * {
+  stroke: #e89440;
+  fill: none;
+  stroke-width: 4;
+  stroke-miterlimit: 10;
+}
+
+.button--d6:before, .button--d6:after {
+  transition: 0.5s ease;
+  display: block;
+  content: " ";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.button--d6:before {
+  z-index: 1;
+  top: -0.2rem;
+  left: 0.2rem;
+  border: 3px solid #e89440;
+}
+
+.button--d6:after {
+  z-index: -1;
+  top: 0.2rem;
+  left: -0.2rem;
+  border: 3px solid #c46e18;
+}
+
+.button--d6:hover:before, .button--d6:hover:after {
+  top: 0rem;
+  left: 0rem;
+}
+
+.button--d8 {
+  border: 0;
+  position: relative;
+  color: #F7F74F;
+}
+
+.button--d8 svg * {
+  stroke: #F7F74F;
+  fill: none;
+  stroke-width: 4;
+  stroke-miterlimit: 10;
+}
+
+.button--d8:before, .button--d8:after {
+  transition: 0.5s ease;
+  display: block;
+  content: " ";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.button--d8:before {
+  z-index: 1;
+  top: -0.2rem;
+  left: 0.2rem;
+  border: 3px solid #F7F74F;
+}
+
+.button--d8:after {
+  z-index: -1;
+  top: 0.2rem;
+  left: -0.2rem;
+  border: 3px solid #efef0b;
+}
+
+.button--d8:hover:before, .button--d8:hover:after {
+  top: 0rem;
+  left: 0rem;
+}
+
+.button--d10 {
+  border: 0;
+  position: relative;
+  color: #2AB746;
+}
+
+.button--d10 svg * {
+  stroke: #2AB746;
+  fill: none;
+  stroke-width: 4;
+  stroke-miterlimit: 10;
+}
+
+.button--d10:before, .button--d10:after {
+  transition: 0.5s ease;
+  display: block;
+  content: " ";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.button--d10:before {
+  z-index: 1;
+  top: -0.2rem;
+  left: -0.2rem;
+  border: 3px solid #2AB746;
+}
+
+.button--d10:after {
+  z-index: -1;
+  top: 0.2rem;
+  left: 0.2rem;
+  border: 3px solid #1c792e;
+}
+
+.button--d10:hover:before, .button--d10:hover:after {
+  top: 0rem;
+  left: 0rem;
+}
+
+.button--d12 {
+  border: 0;
+  position: relative;
+  color: #1893BF;
+}
+
+.button--d12 svg * {
+  stroke: #1893BF;
+  fill: none;
+  stroke-width: 4;
+  stroke-miterlimit: 10;
+}
+
+.button--d12:before, .button--d12:after {
+  transition: 0.5s ease;
+  display: block;
+  content: " ";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.button--d12:before {
+  z-index: 1;
+  top: -0.2rem;
+  left: -0.2rem;
+  border: 3px solid #1893BF;
+}
+
+.button--d12:after {
+  z-index: -1;
+  top: 0.2rem;
+  left: 0.2rem;
+  border: 3px solid #0f5f7b;
+}
+
+.button--d12:hover:before, .button--d12:hover:after {
+  top: 0rem;
+  left: 0rem;
+}
+
+.button--d20 {
+  border: 0;
+  position: relative;
+  color: #8B61A0;
+}
+
+.button--d20 svg * {
+  stroke: #8B61A0;
+  fill: none;
+  stroke-width: 4;
+  stroke-miterlimit: 10;
+}
+
+.button--d20:before, .button--d20:after {
+  transition: 0.5s ease;
+  display: block;
+  content: " ";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.button--d20:before {
+  z-index: 1;
+  top: -0.2rem;
+  left: -0.2rem;
+  border: 3px solid #8B61A0;
+}
+
+.button--d20:after {
+  z-index: -1;
+  top: 0.2rem;
+  left: 0.2rem;
+  border: 3px solid #624471;
+}
+
+.button--d20:hover:before, .button--d20:hover:after {
+  top: 0rem;
+  left: 0rem;
+}
+
+.button__icon {
+  width: 7.5rem;
+}
+
+.button:focus {
+  outline: 0;
+}
+
+.output {
+  border: 3px solid #85E539;
+  color: #85E539;
+  padding: 1rem 5rem;
+  width: 75%;
+  font-size: 2.5rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.dice-control {
+  display: flex;
+  width: 75%;
+  justify-content: space-between;
+}
+
+.dice-control__wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.dice-control__input-control {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  justify-content: space-between;
+}
+
+.dice-control__input-control:first-child {
+  margin-right: 1rem;
+}
+
+.dice-control__input-control:first-child .dice-control__inc-btn {
+  border: 0;
+  position: relative;
+  color: #EA113B;
+}
+
+.dice-control__input-control:first-child .dice-control__inc-btn svg * {
+  stroke: #EA113B;
+  fill: none;
+  stroke-width: 4;
+  stroke-miterlimit: 10;
+}
+
+.dice-control__input-control:first-child .dice-control__inc-btn:before, .dice-control__input-control:first-child .dice-control__inc-btn:after {
+  transition: 0.5s ease;
+  display: block;
+  content: " ";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.dice-control__input-control:first-child .dice-control__inc-btn:before {
+  z-index: 1;
+  top: -0.1rem;
+  left: 0.1rem;
+  border: 3px solid #EA113B;
+}
+
+.dice-control__input-control:first-child .dice-control__inc-btn:after {
+  z-index: -1;
+  top: 0.1rem;
+  left: -0.1rem;
+  border: 3px solid #a30c29;
+}
+
+.dice-control__input-control:first-child .dice-control__inc-btn:hover:before, .dice-control__input-control:first-child .dice-control__inc-btn:hover:after {
+  top: 0rem;
+  left: 0rem;
+}
+
+.dice-control__input-control:last-child {
+  margin-left: 1rem;
+}
+
+.dice-control__input-control:last-child .dice-control__inc-btn {
+  border: 0;
+  position: relative;
+  color: #8B61A0;
+}
+
+.dice-control__input-control:last-child .dice-control__inc-btn svg * {
+  stroke: #8B61A0;
+  fill: none;
+  stroke-width: 4;
+  stroke-miterlimit: 10;
+}
+
+.dice-control__input-control:last-child .dice-control__inc-btn:before, .dice-control__input-control:last-child .dice-control__inc-btn:after {
+  transition: 0.5s ease;
+  display: block;
+  content: " ";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.dice-control__input-control:last-child .dice-control__inc-btn:before {
+  z-index: 1;
+  top: -0.1rem;
+  left: -0.2rem;
+  border: 3px solid #8B61A0;
+}
+
+.dice-control__input-control:last-child .dice-control__inc-btn:after {
+  z-index: -1;
+  top: 0.1rem;
+  left: 0.2rem;
+  border: 3px solid #624471;
+}
+
+.dice-control__input-control:last-child .dice-control__inc-btn:hover:before, .dice-control__input-control:last-child .dice-control__inc-btn:hover:after {
+  top: 0rem;
+  left: 0rem;
+}
+
+.dice-control__inc-btn {
+  background: transparent;
+  font-size: 1.2rem;
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.dice-control__input {
+  display: flex;
+  width: 5rem;
+  height: 5rem;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 500;
+}
+
+.dice-control__input--count {
+  border: 0;
+  position: relative;
+  color: #EA113B;
+}
+
+.dice-control__input--count svg * {
+  stroke: #EA113B;
+  fill: none;
+  stroke-width: 4;
+  stroke-miterlimit: 10;
+}
+
+.dice-control__input--count:before, .dice-control__input--count:after {
+  transition: 0.5s ease;
+  display: block;
+  content: " ";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.dice-control__input--count:before {
+  z-index: 1;
+  top: -0.2rem;
+  left: 0.2rem;
+  border: 3px solid #EA113B;
+}
+
+.dice-control__input--count:after {
+  z-index: -1;
+  top: 0.2rem;
+  left: -0.2rem;
+  border: 3px solid #a30c29;
+}
+
+.dice-control__input--mod {
+  border: 0;
+  position: relative;
+  color: #8B61A0;
+}
+
+.dice-control__input--mod svg * {
+  stroke: #8B61A0;
+  fill: none;
+  stroke-width: 4;
+  stroke-miterlimit: 10;
+}
+
+.dice-control__input--mod:before, .dice-control__input--mod:after {
+  transition: 0.5s ease;
+  display: block;
+  content: " ";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.dice-control__input--mod:before {
+  z-index: 1;
+  top: -0.2rem;
+  left: -0.2rem;
+  border: 3px solid #8B61A0;
+}
+
+.dice-control__input--mod:after {
+  z-index: -1;
+  top: 0.2rem;
+  left: 0.2rem;
+  border: 3px solid #624471;
+}

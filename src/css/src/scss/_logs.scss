@@ -1,0 +1,29 @@
+.log-li {
+  margin: 0.5em;
+  box-shadow: 1px 1px 1px $secondary;
+}
+.log-ul {
+  list-style-type: none;
+  padding-left: 0;
+  min-height: 50vh;
+  max-height: 50vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background: #e4e4e4;
+  border-radius: 5px;
+  box-shadow: inset 0 0 2px #000000;
+}
+
+.keys {
+  vertical-align: text-bottom;
+  font-family: "modesto";
+  margin-top: 2em;
+  font-size: 12px;
+  text-align: left;
+  .key {
+    padding: 1em 1.5em 0.2em 1em;
+    border-radius: 5px;
+    border: 1px solid white;
+    box-shadow: 1px 1px 1px #eee;
+  }
+}

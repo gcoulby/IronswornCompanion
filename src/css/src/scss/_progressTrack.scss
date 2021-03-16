@@ -1,0 +1,76 @@
+$trackBoxWidth: 2em;
+
+.progressTrack {
+  list-style: none;
+  padding-left: 0;
+}
+
+.progressTrack li {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.2em;
+}
+
+.progressTrackBox {
+  position: relative;
+  min-height: $trackBoxWidth;
+  min-width: $trackBoxWidth;
+
+  display: block;
+}
+
+.progressTrackBox {
+  border: 3px solid $secondary;
+}
+
+.progressTick-1 {
+  background: url("/src/img/Check1.svg");
+  background-repeat: no-repeat;
+  transform: rotate(-45deg);
+}
+
+.progressTick-2 {
+  background: url("/src/img/Check1.svg");
+  background-repeat: no-repeat;
+  transform: rotate(45deg);
+}
+
+.progressTick-3 {
+  background: url("/src/img/Check2.svg");
+  background-repeat: no-repeat;
+}
+
+.progressTick-4 {
+  background: url("/src/img/Check2.svg");
+  background-repeat: no-repeat;
+  transform: rotate(-90deg);
+}
+
+.progressTick-10 {
+  background: $dark;
+  // background-repeat: no-repeat;
+  // transform: rotate(-90deg);
+}
+
+.progressTrackBtn {
+  width: $trackBoxWidth;
+  height: $trackBoxWidth;
+  margin: 0 !important;
+  // font-size: 12px;
+  padding: 0em !important;
+  border: none;
+}
+
+.progressTick {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  display: block;
+}
+
+.progressTrackBoxRound {
+  border: 2px solid $secondary;
+  border-radius: 50%;
+  overflow: hidden;
+}

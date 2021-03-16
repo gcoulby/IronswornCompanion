@@ -1,0 +1,74 @@
+.sidebar-wrapper {
+  background: $dark;
+  height: 95%;
+  overflow-y: auto;
+  position: fixed;
+  width: 20em;
+  overflow-x: hidden;
+  margin: 4em 0;
+  padding: 2em 0 6em;
+}
+
+.sidebar-wrapper::-webkit-scrollbar {
+  width: 12px; /* width of the entire scrollbar */
+}
+
+.sidebar-wrapper::-webkit-scrollbar-track {
+  background: $dark; /* color of the tracking area */
+}
+
+.sidebar-wrapper::-webkit-scrollbar-thumb {
+  background-color: $secondary; /* color of the scroll thumb */
+  // border-radius: 20px; /* roundness of the scroll thumb */
+  // border: 3px solid orange; /* creates padding around scroll thumb */
+}
+
+nav a {
+  color: white;
+}
+
+nav a {
+  background: none;
+
+  color: lightgrey;
+  font-size: 14px;
+  padding: 0.1em 2em;
+  display: block;
+}
+
+nav a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.menu-title {
+  text-align: left;
+  padding: 0.8em 0 0.5em 1.8em;
+  border-top: 2px groove #616161;
+  color: white;
+  // margin: 1em 0 0 0;
+  font-size: 14px;
+}
+
+.sidebarGroup {
+  padding-bottom: 0.5em;
+  // border-bottom: 2px groove #616161;
+}
+
+.menu-icon {
+  font-size: 14px;
+  padding: 0.5em;
+  margin-right: 0.5em;
+  // width: 2em;
+}
+
+.iconify {
+  padding: 0.2em 0;
+  font-size: 28px;
+  margin: 0em 0.2em 0 0em;
+}

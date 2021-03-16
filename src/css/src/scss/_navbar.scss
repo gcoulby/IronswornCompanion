@@ -1,0 +1,60 @@
+.navbar {
+  width: 100%;
+  color: white;
+  position: fixed !important;
+  z-index: 100000;
+}
+
+.navbar .btn {
+  margin-left: 1em;
+}
+
+.navbar-brand a {
+  text-align: center;
+  display: block;
+  width: 100%;
+  font-size: 20px;
+  color: white;
+  padding: 0.2em 3em 0 1.5em;
+  margin: 0 0 -0.2em 0;
+}
+
+.nav-post {
+  background-image: url("/src/img/footer.svg");
+  transform: scale(-1, -1);
+  height: 50px;
+  display: block;
+  background-size: contain;
+  position: fixed;
+  top: 3.5em;
+  width: 100vw;
+  z-index: 10000;
+}
+
+.nav-key,
+.stat-key,
+.stat-value {
+  font-family: "Modesto";
+}
+
+.nav-key,
+.nav-value {
+  margin: 0;
+}
+
+.stat-key,
+.stat-value {
+  font-size: 10px;
+  margin: 0;
+}
+
+.navbar li.nav-item.active {
+  margin: 0 0 -1.5em 0;
+}
+
+@media only screen and (max-width: 1400px) {
+  #playerName,
+  .nav-post {
+    display: none;
+  }
+}

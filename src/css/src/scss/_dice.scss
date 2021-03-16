@@ -1,0 +1,23 @@
+.dice {
+  border: 0;
+  position: relative;
+}
+.dice svg * {
+  stroke: #000000;
+  fill: none;
+  stroke-width: 4;
+  stroke-miterlimit: 10;
+}
+
+.dice-card {
+  padding: 2em;
+  margin-bottom: 0.5em;
+}
+
+// .dice h5{
+//   margin-bottom:1em;
+// }
+
+.die_qty {
+  margin-top: 1em;
+}

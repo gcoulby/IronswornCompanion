@@ -1,0 +1,35 @@
+@font-face {
+  font-family: "Modesto";
+  src: url("//db.onlinewebfonts.com/t/962c169da925663d8af1d63c1a36537f.eot");
+  src: url("//db.onlinewebfonts.com/t/962c169da925663d8af1d63c1a36537f.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/962c169da925663d8af1d63c1a36537f.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/962c169da925663d8af1d63c1a36537f.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/962c169da925663d8af1d63c1a36537f.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/962c169da925663d8af1d63c1a36537f.svg#ModestoW01-Expd")
+      format("svg");
+}
+
+@font-face {
+  font-family: "runic";
+  src: url("/src/fonts/modranihtrunic-yvxj-webfont.woff2") format("woff2"),
+    url("/src/fonts/modranihtrunic-yvxj-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+// @font-face {
+//   font-family: "212_keyboardregular";
+//   src: url("/src/fonts/212keyboard-lmrz-webfont.woff2") format("woff2"),
+//     url("/src/fonts/212keyboard-lmrz-webfont.woff") format("woff");
+//   font-weight: normal;
+//   font-style: normal;
+// }
+
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Carrois+Gothic&family=Forum&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sue+Ellen+Francisco&display=swap");

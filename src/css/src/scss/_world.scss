@@ -1,0 +1,87 @@
+.world-tabs {
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .nav-item {
+    font-family: "Modesto";
+  }
+
+  nav a:hover {
+    color: $secondary;
+  }
+}
+
+.truth-card {
+  width: 95%;
+  padding: 0.2em;
+}
+
+.checkbox-card-label {
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.truth {
+  padding: 1em;
+}
+
+.quest-starter {
+  background: $light;
+  padding: 1em;
+  margin-bottom: 0;
+}
+
+.card-input-element + .card {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: 2px solid transparent;
+  border-radius: 4px;
+}
+
+.card-input-element + .card:hover {
+  cursor: pointer;
+}
+
+.card-input-element:checked + .card {
+  border: 6px solid var(--dark);
+  -webkit-transition: border 0.3s;
+  -o-transition: border 0.3s;
+  transition: border 0.3s;
+}
+
+.card-input-element:checked + .card::after {
+  content: "\e5ca";
+  color: --dark;
+  font-family: "Material Icons";
+  font-size: 24px;
+  -webkit-animation-name: fadeInCheckbox;
+  animation-name: fadeInCheckbox;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@-webkit-keyframes fadeInCheckbox {
+  from {
+    opacity: 0;
+    -webkit-transform: rotateZ(-20deg);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: rotateZ(0deg);
+  }
+}
+
+@keyframes fadeInCheckbox {
+  from {
+    opacity: 0;
+    transform: rotateZ(-20deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotateZ(0deg);
+  }
+}

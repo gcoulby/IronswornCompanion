@@ -1,0 +1,26 @@
+.footer-pre {
+  background-image: url("/src/img/footer.svg");
+  height: 50px;
+  display: block;
+  background-size: contain;
+  position: fixed;
+  bottom: 5.8em;
+  width: 100vw;
+  z-index: 1000;
+}
+
+.fixed-bottom {
+  z-index: 1000;
+}
+
+footer {
+  padding: 2em;
+  background-color: #3c3c3b;
+  font-size: 12px;
+
+  .input-group > .form-control:not(:first-child),
+  .input-group > .custom-select:not(:first-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}

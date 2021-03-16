@@ -1,0 +1,272 @@
+.stat-card {
+  padding-top: 1em;
+  border-radius: 0% !important;
+  box-shadow: 4px 4px 1px black;
+  margin: 0 0em;
+}
+.stat-col {
+  padding: 0 0.2em !important;
+  margin: 0;
+}
+
+.momentum-stat {
+  padding: 0.5em !important;
+  width: 200px;
+  cursor: default !important;
+}
+
+.momentum-stat h6 {
+  margin: 0;
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2em;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+label {
+  position: relative;
+  padding-left: 1em;
+  padding-right: 1em;
+  line-height: 2;
+  cursor: pointer;
+  &:before {
+    box-sizing: border-box;
+    content: " ";
+    position: absolute;
+    top: 0.3em;
+    left: 0;
+    display: block;
+    width: 1.4em;
+    height: 1.4em;
+    border-radius: 0.25em;
+    z-index: -1;
+  }
+}
+input[type="radio"] + label::before {
+  border-radius: 1em;
+}
+/* Checked */
+input[type="checkbox"]:checked + label,
+input[type="radio"]:checked + label {
+  padding-left: 1em;
+  color: white;
+  &:before {
+    top: 0;
+    width: 100%;
+    height: 2.7em;
+    background: $dark;
+  }
+}
+
+/* Transition */
+label,
+label::before {
+  -webkit-transition: 0.25s all ease;
+  -o-transition: 0.25s all ease;
+  transition: 0.25s all ease;
+}
+
+/* Sliders */
+.slider-container {
+  margin-top: -0.6em;
+  padding: 0;
+  width: 100%;
+}
+.slider-container .slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: none;
+  border: 1px solid black;
+  height: 3.3em;
+  margin: 0;
+  outline: none;
+  padding: 0;
+  width: 100%;
+  box-shadow: 1px 1px 2px black;
+  cursor: pointer;
+}
+
+/* Sliders - IE */
+.slider-container input[type="range"]::-ms-track {
+  background: none;
+  border-color: transparent;
+  border-width: 6px 0;
+  color: transparent;
+  height: 25px;
+  width: 100%;
+}
+.slider-container input[type="range"]::-ms-fill-lower {
+  background: none;
+}
+
+.slider-container input[type="range"]::-ms-thumb {
+  background: red;
+  cursor: pointer;
+  height: 25px;
+  width: 40px; /* Set a specific slider handle width, cannot use percents */
+}
+
+/* Sliders - ticks */
+.slider-container ul.slider-ticks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 10px;
+  position: relative;
+  top: 0.7em;
+}
+.slider-container ul.slider-ticks li {
+  z-index: -10;
+  color: #000;
+  display: inline-block;
+  font-size: 20px;
+  font-family: "modesto";
+  line-height: 2.3em;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  position: relative;
+  vertical-align: top;
+}
+
+.slider-container ul.slider-ticks li:not(:last-child) {
+  border-right: 1px solid black;
+}
+
+.slider-container ul.slider-ticks li:not(:last-child):before {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 22%;
+  width: 0;
+  height: 0;
+  border: 0 solid transparent;
+  border-bottom-width: 12px;
+  border-top-width: 12px;
+  border-left: 12px solid #000;
+  clear: both;
+}
+
+.slider-container ul.slider-ticks li:not(:last-child):after {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 25%;
+  width: 0;
+  height: 0;
+  border: 0 solid transparent;
+  border-bottom-width: 11px;
+  border-top-width: 11px;
+  border-left: 11px solid #fff;
+  clear: both;
+}
+
+// .stat-track-Momentum {
+//   .slider-container
+//     ul.slider-ticks
+//     li:nth-child(-n + 6):not(:last-child):after {
+//     content: "";
+//     position: absolute;
+//     left: 90%;
+//     top: 25%;
+//     width: 0;
+//     height: 0;
+//     border: 0 solid transparent;
+//     border-bottom-width: 11px;
+//     border-top-width: 11px;
+//     border-right: 11px solid white;
+//     clear: both;
+//   }
+
+//   .slider-container
+//     ul.slider-ticks
+//     li:nth-child(-n + 6):not(:last-child):before {
+//     content: "";
+//     position: absolute;
+//     left: 89%;
+//     top: 22%;
+//     width: 0;
+//     height: 0;
+//     border: 0 solid transparent;
+//     border-bottom-width: 12px;
+//     border-top-width: 12px;
+//     border-right: 12px solid #000;
+//     clear: both;
+//   }
+// }
+
+.slider {
+  z-index: 100;
+  position: relative;
+  background: none;
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider-container .slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: url("/src/img/Clip.svg");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: bottom;
+  cursor: pointer;
+  height: 68px;
+}
+
+.slider-container .slider::-moz-range-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: url("/src/img/Clip.svg");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: bottom;
+  cursor: pointer;
+  height: 68px;
+}
+
+.stat-track {
+  margin-top: 2em;
+}
+
+.stat-track .track-title {
+  background: black;
+  padding: 0.3em 1em;
+  color: white;
+}
+
+.stat-track-Health,
+.stat-track-Spirit,
+.stat-track-Supply {
+  .slider-tick {
+    width: 16.66%;
+  }
+  .slider-container .slider::-webkit-slider-thumb {
+    width: 16.66%;
+  }
+  .slider-container .slider::-moz-range-thumb {
+    width: 16.66%;
+  }
+}
+
+.stat-track-Momentum {
+  .slider-tick {
+    width: 5.88%;
+  }
+  .slider-container .slider::-webkit-slider-thumb {
+    width: 5.88%;
+  }
+  .slider-container .slider::-moz-range-thumb {
+    width: 5.88%;
+  }
+}
+
+.deb-cb label:before {
+  height: 2em !important;
+}

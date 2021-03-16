@@ -1,0 +1,12 @@
+.footer-pre {
+  background-image: url("../img/footer.svg");
+  height: 40px;
+  display: block;
+}
+
+.nav-post {
+  background-image: url("../img/footer.svg");
+  transform: scale(-1, -1);
+  height: 40px;
+  display: block;
+}
