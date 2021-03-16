@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UniqueKeyGenerator from "./uniqueKeyGenerator";
-
+import { HashRouter, Route, Link } from "react-router-dom";
 class Sidebar extends Component {
   state = {
+    baseUrl: "/Ironsworn",
     sections: [
       {
         title: "Campaign",
@@ -179,22 +180,30 @@ class Sidebar extends Component {
       <React.Fragment>
         <nav id="sidebar" className="print-hide">
           <ul>
-            {this.state.sections.map((section) => {
-              return (
-                <li
-                  key={UniqueKeyGenerator.generate("section")}
-                  className="sidebarGroup"
-                >
-                  <h6 className="menu-title">{section.title}</h6>
-                  <ul>
-                    {section.pages.map((page) => (
-                      <li
-                        key={UniqueKeyGenerator.generate("page")}
-                        className={`${page.active ? "active" : ""}`}
-                      >
-                        {page.title}
-                        <a
-                          href={process.env.PUBLIC_URL + page.url}
+            <HashRouter basename="/">
+              {this.state.sections.map((section) => {
+                return (
+                  <li
+                    key={UniqueKeyGenerator.generate("section")}
+                    className="sidebarGroup"
+                  >
+                    <h6 className="menu-title">{section.title}</h6>
+                    <ul>
+                      {section.pages.map((page) => (
+                        <li
+                          key={UniqueKeyGenerator.generate("page")}
+                          className={`${page.active ? "active" : ""}`}
+                        >
+                          {page.title}
+                          <Link to={page.url}>
+                            <i
+                              className={`menu-icon ${page.icon}`}
+                              aria-hidden="true"
+                            ></i>
+                            &nbsp;{page.pageName}
+                          </Link>
+                          {/* <a
+                          href={page.url}
                           onClick={this.state.onPageChange}
                         >
                           <i
@@ -204,13 +213,14 @@ class Sidebar extends Component {
 
                           {page.pageName}
                           <span className="sr-only">(current)</span>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              );
-            })}
+                        </a> */}
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                );
+              })}
+            </HashRouter>
             <li className="credit">
               This companion is an unofficial product building to support the
               table top game Ironsworn, developed by Shawn Tomkin

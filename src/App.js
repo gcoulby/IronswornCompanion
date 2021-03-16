@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
+// import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter, Route, Link } from "react-router-dom";
 import "./css/css-compiled/main.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
@@ -1394,284 +1394,270 @@ class App extends Component {
           </div>
           <div id="page-container">
             <div className="container-fluid">
-              <Router>
-                <Switch>
-                  <Route exact path="/">
-                    <h3 id="site-title">IRONSWORN</h3>
-                    <h1 id="site-subtitle">COMPANION</h1>
-                    <div id="bg-image"></div>
-                  </Route>
-                  <Route path="/characters">
-                    <Characters
-                      players={this.state.players}
-                      onPlayerSelect={this.handlePlayerSelect}
-                      oracles={this.state.oracles}
-                      newPlayerName={this.state.newPlayerName}
-                      newPlayerRole={this.state.newPlayerRole}
-                      newPlayerGoal={this.state.newPlayerGoal}
-                      newPlayerDescriptor={this.state.newPlayerDescriptor}
-                      newPlayerStats={this.state.newPlayerStats}
-                      onAddCharacter={this.handleAddCharacter}
-                      onRollPlayerName={this.handleOnRollPlayerName}
-                      onNewPlayerNameChanged={this.handleNewPlayerNameChanged}
-                      onRollPlayerRole={this.handleOnRollPlayerRole}
-                      onNewPlayerRoleChanged={this.handleNewPlayerRoleChanged}
-                      onRollPlayerGoal={this.handleOnRollPlayerGoal}
-                      onNewPlayerGoalChanged={this.handleNewPlayerGoalChanged}
-                      onRollPlayerDescriptor={this.handleOnRollPlayerDescriptor}
-                      onNewPlayerDescriptorChanged={
-                        this.handleNewPlayerDescriptorChanged
-                      }
-                      onRollPlayerPrimaryStat={
-                        this.handleOnRollPlayerPrimaryStat
-                      }
-                      onPlayerStatChanged={this.handleNewPlayerStatChanged}
-                      onPlayerDelete={this.handlePlayerDelete}
-                    />
-                  </Route>
-                  <Route path="/log">
-                    <Log
-                      title="Campaign Log"
-                      description="Use this section to provide additional information about your campaign. Use this to keep notes between sessions or to log metagame information."
-                      logs={this.state.logs}
-                      logInput={this.state.logInput}
-                      onLogInputChanged={this.handleLogInputChanged}
-                      onAddLog={this.handleAddLog}
-                      onLogItemDeleted={this.handleLogItemDeleted}
-                    />
-                  </Route>
-                  <Route path="/world">
-                    <World
-                      world={this.state.world}
-                      onRollWorldClick={this.handleRollWorldClick}
-                      onWorldTruthChange={this.handleWorldTruthSelector}
-                      onCustomWorldDetailsInputChanged={
-                        this.handleCustomWorldDetailsInputChanged
-                      }
-                      onCustomWorldQuestStarterInputChanged={
-                        this.handleCustomWorldQuestStarterInputChanged
-                      }
-                      customWorldDetails={this.state.customWorldDetails}
-                      customWorldQuestStarter={
-                        this.state.customWorldQuestStarter
-                      }
-                    />
-                  </Route>
-                  <Route path="/npcs">
-                    <NPCs
-                      selectedPlayer={this.getSelectedPlayer()}
-                      newNPC={this.state.newNPC}
-                      races={this.state.oracles.getOracleTableAsArray("Races")}
-                      npcs={this.state.npcs}
-                      locations={this.state.locations}
-                      onAddNPC={this.handleAddNPC}
-                      onRollNPCName={this.handleOnRollNewNPCName}
-                      onNewNPCNameChanged={this.handleNewNPCNameChanged}
-                      onRollNPCRace={this.handleRollNPCRace}
-                      onNewNPCRaceChanged={this.handleNewNPCRaceChanged}
-                      onRollNewNPCGoal={this.handleOnRollNewNPCGoal}
-                      onNewNPCGoalChanged={this.handleNewNPCGoalChanged}
-                      onRollNewNPCRole={this.handleOnRollNewNPCRole}
-                      onNewNPCRoleChanged={this.handleNewNPCRoleChanged}
-                      onRollNewNPCDescriptor={this.handleOnRollNewNPCDescriptor}
-                      onNewNPCDescriptorChanged={
-                        this.handleNewNPCDescriptorChanged
-                      }
-                      onRollNewNPCDisposition={
-                        this.handleOnRollNewNPCDisposition
-                      }
-                      onNewNPCDispositionChanged={
-                        this.handleNewNPCDispositionChanged
-                      }
-                      onRollNewNPCConversation={
-                        this.handleOnRollNewNPCConversation
-                      }
-                      onNewNPCConversationChanged={
-                        this.handleNewNPCConversationChanged
-                      }
-                      onRollNewNPCKnowledge={this.handleOnRollNewNPCKnowledge}
-                      onNewNPCKnowledgeChanged={
-                        this.handleNewNPCKnowledgeChanged
-                      }
-                      onNewNPCLocationChanged={this.handleNewNPCLocationChanged}
-                      onNPCDelete={this.handleNPCDelete}
-                      onNPCProgressionChanged={
-                        this.handleOnNPCProgressionChanged
-                      }
-                      onNPCLocationChanged={this.handleOnNPCLocationChanged}
-                      onAddRandomNPC={this.handleOnAddRandomNPC}
-                    />
-                  </Route>
-                  <Route path="/locations">
-                    <Map
-                      onAddLocationClick={this.handleAddLocationClick}
-                      onDeleteLocationClick={this.handleOnLocationDeleteClick}
-                      locations={this.state.locations}
-                      npcs={this.state.npcs}
-                      selectedPlayer={this.getSelectedPlayer()}
-                      onLocationProgressionChanged={
-                        this.handleOnLocationProgressionChanged
-                      }
-                    />
-                  </Route>
-                  <Route exact path="/enter-the-fray">
-                    <EnterTheFray
-                      foes={this.state.foes}
-                      newFoeCategoryId={this.state.newFoeCategoryId}
-                      newFoeTypeId={this.state.newFoeTypeId}
-                      onRollNewFoe={this.handleOnRollNewFoe}
-                      onRollNewFoeType={this.handleOnRollNewFoeType}
-                      onNewFoeCategoryChanged={
-                        this.handleOnNewFoeCategoryChanged
-                      }
-                      onNewFoeTypeChanged={this.handleOnNewFoeTypeChanged}
-                      onAddFoe={this.handleOnAddFoe}
-                      onAddRandomPack={this.handleOnAddRandomPack}
-                      activeFoes={this.state.activeFoes}
-                      onProgressionChanged={this.handleOnFoeProgressionChanged}
-                      onProgressRollClicked={this.handleOnProgressRollClicked}
-                    />
-                  </Route>
-                  <Route path="/gallery">
-                    <Gallery imgurAlbumHash={this.state.imgurAlbumHash} />
-                  </Route>
+              <HashRouter basename="/">
+                {/* <Switch> */}
+                <Route exact path="/">
+                  <h3 id="site-title">IRONSWORN</h3>
+                  <h1 id="site-subtitle">COMPANION</h1>
+                  <div id="bg-image"></div>
+                </Route>
+                <Route path="/characters">
+                  <Characters
+                    players={this.state.players}
+                    onPlayerSelect={this.handlePlayerSelect}
+                    oracles={this.state.oracles}
+                    newPlayerName={this.state.newPlayerName}
+                    newPlayerRole={this.state.newPlayerRole}
+                    newPlayerGoal={this.state.newPlayerGoal}
+                    newPlayerDescriptor={this.state.newPlayerDescriptor}
+                    newPlayerStats={this.state.newPlayerStats}
+                    onAddCharacter={this.handleAddCharacter}
+                    onRollPlayerName={this.handleOnRollPlayerName}
+                    onNewPlayerNameChanged={this.handleNewPlayerNameChanged}
+                    onRollPlayerRole={this.handleOnRollPlayerRole}
+                    onNewPlayerRoleChanged={this.handleNewPlayerRoleChanged}
+                    onRollPlayerGoal={this.handleOnRollPlayerGoal}
+                    onNewPlayerGoalChanged={this.handleNewPlayerGoalChanged}
+                    onRollPlayerDescriptor={this.handleOnRollPlayerDescriptor}
+                    onNewPlayerDescriptorChanged={
+                      this.handleNewPlayerDescriptorChanged
+                    }
+                    onRollPlayerPrimaryStat={this.handleOnRollPlayerPrimaryStat}
+                    onPlayerStatChanged={this.handleNewPlayerStatChanged}
+                    onPlayerDelete={this.handlePlayerDelete}
+                  />
+                </Route>
+                <Route path="/log">
+                  <Log
+                    title="Campaign Log"
+                    description="Use this section to provide additional information about your campaign. Use this to keep notes between sessions or to log metagame information."
+                    logs={this.state.logs}
+                    logInput={this.state.logInput}
+                    onLogInputChanged={this.handleLogInputChanged}
+                    onAddLog={this.handleAddLog}
+                    onLogItemDeleted={this.handleLogItemDeleted}
+                  />
+                </Route>
+                <Route path="/world">
+                  <World
+                    world={this.state.world}
+                    onRollWorldClick={this.handleRollWorldClick}
+                    onWorldTruthChange={this.handleWorldTruthSelector}
+                    onCustomWorldDetailsInputChanged={
+                      this.handleCustomWorldDetailsInputChanged
+                    }
+                    onCustomWorldQuestStarterInputChanged={
+                      this.handleCustomWorldQuestStarterInputChanged
+                    }
+                    customWorldDetails={this.state.customWorldDetails}
+                    customWorldQuestStarter={this.state.customWorldQuestStarter}
+                  />
+                </Route>
+                <Route path="/npcs">
+                  <NPCs
+                    selectedPlayer={this.getSelectedPlayer()}
+                    newNPC={this.state.newNPC}
+                    races={this.state.oracles.getOracleTableAsArray("Races")}
+                    npcs={this.state.npcs}
+                    locations={this.state.locations}
+                    onAddNPC={this.handleAddNPC}
+                    onRollNPCName={this.handleOnRollNewNPCName}
+                    onNewNPCNameChanged={this.handleNewNPCNameChanged}
+                    onRollNPCRace={this.handleRollNPCRace}
+                    onNewNPCRaceChanged={this.handleNewNPCRaceChanged}
+                    onRollNewNPCGoal={this.handleOnRollNewNPCGoal}
+                    onNewNPCGoalChanged={this.handleNewNPCGoalChanged}
+                    onRollNewNPCRole={this.handleOnRollNewNPCRole}
+                    onNewNPCRoleChanged={this.handleNewNPCRoleChanged}
+                    onRollNewNPCDescriptor={this.handleOnRollNewNPCDescriptor}
+                    onNewNPCDescriptorChanged={
+                      this.handleNewNPCDescriptorChanged
+                    }
+                    onRollNewNPCDisposition={this.handleOnRollNewNPCDisposition}
+                    onNewNPCDispositionChanged={
+                      this.handleNewNPCDispositionChanged
+                    }
+                    onRollNewNPCConversation={
+                      this.handleOnRollNewNPCConversation
+                    }
+                    onNewNPCConversationChanged={
+                      this.handleNewNPCConversationChanged
+                    }
+                    onRollNewNPCKnowledge={this.handleOnRollNewNPCKnowledge}
+                    onNewNPCKnowledgeChanged={this.handleNewNPCKnowledgeChanged}
+                    onNewNPCLocationChanged={this.handleNewNPCLocationChanged}
+                    onNPCDelete={this.handleNPCDelete}
+                    onNPCProgressionChanged={this.handleOnNPCProgressionChanged}
+                    onNPCLocationChanged={this.handleOnNPCLocationChanged}
+                    onAddRandomNPC={this.handleOnAddRandomNPC}
+                  />
+                </Route>
+                <Route path="/locations">
+                  <Map
+                    onAddLocationClick={this.handleAddLocationClick}
+                    onDeleteLocationClick={this.handleOnLocationDeleteClick}
+                    locations={this.state.locations}
+                    npcs={this.state.npcs}
+                    selectedPlayer={this.getSelectedPlayer()}
+                    onLocationProgressionChanged={
+                      this.handleOnLocationProgressionChanged
+                    }
+                  />
+                </Route>
+                <Route exact path="/enter-the-fray">
+                  <EnterTheFray
+                    foes={this.state.foes}
+                    newFoeCategoryId={this.state.newFoeCategoryId}
+                    newFoeTypeId={this.state.newFoeTypeId}
+                    onRollNewFoe={this.handleOnRollNewFoe}
+                    onRollNewFoeType={this.handleOnRollNewFoeType}
+                    onNewFoeCategoryChanged={this.handleOnNewFoeCategoryChanged}
+                    onNewFoeTypeChanged={this.handleOnNewFoeTypeChanged}
+                    onAddFoe={this.handleOnAddFoe}
+                    onAddRandomPack={this.handleOnAddRandomPack}
+                    activeFoes={this.state.activeFoes}
+                    onProgressionChanged={this.handleOnFoeProgressionChanged}
+                    onProgressRollClicked={this.handleOnProgressRollClicked}
+                  />
+                </Route>
+                <Route path="/gallery">
+                  <Gallery imgurAlbumHash={this.state.imgurAlbumHash} />
+                </Route>
 
-                  <Route path="/background">
-                    <Log
-                      title="Background"
-                      description="Use this section to provide additional context to your character.
+                <Route path="/background">
+                  <Log
+                    title="Background"
+                    description="Use this section to provide additional context to your character.
                       Snippets of background information can be entered in the text box
                       below."
-                      logs={
-                        this.getSelectedPlayer()
-                          ? this.getSelectedPlayer().background
-                          : null
-                      }
-                      logInput={this.state.backgroundInput}
-                      onLogInputChanged={this.handleBackgroundInputChanged}
-                      onAddLog={this.handleAddBackground}
-                      onLogItemDeleted={this.handleBackgroundItemDeleted}
-                    />
-                  </Route>
-                  <Route exact path="/stats">
-                    <Stats
-                      selectedPlayer={this.getSelectedPlayer()}
-                      onTrackChange={this.handleStatTrackChange}
-                      onDebilityChange={this.handleDebilityChange}
-                      onPlayerProgressionChanged={
-                        this.handleOnPlayerProgressionChanged
-                      }
-                      onExperienceChange={this.handleOnExperienceChange}
-                    />
-                  </Route>
-                  <Route exact path="/vows">
-                    <Progression
-                      title="Vows"
-                      type="vow"
-                      newProgression={this.getProgressionByType("vow")}
-                      onNewProgressionTextChanged={
-                        this.handleOnNewProgressionTextChanged
-                      }
-                      onNewProgressionRankChanged={
-                        this.handleOnNewProgressionRankChanged
-                      }
-                      onAddNewProgression={this.handleOnAddNewProgression}
-                      selectedPlayer={this.getSelectedPlayer()}
-                      onProgressionChange={this.handleOnProgressionChanged}
-                      onProgressionRankChange={
-                        this.handleOnProgressionRankChanged
-                      }
-                      onProgressRollClicked={this.handleOnProgressRollClicked}
-                    />
-                  </Route>
-                  <Route exact path="/quests">
-                    <Progression
-                      title="Quests"
-                      type="quest"
-                      info="Quests are mechanically identical to vows except they are not as much of a commitment to your character. Use quests when swearing an iron vow does not seem appropriate to the fiction."
-                      newProgression={this.getProgressionByType("quest")}
-                      onNewProgressionTextChanged={
-                        this.handleOnNewProgressionTextChanged
-                      }
-                      onNewProgressionRankChanged={
-                        this.handleOnNewProgressionRankChanged
-                      }
-                      onAddNewProgression={this.handleOnAddNewProgression}
-                      selectedPlayer={this.getSelectedPlayer()}
-                      onProgressionChange={this.handleOnProgressionChanged}
-                      onProgressionRankChange={
-                        this.handleOnProgressionRankChanged
-                      }
-                      onProgressRollClicked={this.handleOnProgressRollClicked}
-                    />
-                  </Route>
-                  <Route exact path="/journeys">
-                    <Progression
-                      title="Journeys"
-                      type="journey"
-                      newProgression={this.getProgressionByType("journey")}
-                      onNewProgressionTextChanged={
-                        this.handleOnNewProgressionTextChanged
-                      }
-                      onNewProgressionRankChanged={
-                        this.handleOnNewProgressionRankChanged
-                      }
-                      onAddNewProgression={this.handleOnAddNewProgression}
-                      selectedPlayer={this.getSelectedPlayer()}
-                      onProgressionChange={this.handleOnProgressionChanged}
-                      onProgressionRankChange={
-                        this.handleOnProgressionRankChanged
-                      }
-                      onProgressRollClicked={this.handleOnProgressRollClicked}
-                    />
-                  </Route>
+                    logs={
+                      this.getSelectedPlayer()
+                        ? this.getSelectedPlayer().background
+                        : null
+                    }
+                    logInput={this.state.backgroundInput}
+                    onLogInputChanged={this.handleBackgroundInputChanged}
+                    onAddLog={this.handleAddBackground}
+                    onLogItemDeleted={this.handleBackgroundItemDeleted}
+                  />
+                </Route>
+                <Route exact path="/stats">
+                  <Stats
+                    selectedPlayer={this.getSelectedPlayer()}
+                    onTrackChange={this.handleStatTrackChange}
+                    onDebilityChange={this.handleDebilityChange}
+                    onPlayerProgressionChanged={
+                      this.handleOnPlayerProgressionChanged
+                    }
+                    onExperienceChange={this.handleOnExperienceChange}
+                  />
+                </Route>
+                <Route exact path="/vows">
+                  <Progression
+                    title="Vows"
+                    type="vow"
+                    newProgression={this.getProgressionByType("vow")}
+                    onNewProgressionTextChanged={
+                      this.handleOnNewProgressionTextChanged
+                    }
+                    onNewProgressionRankChanged={
+                      this.handleOnNewProgressionRankChanged
+                    }
+                    onAddNewProgression={this.handleOnAddNewProgression}
+                    selectedPlayer={this.getSelectedPlayer()}
+                    onProgressionChange={this.handleOnProgressionChanged}
+                    onProgressionRankChange={
+                      this.handleOnProgressionRankChanged
+                    }
+                    onProgressRollClicked={this.handleOnProgressRollClicked}
+                  />
+                </Route>
+                <Route exact path="/quests">
+                  <Progression
+                    title="Quests"
+                    type="quest"
+                    info="Quests are mechanically identical to vows except they are not as much of a commitment to your character. Use quests when swearing an iron vow does not seem appropriate to the fiction."
+                    newProgression={this.getProgressionByType("quest")}
+                    onNewProgressionTextChanged={
+                      this.handleOnNewProgressionTextChanged
+                    }
+                    onNewProgressionRankChanged={
+                      this.handleOnNewProgressionRankChanged
+                    }
+                    onAddNewProgression={this.handleOnAddNewProgression}
+                    selectedPlayer={this.getSelectedPlayer()}
+                    onProgressionChange={this.handleOnProgressionChanged}
+                    onProgressionRankChange={
+                      this.handleOnProgressionRankChanged
+                    }
+                    onProgressRollClicked={this.handleOnProgressRollClicked}
+                  />
+                </Route>
+                <Route exact path="/journeys">
+                  <Progression
+                    title="Journeys"
+                    type="journey"
+                    newProgression={this.getProgressionByType("journey")}
+                    onNewProgressionTextChanged={
+                      this.handleOnNewProgressionTextChanged
+                    }
+                    onNewProgressionRankChanged={
+                      this.handleOnNewProgressionRankChanged
+                    }
+                    onAddNewProgression={this.handleOnAddNewProgression}
+                    selectedPlayer={this.getSelectedPlayer()}
+                    onProgressionChange={this.handleOnProgressionChanged}
+                    onProgressionRankChange={
+                      this.handleOnProgressionRankChanged
+                    }
+                    onProgressRollClicked={this.handleOnProgressRollClicked}
+                  />
+                </Route>
 
-                  <Route exact path="/roll">
-                    <Dice />
-                  </Route>
-                  <Route exact path="/acknowledgements">
-                    <Acknowledgements />
-                  </Route>
-                  <Route path="/oracle-editor">
-                    <OracleEditor
-                      oracles={this.state.oracles}
-                      selectedOracleTable={
-                        this.state.oracles.selectedOracleTable
-                      }
-                      onAddOracleTable={this.handleAddOracleTable}
-                      onNewOracleTableNameChange={
-                        this.handleNewOracleTableNameChange
-                      }
-                      onSelectedOracleTableChange={
-                        this.handleSelectedOracleTableChange
-                      }
-                      onOracleTablePromptsChange={
-                        this.handleOracleTablePromptsChange
-                      }
-                      onDeleteOracleTable={this.handleDeleteOracleTable}
-                    />
-                  </Route>
+                <Route exact path="/roll">
+                  <Dice />
+                </Route>
+                <Route exact path="/acknowledgements">
+                  <Acknowledgements />
+                </Route>
+                <Route path="/oracle-editor">
+                  <OracleEditor
+                    oracles={this.state.oracles}
+                    selectedOracleTable={this.state.oracles.selectedOracleTable}
+                    onAddOracleTable={this.handleAddOracleTable}
+                    onNewOracleTableNameChange={
+                      this.handleNewOracleTableNameChange
+                    }
+                    onSelectedOracleTableChange={
+                      this.handleSelectedOracleTableChange
+                    }
+                    onOracleTablePromptsChange={
+                      this.handleOracleTablePromptsChange
+                    }
+                    onDeleteOracleTable={this.handleDeleteOracleTable}
+                  />
+                </Route>
 
-                  <Route path="/asset-builder">
-                    <AssetBuilder
-                      assets={this.state.assets}
-                      selectedAsset={this.state.assetBuilderSelectedAsset}
-                      onSelectedAssetChange={this.handleOnSelectedAssetChange}
-                    />
-                  </Route>
+                <Route path="/asset-builder">
+                  <AssetBuilder
+                    assets={this.state.assets}
+                    selectedAsset={this.state.assetBuilderSelectedAsset}
+                    onSelectedAssetChange={this.handleOnSelectedAssetChange}
+                  />
+                </Route>
 
-                  <Route path="/documentation">
-                    <Documentation />
-                  </Route>
-                  <Route path="/data-management">
-                    <DataManager
-                      onResetClick={this.resetData}
-                      onDownloadClick={this.saveData}
-                      onLoadClick={this.loadData}
-                    />
-                  </Route>
-                </Switch>
-              </Router>
+                <Route path="/documentation">
+                  <Documentation />
+                </Route>
+                <Route path="/data-management">
+                  <DataManager
+                    onResetClick={this.resetData}
+                    onDownloadClick={this.saveData}
+                    onLoadClick={this.loadData}
+                  />
+                </Route>
+                {/* </Switch> */}
+              </HashRouter>
             </div>
           </div>
         </div>
