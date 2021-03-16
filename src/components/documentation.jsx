@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactMarkdown from "react-markdown";
+import gclogo from "../img/gc_logoai.png";
 class Documentation extends Component {
   constructor() {
     super();
@@ -783,9 +784,9 @@ class Documentation extends Component {
           done by Shawn Tomkin.
         </p>
         <p>
-          <a href="https://creativecommons.org/licenses/by/4.0/">
+          <a href="https://grahamcoulby.co.uk/">
             <img
-              src="http://localhost:3000/img/gc_logoai.svg"
+              src={gclogo}
               alt="img"
               // style="zoom:50%;"
             />

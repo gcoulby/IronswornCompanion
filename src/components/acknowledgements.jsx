@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import TitleBlock from "./titleBlock";
+import gclogo from "../img/gc_logoai.png";
 class Acknowledgements extends Component {
   state = {
     contributors: [
@@ -112,13 +113,12 @@ class Acknowledgements extends Component {
         designed to superseed the work done by Shawn Tomkin.
         <br />
         <br />
-        <a
-          className="mt-4"
-          href="https://creativecommons.org/licenses/by/4.0/"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          <img src="/img/gc_logoai.svg" width="100" />
+        <a href="https://grahamcoulby.co.uk/">
+          <img
+            src={gclogo}
+            alt="img"
+            // style="zoom:50%;"
+          />
         </a>
       </React.Fragment>
     );

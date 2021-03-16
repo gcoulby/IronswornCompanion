@@ -4,6 +4,8 @@ import "../../node_modules/leaflet/dist/leaflet.css";
 import Oracles from "./oracles";
 import ProgressTrack from "./progressTrack";
 import TitleBlock from "./titleBlock";
+import mapImg from "../img/map.jpg";
+import mapMarker from "../img/MapMarker.png";
 
 class Map extends Component {
   state = {
@@ -63,7 +65,7 @@ class Map extends Component {
       [0, 0],
       [792, 594],
     ];
-    L.imageOverlay("/img/Ironlands-Ironlands-Map-Color.jpg", bounds, {
+    L.imageOverlay(mapImg, bounds, {
       attribution:
         '&copy; <a href="https://www.ironswornrpg.com/">Shawn Tomkin</a>, Art by <a href="https://www.blackhawkcartography.com/">Josiah Van Egmond</a>',
     }).addTo(map);
@@ -75,7 +77,7 @@ class Map extends Component {
 
   addMarkers(L, map) {
     var myIcon = L.icon({
-      iconUrl: "img/MapMarker.png",
+      iconUrl: mapMarker,
       iconSize: [32, 32],
       iconAnchor: [0, 32],
       popupAnchor: [15, -32],
