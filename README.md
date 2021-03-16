@@ -1,4 +1,4 @@
-# Ironsworn Companion
+# Ironsworn Companion (WIP)
 
 [toc]
 
@@ -6,35 +6,29 @@
 
 # Introduction
 
-
-
 ## What is Ironsworn?
 
-Ironsworn is a tabletop RPG created by Shawn Tomkin. What makes Ironsworn unique is that unlike traditional tabletop RPGs, Ironsworn enables solo/ small-group play, as its unique game mechanics remove the need for a traditional game master. 
+Ironsworn is a tabletop RPG created by Shawn Tomkin. What makes Ironsworn unique is that unlike traditional tabletop RPGs, Ironsworn enables solo/ small-group play, as its unique game mechanics remove the need for a traditional game master.
 
 What is even more fascinating about Ironsworn is the distribution methods. When reading the game, you realise the care, effort and devotion that has gone in to creating this game and yet, the game is released as open-source under the creative commons 4.0 [![License: CC BY 4.0](https://camo.githubusercontent.com/bca967b18143b8a5b2ffe78bd4a1a30f6bc21de83bd8336f748e96498af38b38/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4c6963656e73652d43432532304259253230342e302d6c69676874677265792e737667)](https://creativecommons.org/licenses/by/4.0/)
 
-Ironsworn truly is a labour of love and is available for free at https://www.ironswornrpg.com/ 
-
-
+Ironsworn truly is a labour of love and is available for free at https://www.ironswornrpg.com/
 
 ## What is the Ironsworn Companion?
 
 First and foremost, this application is not an official Ironsworn product, instead it leverages the CC4.0 license to provide a digital toolkit for playing the game.
 
-I used to use platforms such as Roll20 for playing campaigns with a remote group of friends. I wanted a similar experience from Ironsworn, e.g. a digital companion app that could aid, automate and track my game to reduce on paper waste and also provide quick and easy ways to exploit mechanics such as `The Oracle` *(a roll-based game mechanic to spark ideas during game play).*
+I used to use platforms such as Roll20 for playing campaigns with a remote group of friends. I wanted a similar experience from Ironsworn, e.g. a digital companion app that could aid, automate and track my game to reduce on paper waste and also provide quick and easy ways to exploit mechanics such as `The Oracle` _(a roll-based game mechanic to spark ideas during game play)._
 
 While there are various companions out there, I was disappointed with the features and felt they didn't match my view of what the companion should be like. That's not to say the other apps are bad, but many just felt like lightweight tools to support pen and paper play, which is great, if that is what you want.
 
-This app is not designed to replace the rules, though it may clear your desk of progress tracks and asset cards. 
-
-
+This app is not designed to replace the rules, though it may clear your desk of progress tracks and asset cards.
 
 ---
 
 # Using the app
 
-The following sections will provide instruction on how to use the individual components in the app. 
+The following sections will provide instruction on how to use the individual components in the app.
 
 ---
 
@@ -42,7 +36,7 @@ The following sections will provide instruction on how to use the individual com
 
 Key areas such as a pages will be shown like this throughout the documentation: `Characters`, `Background` etc.
 
-At times the documentation will refer to sections. There are three main sections to this app: `Header`, `Sidebar` and `Footer`. These are fairly self explanatory. 
+At times the documentation will refer to sections. There are three main sections to this app: `Header`, `Sidebar` and `Footer`. These are fairly self explanatory.
 
 ### Header
 
@@ -62,17 +56,15 @@ The `Footer` contains a quick dice roller. This can be used to roll on stats wit
 
 ![image-20210316092805822](https://i.imgur.com/UQCOnvb.png)
 
-
-
 ---
 
-## Oracles 
+## Oracles
 
 Before discussing the features of the app its important to understand how the oracle works. Throughout the companion you will see the following roll icon in various places:
 
- ![image-20210226101636509](https://i.imgur.com/JlEztdW.png)
+![image-20210226101636509](https://i.imgur.com/JlEztdW.png)
 
-This icon denotes that you can consult the oracle. Each implementation of the oracle differs between pages. For example, by consulting the oracle during character creation, a random Ironlander name will be generated. On the other hand, by consulting the oracle during world creation, a number of world truths will be defined. As with everything in Ironsworn, if the Oracle's insights are not inline with your version of the Ironlands or provides some contradiction, you can either roll again or carve your own path. You should definitely consult the rules on how exactly to use the Oracle, this app merely takes away the need to cross reference a comprehensive list of roll tables. 
+This icon denotes that you can consult the oracle. Each implementation of the oracle differs between pages. For example, by consulting the oracle during character creation, a random Ironlander name will be generated. On the other hand, by consulting the oracle during world creation, a number of world truths will be defined. As with everything in Ironsworn, if the Oracle's insights are not inline with your version of the Ironlands or provides some contradiction, you can either roll again or carve your own path. You should definitely consult the rules on how exactly to use the Oracle, this app merely takes away the need to cross reference a comprehensive list of roll tables.
 
 ### Oracle Page
 
@@ -80,25 +72,23 @@ To supplement the oracle implementations on each page, there is also a page dedi
 
 #### Oracle Creation
 
-New Oracle tables can be created using the form at the top of the page. Simply enter the Oracle Table name and press 
+New Oracle tables can be created using the form at the top of the page. Simply enter the Oracle Table name and press
 
 `+ Add Oracle Table`
 
 #### Editing Oracle Tables
 
-Once you have added an oracle table you can edit the tables using the left hand column. Simply select an oracle table from the drop down box and start typing in the box below. Every line represents 1 row in the oracle table. For this reason, long oracles will cause a scroll bar to appear along the bottom of the text box... Do not press Enter to make the box look pretty as this will split your oracle in two. 
-
-
+Once you have added an oracle table you can edit the tables using the left hand column. Simply select an oracle table from the drop down box and start typing in the box below. Every line represents 1 row in the oracle table. For this reason, long oracles will cause a scroll bar to appear along the bottom of the text box... Do not press Enter to make the box look pretty as this will split your oracle in two.
 
 ---
 
 ## Characters
 
-Most of the functionality of the the companion app will not work unless you create and select a character. Characters represent players and multiple characters can be created. However, only 1 character can be selected at a time. This will mean a degree of micro management will be needed in coop games. 
+Most of the functionality of the the companion app will not work unless you create and select a character. Characters represent players and multiple characters can be created. However, only 1 character can be selected at a time. This will mean a degree of micro management will be needed in coop games.
 
 ### Create a character
 
-To create a character go to the `Characters` page and either enter the details into the form manually or roll the individual fields against the respective oracle tables. 
+To create a character go to the `Characters` page and either enter the details into the form manually or roll the individual fields against the respective oracle tables.
 
 > For more information on Character creation consult **Chapter 2** of the Ironsworn rulebook.
 
@@ -110,11 +100,9 @@ There are five stats in total. Each is given a value from 1 to 3. To start, arra
 
 Once you have created a character it will appear under the `CHARACTER SELECTION` heading. This will show a card for each character, which will all contain a `Select` and `Delete` button. Delete button will completely delete your character and Select will make your character the **`Selected Character`**. To use all of the functionality of the companion there must always be one **`Selected Character`**.
 
-Characters can also be selected from the dropdown box in the `Header`. Once a character is a selected, their stats will be shown across the top of the pages, which provide 2 purposes. Firstly, they provide a persistent view of character stats, regardless of where you at the app. Secondly, the stats are buttons and can be clicked to take you to your `Character Sheet`. 
+Characters can also be selected from the dropdown box in the `Header`. Once a character is a selected, their stats will be shown across the top of the pages, which provide 2 purposes. Firstly, they provide a persistent view of character stats, regardless of where you at the app. Secondly, the stats are buttons and can be clicked to take you to your `Character Sheet`.
 
 After selecting a character you are automatically taken to the `Stats` page, which shows a character sheet for the **`Selected Character`**.
-
-
 
 ---
 
@@ -124,55 +112,49 @@ There are two logs in the companion `Campaign Log` and `Background`. These logs 
 
 ### Adding Logs
 
-To add a log enter text into the text box at the bottom of a log page and press `SHIFT + ENTER` to enter fiction *(this information should be in character/roleplay)*. Alternatively press `CTRL + ENTER` to enter metagame information *(This information can be out of character/roleplay)*.
+To add a log enter text into the text box at the bottom of a log page and press `SHIFT + ENTER` to enter fiction _(this information should be in character/roleplay)_. Alternatively press `CTRL + ENTER` to enter metagame information _(This information can be out of character/roleplay)_.
 
 ### Viewing and Deleting Logs
 
-Once logs are added they will appear in the box above the input box. They will appear in chronological order and are all timestamped with the date/time they were added. The box will auto scroll to the bottom of the page on refresh, or when a new log item is added. 
-
-
+Once logs are added they will appear in the box above the input box. They will appear in chronological order and are all timestamped with the date/time they were added. The box will auto scroll to the bottom of the page on refresh, or when a new log item is added.
 
 ---
 
 ## World Truths
 
-As the name suggests, the `World Truths` page is for selecting the truths of your world. In short, there are a various categories under the `World Truths` page such as `The Old World` or `Religion`. Under each category there are **3** truths. You should choose a truth from each page this will define the parameters of your world. For example, the `Mysticism` tab is for choosing the truth about the prevalence of magic, the three options define whether magic is a myth, a rarity or commonplace. 
+As the name suggests, the `World Truths` page is for selecting the truths of your world. In short, there are a various categories under the `World Truths` page such as `The Old World` or `Religion`. Under each category there are **3** truths. You should choose a truth from each page this will define the parameters of your world. For example, the `Mysticism` tab is for choosing the truth about the prevalence of magic, the three options define whether magic is a myth, a rarity or commonplace.
 
 ### Selecting a Truth
 
-To select a truth, simply click on the card. Once selected, a checkmark (`✔`) will appear on the right hand side of the card and the card will be surrounded with a black border. 
+To select a truth, simply click on the card. Once selected, a checkmark (`✔`) will appear on the right hand side of the card and the card will be surrounded with a black border.
 
 ### Changing Truths
 
-As your story unfolds you may find out that you were wrong about your truth selection, i.e. you may go into your world with the idea that there is no magic, but then you meet a ancient mystic who shows you that magic is not a myth, but is rare, dangerous and part of an underground movement. For this reason, you can change your truths at any time. 
+As your story unfolds you may find out that you were wrong about your truth selection, i.e. you may go into your world with the idea that there is no magic, but then you meet a ancient mystic who shows you that magic is not a myth, but is rare, dangerous and part of an underground movement. For this reason, you can change your truths at any time.
 
 ### Rolling a Random World
 
 You have the option to `Roll a Random World`. Clicking this box will randomly choose a truth for each category to add more randomness to your world.
 
-### Custom World Truths. 
+### Custom World Truths.
 
-The custom tab contains two text boxes. One for a custom quest starter and the other for custom world details. Be descriptive here. You can use this box to define an entirely custom world or provide modifiers to existing truths from other categories. It is your world so get creative. 
-
-
+The custom tab contains two text boxes. One for a custom quest starter and the other for custom world details. Be descriptive here. You can use this box to define an entirely custom world or provide modifiers to existing truths from other categories. It is your world so get creative.
 
 > For more information on World Truths consult **Chapter 4** of the Ironsworn rulebook.
-
-
 
 ---
 
 ## NPCs
 
-The NPCs page is for creating **N**on-**P**layer **C**haracters. Creation of NPCs is functionally similar to character creation except there are more options to roll on. Each oracle roll will work the same way as character creation, except for `Name`. If you roll on `Name`, before choosing a `Race`, a race will be selected for you as this will determine which oracle table the name is chosen from. 
+The NPCs page is for creating **N**on-**P**layer **C**haracters. Creation of NPCs is functionally similar to character creation except there are more options to roll on. Each oracle roll will work the same way as character creation, except for `Name`. If you roll on `Name`, before choosing a `Race`, a race will be selected for you as this will determine which oracle table the name is chosen from.
 
 ### Story Helpers
 
-NPCs have more options to roll on that characters to provide more flavour to your NPCs that can drive your story. 
+NPCs have more options to roll on that characters to provide more flavour to your NPCs that can drive your story.
 
 - `Dispositions` help drive the narrative as NPCs could be `helpful` or `curious`, alternatively they could be `threatening` or `derisive`
 - `NPC Conversation` will tell you the nature of their conversations topics; for example, they may tell you about their heritage or about the leadership of their settlement.
-- `NPC Knowledge` will inform you about what information they know about. 
+- `NPC Knowledge` will inform you about what information they know about.
 
 ### Last Location
 
@@ -180,25 +162,23 @@ If you have created locations (See [Locations and Settlements](#locations-and-se
 
 ### Bonds
 
-If you have a character selected a `Bond` Track will appear on the NPC card once it is created. Increasing the bond track of an NPC. will increase the NPCs track by `1 Tick`. It will also increase the bond track of the **`Selected Character`** by `1 Tick`. If you need to add `bonds` to multiple characters *(for co-op)*, this will **not** be done automatically, instead you should use the character select drop down in the `Header` to switch to other character sheets and manually enter those bonds to other characters. 
-
-
+If you have a character selected a `Bond` Track will appear on the NPC card once it is created. Increasing the bond track of an NPC. will increase the NPCs track by `1 Tick`. It will also increase the bond track of the **`Selected Character`** by `1 Tick`. If you need to add `bonds` to multiple characters _(for co-op)_, this will **not** be done automatically, instead you should use the character select drop down in the `Header` to switch to other character sheets and manually enter those bonds to other characters.
 
 ---
 
 ## Locations and Settlements
 
-Locations and settlements can be added to an interactive map under the `Locations and Settlements` page. 
+Locations and settlements can be added to an interactive map under the `Locations and Settlements` page.
 
 ### Adding a location
 
-The `Add Location` form is also used to edit existing locations. Consequently, when you click on the map the form will be reset. Therefore, to add a location you **must** click on the map **first** to choose the location of the new settlement. This will add the XY coordinates to the input form. From there, you can then manually enter details about the settlement or roll on the oracle to generate random location details. The additional information can be used to provide flavour and context to your location. 
+The `Add Location` form is also used to edit existing locations. Consequently, when you click on the map the form will be reset. Therefore, to add a location you **must** click on the map **first** to choose the location of the new settlement. This will add the XY coordinates to the input form. From there, you can then manually enter details about the settlement or roll on the oracle to generate random location details. The additional information can be used to provide flavour and context to your location.
 
-Once you have completed the form, click `Save Location` this will add a marker to the map. 
+Once you have completed the form, click `Save Location` this will add a marker to the map.
 
 ### Editing a Location
 
-Clicking on a map marker will populate the form with details on the location. If any NPCs have their `Last Location` set to this location/settlement they will appear in a list on this screen. A `bond` track is also available, which works the same way as an NPC `bond` track. Each progression adds `1 Tick` to the location and also `1 Tick` to the selected player. 
+Clicking on a map marker will populate the form with details on the location. If any NPCs have their `Last Location` set to this location/settlement they will appear in a list on this screen. A `bond` track is also available, which works the same way as an NPC `bond` track. Each progression adds `1 Tick` to the location and also `1 Tick` to the selected player.
 
 When you have finished editing the location click `Save Location`
 
@@ -206,15 +186,13 @@ When you have finished editing the location click `Save Location`
 
 You can Delete locations by clicking on their map marker and then clicking `Delete`
 
-
-
 ---
 
 ## Enter the Fray
 
-Enter the fray describes the action of combat. 
+Enter the fray describes the action of combat.
 
-To enter combat, create `Active Foes` by either selecting from the `Category` and `Type` drop boxes or click `Roll Random Foe`. Multiple `Active Foes` can be added and each Foe will have an individual `combat track`. 
+To enter combat, create `Active Foes` by either selecting from the `Category` and `Type` drop boxes or click `Roll Random Foe`. Multiple `Active Foes` can be added and each Foe will have an individual `combat track`.
 
 ### Foe Card
 
@@ -234,11 +212,9 @@ If the roll is successful you can delete the character and move on. If it is not
 
 ### Foe Packs
 
-The Ironsworn rules allows you to form packs of NPCs that have a single track. This app does not yet implement packs, but the functionality can be easily achieved. Simply, create a single `Dangerous` or `Formidable` opponent and treat that opponent as a pack. 
+The Ironsworn rules allows you to form packs of NPCs that have a single track. This app does not yet implement packs, but the functionality can be easily achieved. Simply, create a single `Dangerous` or `Formidable` opponent and treat that opponent as a pack.
 
 > For information about **NPC Packs** see **Chapter 5** of the Ironsworn rulebook
-
-
 
 ---
 
@@ -252,11 +228,9 @@ Experience is changed manually after `Fulling a Vow`. You increase experience wi
 
 ### Debilities
 
-To add a debility simply click on one of the words. When done, they will be highlighted black. Momentum is automatically affected by `Debilities`; reducing the `Momentum Reset` and the `Max Momentum` values.  
+To add a debility simply click on one of the words. When done, they will be highlighted black. Momentum is automatically affected by `Debilities`; reducing the `Momentum Reset` and the `Max Momentum` values.
 
 > For more information on **Character Stats** consult **Chapter 2** of the Ironsworn rulebook.
-
-
 
 ---
 
@@ -268,47 +242,37 @@ Vows quests and Journeys are functionally identical to each other. They are crea
 
 The only difference between these progressions is what happens at completion. When you complete a `Vow` you gain experience. However, when you complete quests or journeys you do not. Journeys and Quests are here to add more fictional context. As the rules suggest: Let the fiction drive this. Your Journey may be to `Sail to the Barrier Islands to Deliver a message to the leader Highcairn`. Completing this journey may get you a reward or increase your `bond` with the Highcairn settlement. Your quest may be to `find the mystical staff of Charrak` completing this quest would add this staff to your equipment and grant you whatever powers you envision it having.
 
-
-
 ---
 
 ## Assets
 
 > ⌛ IN DEVELOPMENT
 
-
-
 ---
 
-## Asset Builder 
+## Asset Builder
 
 > ⌛ IN DEVELOPMENT
-
-
 
 ---
 
 ## Roll
 
-The `Roll` button in the `Sidebar` takes you to a simple Dice Roller. This uses the same Dice Roller that drives the tables, but allows you to specify a series of dice and roll them. The dice roller in the `Footer` is functionally more useful to Ironsworn, but this was added for those that want to roll on some dice for whatever reason. 
-
-
+The `Roll` button in the `Sidebar` takes you to a simple Dice Roller. This uses the same Dice Roller that drives the tables, but allows you to specify a series of dice and roll them. The dice roller in the `Footer` is functionally more useful to Ironsworn, but this was added for those that want to roll on some dice for whatever reason.
 
 ---
 
 ## Data Management
 
-This companion has a persistent state meaning that you can move between pages and your textboxes wont clear when you return. This is done through your browser's `local storage`.  The `Data Management` page allows you to `Reset`, `Load` or `Save` your gamestate at any point.  
+This companion has a persistent state meaning that you can move between pages and your textboxes wont clear when you return. This is done through your browser's `local storage`. The `Data Management` page allows you to `Reset`, `Load` or `Save` your gamestate at any point.
 
 ### Saving and Loading the Game State
 
-The `Save` Button allows you to download your gamestate to a JSON file that you can store on your computer. If you not a programmer/unaware of what JSON is, don't worry. You don't need to know what the file is, except that it is a text file that contains all of the information to maintain your game save. It also allows your to move your game between browsers or computers. 
+The `Save` Button allows you to download your gamestate to a JSON file that you can store on your computer. If you not a programmer/unaware of what JSON is, don't worry. You don't need to know what the file is, except that it is a text file that contains all of the information to maintain your game save. It also allows your to move your game between browsers or computers.
 
-JSON files can be loaded using the `Load` button to replace the current gamestate with the gamestate from the save file. 
+JSON files can be loaded using the `Load` button to replace the current gamestate with the gamestate from the save file.
 
 The `Reset` button wipes the gamestate back to defaults. This cannot be reversed so ensure you save your game before doing this.
-
-
 
 ---
 
@@ -324,27 +288,22 @@ To honour the labour of love created by Shawn, this companion is distributed (fo
 
 > As part of the Attribution-NonCommercial-ShareAlike 4.0 license: any forks of this application must only build upon this page. No attributions may be taken away from this page without expressed written permission. This page must be included in any derivative works and may not be 'hidden' from view.
 
-
-
 ### Contributors
 
 There were several content developers from the Ironsworn community that deserve an honourable mention here. During the creation of this companion the following people provided direct or indirect support to this app.
 
-| Contributor       | Contribution                                                 | URL                                                      |
-| ----------------- | ------------------------------------------------------------ | -------------------------------------------------------- |
-| SHAWN TOMKIN      | Without Shawn's work none of this could be possible. When reading the game, you realise the care, effort and devotion that has gone in to creating this game and yet, the game is released as open-source under the creative commons 4.0. True Legend! | https://www.ironswornrpg.com/                            |
+| Contributor       | Contribution                                                                                                                                                                                                                                                       | URL                                                      |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------- |
+| SHAWN TOMKIN      | Without Shawn's work none of this could be possible. When reading the game, you realise the care, effort and devotion that has gone in to creating this game and yet, the game is released as open-source under the creative commons 4.0. True Legend!             | https://www.ironswornrpg.com/                            |
 | JOSIAH VAN EGMOND | The coloured version of the map was created by Josiah Van Egmond from Black Hawk Cartography (who make some amazing maps I might add). Additional thanks to Shawn Tomkin for providing me with explicit permission to use this image outside of the CC4.0 license. | https://www.blackhawkcartography.com/                    |
-| RSEK              | RSEK provided continued support and feedback throughout development and their Datasworn repository was used to build the core assets in this companion. | https://github.com/rsek                                  |
-| ERIC BRIGHT       | To provide more variety and options when rolling on oracle tables, Eric's expanded oracles were used to populate the core oracle tables | https://www.drivethrurpg.com/browse/pub/8584/Eric-Bright |
-| DELAPOUITE & LORC | The icons used at Game-Icons.net are fundamental for achieving the Ironsworn look-and-feel. Therefore the icon selector for asset creation is driven by Game-Icons.net fonts. | https://game-icons.net/                                  |
-| KYLE KEMP         | To integrate the Game-Icons.net icons into the application, Kyle's game-icons.net web-font was used, which was evidently inspired by FontAwesome. | https://seiyria.com/gameicons-font/                      |
-| NOMADSOUL1        | Credit goes to NOMADSOUL1 from freepik for the homepage image. The colour image was filtered to get the same look and feel as the Ironsworn book. | https://www.freepik.com/nomadsoul1                       |
+| RSEK              | RSEK provided continued support and feedback throughout development and their Datasworn repository was used to build the core assets in this companion.                                                                                                            | https://github.com/rsek                                  |
+| ERIC BRIGHT       | To provide more variety and options when rolling on oracle tables, Eric's expanded oracles were used to populate the core oracle tables                                                                                                                            | https://www.drivethrurpg.com/browse/pub/8584/Eric-Bright |
+| DELAPOUITE & LORC | The icons used at Game-Icons.net are fundamental for achieving the Ironsworn look-and-feel. Therefore the icon selector for asset creation is driven by Game-Icons.net fonts.                                                                                      | https://game-icons.net/                                  |
+| KYLE KEMP         | To integrate the Game-Icons.net icons into the application, Kyle's game-icons.net web-font was used, which was evidently inspired by FontAwesome.                                                                                                                  | https://seiyria.com/gameicons-font/                      |
+| NOMADSOUL1        | Credit goes to NOMADSOUL1 from freepik for the homepage image. The colour image was filtered to get the same look and feel as the Ironsworn book.                                                                                                                  | https://www.freepik.com/nomadsoul1                       |
 
 ### Developer
 
 This app was created by Graham Coulby to serve as a holistic digital companion for the Ironsworn tabletop RPG. This app was not designed to replace the official rules nor was it designed to supersede the work done by Shawn Tomkin.
 
-
-
 [![img](https://i.imgur.com/SIbTgYU.png)](https://grahamcoulby.co.uk/)
-
