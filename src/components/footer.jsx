@@ -1,6 +1,16 @@
 import React, { Component } from "react";
+import DiceRoller from "./dice_roller";
 class Footer extends Component {
-  state = {};
+  constructor(props) {
+    super();
+    this.diceRoller = new DiceRoller();
+  }
+
+  componentDidMount() {
+    if (this.props.footerDice.HitType == undefined) {
+      this.handleOnResetClick();
+    }
+  }
 
   getProgressions() {
     let progressions = [];
@@ -36,16 +46,86 @@ class Footer extends Component {
     return progressions;
   }
 
+  /*=================================*/
+  /*    Events
+  /*=================================*/
+
+  handleOnProgressChange = (id) => {
+    this.handleOnResetClick();
+    const footerDice = this.props.footerDice;
+    footerDice.ProgressId = id;
+    this.props.setState({ footerDice: footerDice });
+  };
+
+  handleOnStatChange = (evt) => {
+    const footerDice = this.props.footerDice;
+    footerDice.StatId = evt.target.value;
+    this.props.setState({ footerDice: footerDice });
+  };
+
+  handleOnAddValueChange = (evt) => {
+    const footerDice = this.props.footerDice;
+    footerDice.AddVal = evt.target.value;
+    this.props.setState({ footerDice: footerDice });
+  };
+
+  handleOnResetClick = () => {
+    const footerDice = this.props.footerDice;
+    footerDice.ProgressId = "";
+    footerDice.StatId = "";
+    footerDice.HitType = "";
+    footerDice.AddVal = 0;
+    footerDice.ActionScore = 0;
+    this.props.setState({ footerDice: footerDice });
+  };
+
+  handleOnRollClicked = () => {
+    let dice;
+    const footerDice = this.props.footerDice;
+    let id = this.props.footerDice.ProgressId;
+    let actionRoll = 0;
+    let actionScore = 0;
+    if (this.props.footerDice.ProgressId != "") {
+      actionRoll = Math.floor(
+        this.props.footerDice.ProgressId.split(" | ")[1] / 4
+      );
+      dice = this.diceRoller.roll([1, 10, 10], true);
+      actionScore = actionRoll;
+      footerDice.ActionValue = actionScore;
+      // this.props.setState({ footerDice: footerDice });
+    } else {
+      actionRoll = 6;
+      dice = this.diceRoller.roll([actionRoll, 10, 10], true);
+      let stat =
+        this.props.footerDice.StatId != ""
+          ? this.props.footerDice.StatId.split(" | ")[1]
+          : 0;
+      actionScore =
+        parseInt(dice[0].value) +
+        parseInt(stat) +
+        parseInt(this.props.footerDice.AddVal);
+
+      footerDice.ActionValue = dice[0].value;
+      // this.props.setState({ footerDice: footerDice });
+    }
+    let hitType =
+      actionScore > dice[1].value && actionScore > dice[2].value
+        ? "Strong Hit"
+        : actionScore > dice[1].value || actionScore > dice[2].value
+        ? "Weak Hit"
+        : "Miss";
+    footerDice.Challenge1Value = dice[1].value;
+    footerDice.Challenge2Value = dice[2].value;
+    footerDice.ActionScore = actionScore;
+    footerDice.HitType = hitType;
+    this.props.setState({ footerDice: footerDice });
+  };
+
   render() {
     return (
       <React.Fragment>
         <div className="footer-pre print-hide"></div>
         <div className="navbar fixed-bottom bg-dark text-light">
-          {/* <div className="col-1">
-            <h4 className="mb-0 pt-2 pb-2">
-              <i className="fas fa-dice-d20"></i>&emsp;
-            </h4>
-          </div> */}
           <div className="col-12">
             <div className="row modesto">
               <div className="col-auto">
@@ -58,10 +138,8 @@ class Footer extends Component {
                 <select
                   id="progress-select"
                   className="form-control bg-dark text-light"
-                  onChange={(e) =>
-                    this.props.onFooterDiceProgressChanged(e.target.value)
-                  }
-                  value={this.props.footerDiceProgressId}
+                  onChange={(e) => this.handleOnProgressChange(e.target.value)}
+                  value={this.props.footerDice.ProgressId}
                 >
                   <option></option>
                   {this.getProgressions().map((p) => (
@@ -78,8 +156,8 @@ class Footer extends Component {
                 <select
                   id="stat-select"
                   className="form-control bg-dark text-light"
-                  onChange={(e) => this.props.onFooterDiceStatChanged(e)}
-                  value={this.props.footerDiceStatId}
+                  onChange={(e) => this.handleOnStatChange(e)}
+                  value={this.props.footerDice.StatId}
                 >
                   <option></option>
                   {this.props.selectedPlayer ? (
@@ -101,8 +179,8 @@ class Footer extends Component {
                 <label htmlFor="additional-add">Add</label>
                 <input
                   type="number"
-                  value={this.props.footerDiceAddVal}
-                  onChange={(e) => this.props.onFooterDiceAddValueChanged(e)}
+                  value={this.props.footerDice.AddVal}
+                  onChange={(e) => this.handleOnAddValueChange(e)}
                   className="form-control bg-dark text-light"
                 />
               </div>
@@ -111,61 +189,65 @@ class Footer extends Component {
                 <br />
                 <button
                   className="btn btn-outline-light"
-                  onClick={this.props.onFooterDiceRollClicked}
+                  onClick={this.handleOnRollClicked}
                 >
                   <i className="fas fa-dice-d20"></i>&nbsp;ROLL
                 </button>
                 <button
                   className="btn btn-outline-secondary"
-                  onClick={() => this.props.onFooterDiceResetClick()}
+                  onClick={() => this.handleOnResetClick()}
                 >
                   <i className="fas fa-redo"></i>&nbsp;RESET
                 </button>
-                {this.props.footerDiceHitType != "" ? (
+                {this.props.footerDice.HitType != "" ? (
                   <React.Fragment>
                     <div class="btn btn-outline-light tip">
-                      {this.props.footerDiceHitType}
+                      {this.props.footerDice.HitType}
                       <div class="top">
-                        <h3>{this.props.footerDiceHitType}</h3>
-                        {this.props.footerDiceProgressId != "" ? (
+                        <h3>{this.props.footerDice.HitType}</h3>
+                        {this.props.footerDice.ProgressId != "" ? (
                           <React.Fragment>
-                            <p>Progress: {this.props.footerActionValue}</p>
+                            <p>
+                              Progress:{" "}
+                              {this.props.footerDice.footerActionValue}
+                            </p>
                             <p>
                               Challenge Dice 1:{" "}
-                              {this.props.footerChallenge1Value}
+                              {this.props.footerDice.footerChallenge1Value}
                             </p>
                             <p>
                               Challenge Dice 2:{" "}
-                              {this.props.footerChallenge2Value}
+                              {this.props.footerDice.footerChallenge2Value}
                             </p>
                           </React.Fragment>
                         ) : (
                           <React.Fragment>
                             <span>Action Score:</span>
                             <p>
-                              Dice ({this.props.footerActionValue})
-                              {this.props.footerDiceProgressId == "" &&
-                              this.props.footerDiceStatId != "" ? (
+                              Dice ({this.props.footerDice.ActionValue})
+                              {this.props.footerDice.ProgressId == "" &&
+                              this.props.footerDice.StatId != "" ? (
                                 <React.Fragment>
                                   &nbsp;+&nbsp;
-                                  {this.props.footerDiceStatId.split(" | ")[0]}
+                                  {this.props.footerDice.StatId.split(" | ")[0]}
                                   &nbsp; (
-                                  {this.props.footerDiceStatId.split(" | ")[1]})
+                                  {this.props.footerDice.StatId.split(" | ")[1]}
+                                  )
                                 </React.Fragment>
                               ) : (
                                 React.Fragment
                               )}
-                              &nbsp;+&nbsp;{this.props.footerDiceAddVal} =
-                              &nbsp;
-                              {this.props.footerActionScore}
+                              &nbsp;+&nbsp;
+                              {this.props.footerDice.AddVal} = &nbsp;
+                              {this.props.footerDice.ActionScore}
                             </p>
                             <p>
                               Challenge Dice 1:{" "}
-                              {this.props.footerChallenge1Value}
+                              {this.props.footerDice.Challenge1Value}
                             </p>
                             <p>
                               Challenge Dice 2:{" "}
-                              {this.props.footerChallenge2Value}
+                              {this.props.footerDice.Challenge2Value}
                             </p>
                           </React.Fragment>
                         )}

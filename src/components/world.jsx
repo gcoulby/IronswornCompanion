@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import DiceRoller from "./dice_roller";
 import UniqueKeyGenerator from "./uniqueKeyGenerator";
 class World extends Component {
   state = {
@@ -268,13 +269,72 @@ class World extends Component {
       },
     ],
   };
+
+  constructor(props) {
+    super();
+    if (props.world.categories === undefined) {
+      const world = props.world;
+      world.categories = [
+        { id: "old-world", truths: [false, false, false] },
+        { id: "iron", truths: [false, false, false] },
+        { id: "legacies", truths: [false, false, false] },
+        { id: "communities", truths: [false, false, false] },
+        { id: "leaders", truths: [false, false, false] },
+        { id: "defense", truths: [false, false, false] },
+        { id: "mysticism", truths: [false, false, false] },
+        { id: "religion", truths: [false, false, false] },
+        { id: "firstborn", truths: [false, false, false] },
+        { id: "beasts", truths: [false, false, false] },
+        { id: "horrors", truths: [false, false, false] },
+      ];
+      this.setState({ world: world });
+    }
+    this.diceRoller = new DiceRoller();
+  }
+
+  /*=================================*/
+  /*    Events
+  /*=================================*/
+
+  handleWorldTruthSelector = (e, tab, id) => {
+    const world = this.props.world.categories.map((w) => {
+      if (w.id == tab) w.truths[id] = e.target.checked;
+      return w;
+    });
+    this.setState({ world: world });
+  };
+
+  handleRollWorldClick = () => {
+    const world = this.props.world.categories.map((w) => {
+      const die = this.diceRoller.roll([3]);
+      for (let i = 0; i < w.truths.length; i++) {
+        if (i == die[0].value) {
+          w.truths[i] = true;
+        } else w.truths[i] = false;
+      }
+      return w;
+    });
+    this.setState({ world: world });
+  };
+
+  handleCustomWorldDetailsInputChanged = (evt) => {
+    const world = this.props.world;
+    world.customWorldDetails = evt.target.value;
+    this.setState({ world: world });
+  };
+  handleCustomWorldQuestStarterInputChanged = (evt) => {
+    const world = this.props.world;
+    world.customWorldQuestStarter = evt.target.value;
+    this.setState({ world: world });
+  };
+
   render() {
     return (
       <React.Fragment>
         <button
           className="btn btn-dark mb-3"
           id="world-oracle"
-          onClick={() => this.props.onRollWorldClick()}
+          onClick={() => this.handleRollWorldClick()}
         >
           <i className="fas fa-dice-d20"></i> Roll a Random World
         </button>
@@ -296,15 +356,16 @@ class World extends Component {
                           className="card-input-element d-none"
                           datatype={tab.eventKey}
                           checked={
-                            this.props.world.find((w) => w.id == tab.eventKey)
-                              .truths[
+                            this.props.world.categories.find(
+                              (w) => w.id == tab.eventKey
+                            ).truths[
                               this.state.tabs
                                 .find((t) => t.eventKey == tab.eventKey)
                                 .truths.indexOf(truth)
                             ]
                           }
                           onChange={(e) =>
-                            this.props.onWorldTruthChange(
+                            this.handleWorldTruthSelector(
                               e,
                               tab.eventKey,
                               this.state.tabs
@@ -336,17 +397,17 @@ class World extends Component {
                     className="form-control"
                     rows="15"
                     onChange={(e) =>
-                      this.props.onCustomWorldDetailsInputChanged(e, this)
+                      this.handleCustomWorldDetailsInputChanged(e, this)
                     }
-                    value={this.props.customWorldDetails}
+                    value={this.props.world.customWorldDetails}
                   ></textarea>
                   <span className="modesto mt-3">Quest Starter:</span>
                   <textarea
                     className="form-control"
                     onChange={(e) =>
-                      this.props.onCustomWorldQuestStarterInputChanged(e, this)
+                      this.handleCustomWorldQuestStarterInputChanged(e, this)
                     }
-                    value={this.props.customWorldQuestStarter}
+                    value={this.props.world.customWorldQuestStarter}
                   ></textarea>
                 </div>
               </React.Fragment>

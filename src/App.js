@@ -12,9 +12,9 @@ import Oracles from "./components/oracles";
 import Log from "./components/log";
 import World from "./components/world";
 import DiceRoller from "./components/dice_roller";
-import Character from "./models/character";
+
 import Documentation from "./components/documentation";
-import Map from "./components/map";
+import Locations from "./components/locations";
 import Stats from "./components/stats";
 import Gallery from "./components/gallery";
 import Footer from "./components/footer";
@@ -42,12 +42,23 @@ class App extends Component {
     save: false,
     version: "0.46",
     updateCore: false,
-    counters: [
-      { id: 1, value: 0 },
-      { id: 2, value: 3 },
-      { id: 3, value: 0 },
-      { id: 4, value: 0 },
-    ],
+
+    players: [],
+    newPlayer: {},
+    newPlayerName: "",
+    newPlayerRole: "",
+    newPlayerGoal: "",
+    newPlayerDescriptor: "",
+    newPlayerStats: this.getNewStats(),
+
+    world: {},
+
+    // counters: [
+    //   { id: 1, value: 0 },
+    //   { id: 2, value: 3 },
+    //   { id: 3, value: 0 },
+    //   { id: 4, value: 0 },
+    // ],
     assets: [],
     assetBuilderSelectedAsset: {
       "Asset Type": "",
@@ -154,11 +165,7 @@ class App extends Component {
       loneFoes: [],
       packs: [],
     },
-    newPlayerName: "",
-    newPlayerRole: "",
-    newPlayerGoal: "",
-    newPlayerDescriptor: "",
-    newPlayerStats: this.getNewStats(),
+
     logs: [],
     newAsset: {
       id: 0,
@@ -210,25 +217,10 @@ class App extends Component {
     ],
     newVowText: "",
     newVowRank: 0,
-    world: [
-      { id: "old-world", truths: [false, false, false] },
-      { id: "iron", truths: [false, false, false] },
-      { id: "legacies", truths: [false, false, false] },
-      { id: "communities", truths: [false, false, false] },
-      { id: "leaders", truths: [false, false, false] },
-      { id: "defense", truths: [false, false, false] },
-      { id: "mysticism", truths: [false, false, false] },
-      { id: "religion", truths: [false, false, false] },
-      { id: "firstborn", truths: [false, false, false] },
-      { id: "beasts", truths: [false, false, false] },
-      { id: "horrors", truths: [false, false, false] },
-    ],
+
     imgurAlbumHash: "cFnZi",
-    customWorldDetails: "",
-    customWorldQuestStarter: "",
     logInput: "",
     backgroundInput: "",
-    players: [],
     npcs: [],
     newNPC: {
       Race: "",
@@ -248,14 +240,7 @@ class App extends Component {
     nextBackgroundId: 0,
     nextLocationId: 0,
     nextNPCId: 0,
-    footerDiceProgressId: "",
-    footerDiceStatId: "",
-    footerDiceAddVal: 0,
-    footerDiceChallenge1Value: 0,
-    footerDiceChallenge2Value: 0,
-    footerDiceActionValue: 0,
-    footerDiceActionScore: 0,
-    footerDiceHitType: "",
+    footerDice: {},
     oracles: new Oracles(),
   };
 
@@ -289,6 +274,10 @@ class App extends Component {
   /*=================================*/
   /*    Gamestate and Data
   /*=================================*/
+
+  handleSetState = (key, value) => {
+    this.setState({ key, value });
+  };
 
   saveGameState() {
     localStorage.setItem("game_state", JSON.stringify(this.state));
@@ -345,7 +334,7 @@ class App extends Component {
 
   resetData() {
     localStorage.removeItem("game_state");
-    window.location.replace("/");
+    window.location.reload("/");
   }
 
   getNewStats() {
@@ -413,108 +402,96 @@ class App extends Component {
     });
     this.setState({ players });
     this.setState({ save: true });
+    //TODO: FIX THIS
     window.location.replace("/stats");
   };
 
-  handleAddCharacter = () => {
-    const players = [...this.state.players];
-    const player = new Character();
-    player.name = this.state.newPlayerName;
-    player.role = this.state.newPlayerRole;
-    player.goal = this.state.newPlayerGoal;
-    player.descriptor = this.state.newPlayerDescriptor;
-    player.stats = this.state.newPlayerStats;
-    if (
-      this.state.newPlayerName != "" &&
-      !players.find((p) => p.name == this.state.newPlayerName)
-    ) {
-      players.push(player);
-      this.setState({ newPlayerName: "" });
-      this.setState({ newPlayerRole: "" });
-      this.setState({ newPlayerGoal: "" });
-      this.setState({ newPlayerDescriptor: "" });
-      this.setState({ newPlayerStats: this.getNewStats() });
-      this.setState({ players: players });
-      this.setState({ save: true });
-    }
-  };
+  // handleAddCharacter = () => {
+  //   const players = [...this.state.players];
+  //   const player = new Character();
+  //   player.name = this.state.newPlayerName;
+  //   player.role = this.state.newPlayerRole;
+  //   player.goal = this.state.newPlayerGoal;
+  //   player.descriptor = this.state.newPlayerDescriptor;
+  //   player.stats = this.state.newPlayerStats;
+  //   if (
+  //     this.state.newPlayerName != "" &&
+  //     !players.find((p) => p.name == this.state.newPlayerName)
+  //   ) {
+  //     players.push(player);
+  //     this.setState({ newPlayerName: "" });
+  //     this.setState({ newPlayerRole: "" });
+  //     this.setState({ newPlayerGoal: "" });
+  //     this.setState({ newPlayerDescriptor: "" });
+  //     this.setState({ newPlayerStats: this.getNewStats() });
+  //     this.setState({ players: players });
+  //     this.setState({ save: true });
+  //   }
+  // };
 
-  handlePlayerDelete = (playerName) => {
-    const players = this.state.players.filter((p) => p.name !== playerName);
-    this.setState({ players });
-    this.setState({ save: true });
-  };
+  // handlePlayerDelete = (playerName) => {
+  //   const players = this.state.players.filter((p) => p.name !== playerName);
+  //   this.setState({ players });
+  //   this.setState({ save: true });
+  // };
 
-  handleOnRollPlayerName = () => {
-    let rn = this.state.oracles.IronlanderName;
-    this.setState({ newPlayerName: rn });
-  };
+  // handleOnRollPlayerName = () => {
+  //   let rn = this.state.oracles.IronlanderName;
+  //   this.setState({ newPlayerName: rn });
+  // };
 
-  handleNewPlayerNameChanged = (evt) => {
-    this.setState({ newPlayerName: evt.target.value });
-  };
+  // handleNewPlayerNameChanged = (evt) => {
+  //   this.setState({ newPlayerName: evt.target.value });
+  // };
 
-  handleOnRollPlayerRole = () => {
-    let rn = this.state.oracles.CharacterRole;
-    this.setState({ newPlayerRole: rn });
-  };
+  // handleOnRollPlayerRole = () => {
+  //   let rn = this.state.oracles.CharacterRole;
+  //   this.setState({ newPlayerRole: rn });
+  // };
 
-  handleNewPlayerRoleChanged = (evt) => {
-    this.setState({ newPlayerRole: evt.target.value });
-  };
+  // handleNewPlayerRoleChanged = (evt) => {
+  //   this.setState({ newPlayerRole: evt.target.value });
+  // };
 
-  handleOnRollPlayerGoal = () => {
-    let rn = this.state.oracles.CharacterGoal;
-    this.setState({ newPlayerGoal: rn });
-  };
+  // handleOnRollPlayerGoal = () => {
+  //   let rn = this.state.oracles.CharacterGoal;
+  //   this.setState({ newPlayerGoal: rn });
+  // };
 
-  handleNewPlayerGoalChanged = (evt) => {
-    this.setState({ newPlayerGoal: evt.target.value });
-  };
+  // handleNewPlayerGoalChanged = (evt) => {
+  //   this.setState({ newPlayerGoal: evt.target.value });
+  // };
 
-  handleOnRollPlayerDescriptor = () => {
-    let rn = this.state.oracles.CharacterDescriptor;
-    this.setState({ newPlayerDescriptor: rn });
-  };
+  // handleOnRollPlayerDescriptor = () => {
+  //   let rn = this.state.oracles.CharacterDescriptor;
+  //   this.setState({ newPlayerDescriptor: rn });
+  // };
 
-  handleNewPlayerDescriptorChanged = (evt) => {
-    this.setState({ newPlayerDescriptor: evt.target.value });
-  };
+  // handleNewPlayerDescriptorChanged = (evt) => {
+  //   this.setState({ newPlayerDescriptor: evt.target.value });
+  // };
 
-  handleOnRollPlayerPrimaryStat = () => {
-    let rn = this.state.oracles.PrimaryStat;
-    const newPlayerStats = this.state.newPlayerStats.map((s) => {
-      if (s.type == "core") s.value = s.id == rn ? 3 : "";
-      return s;
-    });
-    this.setState({ newPlayerStats });
-  };
+  // handleOnRollPlayerPrimaryStat = () => {
+  //   let rn = this.state.oracles.PrimaryStat;
+  //   const newPlayerStats = this.state.newPlayerStats.map((s) => {
+  //     if (s.type == "core") s.value = s.id == rn ? 3 : "";
+  //     return s;
+  //   });
+  //   this.setState({ newPlayerStats });
+  // };
 
-  handleNewPlayerStatChanged = (evt) => {
-    let statName = evt.target.getAttribute("data-name");
-    const newPlayerStats = this.state.newPlayerStats.map((s) => {
-      if (s.stat == statName) s.value = evt.target.value;
-      return s;
-    });
-    this.setState({ newPlayerStats });
-  };
+  // handleNewPlayerStatChanged = (evt) => {
+  //   let statName = evt.target.getAttribute("data-name");
+  //   const newPlayerStats = this.state.newPlayerStats.map((s) => {
+  //     if (s.stat == statName) s.value = evt.target.value;
+  //     return s;
+  //   });
+  //   this.setState({ newPlayerStats });
+  // };
 
   getSelectedPlayer() {
     return this.state.players.find((p) => p.selected);
   }
-
-  handleOnPlayerProgressionChanged = (playerName, increment) => {
-    const players = this.state.players.map((p) => {
-      if (p.name == playerName) {
-        let val = increment ? 1 : -1;
-        p.bonds += val;
-        p.bonds = p.bonds > 40 ? 40 : p.bonds;
-        p.bonds = p.bonds < 0 ? 0 : p.bonds;
-      }
-      return p;
-    });
-    this.setState({ players });
-  };
 
   /*=================================*/
   /*    Log
@@ -544,38 +521,6 @@ class App extends Component {
       (l) => this.state.logs.indexOf(l) !== logId
     );
     this.setState({ logs });
-  };
-
-  /*=================================*/
-  /*    World
-  /*=================================*/
-
-  handleWorldTruthSelector = (e, tab, id) => {
-    const world = this.state.world.map((w) => {
-      if (w.id == tab) w.truths[id] = e.target.checked;
-      return w;
-    });
-    this.setState({ world });
-  };
-
-  handleRollWorldClick = () => {
-    const world = this.state.world.map((w) => {
-      const die = this.diceRoller.roll([3]);
-      for (let i = 0; i < w.truths.length; i++) {
-        if (i == die[0].value) {
-          w.truths[i] = true;
-        } else w.truths[i] = false;
-      }
-      return w;
-    });
-    this.setState({ world });
-  };
-
-  handleCustomWorldDetailsInputChanged = (evt) => {
-    this.setState({ customWorldDetails: evt.target.value });
-  };
-  handleCustomWorldQuestStarterInputChanged = (evt) => {
-    this.setState({ customWorldQuestStarter: evt.target.value });
   };
 
   /*=================================*/
@@ -1016,119 +961,6 @@ class App extends Component {
   };
 
   /*=================================*/
-  /*    Stat
-  /*=================================*/
-
-  valueToStat(val, steps) {
-    let n = 100 / (steps - 1);
-    return val == 0 ? 0 : Math.round(val / n);
-  }
-
-  handleStatTrackChange = (evt, name, steps, offset) => {
-    let val = evt.target.value;
-    let stat = this.valueToStat(val, steps) + offset;
-    const players = this.state.players.map((p) => {
-      if (p.selected) {
-        const stats = p.stats.map((s) => {
-          if (s.stat == name) {
-            s.value = stat;
-          }
-          return s;
-        });
-      }
-      return p;
-    });
-
-    this.setState({ players });
-    if (name == "Momentum") this.checkMomentum();
-  };
-
-  handleDebilityChange = (evt, name) => {
-    let checked = evt.target.checked;
-    let count = 0;
-    const players = this.state.players.map((p) => {
-      if (p.selected) {
-        const debilities = p.debilities.map((d) => {
-          if (d.name == name) {
-            d.active = checked;
-          }
-          return d;
-        });
-        count = debilities.filter((d) => d.active).length;
-        p.maxMomentum = 10 - count;
-        switch (count) {
-          case 0:
-            p.resetMomentum = 2;
-            break;
-          case 1:
-            p.resetMomentum = 1;
-            break;
-          default:
-            p.resetMomentum = 0;
-            break;
-        }
-      }
-      return p;
-    });
-    this.setState({ players });
-    this.checkMomentum();
-  };
-
-  checkMomentum() {
-    const players = this.state.players.map((p) => {
-      if (p.selected) {
-        const stats = p.stats.map((s) => {
-          if (s.stat == "Momentum" && s.value > p.maxMomentum) {
-            s.value = p.maxMomentum;
-          }
-          return s;
-        });
-      }
-      return p;
-    });
-
-    this.setState({ players });
-  }
-
-  handleOnExperienceChange = (type) => {
-    const players = this.state.players.map((p) => {
-      if (p.selected) {
-        switch (type) {
-          case "INC":
-            p.totalExperience =
-              p.totalExperience + 1 >= 30 ? 30 : p.totalExperience + 1;
-            break;
-          case "DEC":
-            p.totalExperience =
-              p.totalExperience - 1 <= 0 ? 0 : p.totalExperience - 1;
-
-            p.spentExperience =
-              p.totalExperience < p.spentExperience
-                ? p.totalExperience
-                : p.spentExperience;
-            break;
-          case "REG":
-            p.spentExperience =
-              p.spentExperience - 1 <= 0 ? 0 : p.spentExperience - 1;
-            break;
-          case "ADV":
-            p.spentExperience =
-              p.spentExperience + 1 >= 30 ? 30 : p.spentExperience + 1;
-
-            p.totalExperience =
-              p.spentExperience > p.totalExperience
-                ? p.spentExperience
-                : p.totalExperience;
-            break;
-        }
-      }
-      return p;
-    });
-
-    this.setState({ players });
-  };
-
-  /*=================================*/
   /*    Vows
   /*=================================*/
 
@@ -1235,56 +1067,6 @@ class App extends Component {
   }
 
   /*=================================*/
-  /*    Oracles
-  /*=================================*/
-
-  handleNewOracleTableNameChange = (evt) => {
-    const oracles = this.state.oracles;
-    oracles.newOracleTableName = evt.target.value;
-    this.setState({ oracles });
-  };
-
-  handleSelectedOracleTableChange = (evt) => {
-    const oracles = this.state.oracles;
-    oracles.selectedOracleTable = evt.target.value;
-    this.setState({ oracles });
-  };
-
-  handleAddOracleTable = () => {
-    const oracles = this.state.oracles;
-    oracles.tables.push({
-      title: this.state.oracles.newOracleTableName,
-      core: false,
-      prompts: [],
-    });
-    oracles.newOracleTableName = "";
-    this.setState({ oracles });
-  };
-
-  handleDeleteOracleTable = (title) => {
-    const oracles = this.state.oracles;
-    oracles.tables = oracles.tables.filter((o) => o.title !== title);
-    this.setState({ oracles });
-  };
-
-  handleOracleTablePromptsChange = (evt) => {
-    const oracles = this.state.oracles;
-    // oracles.selectedOracleTable = evt.target.value;
-    // this.setState({ oracles });
-    oracles.editOracleCursorPosition = evt.target.selectionStart;
-    oracles.tables.map((o) => {
-      let text = evt.target.value.replace(/^\s+|\s+$/g, "");
-      if (o.title == this.state.oracles.selectedOracleTable) {
-        let prompts = text.split("\n");
-
-        o.prompts = prompts;
-      }
-      return o;
-    });
-    this.setState({ oracles });
-  };
-
-  /*=================================*/
   /*    Asset Builder
   /*=================================*/
 
@@ -1297,73 +1079,15 @@ class App extends Component {
     });
   };
 
-  /*=================================*/
-  /*    Footer Dice
-  /*=================================*/
+  // /*=================================*/
+  // /*    Footer Dice
+  // /*=================================*/
 
   handleOnProgressRollClicked = (id, type, progress) => {
-    this.handleOnFooterDiceResetClick();
+    const footerDice = this.state.footerDice;
     let progressId = `${type}_${id} | ${progress}`;
-    this.setState({ footerDiceProgressId: progressId });
-  };
-
-  handleOnFooterDiceProgressChange = (id) => {
-    this.handleOnFooterDiceResetClick();
-    this.setState({ footerDiceProgressId: id });
-  };
-
-  handleOnFooterDiceStatChange = (evt) => {
-    this.setState({ footerDiceStatId: evt.target.value });
-  };
-
-  handleOnFooterDiceAddValueChange = (evt) => {
-    this.setState({ footerDiceAddVal: evt.target.value });
-  };
-
-  handleOnFooterDiceResetClick = () => {
-    this.setState({ footerDiceProgressId: "" });
-    this.setState({ footerDiceStatId: "" });
-    this.setState({ footerDiceAddVal: 0 });
-    this.setState({ footerDiceActionScore: 0 });
-    this.setState({ footerDiceHitType: "" });
-  };
-
-  handleOnFooterDiceRollClicked = () => {
-    let dice;
-    let id = this.state.footerDiceProgressId;
-    let actionRoll = 0;
-    let actionScore = 0;
-    if (this.state.footerDiceProgressId != "") {
-      actionRoll = Math.floor(
-        this.state.footerDiceProgressId.split(" | ")[1] / 4
-      );
-      dice = this.diceRoller.roll([1, 10, 10], true);
-      actionScore = actionRoll;
-      this.setState({ footerDiceActionValue: actionScore });
-    } else {
-      actionRoll = 6;
-      dice = this.diceRoller.roll([actionRoll, 10, 10], true);
-      let stat =
-        this.state.footerDiceStatId != ""
-          ? this.state.footerDiceStatId.split(" | ")[1]
-          : 0;
-      actionScore =
-        parseInt(dice[0].value) +
-        parseInt(stat) +
-        parseInt(this.state.footerDiceAddVal);
-      this.setState({ footerDiceActionValue: dice[0].value });
-    }
-    let hitType =
-      actionScore > dice[1].value && actionScore > dice[2].value
-        ? "Strong Hit"
-        : actionScore > dice[1].value || actionScore > dice[2].value
-        ? "Weak Hit"
-        : "Miss";
-
-    this.setState({ footerDiceChallenge1Value: dice[1].value });
-    this.setState({ footerDiceChallenge2Value: dice[2].value });
-    this.setState({ footerDiceActionScore: actionScore });
-    this.setState({ footerDiceHitType: hitType });
+    footerDice.ProgressId = progressId;
+    this.setState({ footerDice: footerDice });
   };
 
   /*=================================*/
@@ -1387,9 +1111,9 @@ class App extends Component {
         <div id="root-fragment" className="row">
           <div className="sidebar-wrapper print-hide">
             <Sidebar
-              totalCounters={
-                this.state.counters.filter((c) => c.value > 0).length
-              }
+              // totalCounters={
+              //   this.state.counters.filter((c) => c.value > 0).length
+              // }
               pages={this.state.pages}
               onPageChange={this.onPageChange}
             />
@@ -1412,6 +1136,8 @@ class App extends Component {
                 <Route path="/characters">
                   <Characters
                     players={this.state.players}
+                    newPlayer={this.state.newPlayer}
+                    setState={this.handleSetState}
                     onPlayerSelect={this.handlePlayerSelect}
                     oracles={this.state.oracles}
                     newPlayerName={this.state.newPlayerName}
@@ -1449,16 +1175,7 @@ class App extends Component {
                 <Route path="/world">
                   <World
                     world={this.state.world}
-                    onRollWorldClick={this.handleRollWorldClick}
-                    onWorldTruthChange={this.handleWorldTruthSelector}
-                    onCustomWorldDetailsInputChanged={
-                      this.handleCustomWorldDetailsInputChanged
-                    }
-                    onCustomWorldQuestStarterInputChanged={
-                      this.handleCustomWorldQuestStarterInputChanged
-                    }
-                    customWorldDetails={this.state.customWorldDetails}
-                    customWorldQuestStarter={this.state.customWorldQuestStarter}
+                    setState={this.handleSetState}
                   />
                 </Route>
                 <Route path="/npcs">
@@ -1501,7 +1218,7 @@ class App extends Component {
                   />
                 </Route>
                 <Route path="/locations">
-                  <Map
+                  <Locations
                     onAddLocationClick={this.handleAddLocationClick}
                     onDeleteLocationClick={this.handleOnLocationDeleteClick}
                     locations={this.state.locations}
@@ -1551,13 +1268,8 @@ class App extends Component {
                 </Route>
                 <Route exact path="/stats">
                   <Stats
+                    players={this.state.players}
                     selectedPlayer={this.getSelectedPlayer()}
-                    onTrackChange={this.handleStatTrackChange}
-                    onDebilityChange={this.handleDebilityChange}
-                    onPlayerProgressionChanged={
-                      this.handleOnPlayerProgressionChanged
-                    }
-                    onExperienceChange={this.handleOnExperienceChange}
                   />
                 </Route>
                 <Route exact path="/vows">
@@ -1633,21 +1345,7 @@ class App extends Component {
                   <Acknowledgements />
                 </Route>
                 <Route path="/oracle-editor">
-                  <OracleEditor
-                    oracles={this.state.oracles}
-                    selectedOracleTable={this.state.oracles.selectedOracleTable}
-                    onAddOracleTable={this.handleAddOracleTable}
-                    onNewOracleTableNameChange={
-                      this.handleNewOracleTableNameChange
-                    }
-                    onSelectedOracleTableChange={
-                      this.handleSelectedOracleTableChange
-                    }
-                    onOracleTablePromptsChange={
-                      this.handleOracleTablePromptsChange
-                    }
-                    onDeleteOracleTable={this.handleDeleteOracleTable}
-                  />
+                  <OracleEditor oracles={this.state.oracles} />
                 </Route>
 
                 <Route path="/asset-builder">
@@ -1677,19 +1375,8 @@ class App extends Component {
           selectedPlayer={this.getSelectedPlayer()}
           npcs={this.state.npcs}
           foes={this.state.activeFoes.loneFoes}
-          footerDiceProgressId={this.state.footerDiceProgressId}
-          footerDiceStatId={this.state.footerDiceStatId}
-          footerDiceAddVal={this.state.footerDiceAddVal}
-          footerChallenge1Value={this.state.footerDiceChallenge1Value}
-          footerChallenge2Value={this.state.footerDiceChallenge2Value}
-          footerActionValue={this.state.footerDiceActionValue}
-          footerActionScore={this.state.footerDiceActionScore}
-          footerDiceHitType={this.state.footerDiceHitType}
-          onFooterDiceProgressChanged={this.handleOnFooterDiceProgressChange}
-          onFooterDiceStatChanged={this.handleOnFooterDiceStatChange}
-          onFooterDiceAddValueChanged={this.handleOnFooterDiceAddValueChange}
-          onFooterDiceResetClick={this.handleOnFooterDiceResetClick}
-          onFooterDiceRollClicked={this.handleOnFooterDiceRollClicked}
+          footerDice={this.state.footerDice}
+          setState={this.handleSetState}
         />
 
         {/* <div className="row"> */}
@@ -1697,35 +1384,6 @@ class App extends Component {
       </React.Fragment>
     );
   }
-
-  /*=================================*/
-  /*    Examples
-  /*=================================*/
-
-  handleDelete = (counterId) => {
-    const counters = this.state.counters.filter((c) => c.id !== counterId);
-    this.setState({ counters });
-  };
-
-  handleIncrement = (counter) => {
-    const counters = [...this.state.counters];
-    const index = counters.indexOf(counter);
-    counters[index] = { ...counter };
-    counters[index].value++;
-    this.setState({ counters });
-  };
-
-  handleReset = () => {
-    const counters = this.state.counters.map((c) => {
-      c.value = 0;
-      return c;
-    });
-    this.setState({ counters });
-  };
-
-  onPageChange = () => {
-    console.log("Page Change");
-  };
 }
 
 export default App;

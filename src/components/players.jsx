@@ -1,6 +1,93 @@
 import React, { Component } from "react";
 import TitleBlock from "./titleBlock";
+import Character from "../models/character";
 class Characters extends Component {
+  //TODO: implement props.newPlayer
+  handleAddCharacter = () => {
+    const players = [...this.props.players];
+    const player = new Character();
+    player.name = this.state.newPlayerName;
+    player.role = this.state.newPlayerRole;
+    player.goal = this.state.newPlayerGoal;
+    player.descriptor = this.state.newPlayerDescriptor;
+    player.stats = this.state.newPlayerStats;
+    if (
+      this.state.newPlayerName != "" &&
+      !players.find((p) => p.name == this.state.newPlayerName)
+    ) {
+      players.push(player);
+      this.setState({ newPlayerName: "" });
+      this.setState({ newPlayerRole: "" });
+      this.setState({ newPlayerGoal: "" });
+      this.setState({ newPlayerDescriptor: "" });
+      this.setState({ newPlayerStats: this.getNewStats() });
+      this.setState({ players: players });
+    }
+  };
+
+  handlePlayerDelete = (playerName) => {
+    const players = this.props.players.filter((p) => p.name !== playerName);
+    this.setState({ players });
+  };
+
+  handleOnRollPlayerName = () => {
+    let rn = this.props.oracles.IronlanderName;
+    this.setState({ newPlayerName: rn });
+  };
+
+  handleNewPlayerNameChanged = (evt) => {
+    this.setState({ newPlayerName: evt.target.value });
+  };
+
+  handleOnRollPlayerRole = () => {
+    let rn = this.props.oracles.CharacterRole;
+    this.setState({ newPlayerRole: rn });
+  };
+
+  handleNewPlayerRoleChanged = (evt) => {
+    this.setState({ newPlayerRole: evt.target.value });
+  };
+
+  handleOnRollPlayerGoal = () => {
+    let rn = this.props.oracles.CharacterGoal;
+    this.setState({ newPlayerGoal: rn });
+  };
+
+  handleNewPlayerGoalChanged = (evt) => {
+    this.setState({ newPlayerGoal: evt.target.value });
+  };
+
+  handleOnRollPlayerDescriptor = () => {
+    let rn = this.props.oracles.CharacterDescriptor;
+    this.setState({ newPlayerDescriptor: rn });
+  };
+
+  handleNewPlayerDescriptorChanged = (evt) => {
+    this.setState({ newPlayerDescriptor: evt.target.value });
+  };
+
+  handleOnRollPlayerPrimaryStat = () => {
+    let rn = this.props.oracles.PrimaryStat;
+    const newPlayerStats = this.state.newPlayerStats.map((s) => {
+      if (s.type == "core") s.value = s.id == rn ? 3 : "";
+      return s;
+    });
+    this.setState({ newPlayerStats });
+  };
+
+  handleNewPlayerStatChanged = (evt) => {
+    let statName = evt.target.getAttribute("data-name");
+    const newPlayerStats = this.state.newPlayerStats.map((s) => {
+      if (s.stat == statName) s.value = evt.target.value;
+      return s;
+    });
+    this.setState({ newPlayerStats });
+  };
+
+  getSelectedPlayer() {
+    return this.props.players.find((p) => p.selected);
+  }
+
   render() {
     return (
       <React.Fragment>

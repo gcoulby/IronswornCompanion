@@ -2,6 +2,51 @@ import React, { Component } from "react";
 import OracleRoller from "./oracleRoller";
 class OracleEditor extends Component {
   state = {};
+
+  handleNewOracleTableNameChange = (evt) => {
+    const oracles = this.props.oracles;
+    oracles.newOracleTableName = evt.target.value;
+    this.setState({ oracles });
+  };
+
+  handleSelectedOracleTableChange = (evt) => {
+    const oracles = this.props.oracles;
+    oracles.selectedOracleTable = evt.target.value;
+    this.setState({ oracles });
+  };
+
+  handleAddOracleTable = () => {
+    const oracles = this.props.oracles;
+    oracles.tables.push({
+      title: this.props.oracles.newOracleTableName,
+      core: false,
+      prompts: [],
+    });
+    oracles.newOracleTableName = "";
+    this.setState({ oracles });
+  };
+
+  handleDeleteOracleTable = (title) => {
+    const oracles = this.props.oracles;
+    oracles.tables = oracles.tables.filter((o) => o.title !== title);
+    this.setState({ oracles });
+  };
+
+  handleOracleTablePromptsChange = (evt) => {
+    const oracles = this.props.oracles;
+    oracles.editOracleCursorPosition = evt.target.selectionStart;
+    oracles.tables.map((o) => {
+      let text = evt.target.value.replace(/^\s+|\s+$/g, "");
+      if (o.title == this.props.oracles.selectedOracleTable) {
+        let prompts = text.split("\n");
+
+        o.prompts = prompts;
+      }
+      return o;
+    });
+    this.setState({ oracles });
+  };
+
   componentDidUpdate() {
     let el = document.getElementById("tableEditor");
     el.setSelectionRange(
@@ -27,7 +72,7 @@ class OracleEditor extends Component {
                 aria-label="Name"
                 aria-describedby="basic-addon2"
                 value={this.props.oracles.newOracleTableName}
-                onChange={(e) => this.props.onNewOracleTableNameChange(e)}
+                onChange={(e) => this.handleNewOracleTableNameChange(e)}
               />
             </div>
           </div>
@@ -37,7 +82,7 @@ class OracleEditor extends Component {
             <button
               className="btn btn-dark"
               type="button"
-              onClick={() => this.props.onAddOracleTable()}
+              onClick={() => this.handleAddOracleTable()}
             >
               <i className="fas fa-plus" aria-hidden="true"></i>
               &nbsp;Add Oracle Table
@@ -57,7 +102,7 @@ class OracleEditor extends Component {
               <select
                 className="form-control"
                 value={this.props.selectedOracleTable}
-                onChange={(e) => this.props.onSelectedOracleTableChange(e)}
+                onChange={(e) => this.handleSelectedOracleTableChange(e)}
               >
                 <option val="">Select Table</option>
                 {this.props.oracles.OracleTableNames.map((o) => (
@@ -75,9 +120,9 @@ class OracleEditor extends Component {
               id="tableEditor"
               wrap="off"
               value={this.props.oracles.getOracleTablePrompts(
-                this.props.selectedOracleTable
+                this.props.oracles.selectedOracleTable
               )}
-              onChange={(e) => this.props.onOracleTablePromptsChange(e)}
+              onChange={(e) => this.handleOracleTablePromptsChange(e)}
             ></textarea>
             {this.props.oracles.isCore(this.props.selectedOracleTable) ? (
               <React.Fragment></React.Fragment>
@@ -89,7 +134,7 @@ class OracleEditor extends Component {
                       id="locationDeleteBtn"
                       className={`mt-2 ${this.state.deleteButtonClass}`}
                       onClick={() =>
-                        this.props.onDeleteOracleTable(
+                        this.handleDeleteOracleTable(
                           this.props.selectedOracleTable
                         )
                       }

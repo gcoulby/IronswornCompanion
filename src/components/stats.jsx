@@ -12,23 +12,123 @@ class Stats extends Component {
     return val == 0 ? 0 : Math.round(val / n);
   }
 
-  handleTrackChange = (evt, name, steps, offset) => {
-    let val = evt.target.value;
-    let stat = this.valueToStat(val, steps);
-    this.setState({ health: stat });
-  };
-
-  handleHealthTrackChange = (evt, steps) => {
-    let val = evt.target.value;
-    let stat = this.valueToStat(val, steps);
-    this.setState({ health: stat });
-  };
-
-  handleMomentumTrackChange = (evt, steps, offset) => {
+  handleStatTrackChange = (evt, name, steps, offset) => {
     let val = evt.target.value;
     let stat = this.valueToStat(val, steps) + offset;
-    this.setState({ momentum: stat });
+    const players = this.props.players.map((p) => {
+      if (p.selected) {
+        const stats = p.stats.map((s) => {
+          if (s.stat == name) {
+            s.value = stat;
+          }
+          return s;
+        });
+      }
+      return p;
+    });
+
+    this.setState({ players });
+    if (name == "Momentum") this.checkMomentum();
   };
+
+  handleDebilityChange = (evt, name) => {
+    let checked = evt.target.checked;
+    let count = 0;
+    const players = this.props.players.map((p) => {
+      if (p.selected) {
+        const debilities = p.debilities.map((d) => {
+          if (d.name == name) {
+            d.active = checked;
+          }
+          return d;
+        });
+        count = debilities.filter((d) => d.active).length;
+        p.maxMomentum = 10 - count;
+        switch (count) {
+          case 0:
+            p.resetMomentum = 2;
+            break;
+          case 1:
+            p.resetMomentum = 1;
+            break;
+          default:
+            p.resetMomentum = 0;
+            break;
+        }
+      }
+      return p;
+    });
+    this.setState({ players });
+    this.checkMomentum();
+  };
+
+  checkMomentum() {
+    const players = this.props.players.map((p) => {
+      if (p.selected) {
+        const stats = p.stats.map((s) => {
+          if (s.stat == "Momentum" && s.value > p.maxMomentum) {
+            s.value = p.maxMomentum;
+          }
+          return s;
+        });
+      }
+      return p;
+    });
+
+    this.setState({ players });
+  }
+
+  handleOnExperienceChange = (type) => {
+    const players = this.props.players.map((p) => {
+      if (p.selected) {
+        switch (type) {
+          case "INC":
+            p.totalExperience =
+              p.totalExperience + 1 >= 30 ? 30 : p.totalExperience + 1;
+            break;
+          case "DEC":
+            p.totalExperience =
+              p.totalExperience - 1 <= 0 ? 0 : p.totalExperience - 1;
+
+            p.spentExperience =
+              p.totalExperience < p.spentExperience
+                ? p.totalExperience
+                : p.spentExperience;
+            break;
+          case "REG":
+            p.spentExperience =
+              p.spentExperience - 1 <= 0 ? 0 : p.spentExperience - 1;
+            break;
+          case "ADV":
+            p.spentExperience =
+              p.spentExperience + 1 >= 30 ? 30 : p.spentExperience + 1;
+
+            p.totalExperience =
+              p.spentExperience > p.totalExperience
+                ? p.spentExperience
+                : p.totalExperience;
+            break;
+        }
+      }
+      return p;
+    });
+
+    this.setState({ players });
+  };
+
+  handleOnPlayerProgressionChanged = (playerName, increment) => {
+    const players = this.props.players.map((p) => {
+      if (p.name == playerName) {
+        let val = increment ? 1 : -1;
+        p.bonds += val;
+        p.bonds = p.bonds > 40 ? 40 : p.bonds;
+        p.bonds = p.bonds < 0 ? 0 : p.bonds;
+      }
+      return p;
+    });
+    this.setState({ players });
+  };
+
   render() {
     if (this.props.selectedPlayer == null) return <UnselectedPlayer />;
     return (
@@ -39,7 +139,7 @@ class Stats extends Component {
           selectedPlayer={this.props.selectedPlayer}
           key={this.props.selectedPlayer}
           progress={this.props.selectedPlayer.bonds}
-          onExperienceChange={this.props.onExperienceChange}
+          onExperienceChange={this.handleOnExperienceChange}
         />
         <TitleBlock title="STATS" />
         <div className="container">
@@ -63,7 +163,7 @@ class Stats extends Component {
             key={this.props.selectedPlayer}
             progress={this.props.selectedPlayer.bonds}
             onProgressionChange={(increment) =>
-              this.props.onPlayerProgressionChanged(
+              this.handleOnPlayerProgressionChanged(
                 this.props.selectedPlayer.name,
                 increment
               )
@@ -74,7 +174,7 @@ class Stats extends Component {
           <StatTrack
             min={0}
             max={5}
-            onChange={this.props.onTrackChange}
+            onChange={this.handleStatTrackChange}
             stat={this.props.selectedPlayer.stats.find(
               (s) => s.stat == "Health"
             )}
@@ -87,7 +187,7 @@ class Stats extends Component {
             min={0}
             max={5}
             value={0}
-            onChange={this.props.onTrackChange}
+            onChange={this.handleStatTrackChange}
             stat={this.props.selectedPlayer.stats.find(
               (s) => s.stat == "Spirit"
             )}
@@ -96,7 +196,7 @@ class Stats extends Component {
             min={0}
             max={5}
             value={0}
-            onChange={this.props.onTrackChange}
+            onChange={this.handleStatTrackChange}
             stat={this.props.selectedPlayer.stats.find(
               (s) => s.stat == "Supply"
             )}
@@ -105,7 +205,7 @@ class Stats extends Component {
             min={-6}
             max={10}
             // onChange={this.handleMomentumTrackChange}
-            onChange={this.props.onTrackChange}
+            onChange={this.handleStatTrackChange}
             value={this.state.momentum}
             stat={this.props.selectedPlayer.stats.find(
               (s) => s.stat == "Momentum"
@@ -139,7 +239,7 @@ class Stats extends Component {
                       //   name="cb"
                       id={`cb_${d.name}`}
                       checked={d.active}
-                      onChange={(e) => this.props.onDebilityChange(e, d.name)}
+                      onChange={(e) => this.handleDebilityChange(e, d.name)}
                     />
                     <label htmlFor={`cb_${d.name}`}>{d.name}</label>
                   </div>
@@ -156,7 +256,7 @@ class Stats extends Component {
                       //   name="cb"
                       id={`cb_${d.name}`}
                       checked={d.active}
-                      onChange={(e) => this.props.onDebilityChange(e, d.name)}
+                      onChange={(e) => this.handleDebilityChange(e, d.name)}
                     />
                     <label htmlFor={`cb_${d.name}`}>{d.name}</label>
                   </div>
@@ -173,7 +273,7 @@ class Stats extends Component {
                       //   name="cb"
                       id={`cb_${d.name}`}
                       checked={d.active}
-                      onChange={(e) => this.props.onDebilityChange(e, d.name)}
+                      onChange={(e) => this.handleDebilityChange(e, d.name)}
                     />
                     <label htmlFor={`cb_${d.name}`}>{d.name}</label>
                   </div>

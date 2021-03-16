@@ -11,6 +11,7 @@ class Progression extends Component {
   //   this.props.onProgressUpdate();
   // }
 
+  //TODO: CANCEL VOW
   render() {
     if (this.props.selectedPlayer == null) return <UnselectedPlayer />;
     return (

@@ -12,6 +12,32 @@ class Log extends Component {
     }
   };
 
+  handleLogInputChanged = (evt) => {
+    this.setState({ logInput: evt.target.value });
+  };
+
+  handleAddLog = (isMeta) => {
+    if (this.state.logInput != "") {
+      const logs = this.state.logs;
+      logs.push({
+        id: this.state.nextLogId,
+        ts: new Date(),
+        text: this.state.logInput,
+        isMeta: isMeta,
+      });
+      this.setState({ nextLogId: this.state.nextLogId + 1 });
+      this.setState({ logs: logs });
+      this.setState({ logInput: "" });
+    }
+  };
+
+  handleLogItemDeleted = (logId) => {
+    const logs = this.state.logs.filter(
+      (l) => this.state.logs.indexOf(l) !== logId
+    );
+    this.setState({ logs });
+  };
+
   render() {
     if (this.props.logs == null) return <UnselectedPlayer />;
     return (

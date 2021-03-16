@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Leaflet from "../../node_modules/leaflet/dist/leaflet";
+import Leaflet from "leaflet/dist/leaflet";
 import "../../node_modules/leaflet/dist/leaflet.css";
 import Oracles from "./oracles";
 import ProgressTrack from "./progressTrack";
@@ -7,7 +7,7 @@ import TitleBlock from "./titleBlock";
 import mapImg from "../img/map.jpg";
 import mapMarker from "../img/MapMarker.png";
 
-class Map extends Component {
+class Locations extends Component {
   state = {
     id: -1,
     name: "",
@@ -432,4 +432,4 @@ class Map extends Component {
   }
 }
 
-export default Map;
+export default Locations;
