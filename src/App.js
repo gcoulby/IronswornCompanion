@@ -40,6 +40,7 @@ import Assets from "./components/assets";
 class App extends Component {
   state = {
     save: false,
+    version: "0.46",
     updateCore: false,
     counters: [
       { id: 1, value: 0 },
