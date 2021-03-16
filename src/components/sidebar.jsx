@@ -193,7 +193,10 @@ class Sidebar extends Component {
                         className={`${page.active ? "active" : ""}`}
                       >
                         {page.title}
-                        <a href={page.url} onClick={this.state.onPageChange}>
+                        <a
+                          href={process.env.PUBLIC_URL + page.url}
+                          onClick={this.state.onPageChange}
+                        >
                           <i
                             className={`menu-icon ${page.icon}`}
                             aria-hidden="true"

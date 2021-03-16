@@ -32,7 +32,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "rmdir docs /s && react-scripts build && copy build\\index.html build\\404.html && move build docs",
+    "build": "rmdir docs /s /q && react-scripts build && move build docs",
     "webpack-start": "webpack-dev-server --mode development --open --hot",
     "webpack-build": "webpack --mode production",
     "test": "react-scripts test",
