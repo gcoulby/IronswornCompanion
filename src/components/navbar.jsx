@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { HashRouter, Link } from "react-router-dom";
 class Navbar extends Component {
   state = {};
   render() {
@@ -6,7 +7,10 @@ class Navbar extends Component {
       <React.Fragment>
         <nav className="navbar navbar-fixed-top  navbar-expand navbar-dark bg-dark print-hide">
           <h1 className="navbar-brand">
-            <a href="/">IRONSWORN</a>
+            <HashRouter basename="/">
+              <Link to="/">IRONSWORN</Link>
+            </HashRouter>
+            {/* <a href="/">IRONSWORN</a> */}
           </h1>
           <button
             className="navbar-toggler"
@@ -67,10 +71,16 @@ class Navbar extends Component {
                   <React.Fragment>
                     {this.props.selectedPlayer.stats.map((s) => (
                       <li className="nav-item active">
-                        <a href="/stats" className="btn btn-outline-light">
+                        <HashRouter basename="/">
+                          <Link to="/stats" className="btn btn-outline-light">
+                            <p className="stat-value">{s.value}</p>
+                            <p className="stat-key">{s.stat}</p>
+                          </Link>
+                        </HashRouter>
+                        {/* <a href="/stats" className="btn btn-outline-light">
                           <p className="stat-value">{s.value}</p>
                           <p className="stat-key">{s.stat}</p>
-                        </a>
+                        </a> */}
                       </li>
                     ))}
                   </React.Fragment>

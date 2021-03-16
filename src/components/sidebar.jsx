@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UniqueKeyGenerator from "./uniqueKeyGenerator";
-import { HashRouter, Route, Link } from "react-router-dom";
+import { HashRouter, Link } from "react-router-dom";
 class Sidebar extends Component {
   state = {
     baseUrl: "/Ironsworn",
