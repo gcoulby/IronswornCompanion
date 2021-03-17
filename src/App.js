@@ -42,23 +42,9 @@ class App extends Component {
     save: false,
     version: "0.46",
     updateCore: false,
-
     players: [],
     newPlayer: {},
-    newPlayerName: "",
-    newPlayerRole: "",
-    newPlayerGoal: "",
-    newPlayerDescriptor: "",
-    newPlayerStats: this.getNewStats(),
-
     world: {},
-
-    // counters: [
-    //   { id: 1, value: 0 },
-    //   { id: 2, value: 3 },
-    //   { id: 3, value: 0 },
-    //   { id: 4, value: 0 },
-    // ],
     assets: [],
     assetBuilderSelectedAsset: {
       "Asset Type": "",
@@ -337,20 +323,6 @@ class App extends Component {
     window.location.reload("/");
   }
 
-  getNewStats() {
-    return [
-      { id: 1, type: "core", stat: "Edge", value: 0 },
-      { id: 2, type: "core", stat: "Heart", value: 0 },
-      { id: 3, type: "core", stat: "Iron", value: 0 },
-      { id: 4, type: "core", stat: "Shadow", value: 0 },
-      { id: 5, type: "core", stat: "Wits", value: 0 },
-      { id: 6, type: "status", stat: "Health", value: 5 },
-      { id: 7, type: "status", stat: "Spirit", value: 5 },
-      { id: 8, type: "status", stat: "Supply", value: 5 },
-      { id: 9, type: "status", stat: "Momentum", value: 2 },
-    ];
-  }
-
   saveData = () => {
     var a = document.createElement("a");
     document.body.appendChild(a);
@@ -405,89 +377,6 @@ class App extends Component {
     //TODO: FIX THIS
     window.location.replace("/stats");
   };
-
-  // handleAddCharacter = () => {
-  //   const players = [...this.state.players];
-  //   const player = new Character();
-  //   player.name = this.state.newPlayerName;
-  //   player.role = this.state.newPlayerRole;
-  //   player.goal = this.state.newPlayerGoal;
-  //   player.descriptor = this.state.newPlayerDescriptor;
-  //   player.stats = this.state.newPlayerStats;
-  //   if (
-  //     this.state.newPlayerName != "" &&
-  //     !players.find((p) => p.name == this.state.newPlayerName)
-  //   ) {
-  //     players.push(player);
-  //     this.setState({ newPlayerName: "" });
-  //     this.setState({ newPlayerRole: "" });
-  //     this.setState({ newPlayerGoal: "" });
-  //     this.setState({ newPlayerDescriptor: "" });
-  //     this.setState({ newPlayerStats: this.getNewStats() });
-  //     this.setState({ players: players });
-  //     this.setState({ save: true });
-  //   }
-  // };
-
-  // handlePlayerDelete = (playerName) => {
-  //   const players = this.state.players.filter((p) => p.name !== playerName);
-  //   this.setState({ players });
-  //   this.setState({ save: true });
-  // };
-
-  // handleOnRollPlayerName = () => {
-  //   let rn = this.state.oracles.IronlanderName;
-  //   this.setState({ newPlayerName: rn });
-  // };
-
-  // handleNewPlayerNameChanged = (evt) => {
-  //   this.setState({ newPlayerName: evt.target.value });
-  // };
-
-  // handleOnRollPlayerRole = () => {
-  //   let rn = this.state.oracles.CharacterRole;
-  //   this.setState({ newPlayerRole: rn });
-  // };
-
-  // handleNewPlayerRoleChanged = (evt) => {
-  //   this.setState({ newPlayerRole: evt.target.value });
-  // };
-
-  // handleOnRollPlayerGoal = () => {
-  //   let rn = this.state.oracles.CharacterGoal;
-  //   this.setState({ newPlayerGoal: rn });
-  // };
-
-  // handleNewPlayerGoalChanged = (evt) => {
-  //   this.setState({ newPlayerGoal: evt.target.value });
-  // };
-
-  // handleOnRollPlayerDescriptor = () => {
-  //   let rn = this.state.oracles.CharacterDescriptor;
-  //   this.setState({ newPlayerDescriptor: rn });
-  // };
-
-  // handleNewPlayerDescriptorChanged = (evt) => {
-  //   this.setState({ newPlayerDescriptor: evt.target.value });
-  // };
-
-  // handleOnRollPlayerPrimaryStat = () => {
-  //   let rn = this.state.oracles.PrimaryStat;
-  //   const newPlayerStats = this.state.newPlayerStats.map((s) => {
-  //     if (s.type == "core") s.value = s.id == rn ? 3 : "";
-  //     return s;
-  //   });
-  //   this.setState({ newPlayerStats });
-  // };
-
-  // handleNewPlayerStatChanged = (evt) => {
-  //   let statName = evt.target.getAttribute("data-name");
-  //   const newPlayerStats = this.state.newPlayerStats.map((s) => {
-  //     if (s.stat == statName) s.value = evt.target.value;
-  //     return s;
-  //   });
-  //   this.setState({ newPlayerStats });
-  // };
 
   getSelectedPlayer() {
     return this.state.players.find((p) => p.selected);
@@ -1079,9 +968,9 @@ class App extends Component {
     });
   };
 
-  // /*=================================*/
-  // /*    Footer Dice
-  // /*=================================*/
+  /*=================================*/
+  /*    Footer Dice
+  /*=================================*/
 
   handleOnProgressRollClicked = (id, type, progress) => {
     const footerDice = this.state.footerDice;
@@ -1137,28 +1026,8 @@ class App extends Component {
                   <Characters
                     players={this.state.players}
                     newPlayer={this.state.newPlayer}
-                    setState={this.handleSetState}
                     onPlayerSelect={this.handlePlayerSelect}
                     oracles={this.state.oracles}
-                    newPlayerName={this.state.newPlayerName}
-                    newPlayerRole={this.state.newPlayerRole}
-                    newPlayerGoal={this.state.newPlayerGoal}
-                    newPlayerDescriptor={this.state.newPlayerDescriptor}
-                    newPlayerStats={this.state.newPlayerStats}
-                    onAddCharacter={this.handleAddCharacter}
-                    onRollPlayerName={this.handleOnRollPlayerName}
-                    onNewPlayerNameChanged={this.handleNewPlayerNameChanged}
-                    onRollPlayerRole={this.handleOnRollPlayerRole}
-                    onNewPlayerRoleChanged={this.handleNewPlayerRoleChanged}
-                    onRollPlayerGoal={this.handleOnRollPlayerGoal}
-                    onNewPlayerGoalChanged={this.handleNewPlayerGoalChanged}
-                    onRollPlayerDescriptor={this.handleOnRollPlayerDescriptor}
-                    onNewPlayerDescriptorChanged={
-                      this.handleNewPlayerDescriptorChanged
-                    }
-                    onRollPlayerPrimaryStat={this.handleOnRollPlayerPrimaryStat}
-                    onPlayerStatChanged={this.handleNewPlayerStatChanged}
-                    onPlayerDelete={this.handlePlayerDelete}
                   />
                 </Route>
                 <Route path="/log">

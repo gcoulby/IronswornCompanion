@@ -3,72 +3,123 @@ import TitleBlock from "./titleBlock";
 import Character from "../models/character";
 class Characters extends Component {
   //TODO: implement props.newPlayer
+
+  constructor(props) {
+    super();
+    if (props.newPlayer.Stats == null) this.resetNewPlayer(props);
+  }
+  getNewStats() {
+    return [
+      { id: 1, type: "core", stat: "Edge", value: 0 },
+      { id: 2, type: "core", stat: "Heart", value: 0 },
+      { id: 3, type: "core", stat: "Iron", value: 0 },
+      { id: 4, type: "core", stat: "Shadow", value: 0 },
+      { id: 5, type: "core", stat: "Wits", value: 0 },
+      { id: 6, type: "status", stat: "Health", value: 5 },
+      { id: 7, type: "status", stat: "Spirit", value: 5 },
+      { id: 8, type: "status", stat: "Supply", value: 5 },
+      { id: 9, type: "status", stat: "Momentum", value: 2 },
+    ];
+  }
+
   handleAddCharacter = () => {
-    const players = [...this.props.players];
+    const players = this.props.players;
     const player = new Character();
-    player.name = this.state.newPlayerName;
-    player.role = this.state.newPlayerRole;
-    player.goal = this.state.newPlayerGoal;
-    player.descriptor = this.state.newPlayerDescriptor;
-    player.stats = this.state.newPlayerStats;
+    player.name = this.props.newPlayer.Name;
+    player.role = this.props.newPlayer.Role;
+    player.goal = this.props.newPlayer.Goal;
+    player.descriptor = this.props.newPlayer.Descriptor;
+    player.stats = this.props.newPlayer.Stats;
     if (
-      this.state.newPlayerName != "" &&
-      !players.find((p) => p.name == this.state.newPlayerName)
+      this.props.newPlayer.Name != "" &&
+      !players.find((p) => p.name == this.props.newPlayer.Name)
     ) {
       players.push(player);
-      this.setState({ newPlayerName: "" });
-      this.setState({ newPlayerRole: "" });
-      this.setState({ newPlayerGoal: "" });
-      this.setState({ newPlayerDescriptor: "" });
-      this.setState({ newPlayerStats: this.getNewStats() });
       this.setState({ players: players });
+      this.resetNewPlayer();
     }
   };
 
+  resetNewPlayer(props = null) {
+    const newPlayer = props !== null ? props.newPlayer : this.props.newPlayer;
+    newPlayer.Name = "";
+    newPlayer.Role = "";
+    newPlayer.Goal = "";
+    newPlayer.Descriptor = "";
+    newPlayer.Stats = this.getNewStats();
+    this.setState({ newPlayer });
+  }
+
   handlePlayerDelete = (playerName) => {
-    const players = this.props.players.filter((p) => p.name !== playerName);
-    this.setState({ players });
+    const players = this.props.players;
+    let pos = -1;
+    for (let i = 0; i < players.length; i++) {
+      let p = players[i];
+      if (p.name === playerName) {
+        pos = i;
+      }
+    }
+
+    if (pos != -1) players.splice(pos, 1);
+
+    this.setState({ players: players });
   };
 
   handleOnRollPlayerName = () => {
+    const newPlayer = this.props.newPlayer;
     let rn = this.props.oracles.IronlanderName;
-    this.setState({ newPlayerName: rn });
+    newPlayer.Name = rn;
+    this.setState({ newPlayer });
   };
 
   handleNewPlayerNameChanged = (evt) => {
-    this.setState({ newPlayerName: evt.target.value });
+    const newPlayer = this.props.newPlayer;
+    newPlayer.Name = evt.target.value;
+    this.setState({ newPlayer });
   };
 
   handleOnRollPlayerRole = () => {
+    const newPlayer = this.props.newPlayer;
     let rn = this.props.oracles.CharacterRole;
-    this.setState({ newPlayerRole: rn });
+    newPlayer.Role = rn;
+    this.setState({ newPlayer });
   };
 
   handleNewPlayerRoleChanged = (evt) => {
-    this.setState({ newPlayerRole: evt.target.value });
+    const newPlayer = this.props.newPlayer;
+    newPlayer.Role = evt.target.value;
+    this.setState({ newPlayer });
   };
 
   handleOnRollPlayerGoal = () => {
+    const newPlayer = this.props.newPlayer;
     let rn = this.props.oracles.CharacterGoal;
-    this.setState({ newPlayerGoal: rn });
+    newPlayer.Goal = rn;
+    this.setState({ newPlayer });
   };
 
   handleNewPlayerGoalChanged = (evt) => {
-    this.setState({ newPlayerGoal: evt.target.value });
+    const newPlayer = this.props.newPlayer;
+    newPlayer.Goal = evt.target.value;
+    this.setState({ newPlayer });
   };
 
   handleOnRollPlayerDescriptor = () => {
+    const newPlayer = this.props.newPlayer;
     let rn = this.props.oracles.CharacterDescriptor;
-    this.setState({ newPlayerDescriptor: rn });
+    newPlayer.Descriptor = rn;
+    this.setState({ newPlayer });
   };
 
   handleNewPlayerDescriptorChanged = (evt) => {
-    this.setState({ newPlayerDescriptor: evt.target.value });
+    const newPlayer = this.props.newPlayer;
+    newPlayer.Descriptor = evt.target.value;
+    this.setState({ newPlayer });
   };
 
   handleOnRollPlayerPrimaryStat = () => {
     let rn = this.props.oracles.PrimaryStat;
-    const newPlayerStats = this.state.newPlayerStats.map((s) => {
+    const newPlayerStats = this.props.newPlayer.Stats.map((s) => {
       if (s.type == "core") s.value = s.id == rn ? 3 : "";
       return s;
     });
@@ -77,7 +128,7 @@ class Characters extends Component {
 
   handleNewPlayerStatChanged = (evt) => {
     let statName = evt.target.getAttribute("data-name");
-    const newPlayerStats = this.state.newPlayerStats.map((s) => {
+    const newPlayerStats = this.props.newPlayer.Stats.map((s) => {
       if (s.stat == statName) s.value = evt.target.value;
       return s;
     });
@@ -101,7 +152,7 @@ class Characters extends Component {
                     <button
                       className="btn btn-dark"
                       type="button"
-                      onClick={() => this.props.onRollPlayerName()}
+                      onClick={() => this.handleOnRollPlayerName()}
                     >
                       <i className="fas fa-dice-d20"></i> Roll
                     </button>
@@ -112,8 +163,8 @@ class Characters extends Component {
                     placeholder="Character Name"
                     aria-label="Name"
                     aria-describedby="basic-addon2"
-                    value={this.props.newPlayerName}
-                    onChange={(e) => this.props.onNewPlayerNameChanged(e)}
+                    value={this.props.newPlayer.Name}
+                    onChange={(e) => this.handleNewPlayerNameChanged(e)}
                   />
                 </div>
 
@@ -122,7 +173,7 @@ class Characters extends Component {
                     <button
                       className="btn btn-dark"
                       type="button"
-                      onClick={() => this.props.onRollPlayerGoal()}
+                      onClick={() => this.handleOnRollPlayerGoal()}
                     >
                       <i className="fas fa-dice-d20"></i> Roll
                     </button>
@@ -133,8 +184,8 @@ class Characters extends Component {
                     placeholder="Character Goal"
                     aria-label="Character Goal"
                     aria-describedby="basic-addon2"
-                    value={this.props.newPlayerGoal}
-                    onChange={(e) => this.props.onNewPlayerGoalChanged(e)}
+                    value={this.props.newPlayer.Goal}
+                    onChange={(e) => this.handleNewPlayerGoalChanged(e)}
                   />
                 </div>
               </div>
@@ -144,7 +195,7 @@ class Characters extends Component {
                     <button
                       className="btn btn-dark"
                       type="button"
-                      onClick={() => this.props.onRollPlayerRole()}
+                      onClick={() => this.handleOnRollPlayerRole()}
                     >
                       <i className="fas fa-dice-d20"></i> Roll
                     </button>
@@ -155,8 +206,8 @@ class Characters extends Component {
                     placeholder="Character Role"
                     aria-label="Character Role"
                     aria-describedby="basic-addon2"
-                    value={this.props.newPlayerRole}
-                    onChange={(e) => this.props.onNewPlayerRoleChanged(e)}
+                    value={this.props.newPlayer.Role}
+                    onChange={(e) => this.handleNewPlayerRoleChanged(e)}
                   />
                 </div>
                 <div className="input-group mb-3">
@@ -164,7 +215,7 @@ class Characters extends Component {
                     <button
                       className="btn btn-dark"
                       type="button"
-                      onClick={() => this.props.onRollPlayerDescriptor()}
+                      onClick={() => this.handleOnRollPlayerDescriptor()}
                     >
                       <i className="fas fa-dice-d20"></i> Roll
                     </button>
@@ -175,8 +226,8 @@ class Characters extends Component {
                     placeholder="Character Descriptor"
                     aria-label="Character Descriptor"
                     aria-describedby="basic-addon2"
-                    value={this.props.newPlayerDescriptor}
-                    onChange={(e) => this.props.onNewPlayerDescriptorChanged(e)}
+                    value={this.props.newPlayer.Descriptor}
+                    onChange={(e) => this.handleNewPlayerDescriptorChanged(e)}
                   />
                 </div>
               </div>
@@ -197,14 +248,13 @@ class Characters extends Component {
                 <button
                   className="btn btn-dark btn-block"
                   type="button"
-                  onClick={() => this.props.onRollPlayerPrimaryStat()}
+                  onClick={() => this.handleOnRollPlayerPrimaryStat()}
                 >
                   <i className="fas fa-dice-d20"></i> Roll Primary Stat
                 </button>
               </div>
-              {this.props.newPlayerStats
-                .filter((s) => s.type == "core")
-                .map((s) => (
+              {this.props.newPlayer.Stats.filter((s) => s.type == "core").map(
+                (s) => (
                   <div className="col-2">
                     <h6>{s.stat.toUpperCase()}</h6>
                     <input
@@ -215,17 +265,18 @@ class Characters extends Component {
                       max="3"
                       value={s.value == 0 ? "" : s.value}
                       placeholder={s.stat}
-                      onChange={(e) => this.props.onPlayerStatChanged(e)}
+                      onChange={(e) => this.handleNewPlayerStatChanged(e)}
                     />
                   </div>
-                ))}
+                )
+              )}
             </div>
             <div className="row mt-5">
               <div className="col">
                 <button
                   className="btn btn-dark"
                   type="button"
-                  onClick={() => this.props.onAddCharacter()}
+                  onClick={() => this.handleAddCharacter()}
                 >
                   <i className="fas fa-plus" aria-hidden="true"></i>
                   &nbsp;Add Character
@@ -267,7 +318,7 @@ class Characters extends Component {
                     <div className="col-md-6 col-sm-12">
                       <button
                         className="btn btn-danger btn-block"
-                        onClick={() => this.props.onPlayerDelete(player.name)}
+                        onClick={() => this.handlePlayerDelete(player.name)}
                       >
                         <i className="fas fa-times" aria-hidden="true"></i>
                         &nbsp;Delete
