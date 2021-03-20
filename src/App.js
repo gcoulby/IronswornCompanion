@@ -45,6 +45,14 @@ class App extends Component {
     players: [],
     newPlayer: {},
     world: {},
+
+    foes: [],
+    newFoe: {},
+    activeFoes: {
+      loneFoes: [],
+      packs: [],
+    },
+
     assets: [],
     assetBuilderSelectedAsset: {
       "Asset Type": "",
@@ -143,16 +151,6 @@ class App extends Component {
       { id: "core-fated", icon: "crystal-ball" },
       { id: "core-lorekeeper", icon: "enlightenment" },
     ],
-    foes: [],
-    newFoe: {},
-    // nextFoeId: 0,
-    // newFoeCategoryId: -1,
-    // newFoeTypeId: -1,
-    activeFoes: {
-      loneFoes: [],
-      packs: [],
-    },
-
     logs: [],
     newAsset: {
       id: 0,
@@ -271,7 +269,7 @@ class App extends Component {
   }
 
   updateCoreAssets() {
-    console.log("UPDATE CORE");
+    // console.log("UPDATE CORE");
     fetch(
       "https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_assets.json"
     )
@@ -281,7 +279,7 @@ class App extends Component {
         for (let i = 0; i < data["Assets"].length; i++) {
           const asset = data["Assets"][i];
           asset.id = `core-${asset.Name.toLowerCase().replace(" ", "-")}`;
-          console.log(asset.id);
+          // console.log(asset.id);
           asset.core = true;
           let existingAsset = assets.find((a) => a.id == asset.id);
           if (existingAsset == undefined) {
@@ -338,7 +336,7 @@ class App extends Component {
   };
 
   loadData = (evt) => {
-    console.log(evt.target.files[0]);
+    // console.log(evt.target.files[0]);
     let file = evt.target.files[0];
     const reader = new FileReader();
     reader.readAsText(file);
@@ -665,147 +663,6 @@ class App extends Component {
     this.setState({ locations });
   };
 
-  // /*=================================*/
-  // /*    Enter the Fray
-  // /*=================================*/
-
-  // getRandomFoeCategory() {
-  //   return this.diceRoller.roll([this.state.foes.length], false)[0].value;
-  // }
-
-  // getRandomFoeType(newFoeCategoryId) {
-  //   return this.diceRoller.roll(
-  //     [this.state.foes[newFoeCategoryId].Foes.length],
-  //     false
-  //   )[0].value;
-  // }
-
-  // getRandomPackFoe(newFoeCategoryId, rank = null) {
-  //   let foes = this.state.foes[newFoeCategoryId].Foes.filter(
-  //     (f) => f.Rank === "Dangerous"
-  //   );
-  //   console.log("foes");
-  //   console.log(foes);
-  //   let rn = this.diceRoller.roll([foes.length], false)[0].value;
-  //   // console.log(rn);
-  //   let foe = foes[rn];
-  //   console.log(foe);
-  //   return foe;
-  //   // let i = this.state.foes[newFoeCategoryId].Foes.indexOf(foe);
-  //   // return this.state.foes[newFoeCategoryId].Foes[i];
-  // }
-
-  // handleOnRollNewFoe = () => {
-  //   const newFoeCategoryId = this.getRandomFoeCategory();
-  //   this.setState({ newFoeCategoryId });
-  //   const newFoeTypeId = this.getRandomFoeType(newFoeCategoryId);
-  //   this.setState({ newFoeTypeId });
-  // };
-
-  // handleOnRollNewFoeType = () => {
-  //   let newFoeCategoryId = this.state.newFoeCategoryId;
-  //   if (
-  //     this.state.newFoeCategoryId === -1 ||
-  //     this.state.newFoeCategoryId === "Select Foe Category"
-  //   ) {
-  //     newFoeCategoryId = this.getRandomFoeCategory();
-  //     this.setState({ newFoeCategoryId });
-  //   }
-  //   const newFoeTypeId = this.getRandomFoeType(newFoeCategoryId);
-  //   this.setState({ newFoeTypeId });
-  // };
-
-  // handleOnNewFoeCategoryChanged = (evt) => {
-  //   this.setState({ newFoeCategoryId: evt.target.value });
-  // };
-
-  // handleOnNewFoeTypeChanged = (evt) => {
-  //   this.setState({ newFoeTypeId: evt.target.value });
-  // };
-
-  // handleOnAddFoe = () => {
-  //   if (
-  //     this.props.newFoeCategoryId == -1 ||
-  //     this.props.newFoeCategoryId == "Select Foe Category" ||
-  //     this.props.newFoeTypeId == -1 ||
-  //     this.props.newFoeTypeId == "Select Foe Type"
-  //   )
-  //     return;
-  //   const activeFoes = this.state.activeFoes;
-
-  //   const foe = this.state.foes[this.state.newFoeCategoryId].Foes[
-  //     this.state.newFoeTypeId
-  //   ];
-  //   foe.progress = 0;
-  //   foe.id = this.state.nextFoeId;
-  //   activeFoes.loneFoes.push(foe);
-  //   this.setState({ activeFoes });
-  //   this.setState({ newFoeCategoryId: -1 });
-  //   this.setState({ newFoeTypeId: -1 });
-  //   this.setState({ nextFoeId: this.state.nextFoeId + 1 });
-  // };
-
-  // handleOnAddRandomPack = () => {
-  //   let ranks = ["Troublesome", "Dangerous"];
-  //   let rank = ranks[this.diceRoller.roll([2], false)[0].value];
-  //   console.log(`Rank ${rank}`);
-  //   let rn = this.diceRoller.roll([10], false)[0].value;
-  //   const activeFoes = this.state.activeFoes;
-  //   const newFoeCategoryId = this.getRandomFoeCategory();
-  //   console.log(`categoryId ${newFoeCategoryId}`);
-  //   activeFoes.packs.push([]);
-  //   for (let i = 0; i < rn; i++) {
-  //     // const newFoeTypeId = this.getRandomFoeType(newFoeCategoryId, true);
-  //     // const foe = this.state.foes[newFoeCategoryId].Foes[newFoeTypeId];
-  //     const foe = this.getRandomPackFoe(newFoeCategoryId, rank);
-  //     console.log(foe);
-
-  //     activeFoes.packs[activeFoes.packs.length - 1].push(foe);
-  //   }
-
-  //   this.setState({ activeFoes });
-  //   this.setState({ newFoeCategoryId: -1 });
-  //   this.setState({ newFoeTypeId: -1 });
-  // };
-
-  // handleOnFoeProgressionChanged = (id, rank, increment) => {
-  //   console.log(id);
-  //   console.log(rank);
-  //   console.log(increment);
-
-  //   const activeFoes = this.state.activeFoes;
-
-  //   activeFoes.loneFoes.map((lf) => {
-  //     if (lf.id == id) {
-  //       let val = 0;
-  //       switch (rank) {
-  //         case "Troublesome":
-  //           val = increment ? 12 : -12;
-  //           break;
-  //         case "Dangerous":
-  //           val = increment ? 8 : -8;
-  //           break;
-  //         case "Formidable":
-  //           val = increment ? 4 : -4;
-  //           break;
-  //         case "Extreme":
-  //           val = increment ? 2 : -2;
-  //           break;
-  //         case "Epic":
-  //           val = increment ? 1 : -1;
-  //           break;
-  //       }
-  //       console.log(`val: ${val}`);
-  //       lf.progress += val;
-  //       lf.progress = lf.progress > 40 ? 40 : lf.progress;
-  //       lf.progress = lf.progress < 0 ? 0 : lf.progress;
-  //     }
-  //     console.log(lf);
-  //     return lf;
-  //   });
-  //   this.setState({ activeFoes });
-  // };
-
   /*=================================*/
   /*    Background
   /*=================================*/
@@ -846,117 +703,11 @@ class App extends Component {
   };
 
   /*=================================*/
-  /*    Vows
-  /*=================================*/
-
-  handleOnNewProgressionTextChanged = (evt, type) => {
-    const newProgressions = this.state.newProgressions.map((np) => {
-      if (np.type == type) {
-        np.text = evt.target.value;
-      }
-      return np;
-    });
-    this.setState({ newProgressions });
-  };
-
-  handleOnNewProgressionRankChanged = (evt, type) => {
-    const newProgressions = this.state.newProgressions.map((np) => {
-      if (np.type == type) {
-        np.rank = evt.target.value;
-      }
-      return np;
-    });
-    this.setState({ newProgressions });
-  };
-
-  handleOnAddNewProgression = (type) => {
-    // let type = "vow";
-    if (this.getProgressionByType(type).text != "") {
-      const players = this.state.players.map((p) => {
-        if (p.selected) {
-          p.progressions.push({
-            id: this.getProgressionByType(type).nextId,
-            type: type,
-            progress: 0,
-            text: this.getProgressionByType(type).text,
-            rank: this.getProgressionByType(type).rank,
-          });
-        }
-        return p;
-      });
-
-      const newProgressions = this.state.newProgressions.map((np) => {
-        if (np.type == type) {
-          np.text = "";
-          np.rank = 0;
-          np.nextId++;
-        }
-        return np;
-      });
-      this.setState({ players });
-      this.setState({ newProgressions });
-    }
-  };
-
-  handleOnProgressionChanged = (id, rank, increment) => {
-    const players = this.state.players.map((p) => {
-      if (p.selected) {
-        p.progressions.map((p2) => {
-          if (p2.id == id) {
-            let val = 0;
-            switch (parseInt(rank)) {
-              case 0:
-                val = increment ? 12 : -12;
-                break;
-              case 1:
-                val = increment ? 8 : -8;
-                break;
-              case 2:
-                val = increment ? 4 : -4;
-                break;
-              case 3:
-                val = increment ? 2 : -2;
-                break;
-              case 4:
-                val = increment ? 1 : -1;
-                break;
-            }
-            p2.progress += val;
-            p2.progress = p2.progress > 40 ? 40 : p2.progress;
-            p2.progress = p2.progress < 0 ? 0 : p2.progress;
-          }
-        });
-      }
-
-      return p;
-    });
-    this.setState({ players });
-  };
-
-  handleOnProgressionRankChanged = (evt, id) => {
-    const players = this.state.players.map((p) => {
-      if (p.selected) {
-        p.progressions.map((p2) => {
-          if (p2.id == id) {
-            p2.rank = evt.target.value;
-          }
-        });
-      }
-      return p;
-    });
-    this.setState({ players });
-  };
-
-  getProgressionByType(type) {
-    return this.state.newProgressions.find((np) => np.type == type);
-  }
-
-  /*=================================*/
   /*    Asset Builder
   /*=================================*/
 
   handleOnSelectedAssetChange = (evt) => {
-    console.log(evt.target.value);
+    // console.log(evt.target.value);
     this.setState({
       assetBuilderSelectedAsset: this.state.assets.find(
         (a) => a.id == evt.target.value
@@ -1102,15 +853,6 @@ class App extends Component {
                     activeFoes={this.state.activeFoes}
                     newFoe={this.state.newFoe}
                     onComponentUpdate={this.componentDidUpdate}
-                    // newFoeCategoryId={this.state.newFoeCategoryId}
-                    // newFoeTypeId={this.state.newFoeTypeId}
-                    // onRollNewFoe={this.handleOnRollNewFoe}
-                    // onRollNewFoeType={this.handleOnRollNewFoeType}
-                    // onNewFoeCategoryChanged={this.handleOnNewFoeCategoryChanged}
-                    // onNewFoeTypeChanged={this.handleOnNewFoeTypeChanged}
-                    // onAddFoe={this.handleOnAddFoe}
-                    // onAddRandomPack={this.handleOnAddRandomPack}
-                    // onProgressionChanged={this.handleOnFoeProgressionChanged}
                     onProgressRollClicked={this.handleOnProgressRollClicked}
                   />
                 </Route>
@@ -1146,61 +888,34 @@ class App extends Component {
                   <Progression
                     title="Vows"
                     type="vow"
-                    newProgression={this.getProgressionByType("vow")}
-                    onNewProgressionTextChanged={
-                      this.handleOnNewProgressionTextChanged
-                    }
-                    onNewProgressionRankChanged={
-                      this.handleOnNewProgressionRankChanged
-                    }
-                    onAddNewProgression={this.handleOnAddNewProgression}
+                    newProgressions={this.state.newProgressions}
+                    players={this.state.players}
                     selectedPlayer={this.getSelectedPlayer()}
-                    onProgressionChange={this.handleOnProgressionChanged}
-                    onProgressionRankChange={
-                      this.handleOnProgressionRankChanged
-                    }
                     onProgressRollClicked={this.handleOnProgressRollClicked}
+                    onComponentUpdate={this.componentDidUpdate}
                   />
                 </Route>
                 <Route exact path="/quests">
                   <Progression
                     title="Quests"
                     type="quest"
-                    info="Quests are mechanically identical to vows except they are not as much of a commitment to your character. Use quests when swearing an iron vow does not seem appropriate to the fiction."
-                    newProgression={this.getProgressionByType("quest")}
-                    onNewProgressionTextChanged={
-                      this.handleOnNewProgressionTextChanged
-                    }
-                    onNewProgressionRankChanged={
-                      this.handleOnNewProgressionRankChanged
-                    }
-                    onAddNewProgression={this.handleOnAddNewProgression}
+                    info="Quests are mechanically identical to vows except they are not as much of a commitment to your character. Use quests when swearing an iron vow does not seem appropriate to the fiction. However, quests do not grant experience upon completion."
+                    newProgressions={this.state.newProgressions}
+                    players={this.state.players}
                     selectedPlayer={this.getSelectedPlayer()}
-                    onProgressionChange={this.handleOnProgressionChanged}
-                    onProgressionRankChange={
-                      this.handleOnProgressionRankChanged
-                    }
                     onProgressRollClicked={this.handleOnProgressRollClicked}
+                    onComponentUpdate={this.componentDidUpdate}
                   />
                 </Route>
                 <Route exact path="/journeys">
                   <Progression
                     title="Journeys"
                     type="journey"
-                    newProgression={this.getProgressionByType("journey")}
-                    onNewProgressionTextChanged={
-                      this.handleOnNewProgressionTextChanged
-                    }
-                    onNewProgressionRankChanged={
-                      this.handleOnNewProgressionRankChanged
-                    }
-                    onAddNewProgression={this.handleOnAddNewProgression}
+                    newProgressions={this.state.newProgressions}
+                    players={this.state.players}
                     selectedPlayer={this.getSelectedPlayer()}
-                    onProgressionChange={this.handleOnProgressionChanged}
-                    onProgressionRankChange={
-                      this.handleOnProgressionRankChanged
-                    }
                     onProgressRollClicked={this.handleOnProgressRollClicked}
+                    onComponentUpdate={this.componentDidUpdate}
                   />
                 </Route>
 

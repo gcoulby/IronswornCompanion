@@ -77,7 +77,10 @@ class ProgressCard extends Component {
                     </button>
                   </div>
                   <div className="col-4">
-                    <button className="btn btn-danger pt-2 pb-2 btn-block">
+                    <button
+                      className="btn btn-danger pt-2 pb-2 btn-block"
+                      onClick={() => this.props.onProgressCancel(this.props.id)}
+                    >
                       <i className="fas fa-times"></i>&nbsp;Cancel
                     </button>
                   </div>

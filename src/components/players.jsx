@@ -294,7 +294,7 @@ class Characters extends Component {
 
         <div className="row mt-4">
           {this.props.players.map((player) => (
-            <div key={player.name} className="col-md-6 col-lg-3 col-sm-12">
+            <div key={player.name} className="col-md-6 col-lg-4 col-sm-12">
               <div className="card">
                 <div className="card-body">
                   <h4 className="mb-2">{player.name}</h4>

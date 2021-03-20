@@ -108,9 +108,7 @@ class EnterTheFray extends Component {
   };
 
   handleActiveFoeDelete = (id) => {
-    console.log(id);
     const activeFoes = this.props.activeFoes;
-    console.log(activeFoes);
     let pos = -1;
     for (let i = 0; i < activeFoes.loneFoes.length; i++) {
       let af = activeFoes.loneFoes[i];
@@ -148,10 +146,6 @@ class EnterTheFray extends Component {
   // };
 
   handleOnProgressionChanged = (id, rank, increment) => {
-    console.log(id);
-    console.log(rank);
-    console.log(increment);
-
     const activeFoes = this.props.activeFoes;
 
     activeFoes.loneFoes.map((lf) => {
@@ -174,12 +168,10 @@ class EnterTheFray extends Component {
             val = increment ? 1 : -1;
             break;
         }
-        console.log(`val: ${val}`);
         lf.progress += val;
         lf.progress = lf.progress > 40 ? 40 : lf.progress;
         lf.progress = lf.progress < 0 ? 0 : lf.progress;
       }
-      console.log(lf);
       return lf;
     });
     this.setState({ activeFoes });
@@ -190,7 +182,6 @@ class EnterTheFray extends Component {
   }
 
   render() {
-    console.log(this.props.foes);
     return (
       <React.Fragment>
         <h1>Enter the Fray</h1>
