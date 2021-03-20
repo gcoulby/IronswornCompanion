@@ -1,8 +1,23 @@
 import React, { Component } from "react";
+import DiceRoller from "./dice_roller";
 import ProgressTrack from "./progressTrack";
 import TitleBlock from "./titleBlock";
 class EnterTheFray extends Component {
   state = {};
+
+  constructor(props) {
+    super();
+    if (props.newFoe.nextFoeId === undefined) this.resetNewFoe(props);
+    this.diceRoller = new DiceRoller();
+  }
+
+  resetNewFoe(props) {
+    const newFoe = props !== null ? props.newFoe : this.props.newFoe;
+    newFoe.nextFoeId = 0;
+    newFoe.newFoeCategoryId = -1;
+    newFoe.newFoeTypeId = -1;
+    this.setState({ newFoe });
+  }
 
   getCountInArray(arr, name) {
     let c = 0;
@@ -11,6 +26,167 @@ class EnterTheFray extends Component {
       c += foe.Name == name ? 1 : 0;
     }
     return c;
+  }
+
+  getRandomFoeCategory() {
+    return this.diceRoller.roll([this.props.foes.length], false)[0].value;
+  }
+
+  getRandomFoeType(newFoeCategoryId) {
+    return this.diceRoller.roll(
+      [this.props.foes[newFoeCategoryId].Foes.length],
+      false
+    )[0].value;
+  }
+
+  getRandomPackFoe(newFoeCategoryId, rank = null) {
+    let foes = this.props.foes[newFoeCategoryId].Foes.filter(
+      (f) => f.Rank === "Dangerous"
+    );
+    let rn = this.diceRoller.roll([foes.length], false)[0].value;
+    let foe = foes[rn];
+    return foe;
+  }
+
+  /*=================================*/
+  /*    Events
+  /*=================================*/
+
+  handleOnRollNewFoe = () => {
+    const newFoe = this.props.newFoe;
+    newFoe.newFoeCategoryId = this.getRandomFoeCategory();
+    newFoe.newFoeTypeId = this.getRandomFoeType(newFoe.newFoeCategoryId);
+    this.setState({ newFoe });
+  };
+
+  handleOnRollNewFoeType = () => {
+    const newFoe = this.props.newFoe;
+    if (
+      this.props.newFoe.newFoeCategoryId === -1 ||
+      this.props.newFoe.newFoeCategoryId === "Select Foe Category"
+    ) {
+      newFoe.newFoeCategoryId = this.getRandomFoeCategory();
+    }
+    newFoe.newFoeTypeId = this.getRandomFoeType(newFoe.newFoeCategoryId);
+    this.setState({ newFoe });
+  };
+
+  handleOnNewFoeCategoryChanged = (evt) => {
+    const newFoe = this.props.newFoe;
+    newFoe.newFoeCategoryId = evt.target.value;
+    this.setState({ newFoe });
+  };
+
+  handleOnNewFoeTypeChanged = (evt) => {
+    const newFoe = this.props.newFoe;
+    newFoe.newFoeTypeId = evt.target.value;
+    this.setState({ newFoe });
+  };
+
+  handleOnAddFoe = () => {
+    if (
+      this.props.newFoe.newFoeCategoryId == -1 ||
+      this.props.newFoe.newFoeCategoryId == "Select Foe Category" ||
+      this.props.newFoe.newFoeTypeId == -1 ||
+      this.props.newFoe.newFoeTypeId == "Select Foe Type"
+    )
+      return;
+    const activeFoes = this.props.activeFoes;
+
+    const foe = this.props.foes[this.props.newFoe.newFoeCategoryId].Foes[
+      this.props.newFoe.newFoeTypeId
+    ];
+    foe.progress = 0;
+    foe.id = this.props.newFoe.nextFoeId;
+    activeFoes.loneFoes.push(foe);
+    const newFoe = this.props.newFoe;
+    newFoe.nextFoeId = this.props.newFoe.nextFoeId + 1;
+    newFoe.newFoeCategoryId = -1;
+    newFoe.newFoeTypeId = -1;
+    this.setState({ activeFoes });
+    this.setState({ newFoe });
+  };
+
+  handleActiveFoeDelete = (id) => {
+    console.log(id);
+    const activeFoes = this.props.activeFoes;
+    console.log(activeFoes);
+    let pos = -1;
+    for (let i = 0; i < activeFoes.loneFoes.length; i++) {
+      let af = activeFoes.loneFoes[i];
+      if (af.id === id) {
+        pos = i;
+      }
+    }
+
+    if (pos != -1) activeFoes.loneFoes.splice(pos, 1);
+    this.props.onProgressRollClicked(-1, "foe", 0);
+    this.setState({ activeFoes: activeFoes });
+  };
+
+  // handleOnAddRandomPack = () => {
+  //   let ranks = ["Troublesome", "Dangerous"];
+  //   let rank = ranks[this.diceRoller.roll([2], false)[0].value];
+  //   console.log(`Rank ${rank}`);
+  //   let rn = this.diceRoller.roll([10], false)[0].value;
+  //   const activeFoes = this.props.activeFoes;
+  //   const newFoeCategoryId = this.getRandomFoeCategory();
+  //   console.log(`categoryId ${newFoeCategoryId}`);
+  //   activeFoes.packs.push([]);
+  //   for (let i = 0; i < rn; i++) {
+  //     // const newFoeTypeId = this.getRandomFoeType(newFoeCategoryId, true);
+  //     // const foe = this.props.foes[newFoeCategoryId].Foes[newFoeTypeId];
+  //     const foe = this.getRandomPackFoe(newFoeCategoryId, rank);
+  //     console.log(foe);
+
+  //     activeFoes.packs[activeFoes.packs.length - 1].push(foe);
+  //   }
+
+  //   this.setState({ activeFoes });
+  //   this.setState({ newFoeCategoryId: -1 });
+  //   this.setState({ newFoeTypeId: -1 });
+  // };
+
+  handleOnProgressionChanged = (id, rank, increment) => {
+    console.log(id);
+    console.log(rank);
+    console.log(increment);
+
+    const activeFoes = this.props.activeFoes;
+
+    activeFoes.loneFoes.map((lf) => {
+      if (lf.id == id) {
+        let val = 0;
+        switch (rank) {
+          case "Troublesome":
+            val = increment ? 12 : -12;
+            break;
+          case "Dangerous":
+            val = increment ? 8 : -8;
+            break;
+          case "Formidable":
+            val = increment ? 4 : -4;
+            break;
+          case "Extreme":
+            val = increment ? 2 : -2;
+            break;
+          case "Epic":
+            val = increment ? 1 : -1;
+            break;
+        }
+        console.log(`val: ${val}`);
+        lf.progress += val;
+        lf.progress = lf.progress > 40 ? 40 : lf.progress;
+        lf.progress = lf.progress < 0 ? 0 : lf.progress;
+      }
+      console.log(lf);
+      return lf;
+    });
+    this.setState({ activeFoes });
+  };
+
+  componentDidUpdate() {
+    this.props.onComponentUpdate();
   }
 
   render() {
@@ -23,7 +199,7 @@ class EnterTheFray extends Component {
             <button
               className="btn btn-dark mt-2 mb-4"
               type="button"
-              onClick={() => this.props.onRollNewFoe()}
+              onClick={() => this.handleOnRollNewFoe()}
             >
               <i className="fas fa-dice-d20" aria-hidden="true"></i>
               &nbsp;Roll Random Foe
@@ -39,8 +215,8 @@ class EnterTheFray extends Component {
 
               <select
                 className="form-control"
-                value={this.props.newFoeCategoryId}
-                onChange={(e) => this.props.onNewFoeCategoryChanged(e)}
+                value={this.props.newFoe.newFoeCategoryId}
+                onChange={(e) => this.handleOnNewFoeCategoryChanged(e)}
               >
                 <option>Select Foe Category</option>
                 {this.props.foes.map((f) => (
@@ -58,7 +234,7 @@ class EnterTheFray extends Component {
                 <button
                   className="btn btn-dark"
                   type="button"
-                  onClick={() => this.props.onRollNewFoeType()}
+                  onClick={() => this.handleOnRollNewFoeType()}
                 >
                   <i className="fas fa-dice-d20"></i> Roll Foe Type
                 </button>
@@ -66,25 +242,25 @@ class EnterTheFray extends Component {
 
               <select
                 className="form-control"
-                value={this.props.newFoeTypeId}
-                onChange={(e) => this.props.onNewFoeTypeChanged(e)}
+                value={this.props.newFoe.newFoeTypeId}
+                onChange={(e) => this.handleOnNewFoeTypeChanged(e)}
               >
                 <option>Select Foe Type</option>
 
-                {this.props.newFoeCategoryId != -1 &&
-                this.props.newFoeCategoryId != "Select Foe Category" ? (
+                {this.props.newFoe.newFoeCategoryId != -1 &&
+                this.props.newFoe.newFoeCategoryId != "Select Foe Category" ? (
                   <React.Fragment>
                     {this.props.foes
                       .find(
                         (f) =>
                           this.props.foes.indexOf(f) ==
-                          this.props.newFoeCategoryId
+                          this.props.newFoe.newFoeCategoryId
                       )
                       .Foes.map((f) => (
                         <option
                           key={f.Name}
                           value={this.props.foes[
-                            this.props.newFoeCategoryId
+                            this.props.newFoe.newFoeCategoryId
                           ].Foes.indexOf(f)}
                         >
                           {f.Name}
@@ -100,14 +276,14 @@ class EnterTheFray extends Component {
         </div>
         <div className="row">
           <div className="col">
-            {this.props.newFoeTypeId != -1 &&
-            this.props.newFoeTypeId != "Select Foe Type" ? (
+            {this.props.newFoe.newFoeTypeId != -1 &&
+            this.props.newFoe.newFoeTypeId != "Select Foe Type" ? (
               <React.Fragment>
                 {/* <p>
                   <span className="modesto">Description</span>&nbsp;
                   {
-                    this.props.foes[this.props.newFoeCategoryId].Foes[
-                      this.props.newFoeTypeId
+                    this.props.foes[this.props.newFoe.newFoeCategoryId].Foes[
+                      this.props.newFoe.newFoeTypeId
                     ].Description
                   }
                 </p> */}
@@ -120,23 +296,20 @@ class EnterTheFray extends Component {
                   <tbody>
                     <td>
                       {
-                        this.props.foes[this.props.newFoeCategoryId].Foes[
-                          this.props.newFoeTypeId
-                        ].Rank
+                        this.props.foes[this.props.newFoe.newFoeCategoryId]
+                          .Foes[this.props.newFoe.newFoeTypeId].Rank
                       }
                     </td>
                     <td>
                       {
-                        this.props.foes[this.props.newFoeCategoryId].Foes[
-                          this.props.newFoeTypeId
-                        ].Source
+                        this.props.foes[this.props.newFoe.newFoeCategoryId]
+                          .Foes[this.props.newFoe.newFoeTypeId].Source
                       }
                     </td>
                     <td>
                       {
-                        this.props.foes[this.props.newFoeCategoryId].Foes[
-                          this.props.newFoeTypeId
-                        ].Page
+                        this.props.foes[this.props.newFoe.newFoeCategoryId]
+                          .Foes[this.props.newFoe.newFoeTypeId].Page
                       }
                     </td>
                   </tbody>
@@ -146,7 +319,7 @@ class EnterTheFray extends Component {
                     <button
                       className="btn btn-dark"
                       type="button"
-                      onClick={() => this.props.onAddFoe()}
+                      onClick={() => this.handleOnAddFoe()}
                     >
                       <i className="fas fa-plus" aria-hidden="true"></i>
                       &nbsp;Add Foe
@@ -227,7 +400,7 @@ class EnterTheFray extends Component {
                           key={lf.id}
                           progress={lf.progress}
                           onProgressionChange={(increment) =>
-                            this.props.onProgressionChanged(
+                            this.handleOnProgressionChanged(
                               lf.id,
                               lf.Rank,
                               increment
@@ -253,7 +426,12 @@ class EnterTheFray extends Component {
                               </button>
                             </div>
                             <div className="col-4">
-                              <button className="btn btn-danger pt-2 pb-2 btn-block">
+                              <button
+                                className="btn btn-danger pt-2 pb-2 btn-block"
+                                onClick={() =>
+                                  this.handleActiveFoeDelete(lf.id)
+                                }
+                              >
                                 <i className="fas fa-times"></i>&nbsp;Delete
                               </button>
                             </div>

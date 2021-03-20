@@ -144,9 +144,10 @@ class App extends Component {
       { id: "core-lorekeeper", icon: "enlightenment" },
     ],
     foes: [],
-    nextFoeId: 0,
-    newFoeCategoryId: -1,
-    newFoeTypeId: -1,
+    newFoe: {},
+    // nextFoeId: 0,
+    // newFoeCategoryId: -1,
+    // newFoeTypeId: -1,
     activeFoes: {
       loneFoes: [],
       packs: [],
@@ -664,146 +665,146 @@ class App extends Component {
     this.setState({ locations });
   };
 
-  /*=================================*/
-  /*    Enter the Fray
-  /*=================================*/
+  // /*=================================*/
+  // /*    Enter the Fray
+  // /*=================================*/
 
-  getRandomFoeCategory() {
-    return this.diceRoller.roll([this.state.foes.length], false)[0].value;
-  }
+  // getRandomFoeCategory() {
+  //   return this.diceRoller.roll([this.state.foes.length], false)[0].value;
+  // }
 
-  getRandomFoeType(newFoeCategoryId) {
-    return this.diceRoller.roll(
-      [this.state.foes[newFoeCategoryId].Foes.length],
-      false
-    )[0].value;
-  }
+  // getRandomFoeType(newFoeCategoryId) {
+  //   return this.diceRoller.roll(
+  //     [this.state.foes[newFoeCategoryId].Foes.length],
+  //     false
+  //   )[0].value;
+  // }
 
-  getRandomPackFoe(newFoeCategoryId, rank = null) {
-    let foes = this.state.foes[newFoeCategoryId].Foes.filter(
-      (f) => f.Rank === "Dangerous"
-    );
-    console.log("foes");
-    console.log(foes);
-    let rn = this.diceRoller.roll([foes.length], false)[0].value;
-    // console.log(rn);
-    let foe = foes[rn];
-    console.log(foe);
-    return foe;
-    // let i = this.state.foes[newFoeCategoryId].Foes.indexOf(foe);
-    // return this.state.foes[newFoeCategoryId].Foes[i];
-  }
+  // getRandomPackFoe(newFoeCategoryId, rank = null) {
+  //   let foes = this.state.foes[newFoeCategoryId].Foes.filter(
+  //     (f) => f.Rank === "Dangerous"
+  //   );
+  //   console.log("foes");
+  //   console.log(foes);
+  //   let rn = this.diceRoller.roll([foes.length], false)[0].value;
+  //   // console.log(rn);
+  //   let foe = foes[rn];
+  //   console.log(foe);
+  //   return foe;
+  //   // let i = this.state.foes[newFoeCategoryId].Foes.indexOf(foe);
+  //   // return this.state.foes[newFoeCategoryId].Foes[i];
+  // }
 
-  handleOnRollNewFoe = () => {
-    const newFoeCategoryId = this.getRandomFoeCategory();
-    this.setState({ newFoeCategoryId });
-    const newFoeTypeId = this.getRandomFoeType(newFoeCategoryId);
-    this.setState({ newFoeTypeId });
-  };
+  // handleOnRollNewFoe = () => {
+  //   const newFoeCategoryId = this.getRandomFoeCategory();
+  //   this.setState({ newFoeCategoryId });
+  //   const newFoeTypeId = this.getRandomFoeType(newFoeCategoryId);
+  //   this.setState({ newFoeTypeId });
+  // };
 
-  handleOnRollNewFoeType = () => {
-    let newFoeCategoryId = this.state.newFoeCategoryId;
-    if (
-      this.state.newFoeCategoryId === -1 ||
-      this.state.newFoeCategoryId === "Select Foe Category"
-    ) {
-      newFoeCategoryId = this.getRandomFoeCategory();
-      this.setState({ newFoeCategoryId });
-    }
-    const newFoeTypeId = this.getRandomFoeType(newFoeCategoryId);
-    this.setState({ newFoeTypeId });
-  };
+  // handleOnRollNewFoeType = () => {
+  //   let newFoeCategoryId = this.state.newFoeCategoryId;
+  //   if (
+  //     this.state.newFoeCategoryId === -1 ||
+  //     this.state.newFoeCategoryId === "Select Foe Category"
+  //   ) {
+  //     newFoeCategoryId = this.getRandomFoeCategory();
+  //     this.setState({ newFoeCategoryId });
+  //   }
+  //   const newFoeTypeId = this.getRandomFoeType(newFoeCategoryId);
+  //   this.setState({ newFoeTypeId });
+  // };
 
-  handleOnNewFoeCategoryChanged = (evt) => {
-    this.setState({ newFoeCategoryId: evt.target.value });
-  };
+  // handleOnNewFoeCategoryChanged = (evt) => {
+  //   this.setState({ newFoeCategoryId: evt.target.value });
+  // };
 
-  handleOnNewFoeTypeChanged = (evt) => {
-    this.setState({ newFoeTypeId: evt.target.value });
-  };
+  // handleOnNewFoeTypeChanged = (evt) => {
+  //   this.setState({ newFoeTypeId: evt.target.value });
+  // };
 
-  handleOnAddFoe = () => {
-    if (
-      this.props.newFoeCategoryId == -1 ||
-      this.props.newFoeCategoryId == "Select Foe Category" ||
-      this.props.newFoeTypeId == -1 ||
-      this.props.newFoeTypeId == "Select Foe Type"
-    )
-      return;
-    const activeFoes = this.state.activeFoes;
+  // handleOnAddFoe = () => {
+  //   if (
+  //     this.props.newFoeCategoryId == -1 ||
+  //     this.props.newFoeCategoryId == "Select Foe Category" ||
+  //     this.props.newFoeTypeId == -1 ||
+  //     this.props.newFoeTypeId == "Select Foe Type"
+  //   )
+  //     return;
+  //   const activeFoes = this.state.activeFoes;
 
-    const foe = this.state.foes[this.state.newFoeCategoryId].Foes[
-      this.state.newFoeTypeId
-    ];
-    foe.progress = 0;
-    foe.id = this.state.nextFoeId;
-    activeFoes.loneFoes.push(foe);
-    this.setState({ activeFoes });
-    this.setState({ newFoeCategoryId: -1 });
-    this.setState({ newFoeTypeId: -1 });
-    this.setState({ nextFoeId: this.state.nextFoeId + 1 });
-  };
+  //   const foe = this.state.foes[this.state.newFoeCategoryId].Foes[
+  //     this.state.newFoeTypeId
+  //   ];
+  //   foe.progress = 0;
+  //   foe.id = this.state.nextFoeId;
+  //   activeFoes.loneFoes.push(foe);
+  //   this.setState({ activeFoes });
+  //   this.setState({ newFoeCategoryId: -1 });
+  //   this.setState({ newFoeTypeId: -1 });
+  //   this.setState({ nextFoeId: this.state.nextFoeId + 1 });
+  // };
 
-  handleOnAddRandomPack = () => {
-    let ranks = ["Troublesome", "Dangerous"];
-    let rank = ranks[this.diceRoller.roll([2], false)[0].value];
-    console.log(`Rank ${rank}`);
-    let rn = this.diceRoller.roll([10], false)[0].value;
-    const activeFoes = this.state.activeFoes;
-    const newFoeCategoryId = this.getRandomFoeCategory();
-    console.log(`categoryId ${newFoeCategoryId}`);
-    activeFoes.packs.push([]);
-    for (let i = 0; i < rn; i++) {
-      // const newFoeTypeId = this.getRandomFoeType(newFoeCategoryId, true);
-      // const foe = this.state.foes[newFoeCategoryId].Foes[newFoeTypeId];
-      const foe = this.getRandomPackFoe(newFoeCategoryId, rank);
-      console.log(foe);
+  // handleOnAddRandomPack = () => {
+  //   let ranks = ["Troublesome", "Dangerous"];
+  //   let rank = ranks[this.diceRoller.roll([2], false)[0].value];
+  //   console.log(`Rank ${rank}`);
+  //   let rn = this.diceRoller.roll([10], false)[0].value;
+  //   const activeFoes = this.state.activeFoes;
+  //   const newFoeCategoryId = this.getRandomFoeCategory();
+  //   console.log(`categoryId ${newFoeCategoryId}`);
+  //   activeFoes.packs.push([]);
+  //   for (let i = 0; i < rn; i++) {
+  //     // const newFoeTypeId = this.getRandomFoeType(newFoeCategoryId, true);
+  //     // const foe = this.state.foes[newFoeCategoryId].Foes[newFoeTypeId];
+  //     const foe = this.getRandomPackFoe(newFoeCategoryId, rank);
+  //     console.log(foe);
 
-      activeFoes.packs[activeFoes.packs.length - 1].push(foe);
-    }
+  //     activeFoes.packs[activeFoes.packs.length - 1].push(foe);
+  //   }
 
-    this.setState({ activeFoes });
-    this.setState({ newFoeCategoryId: -1 });
-    this.setState({ newFoeTypeId: -1 });
-  };
+  //   this.setState({ activeFoes });
+  //   this.setState({ newFoeCategoryId: -1 });
+  //   this.setState({ newFoeTypeId: -1 });
+  // };
 
-  handleOnFoeProgressionChanged = (id, rank, increment) => {
-    console.log(id);
-    console.log(rank);
-    console.log(increment);
+  // handleOnFoeProgressionChanged = (id, rank, increment) => {
+  //   console.log(id);
+  //   console.log(rank);
+  //   console.log(increment);
 
-    const activeFoes = this.state.activeFoes;
+  //   const activeFoes = this.state.activeFoes;
 
-    activeFoes.loneFoes.map((lf) => {
-      if (lf.id == id) {
-        let val = 0;
-        switch (rank) {
-          case "Troublesome":
-            val = increment ? 12 : -12;
-            break;
-          case "Dangerous":
-            val = increment ? 8 : -8;
-            break;
-          case "Formidable":
-            val = increment ? 4 : -4;
-            break;
-          case "Extreme":
-            val = increment ? 2 : -2;
-            break;
-          case "Epic":
-            val = increment ? 1 : -1;
-            break;
-        }
-        console.log(`val: ${val}`);
-        lf.progress += val;
-        lf.progress = lf.progress > 40 ? 40 : lf.progress;
-        lf.progress = lf.progress < 0 ? 0 : lf.progress;
-      }
-      console.log(lf);
-      return lf;
-    });
-    this.setState({ activeFoes });
-  };
+  //   activeFoes.loneFoes.map((lf) => {
+  //     if (lf.id == id) {
+  //       let val = 0;
+  //       switch (rank) {
+  //         case "Troublesome":
+  //           val = increment ? 12 : -12;
+  //           break;
+  //         case "Dangerous":
+  //           val = increment ? 8 : -8;
+  //           break;
+  //         case "Formidable":
+  //           val = increment ? 4 : -4;
+  //           break;
+  //         case "Extreme":
+  //           val = increment ? 2 : -2;
+  //           break;
+  //         case "Epic":
+  //           val = increment ? 1 : -1;
+  //           break;
+  //       }
+  //       console.log(`val: ${val}`);
+  //       lf.progress += val;
+  //       lf.progress = lf.progress > 40 ? 40 : lf.progress;
+  //       lf.progress = lf.progress < 0 ? 0 : lf.progress;
+  //     }
+  //     console.log(lf);
+  //     return lf;
+  //   });
+  //   this.setState({ activeFoes });
+  // };
 
   /*=================================*/
   /*    Background
@@ -1098,16 +1099,18 @@ class App extends Component {
                 <Route exact path="/enter-the-fray">
                   <EnterTheFray
                     foes={this.state.foes}
-                    newFoeCategoryId={this.state.newFoeCategoryId}
-                    newFoeTypeId={this.state.newFoeTypeId}
-                    onRollNewFoe={this.handleOnRollNewFoe}
-                    onRollNewFoeType={this.handleOnRollNewFoeType}
-                    onNewFoeCategoryChanged={this.handleOnNewFoeCategoryChanged}
-                    onNewFoeTypeChanged={this.handleOnNewFoeTypeChanged}
-                    onAddFoe={this.handleOnAddFoe}
-                    onAddRandomPack={this.handleOnAddRandomPack}
                     activeFoes={this.state.activeFoes}
-                    onProgressionChanged={this.handleOnFoeProgressionChanged}
+                    newFoe={this.state.newFoe}
+                    onComponentUpdate={this.componentDidUpdate}
+                    // newFoeCategoryId={this.state.newFoeCategoryId}
+                    // newFoeTypeId={this.state.newFoeTypeId}
+                    // onRollNewFoe={this.handleOnRollNewFoe}
+                    // onRollNewFoeType={this.handleOnRollNewFoeType}
+                    // onNewFoeCategoryChanged={this.handleOnNewFoeCategoryChanged}
+                    // onNewFoeTypeChanged={this.handleOnNewFoeTypeChanged}
+                    // onAddFoe={this.handleOnAddFoe}
+                    // onAddRandomPack={this.handleOnAddRandomPack}
+                    // onProgressionChanged={this.handleOnFoeProgressionChanged}
                     onProgressRollClicked={this.handleOnProgressRollClicked}
                   />
                 </Route>
