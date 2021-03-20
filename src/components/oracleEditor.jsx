@@ -53,6 +53,7 @@ class OracleEditor extends Component {
       this.props.oracles.editOracleCursorPosition,
       this.props.oracles.editOracleCursorPosition
     );
+    this.props.onComponentUpdate();
   }
   render() {
     return (

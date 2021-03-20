@@ -352,15 +352,13 @@ class App extends Component {
     };
   };
 
-  componentDidUpdate() {
+  componentDidUpdate = () => {
     this.saveGameState();
     this.scrollBottom();
     if (this.state.save) {
-      // this.updateCoreAssets();
-      // this.saveGameState();
       this.setState({ save: false });
     }
-  }
+  };
 
   /*=================================*/
   /*    PLAYERS
@@ -373,9 +371,6 @@ class App extends Component {
       return p;
     });
     this.setState({ players });
-    this.setState({ save: true });
-    //TODO: FIX THIS
-    window.location.replace("/stats");
   };
 
   getSelectedPlayer() {
@@ -1028,6 +1023,7 @@ class App extends Component {
                     newPlayer={this.state.newPlayer}
                     onPlayerSelect={this.handlePlayerSelect}
                     oracles={this.state.oracles}
+                    onComponentUpdate={this.componentDidUpdate}
                   />
                 </Route>
                 <Route path="/log">
@@ -1044,7 +1040,8 @@ class App extends Component {
                 <Route path="/world">
                   <World
                     world={this.state.world}
-                    setState={this.handleSetState}
+                    // setState={this.handleSetState}
+                    onComponentUpdate={this.componentDidUpdate}
                   />
                 </Route>
                 <Route path="/npcs">
@@ -1139,6 +1136,7 @@ class App extends Component {
                   <Stats
                     players={this.state.players}
                     selectedPlayer={this.getSelectedPlayer()}
+                    onComponentUpdate={this.componentDidUpdate}
                   />
                 </Route>
                 <Route exact path="/vows">
@@ -1214,7 +1212,10 @@ class App extends Component {
                   <Acknowledgements />
                 </Route>
                 <Route path="/oracle-editor">
-                  <OracleEditor oracles={this.state.oracles} />
+                  <OracleEditor
+                    oracles={this.state.oracles}
+                    onComponentUpdate={this.componentDidUpdate}
+                  />
                 </Route>
 
                 <Route path="/asset-builder">

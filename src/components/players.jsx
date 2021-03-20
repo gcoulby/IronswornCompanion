@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TitleBlock from "./titleBlock";
 import Character from "../models/character";
+import { HashRouter, Link } from "react-router-dom";
 class Characters extends Component {
   //TODO: implement props.newPlayer
 
@@ -137,6 +138,10 @@ class Characters extends Component {
 
   getSelectedPlayer() {
     return this.props.players.find((p) => p.selected);
+  }
+
+  componentDidUpdate() {
+    this.props.onComponentUpdate();
   }
 
   render() {
@@ -307,13 +312,26 @@ class Characters extends Component {
                   </p>
                   <div className="row">
                     <div className="col-md-6 col-sm-12">
-                      <button
+                      <HashRouter basename="/">
+                        <Link
+                          to="/stats"
+                          className="btn btn-dark btn-block"
+                          onClick={() => this.props.onPlayerSelect(player.name)}
+                        >
+                          <i
+                            className="fas fa-user-plus"
+                            aria-hidden="true"
+                          ></i>
+                          &nbsp;Select
+                        </Link>
+                      </HashRouter>
+                      {/* <button
                         className="btn btn-dark btn-block"
                         onClick={() => this.props.onPlayerSelect(player.name)}
                       >
                         <i className="fas fa-user-plus" aria-hidden="true"></i>
                         &nbsp;Select
-                      </button>
+                      </button> */}
                     </div>
                     <div className="col-md-6 col-sm-12">
                       <button

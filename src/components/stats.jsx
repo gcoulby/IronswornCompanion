@@ -129,6 +129,27 @@ class Stats extends Component {
     this.setState({ players });
   };
 
+  handleOnPlayerStatChanged = (stat, increment) => {
+    const players = this.props.players.map((p) => {
+      if (p.selected === true) {
+        let val = increment ? 1 : -1;
+        p.stats.map((s) => {
+          if (s.stat !== stat) return s;
+          s.value += val;
+          s.value = s.value > 3 ? 3 : s.value;
+          s.value = s.value < 0 ? 0 : s.value;
+          return s;
+        });
+      }
+      return p;
+    });
+    this.setState({ players });
+  };
+
+  componentDidUpdate() {
+    this.props.onComponentUpdate();
+  }
+
   render() {
     if (this.props.selectedPlayer == null) return <UnselectedPlayer />;
     return (
@@ -149,7 +170,33 @@ class Stats extends Component {
               .map((s) => (
                 <div className="col stat-col">
                   <div key={s.stat} className="card stat-card">
-                    <h2>{s.value}</h2>
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-4">
+                          <button
+                            className="btn btn-outline-dark progressTrackBtn"
+                            onClick={() =>
+                              this.handleOnPlayerStatChanged(s.stat, false)
+                            }
+                          >
+                            <i className="fa fa-minus" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                        <div className="col-4">
+                          <h2>{s.value}</h2>
+                        </div>
+                        <div className="col-4">
+                          <button
+                            className="btn btn-outline-dark progressTrackBtn"
+                            onClick={() =>
+                              this.handleOnPlayerStatChanged(s.stat, true)
+                            }
+                          >
+                            <i className="fa fa-plus" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                     <p className="modesto">{s.stat}</p>
                   </div>
                 </div>

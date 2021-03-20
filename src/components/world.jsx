@@ -328,6 +328,10 @@ class World extends Component {
     this.setState({ world: world });
   };
 
+  componentDidUpdate() {
+    this.props.onComponentUpdate();
+  }
+
   render() {
     return (
       <React.Fragment>
