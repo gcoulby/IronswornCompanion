@@ -795,6 +795,7 @@ class App extends Component {
                     locations={this.state.locations}
                     nextLocationId={this.state.nextLocationId}
                     npcs={this.state.npcs}
+                    players={this.state.players}
                     selectedPlayer={this.getSelectedPlayer()}
                     onComponentUpdate={this.componentDidUpdate}
                   />

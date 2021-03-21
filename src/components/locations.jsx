@@ -125,14 +125,14 @@ class Locations extends Component {
   /*=================================*/
 
   handleOnLocationProgressionChanged = (id, increment) => {
-    const locations = this.state.locations.map((l) => {
+    const locations = this.props.locations.map((l) => {
       if (l.id == id) {
         let val = increment ? 1 : -1;
         l.bond += val;
         l.bond = l.bond > 40 ? 40 : l.bond;
         l.bond = l.bond < 0 ? 0 : l.bond;
 
-        const players = this.state.players.map((p) => {
+        const players = this.props.players.map((p) => {
           // if (p.name == this.getSelectedPlayer().name) {
           p.bonds += val;
           p.bonds = p.bonds > 40 ? 40 : p.bonds;
@@ -470,7 +470,7 @@ class Locations extends Component {
                       // .bond
                     }
                     onProgressionChange={(increment) =>
-                      this.props.onLocationProgressionChanged(
+                      this.handleOnLocationProgressionChanged(
                         this.state.id,
                         increment
                       )
