@@ -8,7 +8,65 @@ import TitleBlock from "./titleBlock";
 
 import ComboBox from "./icons";
 class AssetBuilder extends Component {
-  state = {};
+  state = {
+    printableCards: [],
+  };
+
+  valueToStat(val, steps) {
+    let n = 100 / (steps - 1);
+    return val == 0 ? 0 : Math.round(val / n);
+  }
+
+  setPrintableCardSet(showBacks = true) {
+    let cache = [];
+    const printableCards = [];
+    for (let i = 0; i < this.props.assets.length; i++) {
+      let asset = this.props.assets[i];
+      let assetBack = { type: asset["Asset Type"], front: false };
+      cache.push(assetBack);
+      printableCards.push(asset);
+      if ((i + 1) % 9 == 0) {
+        for (let j = 0; j < cache.length; j++) {
+          let assetBack = cache[j];
+          printableCards.push(assetBack);
+        }
+        cache = [];
+      }
+    }
+    this.setState({ printableCards });
+  }
+
+  handleStatTrackChange = (evt, name, steps, offset) => {
+    let val = evt.target.value;
+    console.log(val);
+    console.log(name);
+    console.log(steps);
+    let stat = this.valueToStat(val, steps);
+    const assets = this.props.assets.map((a) => {
+      if (a.id === name) {
+        a.trackValue = stat;
+      }
+      return a;
+    });
+    this.setState({ assets });
+    this.setPrintableCardSet();
+  };
+
+  // handleOnTrackProgressChange = (evt) => {
+  //   console.log(evt.target.value);
+  // };
+
+  componentDidMount() {
+    this.setPrintableCardSet();
+  }
+
+  componentDidUpdate() {
+    this.props.onComponentUpdate();
+  }
+
+  handlePrint() {
+    window.print();
+  }
   render() {
     return (
       <React.Fragment>
@@ -19,7 +77,20 @@ class AssetBuilder extends Component {
         <h1 className="print-hide">Asset Builder</h1>
         <div className="row print-hide">
           {/* <div className="col-3"> */}
-          <AssetCard asset={this.props.assets[0]} />
+          <AssetCard
+            asset={this.props.assets[0]}
+            onTrackProgressChange={() => {}}
+            onInputFieldChange={() => {}}
+            onAbilityCheckChange={() => {}}
+            hideThumb={true}
+            disabled={true}
+            stat={{
+              stat: -1,
+              hideLabel: true,
+              value: 0,
+              trackLabels: [],
+            }}
+          />
           {/* </div> */}
           <div className="col">
             <input id="id" type="hidden" />
@@ -430,15 +501,55 @@ class AssetBuilder extends Component {
           </div>
           <a
             class="print-hide btn btn-dark"
-            href="javascript:window.print();"
             title="Print"
+            onClick={() => this.handlePrint()}
           >
             Print Cards
           </a>
         </div>
-        {this.props.assets.map((a) => (
-          <AssetCard asset={a} />
-        ))}
+
+        {this.state.printableCards.map((a) => {
+          if (a.front)
+            return (
+              <AssetCard
+                asset={a}
+                hideThumb={true}
+                disabled={true}
+                stat={{
+                  stat: a.id,
+                  hideLabel: true,
+                  value: a.trackValue,
+                  trackLabels:
+                    a.MultiFieldAssetTrack != null
+                      ? a.MultiFieldAssetTrack.Fields.map((f) => {
+                          return f.ActiveText;
+                        })
+                      : [],
+                }}
+                onTrackProgressChange={() => {}}
+                onInputFieldChange={() => {}}
+                onAbilityCheckChange={() => {}}
+              />
+            );
+          else {
+            return (
+              <React.Fragment>
+                <div className="card asset-card asset-card-back text-center print-show">
+                  <h3>IRONSWORN</h3>
+                  <div className="asset-icon">
+                    <i
+                      class={`game-icon game-icon-croc-sword`}
+                      // aria-hidden="true"
+                    ></i>
+                  </div>
+                  <div className="hr"></div>
+
+                  <h1 className="mt-5">{a.type}</h1>
+                </div>
+              </React.Fragment>
+            );
+          }
+        })}
 
         <div class="page-break"></div>
 

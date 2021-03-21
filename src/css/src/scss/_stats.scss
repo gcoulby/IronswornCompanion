@@ -123,7 +123,7 @@ label::before {
   top: 0.7em;
 }
 .slider-container ul.slider-ticks li {
-  z-index: -10;
+  z-index: 10;
   color: #000;
   display: inline-block;
   font-size: 20px;
@@ -241,32 +241,49 @@ label::before {
   color: white;
 }
 
-.stat-track-Health,
-.stat-track-Spirit,
-.stat-track-Supply {
-  .slider-tick {
-    width: 16.66%;
+$start: 0;
+$end: 20;
+
+@for $i from $start through $end {
+  // .class-name--#{$i} {
+  //   width: #{$i}px;
+  // }
+
+  // $stat-width: percentage($i/100);
+  $stat-width: 0;
+  @if $i > 0 {
+    $stat-width: (100 / ($i + 1))/100;
   }
-  .slider-container .slider::-webkit-slider-thumb {
-    width: 16.66%;
-  }
-  .slider-container .slider::-moz-range-thumb {
-    width: 16.66%;
+  .stat-track-#{$i} {
+    .slider-tick {
+      width: percentage($stat-width);
+    }
+    .slider-container .slider::-webkit-slider-thumb {
+      width: percentage($stat-width);
+    }
+    .slider-container .slider::-moz-range-thumb {
+      width: percentage($stat-width);
+    }
   }
 }
 
-.stat-track-Momentum {
-  .slider-tick {
-    width: 5.88%;
+.hide-thumb {
+  input {
+    cursor: default !important;
   }
-  .slider-container .slider::-webkit-slider-thumb {
-    width: 5.88%;
+  .slider::-webkit-slider-thumb {
+    display: none !important;
   }
-  .slider-container .slider::-moz-range-thumb {
-    width: 5.88%;
+  .slider::-moz-range-thumb {
+    display: none !important;
   }
 }
 
 .deb-cb label:before {
   height: 2em !important;
+}
+
+.slider-tick-label {
+  font-size: 16px !important;
+  line-height: 1.2em !important;
 }

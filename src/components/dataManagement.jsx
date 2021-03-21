@@ -42,6 +42,17 @@ class DataManager extends Component {
         >
           <i className="fas fa-download"></i>&nbsp;Save
         </button>
+
+        <TitleBlock title="Update Core Assets" />
+        <div className="alert alert-secondary">
+          Update core assets from RSEK's Datasworn
+        </div>
+        <button
+          className="btn btn-dark"
+          onClick={() => this.props.onUpdateAssetClick()}
+        >
+          <i className="fas fa-refresh"></i>&nbsp;Update Core Assets
+        </button>
       </React.Fragment>
     );
   }

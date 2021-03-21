@@ -20,11 +20,14 @@ class Locations extends Component {
     addButtonClass: "show",
     deleteButtonClass: "hide",
     npcs: [],
+    markers: [],
   };
 
   constructor() {
     super();
     this.oracles = new Oracles();
+    // const L = Leaflet;
+    // let map = this.createMap(L);
   }
 
   /*=================================*/
@@ -47,8 +50,10 @@ class Locations extends Component {
 
   componentDidMount() {
     const L = Leaflet;
-    let map = this.createMap(L);
-    this.addMarkers(L, map);
+    let map = this.createMap();
+    this.state.map = map;
+    this.createMarkers();
+    this.addMarkers();
   }
 
   setXY(x, y) {
@@ -56,7 +61,8 @@ class Locations extends Component {
     this.setState({ y });
   }
 
-  createMap(L) {
+  createMap() {
+    const L = Leaflet;
     let map = L.map("mapid", {
       crs: L.CRS.Simple,
       zoomSnap: 0.25,
@@ -75,22 +81,71 @@ class Locations extends Component {
     return map;
   }
 
-  addMarkers(L, map) {
+  createMarkers = () => {
+    const markers = [];
+    const L = Leaflet;
     var myIcon = L.icon({
       iconUrl: mapMarker,
       iconSize: [32, 32],
       iconAnchor: [0, 32],
       popupAnchor: [15, -32],
     });
+
     for (let i = 0; i < this.props.locations.length; i++) {
       const location = this.props.locations[i];
       var loc = L.latLng([location.y, location.x]);
       let marker = L.marker(loc, { icon: myIcon });
       marker.on("click", (e) => this.onMarkerClick(e));
-      marker.addTo(map);
-      marker.bindPopup(`${location.id}: ${location.name}`);
+      markers.push({
+        marker: marker,
+        locationId: location.id,
+        locationName: location.name,
+      });
     }
+    this.setState({ markers });
+  };
+
+  addMarkers = () => {
+    // this.state.markers.map()
+    this.state.markers.map((m) => {
+      m.marker.addTo(this.state.map);
+      m.marker.bindPopup(`${m.locationId}: ${m.locationName}`);
+    });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.markers.length !== prevState.markers.length)
+      this.createMarkers();
+    this.addMarkers();
+    this.props.onComponentUpdate();
   }
+
+  /*=================================*/
+  /*    Locations
+  /*=================================*/
+
+  handleOnLocationProgressionChanged = (id, increment) => {
+    const locations = this.state.locations.map((l) => {
+      if (l.id == id) {
+        let val = increment ? 1 : -1;
+        l.bond += val;
+        l.bond = l.bond > 40 ? 40 : l.bond;
+        l.bond = l.bond < 0 ? 0 : l.bond;
+
+        const players = this.state.players.map((p) => {
+          // if (p.name == this.getSelectedPlayer().name) {
+          p.bonds += val;
+          p.bonds = p.bonds > 40 ? 40 : p.bonds;
+          p.bonds = p.bonds < 0 ? 0 : p.bonds;
+          // }
+          return p;
+        });
+        this.setState({ players });
+      }
+      return l;
+    });
+    this.setState({ locations });
+  };
 
   /*=================================*/
   /*    Events
@@ -125,24 +180,48 @@ class Locations extends Component {
   };
 
   handleOnSaveLocation() {
-    this.props.onAddLocationClick(
-      this.state.id,
-      this.state.name,
-      this.state.descriptor,
-      this.state.features,
-      this.state.trouble,
-      this.state.x,
-      this.state.y,
-      this.state.additionalInfo
-    );
+    if (this.state.name != "" && this.state.x > 0 && this.state.y > 0) {
+      const locations = this.props.locations;
+
+      let id = 0;
+      if (this.state.id > -1) {
+        id = this.state.id;
+      } else if (locations.length > 0) {
+        id = locations[locations.length - 1].id + 1;
+      }
+      locations[locations.length] = {
+        id: id,
+        name: this.state.name,
+        descriptor: this.state.descriptor,
+        features: this.state.features,
+        trouble: this.state.trouble,
+        x: this.state.x,
+        y: this.state.y,
+        additionalInfo: this.state.additionalInfo,
+        bond: 0,
+      };
+      this.setState({ locations: locations });
+    }
+
     this.clearState();
-    window.location.reload();
+    this.createMarkers();
   }
 
-  handleOnDeleteLocation() {
-    this.props.onDeleteLocationClick(this.state.id);
+  handleOnDeleteLocation = () => {
+    console.log(this.state.id);
+    const locations = this.props.locations;
+    let pos = -1;
+    for (let i = 0; i < locations.length; i++) {
+      let l = locations[i];
+      if (l.id === this.state.id) {
+        pos = i;
+      }
+    }
+
+    if (pos != -1) locations.splice(pos, 1);
+    this.setState({ locations: locations });
     window.location.reload();
-  }
+  };
 
   handleOnRollName = () => {
     let rn = this.oracles.SettlementName;

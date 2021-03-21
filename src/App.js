@@ -46,6 +46,8 @@ class App extends Component {
     newPlayer: {},
     world: {},
 
+    locations: [],
+
     foes: [],
     newFoe: {},
     activeFoes: {
@@ -200,8 +202,8 @@ class App extends Component {
         buttonText: "Write Your Epilogue",
       },
     ],
-    newVowText: "",
-    newVowRank: 0,
+    // newVowText: "",
+    // newVowRank: 0,
 
     imgurAlbumHash: "cFnZi",
     logInput: "",
@@ -218,12 +220,12 @@ class App extends Component {
       Knowledge: "",
       Location: -1,
     },
-    locations: [],
+
     nextLogId: 0,
-    nextVowId: 0,
+    // nextVowId: 0,
     nextAssetId: 0,
     nextBackgroundId: 0,
-    nextLocationId: 0,
+    // nextLocationId: 0,
     nextNPCId: 0,
     footerDice: {},
     oracles: new Oracles(),
@@ -268,42 +270,56 @@ class App extends Component {
     localStorage.setItem("game_state", JSON.stringify(this.state));
   }
 
-  updateCoreAssets() {
+  updateCoreAssets = () => {
     // console.log("UPDATE CORE");
     fetch(
       "https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_assets.json"
     )
       .then((response) => response.json())
       .then((data) => {
-        const assets = [...this.state.assets];
+        const assets = this.state.assets;
         for (let i = 0; i < data["Assets"].length; i++) {
           const asset = data["Assets"][i];
           asset.id = `core-${asset.Name.toLowerCase().replace(" ", "-")}`;
-          // console.log(asset.id);
           asset.core = true;
+          asset.front = true;
+          asset.icon = "crystal-ball";
+          let coreIcon = this.state.coreAssetIcons.find(
+            (c) => c.id == asset.id
+          );
+          if (coreIcon) asset.icon = coreIcon.icon;
+          asset.trackValue = 0;
+          if (asset["Input Fields"] !== undefined) {
+            asset["Input Fields"] = asset["Input Fields"].map((f) => {
+              return { name: f, value: "" };
+            });
+          }
+          // asset.Abilities = asset.Abilities.map(a=>{
+          //   a.Enabled === undefined{}
+          // })
+
+          if (asset.id == "core-kindred") {
+            asset["Input Fields"].push({
+              name: asset.Abilities[0]["Input Fields"][0],
+              value: "",
+            });
+          }
+
           let existingAsset = assets.find((a) => a.id == asset.id);
           if (existingAsset == undefined) {
-            asset.icon = "crystal-ball";
-            let coreIcon = this.state.coreAssetIcons.find(
-              (c) => c.id == asset.id
-            );
-            if (coreIcon) asset.icon = coreIcon.icon;
-
-            if (asset.id == "core-kindred") {
-              asset["Input Fields"].push(asset.Abilities[0]["Input Fields"][0]);
-            }
             assets.push(asset);
           } else {
-            if (asset.id == "core-kindred") {
-              asset["Input Fields"].push(asset.Abilities[0]["Input Fields"][0]);
-            }
+            // if (asset.id == "core-kindred") {
+            //   asset["Input Fields"].push(asset.Abilities[0]["Input Fields"][0]);
+            // }
             assets[assets.indexOf(existingAsset)] = asset;
           }
         }
         this.state.assets = assets;
+        console.log(assets);
         this.saveGameState();
       });
-  }
+  };
 
   updateFoes() {
     fetch(
@@ -603,67 +619,6 @@ class App extends Component {
   };
 
   /*=================================*/
-  /*    Locations
-  /*=================================*/
-
-  handleAddLocationClick = (
-    id,
-    name,
-    descriptor,
-    features,
-    trouble,
-    x,
-    y,
-    additionalInfo
-  ) => {
-    if (name != "" && x > 0 && y > 0) {
-      const locations = [...this.state.locations];
-      id = id == -1 ? this.state.nextLocationId : id;
-      locations[locations.length] = {
-        id: id,
-        name: name,
-        descriptor: descriptor,
-        features: features,
-        trouble: trouble,
-        x: x,
-        y: y,
-        additionalInfo: additionalInfo,
-        bond: 0,
-      };
-      this.setState({ nextLocationId: this.state.nextLocationId + 1 });
-      this.setState({ locations });
-    }
-  };
-
-  handleOnLocationDeleteClick = (id) => {
-    const locations = this.state.locations.filter((l) => l.id !== id);
-    this.setState({ locations });
-  };
-
-  handleOnLocationProgressionChanged = (id, increment) => {
-    const locations = this.state.locations.map((l) => {
-      if (l.id == id) {
-        let val = increment ? 1 : -1;
-        l.bond += val;
-        l.bond = l.bond > 40 ? 40 : l.bond;
-        l.bond = l.bond < 0 ? 0 : l.bond;
-
-        const players = this.state.players.map((p) => {
-          // if (p.name == this.getSelectedPlayer().name) {
-          p.bonds += val;
-          p.bonds = p.bonds > 40 ? 40 : p.bonds;
-          p.bonds = p.bonds < 0 ? 0 : p.bonds;
-          // }
-          return p;
-        });
-        this.setState({ players });
-      }
-      return l;
-    });
-    this.setState({ locations });
-  };
-
-  /*=================================*/
   /*    Background
   /*=================================*/
 
@@ -837,14 +792,11 @@ class App extends Component {
                 </Route>
                 <Route path="/locations">
                   <Locations
-                    onAddLocationClick={this.handleAddLocationClick}
-                    onDeleteLocationClick={this.handleOnLocationDeleteClick}
                     locations={this.state.locations}
+                    nextLocationId={this.state.nextLocationId}
                     npcs={this.state.npcs}
                     selectedPlayer={this.getSelectedPlayer()}
-                    onLocationProgressionChanged={
-                      this.handleOnLocationProgressionChanged
-                    }
+                    onComponentUpdate={this.componentDidUpdate}
                   />
                 </Route>
                 <Route exact path="/enter-the-fray">
@@ -920,7 +872,12 @@ class App extends Component {
                 </Route>
 
                 <Route exact path="/assets">
-                  <Assets assets={this.state.assets} />
+                  <Assets
+                    assets={this.state.assets}
+                    players={this.state.players}
+                    selectedPlayer={this.getSelectedPlayer()}
+                    onComponentUpdate={this.componentDidUpdate}
+                  />
                 </Route>
 
                 <Route exact path="/roll">
@@ -941,6 +898,7 @@ class App extends Component {
                     assets={this.state.assets}
                     selectedAsset={this.state.assetBuilderSelectedAsset}
                     onSelectedAssetChange={this.handleOnSelectedAssetChange}
+                    onComponentUpdate={this.componentDidUpdate}
                   />
                 </Route>
 
@@ -952,6 +910,7 @@ class App extends Component {
                     onResetClick={this.resetData}
                     onDownloadClick={this.saveData}
                     onLoadClick={this.loadData}
+                    onUpdateAssetClick={this.updateCoreAssets}
                   />
                 </Route>
                 {/* </Switch> */}

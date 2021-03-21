@@ -22,13 +22,40 @@ class StatTrack extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className={`stat-track stat-track-${this.props.stat.stat}`}>
-          <span className="track-title modesto">{this.props.stat.stat}</span>
-          <div className="slider-container">
+        <div
+          className={`stat-track stat-track-${
+            this.props.stat.stat == "Momentum" ? "16" : this.props.max
+          } `}
+        >
+          {this.props.stat.hideLabel != true ? (
+            <React.Fragment>
+              <span className="track-title modesto">
+                {this.props.stat.stat}
+              </span>
+            </React.Fragment>
+          ) : (
+            React.Fragment
+          )}
+          <div
+            className={`slider-container ${
+              this.props.hideThumb ? "hide-thumb" : ""
+            }`}
+          >
             <ul className="slider-ticks">
-              {this.state.ticks.map((t) => (
-                <li className="slider-tick">{t <= 0 ? `${t}` : `+${t}`}</li>
-              ))}
+              {this.props.stat.trackLabels !== undefined &&
+              this.props.stat.trackLabels.length > 0 ? (
+                <React.Fragment>
+                  {this.props.stat.trackLabels.map((t) => (
+                    <li className="slider-tick slider-tick-label">{t}</li>
+                  ))}
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  {this.state.ticks.map((t) => (
+                    <li className="slider-tick">{t <= 0 ? `${t}` : `+${t}`}</li>
+                  ))}
+                </React.Fragment>
+              )}
             </ul>
             <input
               type="range"

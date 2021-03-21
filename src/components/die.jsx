@@ -13,7 +13,7 @@ class Die extends Component {
   };
   constructor(props) {
     super();
-    console.log(props.die.id);
+    // console.log(props.die.id);
     switch (props.die.id) {
       case 2:
         this.state.dieImg = d2;
@@ -46,14 +46,7 @@ class Die extends Component {
         <div className="card dice-card">
           <div className="dice text-center">
             <h6>D{this.props.die.id}</h6>
-            <img
-              src={this.state.dieImg}
-              // {
-              //   "/img/d" +
-              //   (this.props.die.id == 100 ? 10 : this.props.die.id) +
-              //   ".svg"
-              // }
-            />
+            <img src={this.state.dieImg} />
           </div>
           <input
             id={`d${this.props.die.id}_qty`}

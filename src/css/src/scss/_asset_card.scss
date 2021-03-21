@@ -207,8 +207,8 @@ $card-scale: 1.4;
   }
 }
 
-.asset-card-back {
-  display: none;
+.print-show {
+  display: none !important;
 }
 
 @media print {
@@ -221,12 +221,9 @@ $card-scale: 1.4;
     page-break-before: always;
   }
 
-  // body {
-  //   margin: 0 1rem ($card-height / 2) 0;
-  //   // overflow-y: scroll;
-  //   cursor: default;
-  // }
-
+  .print-show {
+    display: block !important;
+  }
   .print-hide {
     display: none !important;
   }
@@ -243,6 +240,21 @@ $card-scale: 1.4;
 
   .asset-card-back {
     display: block;
+  }
+
+  .asset-card {
+    .slider-container .slider {
+      box-shadow: none;
+    }
+  }
+
+  .asset-card {
+    .slider-container .slider::-webkit-slider-thumb {
+      display: none;
+    }
+    .slider-container .slider::-moz-range-thumb {
+      display: none;
+    }
   }
   // #assetCards {
   //   position: absolute;
@@ -289,4 +301,66 @@ $card-scale: 1.4;
 input.autocomplete-input {
   margin-top: -0.2em !important;
   padding: 0 !important;
+}
+
+.asset-card-back {
+  h3 {
+    margin-top: 4em;
+  }
+
+  .asset-card-back-line {
+    margin-top: 3em;
+    border-top: 2px solid rgba(0, 0, 0, 1);
+  }
+  .container {
+    position: relative;
+  }
+  .asset-icon {
+    color: white;
+    transform: rotate(45deg);
+    left: 50%;
+    margin-left: -1.5em;
+    top: 12em;
+  }
+
+  .hr {
+    height: 5px;
+    border-top: 2px solid black;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 2em;
+  }
+}
+
+.asset-card {
+  // .stat-track-container {
+  //   position: absolute;
+  //   bottom: 0;
+  // }
+  .slider-container {
+    width: 88%;
+    position: absolute;
+    bottom: 1em;
+  }
+  .slider-container ul.slider-ticks li:not(:last-child):before {
+    content: "";
+    border: 0 !important;
+    clear: both;
+  }
+
+  .slider-container ul.slider-ticks li:not(:last-child):after {
+    content: "";
+    border: 0 !important;
+    clear: both;
+  }
+  .slider-container ul.slider-ticks li {
+    margin-top: 0.1em;
+    line-height: 2.1em;
+  }
+
+  .form-control:disabled,
+  .form-control[readonly] {
+    background-color: white;
+    opacity: 1;
+  }
 }
