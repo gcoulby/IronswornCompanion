@@ -60,8 +60,8 @@ class StatTrack extends Component {
             </ul>
             <input
               type="range"
-              min={this.props.min}
-              max={this.props.max}
+              min={this.state.min}
+              max={this.state.max}
               step="1"
               value={this.getTrackPosition()}
               onChange={(e) => this.props.onChange(e, this.props.stat.stat, ticks.length, -this.state.offset)}

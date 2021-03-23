@@ -423,7 +423,7 @@ class App extends Component {
                   <h6 class="text-light">Version {this.version}</h6>
 
                   <div id="bg-image"></div>
-                  <div className="alert alert-info">
+                  <div id="welcome-page-notice" className="alert alert-secondary">
                     This application is still heavilly under development and is live only to demonstrate functionality
                     and receive feedback. As a result, it cannot be guaranteed that save files created in this version
                     of the application will work in all future versions.
