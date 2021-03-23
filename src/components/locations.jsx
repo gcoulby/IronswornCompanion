@@ -114,8 +114,7 @@ class Locations extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.markers.length !== prevState.markers.length)
-      this.createMarkers();
+    if (this.state.markers.length !== prevState.markers.length) this.createMarkers();
     this.addMarkers();
     this.props.onComponentUpdate();
   }
@@ -208,7 +207,6 @@ class Locations extends Component {
   }
 
   handleOnDeleteLocation = () => {
-    console.log(this.state.id);
     const locations = this.props.locations;
     let pos = -1;
     for (let i = 0; i < locations.length; i++) {
@@ -286,37 +284,23 @@ class Locations extends Component {
               <div className="col-9">
                 <h3>Location/Settlement Details</h3>
               </div>
-              <div
-                id="locationAddBtn"
-                className={`col-3 text-right ${this.state.addButtonClass}`}
-              >
-                <button
-                  className="btn btn-dark"
-                  onClick={() => this.handleOnSaveLocation()}
-                >
+              <div id="locationAddBtn" className={`col-3 text-right ${this.state.addButtonClass}`}>
+                <button className="btn btn-dark" onClick={() => this.handleOnSaveLocation()}>
                   <i className="fas fa-save"></i> Save Location
                 </button>
               </div>
             </div>
 
             <p className="mt-3">
-              Click on the map to choose an X,Y coordinate for your new
-              location. Then fill out the details for each field either by
-              typing into the boxes or consulting the oracle. You can edit
-              locations by clicking on a map pin and changing the details.
+              Click on the map to choose an X,Y coordinate for your new location. Then fill out the details for each
+              field either by typing into the boxes or consulting the oracle. You can edit locations by clicking on a
+              map pin and changing the details.
             </p>
 
-            <input
-              type="hidden"
-              className="form-control"
-              value={this.state.id}
-              disabled
-            />
+            <input type="hidden" className="form-control" value={this.state.id} disabled />
 
             <div className="input-group mb-3">
-              <label className="input-group-prepend btn btn-dark btn-tag">
-                X:
-              </label>
+              <label className="input-group-prepend btn btn-dark btn-tag">X:</label>
               <input
                 type="text"
                 className="form-control input-group-prepend"
@@ -326,9 +310,7 @@ class Locations extends Component {
                 disabled
                 value={this.state.x}
               />
-              <label className="input-group-prepend btn btn-dark btn-tag">
-                Y:
-              </label>
+              <label className="input-group-prepend btn btn-dark btn-tag">Y:</label>
               <input
                 type="text"
                 className="form-control"
@@ -345,9 +327,10 @@ class Locations extends Component {
                 <button
                   className="btn btn-dark"
                   type="button"
+                  title="Roll on the oracle"
                   onClick={() => this.handleOnRollName()}
                 >
-                  <i className="fas fa-dice-d20"></i> Roll
+                  <i className="fas fa-dice-d20"></i> Name
                 </button>
               </div>
               <input
@@ -380,9 +363,10 @@ class Locations extends Component {
                 <button
                   className="btn btn-dark"
                   type="button"
+                  title="Roll on the oracle"
                   onClick={() => this.handleOnRollDescriptor()}
                 >
-                  <i className="fas fa-dice-d20"></i> Roll
+                  <i className="fas fa-dice-d20"></i> Descriptor
                 </button>
               </div>
               <input
@@ -401,18 +385,20 @@ class Locations extends Component {
                 <button
                   className="btn btn-dark"
                   type="button"
+                  title="Roll on the oracle"
                   onClick={() => this.handleOnRollFeature()}
                 >
-                  <i className="fas fa-dice-d20"></i> Roll Mainland
+                  <i className="fas fa-dice-d20"></i> Mainland
                 </button>
               </div>
               <div className="input-group-prepend">
                 <button
                   className="btn btn-secondary"
                   type="button"
+                  title="Roll on the oracle"
                   onClick={() => this.handleOnRollCoastalFeature()}
                 >
-                  <i className="fas fa-dice-d20"></i> Roll Coastal
+                  <i className="fas fa-dice-d20"></i> Coastal
                 </button>
               </div>
 
@@ -432,9 +418,10 @@ class Locations extends Component {
                 <button
                   className="btn btn-dark"
                   type="button"
+                  title="Roll on the oracle"
                   onClick={() => this.handleOnRollLocationTrouble()}
                 >
-                  <i className="fas fa-dice-d20"></i> Roll
+                  <i className="fas fa-dice-d20"></i> Trouble
                 </button>
               </div>
               <input
@@ -447,6 +434,7 @@ class Locations extends Component {
                 onChange={(e) => this.handleOnLocationTroubleChanged(e)}
               />
             </div>
+            <span className="modesto">Additional Information:</span>
             <textarea
               className="form-control mb-3"
               placeholder="Additional Information"
@@ -463,17 +451,12 @@ class Locations extends Component {
                     key={this.state.id}
                     progress={
                       this.props.locations.find((l) => l.id == this.state.id)
-                        ? this.props.locations.find(
-                            (l) => l.id == this.state.id
-                          ).bond
+                        ? this.props.locations.find((l) => l.id == this.state.id).bond
                         : 0
                       // .bond
                     }
                     onProgressionChange={(increment) =>
-                      this.handleOnLocationProgressionChanged(
-                        this.state.id,
-                        increment
-                      )
+                      this.handleOnLocationProgressionChanged(this.state.id, increment)
                     }
                   />
                 </React.Fragment>

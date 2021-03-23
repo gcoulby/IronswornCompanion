@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import UniqueKeyGenerator from "./uniqueKeyGenerator";
 class StatTrack extends Component {
   state = {
     ticks: [],
@@ -11,6 +12,14 @@ class StatTrack extends Component {
     this.state.offset = props.min < 0 ? props.min * -1 : props.min;
   }
 
+  getTicks = () => {
+    let ticks = [];
+    for (let i = this.props.min; i <= this.props.max; i++) {
+      ticks.push(i);
+    }
+    return ticks;
+  };
+
   getTrackPosition() {
     let val = this.props.stat.value + this.state.offset;
     let n = 100 / (this.state.ticks.length - 1);
@@ -20,38 +29,30 @@ class StatTrack extends Component {
   }
 
   render() {
+    let ticks = this.getTicks();
     return (
       <React.Fragment>
-        <div
-          className={`stat-track stat-track-${
-            this.props.stat.stat == "Momentum" ? "16" : this.props.max
-          } `}
-        >
+        <div className={`stat-track stat-track-${this.props.stat.stat == "Momentum" ? "16" : this.props.max} `}>
           {this.props.stat.hideLabel != true ? (
             <React.Fragment>
-              <span className="track-title modesto">
-                {this.props.stat.stat}
-              </span>
+              <span className="track-title modesto">{this.props.stat.stat}</span>
             </React.Fragment>
           ) : (
             React.Fragment
           )}
-          <div
-            className={`slider-container ${
-              this.props.hideThumb ? "hide-thumb" : ""
-            }`}
-          >
+          <div className={`slider-container ${this.props.hideThumb ? "hide-thumb" : ""}`}>
             <ul className="slider-ticks">
-              {this.props.stat.trackLabels !== undefined &&
-              this.props.stat.trackLabels.length > 0 ? (
+              {this.props.stat.trackLabels !== undefined && this.props.stat.trackLabels.length > 0 ? (
                 <React.Fragment>
                   {this.props.stat.trackLabels.map((t) => (
-                    <li className="slider-tick slider-tick-label">{t}</li>
+                    <li key={UniqueKeyGenerator.generate()} className="slider-tick slider-tick-label">
+                      <span>{t}</span>
+                    </li>
                   ))}
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  {this.state.ticks.map((t) => (
+                  {ticks.map((t) => (
                     <li className="slider-tick">{t <= 0 ? `${t}` : `+${t}`}</li>
                   ))}
                 </React.Fragment>
@@ -59,18 +60,11 @@ class StatTrack extends Component {
             </ul>
             <input
               type="range"
-              min={this.state.min}
-              max={this.state.max}
+              min={this.props.min}
+              max={this.props.max}
               step="1"
               value={this.getTrackPosition()}
-              onChange={(e) =>
-                this.props.onChange(
-                  e,
-                  this.props.stat.stat,
-                  this.state.ticks.length,
-                  -this.state.offset
-                )
-              }
+              onChange={(e) => this.props.onChange(e, this.props.stat.stat, ticks.length, -this.state.offset)}
               className="slider gh-slider-option4"
               id="test"
             />

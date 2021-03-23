@@ -49,10 +49,7 @@ class OracleEditor extends Component {
 
   componentDidUpdate() {
     let el = document.getElementById("tableEditor");
-    el.setSelectionRange(
-      this.props.oracles.editOracleCursorPosition,
-      this.props.oracles.editOracleCursorPosition
-    );
+    el.setSelectionRange(this.props.oracles.editOracleCursorPosition, this.props.oracles.editOracleCursorPosition);
     this.props.onComponentUpdate();
   }
   render() {
@@ -80,11 +77,7 @@ class OracleEditor extends Component {
         </div>
         <div className="row mb-4">
           <div className="col">
-            <button
-              className="btn btn-dark"
-              type="button"
-              onClick={() => this.handleAddOracleTable()}
-            >
+            <button className="btn btn-dark" type="button" onClick={() => this.handleAddOracleTable()}>
               <i className="fas fa-plus" aria-hidden="true"></i>
               &nbsp;Add Oracle Table
             </button>
@@ -107,10 +100,7 @@ class OracleEditor extends Component {
               >
                 <option val="">Select Table</option>
                 {this.props.oracles.OracleTableNames.map((o) => (
-                  <option
-                    key={this.props.oracles.OracleTableNames.indexOf(o)}
-                    value={o}
-                  >
+                  <option key={this.props.oracles.OracleTableNames.indexOf(o)} value={o}>
                     {o}
                   </option>
                 ))}
@@ -120,9 +110,7 @@ class OracleEditor extends Component {
             <textarea
               id="tableEditor"
               wrap="off"
-              value={this.props.oracles.getOracleTablePrompts(
-                this.props.oracles.selectedOracleTable
-              )}
+              value={this.props.oracles.getOracleTablePrompts(this.props.oracles.selectedOracleTable)}
               onChange={(e) => this.handleOracleTablePromptsChange(e)}
             ></textarea>
             {this.props.oracles.isCore(this.props.selectedOracleTable) ? (
@@ -134,11 +122,7 @@ class OracleEditor extends Component {
                     <div
                       id="locationDeleteBtn"
                       className={`mt-2 ${this.state.deleteButtonClass}`}
-                      onClick={() =>
-                        this.handleDeleteOracleTable(
-                          this.props.selectedOracleTable
-                        )
-                      }
+                      onClick={() => this.handleDeleteOracleTable(this.props.selectedOracleTable)}
                     >
                       <button className="btn btn-danger">
                         <i className="fas fa-times"></i> Delete Table
@@ -151,8 +135,7 @@ class OracleEditor extends Component {
           </div>
           <div className="col-7">
             <h3>
-              <i class="ra ra-crystal-ball" aria-hidden="true"></i> Ask the
-              Oracle
+              <i class="ra ra-crystal-ball" aria-hidden="true"></i> Ask the Oracle
             </h3>
             {this.props.oracles.tables.map((o) => (
               <OracleRoller tableName={o.title} oracles={this.props.oracles} />

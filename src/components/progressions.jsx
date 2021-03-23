@@ -60,6 +60,7 @@ class Progression extends Component {
       });
       this.setState({ players });
       this.setState({ newProgressions });
+      this.props.updateFooterDice();
     }
   };
 
@@ -98,6 +99,7 @@ class Progression extends Component {
       return p;
     });
     this.setState({ players });
+    this.props.updateFooterDice();
   };
 
   handleOnProgressionRankChanged = (evt, id) => {
@@ -131,6 +133,7 @@ class Progression extends Component {
       return p;
     });
     this.setState({ players });
+    this.props.updateFooterDice();
   };
 
   getProgressionByType(type = null) {
@@ -142,7 +145,6 @@ class Progression extends Component {
     this.props.onComponentUpdate();
   }
 
-  //TODO: CANCEL VOW
   render() {
     if (this.props.selectedPlayer == null) return <UnselectedPlayer />;
     return (
@@ -224,7 +226,6 @@ class Progression extends Component {
                 onProgressionRankChange={this.handleOnProgressionRankChanged}
                 onProgressRollClicked={this.props.onProgressRollClicked}
                 onProgressCancel={this.handleProgressionDelete}
-                // onProgressionRegress={this.props.onProgressionRegress}
               />
             ))}
         </div>

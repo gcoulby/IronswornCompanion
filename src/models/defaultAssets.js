@@ -1,18 +1,19 @@
-class Asset {
-  id;
-  title = "";
-  assetType = "";
-  iconClass = "ra ra-perspective-dice-random";
-  levels = [
-    { selected: true, text: "" },
-    { selected: false, text: "" },
-    { selected: false, text: "" },
+class DefaultAsset {
+  id = "";
+  Type = "";
+  Name = "";
+  core = false;
+  front = true;
+  icon = "perspective-dice-six-faces-random";
+  Abilities = [
+    { Name: "", Text: "", Enabled: false },
+    { Name: "", Text: "", Enabled: false },
+    { Name: "", Text: "", Enabled: false },
   ];
-  trackType = 0;
-  trackCount = -1;
-  trackValues = [];
-  description = "";
-  inputs = [];
+  InputFields = [];
+  Description = "";
+  TrackMax = 0;
+  TrackValue = 0;
+  AssetTrackLabels = [];
 }
-
-defaultAssets: [];
+export default DefaultAsset;

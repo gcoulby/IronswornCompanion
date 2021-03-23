@@ -1,16 +1,11 @@
 @font-face {
   font-family: "Modesto";
-  src: url("//db.onlinewebfonts.com/t/962c169da925663d8af1d63c1a36537f.eot");
-  src: url("//db.onlinewebfonts.com/t/962c169da925663d8af1d63c1a36537f.eot?#iefix")
-      format("embedded-opentype"),
-    url("//db.onlinewebfonts.com/t/962c169da925663d8af1d63c1a36537f.woff2")
-      format("woff2"),
-    url("//db.onlinewebfonts.com/t/962c169da925663d8af1d63c1a36537f.woff")
-      format("woff"),
-    url("//db.onlinewebfonts.com/t/962c169da925663d8af1d63c1a36537f.ttf")
-      format("truetype"),
-    url("//db.onlinewebfonts.com/t/962c169da925663d8af1d63c1a36537f.svg#ModestoW01-Expd")
-      format("svg");
+  src: url("/src/fonts/modesto.eot");
+  src: url("/src/fonts/modesto_ie.eot") format("embedded-opentype"),
+    url("/src/fonts/modesto.woff2") format("woff2"),
+    url("/src/fonts/modesto.woff") format("woff"),
+    url("/src/fonts/modesto.ttf") format("truetype"),
+    url("/src/fonts/modesto.svg") format("svg");
 }
 
 @font-face {

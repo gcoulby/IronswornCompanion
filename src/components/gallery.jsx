@@ -6,7 +6,6 @@ class Gallery extends Component {
   }
   componentDidMount() {
     // let url = "https://api.imgur.com/3/album/" + this.props.imgurAlbumHash;
-    // console.log(url);
     // let response = fetch(url, {
     //   method: "GET",
     //   headers: {
@@ -20,8 +19,8 @@ class Gallery extends Component {
       <React.Fragment>
         <h1>Gallery</h1>
         <div className="alert alert-secondary">
-          Add an Imgur album hash to view the images of an Imgur album in the
-          gallery. Use this to view your campaign photos from the app.
+          Add an Imgur album hash to view the images of an Imgur album in the gallery. Use this to view your campaign
+          photos from the app.
         </div>
       </React.Fragment>
     );

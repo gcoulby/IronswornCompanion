@@ -20,16 +20,16 @@ class AssetCard extends Component {
   }
 
   buildStat(asset) {
-    let trackLabels = [];
-    if (asset.MultiFieldAssetTrack != null) {
-      asset.MultiFieldAssetTrack.Fields.map((f) => {
-        trackLabels.push(f.ActiveText);
-      });
-    }
+    let trackLabels = asset.TrackLabels ? asset.TrackLabels : [];
+    // if (asset.TrackLabels != null) {
+    //   asset.TrackLabels.map((f) => {
+    //     trackLabels.push(f);
+    //   });
+    // }
     return {
       stat: asset.id,
       hideLabel: true,
-      value: asset.trackValue,
+      value: asset.TrackValue,
       trackLabels: trackLabels,
     };
   }
@@ -39,29 +39,24 @@ class AssetCard extends Component {
       <React.Fragment>
         <div className="card asset-card">
           <div className="card-header bg-dark text-light">
-            <h6>{this.props.asset["Asset Type"]}</h6>
+            <h6>{this.props.asset.Type}</h6>
 
             <div className="asset-icon">
-              <i
-                class={`game-icon game-icon-${this.props.asset.icon}`}
-                aria-hidden="true"
-              ></i>
+              <i class={`game-icon game-icon-${this.props.asset.icon}`} aria-hidden="true"></i>
             </div>
           </div>
           <div className="card-body">
             <h4>{this.props.asset.Name}</h4>
-            {this.props.asset["Input Fields"] ? (
+            {this.props.asset.InputFields ? (
               <React.Fragment>
-                {this.props.asset["Input Fields"].map((f) => {
-                  let idx = this.props.asset["Input Fields"].indexOf(f);
+                {this.props.asset.InputFields.filter((f) => f.name !== undefined && f.name !== "").map((f) => {
+                  let idx = this.props.asset.InputFields.indexOf(f);
                   return (
                     <React.Fragment>
                       <div className="row input-field">
                         <div className="input-group">
                           <div className="input-group-prepend">
-                            <label
-                              htmlFor={`${this.props.asset.id}||input||${idx}`}
-                            >
+                            <label htmlFor={`${this.props.asset.id}||input||${idx}`}>
                               <strong>{f.name}:</strong>&emsp;
                             </label>
                           </div>
@@ -71,13 +66,7 @@ class AssetCard extends Component {
                             type="text"
                             value={f.value}
                             disabled={this.props.disabled}
-                            onChange={(e) =>
-                              this.props.onInputFieldChange(
-                                e,
-                                this.props.asset.id,
-                                idx
-                              )
-                            }
+                            onChange={(e) => this.props.onInputFieldChange(e, this.props.asset.id, idx)}
                           />
                           <div className="hr"></div>
                         </div>
@@ -89,19 +78,18 @@ class AssetCard extends Component {
             ) : (
               <React.Fragment></React.Fragment>
             )}
+            {this.props.asset.Description !== undefined ? <p>{this.props.asset.Description}</p> : React.Fragment}
 
-            {this.props.asset.Abilities.map((a) => (
+            {this.props.asset.Abilities.filter(
+              (a) => (a.Name !== undefined && a.Name !== "") || (a.Text !== undefined && a.Text !== "")
+            ).map((a) => (
               <div className="row">
                 <label class="control control-checkbox">
                   <input
                     type="checkbox"
                     checked={a.Enabled}
                     onChange={(e) =>
-                      this.props.onAbilityCheckChange(
-                        e,
-                        this.props.asset.id,
-                        this.props.asset.Abilities.indexOf(a)
-                      )
+                      this.props.onAbilityCheckChange(e, this.props.asset.id, this.props.asset.Abilities.indexOf(a))
                     }
                   />
                   <div class="control_indicator"></div>
@@ -110,27 +98,28 @@ class AssetCard extends Component {
               </div>
             ))}
 
-            {this.props.asset.Health !== undefined ||
-            this.props.asset.MultiFieldAssetTrack !== undefined ? (
+            {(this.props.asset.TrackMax !== undefined && this.props.asset.TrackMax > 0) ||
+            (this.props.asset.TrackLabels !== undefined && this.props.asset.TrackLabels.length > 0) ? (
               <React.Fragment>
                 <div className="stat-track-container">
                   <StatTrack
                     min={0}
                     max={
-                      this.props.asset.Health !== undefined
-                        ? this.props.asset.Health
-                        : this.props.asset.MultiFieldAssetTrack.Fields.length -
-                          1
+                      this.props.asset.TrackLabels &&
+                      this.props.asset.TrackLabels.length > 0 &&
+                      this.props.asset.TrackLabels[0] != ""
+                        ? this.props.asset.TrackLabels.length - 1
+                        : this.props.asset.TrackMax
                     }
                     onChange={this.props.onTrackProgressChange}
                     // onChange={this.handleStatTrackChange}
-                    value={this.props.asset.trackValue}
+                    value={this.props.asset.TrackValue}
                     stat={this.props.stat} // {this.props.asset.id}
                     hideThumb={this.props.hideThumb}
                     // hideLabel="true"
                   />
                 </div>
-                {/* <p>{this.props.asset.Health}</p> */}
+                {/* <p>{this.props.asset.TrackMax}</p> */}
               </React.Fragment>
             ) : (
               React.Fragment

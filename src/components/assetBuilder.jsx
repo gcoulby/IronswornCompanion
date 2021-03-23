@@ -3,13 +3,18 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import AssetCard from "./assetCard";
 import TitleBlock from "./titleBlock";
+import _ from "lodash";
+
 // import TextField from "@material-ui/core/TextField";
 // import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import ComboBox from "./icons";
+import DefaultAsset from "../models/defaultAssets";
 class AssetBuilder extends Component {
   state = {
     printableCards: [],
+    trackLabelCursorPosition: 0,
+    defaultAsset: new DefaultAsset(),
   };
 
   valueToStat(val, steps) {
@@ -20,9 +25,16 @@ class AssetBuilder extends Component {
   setPrintableCardSet(showBacks = true) {
     let cache = [];
     const printableCards = [];
-    for (let i = 0; i < this.props.assets.length; i++) {
-      let asset = this.props.assets[i];
-      let assetBack = { type: asset["Asset Type"], front: false };
+    let assets = [...this.props.assets];
+    let remainder = 9 - (assets.length % 9);
+    if (remainder < 9) {
+      for (let i = 0; i < remainder; i++) {
+        assets.push(new DefaultAsset());
+      }
+    }
+    for (let i = 0; i < assets.length; i++) {
+      let asset = assets[i];
+      let assetBack = { type: asset.Type, front: false };
       cache.push(assetBack);
       printableCards.push(asset);
       if ((i + 1) % 9 == 0) {
@@ -38,13 +50,10 @@ class AssetBuilder extends Component {
 
   handleStatTrackChange = (evt, name, steps, offset) => {
     let val = evt.target.value;
-    console.log(val);
-    console.log(name);
-    console.log(steps);
     let stat = this.valueToStat(val, steps);
     const assets = this.props.assets.map((a) => {
       if (a.id === name) {
-        a.trackValue = stat;
+        a.TrackValue = stat;
       }
       return a;
     });
@@ -52,15 +61,122 @@ class AssetBuilder extends Component {
     this.setPrintableCardSet();
   };
 
-  // handleOnTrackProgressChange = (evt) => {
-  //   console.log(evt.target.value);
-  // };
+  handleOnIconInputChange = (evt) => {
+    if (evt === null) return;
+
+    let value = evt.target.value;
+    if (value === 0) {
+      value = evt.target.children[0].dataset.value;
+    }
+
+    const selectedAsset = this.props.selectedAsset;
+    selectedAsset.icon = value;
+    this.setState({ selectedAsset });
+    this.setPrintableCardSet();
+  };
+
+  handleOnTextInputChange = (evt, field) => {
+    const selectedAsset = this.props.selectedAsset;
+    selectedAsset[field] = evt.target.value;
+    this.setState({ selectedAsset });
+    this.setPrintableCardSet();
+  };
+
+  handleOnInputFieldNameInputChange = (evt, index) => {
+    const selectedAsset = this.props.selectedAsset;
+    selectedAsset.InputFields[index] = { name: evt.target.value, value: "" };
+    this.setState({ selectedAsset });
+    this.setPrintableCardSet();
+  };
+
+  handleOnAbilityInputChange = (evt, index, field) => {
+    const selectedAsset = this.props.selectedAsset;
+    selectedAsset.Abilities[index] = { ...selectedAsset.Abilities[index] };
+    selectedAsset.Abilities[index][field] = evt.target.value;
+    this.setState({ selectedAsset });
+    this.setPrintableCardSet();
+  };
+
+  handleOnAbilityCheckboxChange = (evt, index) => {
+    const selectedAsset = this.props.selectedAsset;
+    selectedAsset.Abilities[index] = { ...selectedAsset.Abilities[index] };
+    selectedAsset.Abilities[index].Enabled = evt.target.checked;
+    this.setState({ selectedAsset });
+    this.setPrintableCardSet();
+  };
+
+  getTrackLabels() {
+    let out = "";
+    this.props.selectedAsset.TrackLabels.map((l) => (out += l + "\n"));
+    out.replace(/^\s+|\s+$/g, "");
+    return out;
+  }
+
+  handleTrackLabelsChange = (evt) => {
+    const selectedAsset = this.props.selectedAsset;
+    selectedAsset.TrackLabels = selectedAsset.TrackLabels;
+
+    this.setState({ trackLabelCursorPosition: evt.target.selectionStart });
+    let text = evt.target.value.replace(/^\s+|\s+$/g, "");
+    let labels = [];
+    if (text !== "") labels = text.split("\n");
+
+    selectedAsset.TrackLabels = labels;
+    this.setState({ selectedAsset });
+    this.setPrintableCardSet();
+  };
+
+  handleOnAddAsset = () => {
+    const assets = this.props.assets;
+    let asset = { ...this.props.selectedAsset };
+    asset.id = this.getUserAssetId(asset.Name);
+    asset.core = false;
+    assets.push(asset);
+    this.setState({ assets });
+    this.props.onSelectedAssetChange(asset.id);
+    this.setPrintableCardSet();
+  };
+
+  handleOnSaveChanges = () => {
+    const assets = this.props.assets;
+    for (let i = 0; i < assets.length; i++) {
+      const asset = assets[i];
+      if (asset.id === this.props.selectedAsset.id) {
+        assets[i] = { ...this.props.selectedAsset };
+      }
+    }
+    this.setState({ assets });
+    this.props.onSelectedAssetChange(this.props.selectedAsset.id);
+    this.setPrintableCardSet();
+  };
+
+  handleOnDeleteUserAsset = () => {
+    const assets = this.props.assets;
+    let pos = -1;
+    for (let i = 0; i < assets.length; i++) {
+      let a = assets[i];
+      if (a.id === this.props.selectedAsset.id) {
+        pos = i;
+      }
+    }
+
+    if (pos != -1) assets.splice(pos, 1);
+    this.setState({ assets });
+    this.props.onSelectedAssetChange("");
+    this.setPrintableCardSet();
+  };
+
+  getUserAssetId(name) {
+    return `user-${name.toLowerCase().replace(" ", "-")}`;
+  }
 
   componentDidMount() {
     this.setPrintableCardSet();
   }
 
   componentDidUpdate() {
+    let el = document.getElementById("tableEditor");
+    el.setSelectionRange(this.state.trackLabelCursorPosition, this.state.trackLabelCursorPosition);
     this.props.onComponentUpdate();
   }
 
@@ -70,15 +186,11 @@ class AssetBuilder extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="alert alert-secondary print-hide">
-          This page is still under development. It is not yet possible to
-          add/edit assets and tracks have not yet been implemented.
-        </div>
         <h1 className="print-hide">Asset Builder</h1>
         <div className="row print-hide">
           {/* <div className="col-3"> */}
           <AssetCard
-            asset={this.props.assets[0]}
+            asset={this.props.selectedAsset}
             onTrackProgressChange={() => {}}
             onInputFieldChange={() => {}}
             onAbilityCheckChange={() => {}}
@@ -88,32 +200,22 @@ class AssetBuilder extends Component {
               stat: -1,
               hideLabel: true,
               value: 0,
-              trackLabels: [],
+              trackLabels: this.props.selectedAsset.TrackLabels ? this.props.selectedAsset.TrackLabels : [],
             }}
           />
           {/* </div> */}
           <div className="col">
             <input id="id" type="hidden" />
-            <div className="alert alert-secondary">
-              Select an asset for editing from the drop down box or create a new
-              asset from scratch. Assets should have a unique name, if you
-              select an asset to edit, but then change the name, a new asset
-              will be created with that name. Use this method to create modified
-              asset variants
-            </div>
+
             <div className="input-group mb-3">
               <div className="input-group-prepend">
-                <label className="btn btn-dark btn-tag">
-                  Select Existing Asset
-                </label>
+                <label className="btn btn-dark btn-tag">Select Existing Asset</label>
               </div>
 
               <select
                 className="form-control"
-                onChange={(e) => this.props.onSelectedAssetChange(e)}
-                value={
-                  this.props.selectedAsset ? this.props.selectedAsset.id : -1
-                }
+                onChange={(e) => this.props.onSelectedAssetChange(e.target.value)}
+                value={this.props.selectedAsset ? this.props.selectedAsset.id : -1}
               >
                 <option val="">Select Asset</option>
                 {this.props.assets.map((a) => (
@@ -122,6 +224,83 @@ class AssetBuilder extends Component {
                   </option>
                 ))}
               </select>
+            </div>
+
+            {/*  Cannot add if Name is blank, 
+                Can only save changes if the selected assets is not a core asset, the asset Name
+                cannot be different to the previous version, and the at least on other field
+                must be different to the previous version
+                */}
+            <div id="assetBuilderControls" className="mb-4">
+              {this.props.selectedAsset.Name === "" ||
+              this.props.selectedAsset.core ||
+              this.props.selectedAsset.id === -1 ||
+              this.props.selectedAsset.id === "" ||
+              this.props.selectedAsset.id !== this.getUserAssetId(this.props.selectedAsset.Name) ||
+              _.isEqual(this.props.selectedAsset, this.state.defaultAsset) ||
+              _.isEqual(
+                this.props.selectedAsset,
+                this.props.assets.find((a) => a.id === this.props.selectedAsset.id)
+              ) ? (
+                React.Fragment
+              ) : (
+                <React.Fragment>
+                  <button className="btn btn-dark" onClick={() => this.handleOnSaveChanges()}>
+                    <i class="fas fa-save"></i> Save Changes
+                  </button>
+                </React.Fragment>
+              )}
+
+              {/* Cannot add if Name is blank, Cannot add asset if selected asset is core asset. Cannot add if an asset exists with same name
+              cannot add if the asset is same as default asset (ie no changes) cannot add if asset with same id already exists 
+              add button is not shown when modifying an existing asset - copy shown instead*/}
+              {this.props.selectedAsset.Name === "" ||
+              this.props.selectedAsset.core ||
+              this.props.selectedAsset.id === -1 ||
+              this.props.selectedAsset.id != "" ||
+              this.props.assets.find((a) => a.Name === this.props.selectedAsset.Name) != null ||
+              _.isEqual(this.props.selectedAsset, this.state.defaultAsset) ||
+              _.isEqual(
+                this.props.selectedAsset,
+                this.props.assets.find((a) => a.id === this.props.selectedAsset.id)
+              ) ? (
+                React.Fragment
+              ) : (
+                <React.Fragment>
+                  <button className="btn btn-dark" onClick={() => this.handleOnAddAsset()}>
+                    <i class="fas fa-plus"></i> Add Asset
+                  </button>
+                </React.Fragment>
+              )}
+
+              {/* Name cannot be blank, Cannot copy asset that does not exist 
+              No asset can be selected              
+              */}
+              {this.props.selectedAsset.Name === "" ||
+              this.props.selectedAsset.id === -1 ||
+              this.props.selectedAsset.id === "" ||
+              this.props.assets.find((a) => a.Name === this.props.selectedAsset.Name) != null ? (
+                React.Fragment
+              ) : (
+                <React.Fragment>
+                  <button className="btn btn-dark ml-2" onClick={() => this.handleOnAddAsset()}>
+                    <i class="fas fa-copy"></i> Save As Copy
+                  </button>
+                </React.Fragment>
+              )}
+
+              {/* Delete Button not available on new assets or core assets */}
+              {this.props.selectedAsset.core ||
+              this.props.selectedAsset.id === -1 ||
+              this.props.selectedAsset.id === "" ? (
+                React.Fragment
+              ) : (
+                <React.Fragment>
+                  <button className="btn btn-danger ml-2" onClick={() => this.handleOnDeleteUserAsset()}>
+                    <i class="fas fa-minus"></i> Delete Asset
+                  </button>
+                </React.Fragment>
+              )}
             </div>
 
             <Tabs defaultActiveKey="header" id="uncontrolled-tab-example">
@@ -139,32 +318,22 @@ class AssetBuilder extends Component {
                           placeholder="Asset Type"
                           aria-label="Name"
                           aria-describedby="basic-addon2"
-                          // value={this.props.newProgression.text}
-                          // onChange={(e) =>
-                          //   this.props.onNewProgressionTextChanged(
-                          //     e,
-                          //     this.props.newProgression.type
-                          //   )
-                          // }
+                          value={this.props.selectedAsset.Type}
+                          onChange={(e) => this.handleOnTextInputChange(e, "Type")}
                         />
                       </div>
                       <div className="input-group mb-3">
                         <div className="input-group-prepend">
-                          <label className="btn btn-dark btn-tag">Title</label>
+                          <label className="btn btn-dark btn-tag">Name</label>
                         </div>
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Asset Title"
+                          placeholder="Asset Name"
                           aria-label="Name"
                           aria-describedby="basic-addon2"
-                          // value={this.props.newProgression.text}
-                          // onChange={(e) =>
-                          //   this.props.onNewProgressionTextChanged(
-                          //     e,
-                          //     this.props.newProgression.type
-                          //   )
-                          // }
+                          value={this.props.selectedAsset.Name}
+                          onChange={(e) => this.handleOnTextInputChange(e, "Name")}
                         />
                       </div>
                     </div>
@@ -174,49 +343,8 @@ class AssetBuilder extends Component {
                     <div className="input-group-prepend">
                       <label className="btn btn-dark btn-tag">Icon</label>
                     </div>
-                    {ComboBox()}
-                    {/* <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Icon (see documentation for more info)"
-                      aria-label="Name"
-                      aria-describedby="basic-addon2"
-                      // value={this.props.newProgression.text}
-                      // onChange={(e) =>
-                      //   this.props.onNewProgressionTextChanged(
-                      //     e,
-                      //     this.props.newProgression.type
-                      //   )
-                      // }
-                    /> */}
+                    {ComboBox(this.props.selectedAsset, this.handleOnIconInputChange)}
                   </div>
-                  {/* <div className="alert alert-secondary">
-                    Icon classes can be found at{" "}
-                    <a
-                      href="https://fontawesome.com/icons?d=gallery&p=2&m=free"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      FontAwesome
-                    </a>{" "}
-                    or{" "}
-                    <a
-                      href="https://nagoshiashumari.github.io/Rpg-Awesome/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      RPG-Awesome
-                    </a>
-                    . Please declare full class names and the assosciate
-                    library. For example, Font Aweome have several libraries.
-                    For the Icon <b>address-book</b> from the <b>Regular</b>{" "}
-                    library, enter <b>far fa-address-book</b> into the icon
-                    class box, where <b>far</b> defines the library and{" "}
-                    <b>fa-address-book</b> defines the icon. Similarly, for
-                    RPG-Awesome fonts, enter <b>ra ra-crossed-axes</b> where{" "}
-                    <b>ra</b> defines the library and <b>ra-crossed-axes</b>{" "}
-                    defines the icon.
-                  </div> */}
                 </div>
               </Tab>
               <Tab eventKey="additional-info" title="Additional Info">
@@ -225,9 +353,7 @@ class AssetBuilder extends Component {
                     <div className="col">
                       <div className="input-group mb-3">
                         <div className="input-group-prepend">
-                          <label className="btn btn-dark btn-tag">
-                            Description
-                          </label>
+                          <label className="btn btn-dark btn-tag">Description</label>
                         </div>
                         <input
                           type="text"
@@ -235,24 +361,17 @@ class AssetBuilder extends Component {
                           placeholder="Description (optional)"
                           aria-label="Name"
                           aria-describedby="basic-addon2"
-                          // value={this.props.newProgression.text}
-                          // onChange={(e) =>
-                          //   this.props.onNewProgressionTextChanged(
-                          //     e,
-                          //     this.props.newProgression.type
-                          //   )
-                          // }
+                          value={this.props.selectedAsset.Description}
+                          onChange={(e) => this.handleOnTextInputChange(e, "Description")}
                         />
                       </div>
                     </div>
                     <div className="container">
                       <div className="row">
-                        <div className="col-6">
+                        <div className="col">
                           <div className="input-group mb-3">
                             <div className="input-group-prepend">
-                              <label className="btn btn-dark btn-tag">
-                                Input Title 1
-                              </label>
+                              <label className="btn btn-dark btn-tag">1st Input Title</label>
                             </div>
                             <input
                               type="text"
@@ -260,36 +379,12 @@ class AssetBuilder extends Component {
                               placeholder="User Input Title"
                               aria-label="Name"
                               aria-describedby="basic-addon2"
-                              // value={this.props.newProgression.text}
-                              // onChange={(e) =>
-                              //   this.props.onNewProgressionTextChanged(
-                              //     e,
-                              //     this.props.newProgression.type
-                              //   )
-                              // }
-                            />
-                          </div>
-                        </div>
-                        <div className="col-6">
-                          <div className="input-group mb-3">
-                            <div className="input-group-prepend">
-                              <label className="btn btn-dark btn-tag">
-                                Input Text 1
-                              </label>
-                            </div>
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder="User Input Text"
-                              aria-label="Name"
-                              aria-describedby="basic-addon2"
-                              // value={this.props.newProgression.text}
-                              // onChange={(e) =>
-                              //   this.props.onNewProgressionTextChanged(
-                              //     e,
-                              //     this.props.newProgression.type
-                              //   )
-                              // }
+                              value={
+                                this.props.selectedAsset.InputFields.length > 0
+                                  ? this.props.selectedAsset.InputFields[0].name
+                                  : ""
+                              }
+                              onChange={(e) => this.handleOnInputFieldNameInputChange(e, 0)}
                             />
                           </div>
                         </div>
@@ -297,12 +392,10 @@ class AssetBuilder extends Component {
                     </div>
                     <div className="container">
                       <div className="row">
-                        <div className="col-6">
+                        <div className="col">
                           <div className="input-group mb-3">
                             <div className="input-group-prepend">
-                              <label className="btn btn-dark btn-tag">
-                                Input Title 2
-                              </label>
+                              <label className="btn btn-dark btn-tag">2nd Input Title</label>
                             </div>
                             <input
                               type="text"
@@ -310,36 +403,12 @@ class AssetBuilder extends Component {
                               placeholder="User Input Title"
                               aria-label="Name"
                               aria-describedby="basic-addon2"
-                              // value={this.props.newProgression.text}
-                              // onChange={(e) =>
-                              //   this.props.onNewProgressionTextChanged(
-                              //     e,
-                              //     this.props.newProgression.type
-                              //   )
-                              // }
-                            />
-                          </div>
-                        </div>
-                        <div className="col-6">
-                          <div className="input-group mb-3">
-                            <div className="input-group-prepend">
-                              <label className="btn btn-dark btn-tag">
-                                Input Text 2
-                              </label>
-                            </div>
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder="User Input Text"
-                              aria-label="Name"
-                              aria-describedby="basic-addon2"
-                              // value={this.props.newProgression.text}
-                              // onChange={(e) =>
-                              //   this.props.onNewProgressionTextChanged(
-                              //     e,
-                              //     this.props.newProgression.type
-                              //   )
-                              // }
+                              value={
+                                this.props.selectedAsset.InputFields.length > 1
+                                  ? this.props.selectedAsset.InputFields[1].name
+                                  : ""
+                              }
+                              onChange={(e) => this.handleOnInputFieldNameInputChange(e, 1)}
                             />
                           </div>
                         </div>
@@ -350,16 +419,13 @@ class AssetBuilder extends Component {
               </Tab>
               <Tab eventKey="abilities" title="Abilities">
                 <div className="container mt-4">
-                  <div className="row border-left pl-2 mb-2">
-                    {/* <span class="bg-dark text-light p-2 modesto">Level 1</span> */}
+                  <div className="row border-left-2 pl-2 py-2 my-4">
                     <div className="container">
                       <div className="row">
                         <div className="col-8">
                           <div className="input-group mb-1">
                             <div className="input-group-prepend">
-                              <label className="btn btn-dark btn-tag">
-                                Ability 1
-                              </label>
+                              <label className="btn btn-dark btn-tag">Ability 1 Title</label>
                             </div>
                             <input
                               type="text"
@@ -367,13 +433,12 @@ class AssetBuilder extends Component {
                               placeholder="Title (Optional)"
                               aria-label="Name"
                               aria-describedby="basic-addon2"
-                              // value={this.props.newProgression.text}
-                              // onChange={(e) =>
-                              //   this.props.onNewProgressionTextChanged(
-                              //     e,
-                              //     this.props.newProgression.type
-                              //   )
-                              // }
+                              value={
+                                this.props.selectedAsset.Abilities.length > 0
+                                  ? this.props.selectedAsset.Abilities[0].Name
+                                  : ""
+                              }
+                              onChange={(e) => this.handleOnAbilityInputChange(e, 0, "Name")}
                             />
                           </div>
                         </div>
@@ -382,90 +447,150 @@ class AssetBuilder extends Component {
                             type="checkbox"
                             //   name="cb"
                             id="cb_ability1"
-                            // checked={d.active}
-                            // onChange={(e) =>
-                            //   this.props.onDebilityChange(e, d.name)
-                            // }
+                            checked={
+                              this.props.selectedAsset.Abilities.length > 0 &&
+                              this.props.selectedAsset.Abilities[0].Enabled == true
+                                ? true
+                                : false
+                            }
+                            onChange={(e) => this.handleOnAbilityCheckboxChange(e, 0)}
                           />
                           <label htmlFor={`cb_ability1`}>Checked</label>
                         </div>
                       </div>
                       <div className="row">
                         <div className="col">
+                          <span className="modesto">Ability Text:</span>
                           <textarea
-                            className="form-control mb-3"
+                            className="form-control"
                             placeholder="Ability 1 Text"
                             rows="3"
-                            //   value={this.state.additionalInfo}
-                            //   onChange={(e) => this.handleOnAdditionalInfoChanged(e)}
+                            value={
+                              this.props.selectedAsset.Abilities.length > 0
+                                ? this.props.selectedAsset.Abilities[0].Text
+                                : ""
+                            }
+                            onChange={(e) => this.handleOnAbilityInputChange(e, 0, "Text")}
                           ></textarea>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="row border-left pl-2 mb-2">
-                    {/* <span class="bg-dark text-light p-2 modesto">Level 1</span> */}
-                    <div className="input-group mb-1">
-                      <div className="input-group-prepend">
-                        <label className="btn btn-dark btn-tag">
-                          Ability 2
-                        </label>
+                  <div className="row border-left-2 pl-2 py-2 my-4">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-8">
+                          <div className="input-group mb-1">
+                            <div className="input-group-prepend">
+                              <label className="btn btn-dark btn-tag">Ability 2 Title</label>
+                            </div>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Title (Optional)"
+                              aria-label="Name"
+                              aria-describedby="basic-addon2"
+                              value={
+                                this.props.selectedAsset.Abilities.length > 0
+                                  ? this.props.selectedAsset.Abilities[1].Name
+                                  : ""
+                              }
+                              onChange={(e) => this.handleOnAbilityInputChange(e, 1, "Name")}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-4">
+                          <input
+                            type="checkbox"
+                            //   name="cb"
+                            id="cb_ability2"
+                            checked={
+                              this.props.selectedAsset.Abilities.length > 0 &&
+                              this.props.selectedAsset.Abilities[1].Enabled == true
+                                ? true
+                                : false
+                            }
+                            onChange={(e) => this.handleOnAbilityCheckboxChange(e, 1)}
+                          />
+                          <label htmlFor={`cb_ability2`}>Checked</label>
+                        </div>
                       </div>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Title (Optional)"
-                        aria-label="Name"
-                        aria-describedby="basic-addon2"
-                        // value={this.props.newProgression.text}
-                        // onChange={(e) =>
-                        //   this.props.onNewProgressionTextChanged(
-                        //     e,
-                        //     this.props.newProgression.type
-                        //   )
-                        // }
-                      />
+                      <div className="row">
+                        <div className="col">
+                          <span className="modesto">Ability Text:</span>
+                          <textarea
+                            className="form-control"
+                            placeholder="Ability 2 Text"
+                            rows="3"
+                            value={
+                              this.props.selectedAsset.Abilities.length > 0
+                                ? this.props.selectedAsset.Abilities[1].Text
+                                : ""
+                            }
+                            onChange={(e) => this.handleOnAbilityInputChange(e, 1, "Text")}
+                          ></textarea>
+                        </div>
+                      </div>
                     </div>
-                    <textarea
-                      className="form-control mb-3"
-                      placeholder="Ability 2 Text"
-                      rows="2"
-                      //   value={this.state.additionalInfo}
-                      //   onChange={(e) => this.handleOnAdditionalInfoChanged(e)}
-                    ></textarea>
                   </div>
 
-                  <div className="row border-left pl-2 mb-2">
-                    {/* <span class="bg-dark text-light p-2 modesto">Level 1</span> */}
-                    <div className="input-group mb-1">
-                      <div className="input-group-prepend">
-                        <label className="btn btn-dark btn-tag">
-                          Ability 3
-                        </label>
+                  <div className="row border-left-2 pl-2 py-2 my-4">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-8">
+                          <div className="input-group mb-1">
+                            <div className="input-group-prepend">
+                              <label className="btn btn-dark btn-tag">Ability 3 Title</label>
+                            </div>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Title (Optional)"
+                              aria-label="Name"
+                              aria-describedby="basic-addon2"
+                              value={
+                                this.props.selectedAsset.Abilities.length > 0
+                                  ? this.props.selectedAsset.Abilities[2].Name
+                                  : ""
+                              }
+                              onChange={(e) => this.handleOnAbilityInputChange(e, 2, "Name")}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-4">
+                          <input
+                            type="checkbox"
+                            //   name="cb"
+                            id="cb_ability3"
+                            checked={
+                              this.props.selectedAsset.Abilities.length > 0 &&
+                              this.props.selectedAsset.Abilities[2].Enabled == true
+                                ? true
+                                : false
+                            }
+                            onChange={(e) => this.handleOnAbilityCheckboxChange(e, 2)}
+                          />
+                          <label htmlFor={`cb_ability3`}>Checked</label>
+                        </div>
                       </div>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Title (Optional)"
-                        aria-label="Name"
-                        aria-describedby="basic-addon2"
-                        // value={this.props.newProgression.text}
-                        // onChange={(e) =>
-                        //   this.props.onNewProgressionTextChanged(
-                        //     e,
-                        //     this.props.newProgression.type
-                        //   )
-                        // }
-                      />
+                      <div className="row">
+                        <div className="col">
+                          <span className="modesto">Ability Text:</span>
+                          <textarea
+                            className="form-control"
+                            placeholder="Ability 3 Text"
+                            rows="3"
+                            value={
+                              this.props.selectedAsset.Abilities.length > 0
+                                ? this.props.selectedAsset.Abilities[2].Text
+                                : ""
+                            }
+                            onChange={(e) => this.handleOnAbilityInputChange(e, 2, "Text")}
+                          ></textarea>
+                        </div>
+                      </div>
                     </div>
-                    <textarea
-                      className="form-control mb-3"
-                      placeholder="Ability 3 Text"
-                      rows="2"
-                      //   value={this.state.additionalInfo}
-                      //   onChange={(e) => this.handleOnAdditionalInfoChanged(e)}
-                    ></textarea>
                   </div>
                 </div>
               </Tab>
@@ -475,20 +600,66 @@ class AssetBuilder extends Component {
                     <div className="col">
                       <div className="input-group mb-3">
                         <div className="input-group-prepend">
-                          <label className="btn btn-dark btn-tag">
-                            Track Type
-                          </label>
+                          <label className="btn btn-dark btn-tag">Track Max Value</label>
                         </div>
-
-                        <select className="form-control">
-                          <option val="0">None</option>
-                          <option val="1">Numbers</option>
-                          <option val="2">List</option>
-                        </select>
+                        <input
+                          type="number"
+                          min="0"
+                          max="8"
+                          steps="1"
+                          className="form-control"
+                          placeholder="Max Value"
+                          aria-label="Name"
+                          aria-describedby="basic-addon2"
+                          disabled={
+                            this.props.selectedAsset.TrackLabels &&
+                            this.props.selectedAsset.TrackLabels.length > 0 &&
+                            this.props.selectedAsset.TrackLabels[0] !== ""
+                          }
+                          value={
+                            this.props.selectedAsset.TrackLabels &&
+                            this.props.selectedAsset.TrackLabels.length > 0 &&
+                            this.props.selectedAsset.TrackLabels[0] !== ""
+                              ? this.props.selectedAsset.TrackLabels.length - 1
+                              : this.props.selectedAsset.TrackMax
+                          }
+                          onChange={(e) => this.handleOnTextInputChange(e, "TrackMax")}
+                        />
                       </div>
-                      <div className="input-group mb-3"></div>
+                      <div className="input-group mb-3">
+                        <span className="modesto">Track Labels (Overrides Max Value):</span>
+                        <textarea
+                          id="tableEditor"
+                          wrap="off"
+                          value={
+                            this.props.selectedAsset.TrackLabels && this.props.selectedAsset.TrackLabels.length > 0
+                              ? this.getTrackLabels()
+                              : ""
+                          }
+                          // value={this.props.oracles.getOracleTablePrompts(this.props.oracles.selectedOracleTable)}
+                          onChange={(e) => this.handleTrackLabelsChange(e)}
+                        ></textarea>
+                      </div>
                     </div>
                   </div>
+                </div>
+              </Tab>
+              <Tab eventKey="help" title="Help">
+                <div className="alert alert-light">
+                  Assets with (Core) in the name cannot be edited or deleted. They are centrally maintained by the{" "}
+                  <strong>Data Management</strong> page. To update assets got to the <strong>Data Management</strong>{" "}
+                  page and press <strong>Update Core Assets</strong>
+                  <br />
+                  <br /> To create a new Asset either fill out the various fields and press <strong>
+                    Save Asset
+                  </strong>{" "}
+                  or select an existing asset, make the required changes and press <strong>Save Asset.</strong> As you
+                  make changes, those changes will be reflect live on the card nearest the input form. Use this to
+                  ensure your content fits inside the card (so that it will display/print correctly).
+                  <br />
+                  <br />
+                  <strong>Assets MUST have a unique name</strong>. Therefore you will be unable to click{" "}
+                  <strong>Save Asset.</strong> unless a unique name is chosen.
                 </div>
               </Tab>
             </Tabs>
@@ -496,14 +667,8 @@ class AssetBuilder extends Component {
         </div>
         <div id="assetCards" className="print-hide mb-5">
           <TitleBlock title="Asset Deck" />
-          <div className="alert alert-secondary">
-            Use this section to print cards
-          </div>
-          <a
-            class="print-hide btn btn-dark"
-            title="Print"
-            onClick={() => this.handlePrint()}
-          >
+          <div className="alert alert-secondary">Use this section to print cards</div>
+          <a class="print-hide btn btn-dark" title="Print" onClick={() => this.handlePrint()}>
             Print Cards
           </a>
         </div>
@@ -519,12 +684,7 @@ class AssetBuilder extends Component {
                   stat: a.id,
                   hideLabel: true,
                   value: a.trackValue,
-                  trackLabels:
-                    a.MultiFieldAssetTrack != null
-                      ? a.MultiFieldAssetTrack.Fields.map((f) => {
-                          return f.ActiveText;
-                        })
-                      : [],
+                  trackLabels: a.TrackLabels ? a.TrackLabels : [],
                 }}
                 onTrackProgressChange={() => {}}
                 onInputFieldChange={() => {}}

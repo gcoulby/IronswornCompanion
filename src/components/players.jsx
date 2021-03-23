@@ -157,9 +157,10 @@ class Characters extends Component {
                     <button
                       className="btn btn-dark"
                       type="button"
+                      title="Roll on the oracle"
                       onClick={() => this.handleOnRollPlayerName()}
                     >
-                      <i className="fas fa-dice-d20"></i> Roll
+                      <i className="fas fa-dice-d20"></i> Name
                     </button>
                   </div>
                   <input
@@ -178,9 +179,10 @@ class Characters extends Component {
                     <button
                       className="btn btn-dark"
                       type="button"
+                      title="Roll on the oracle"
                       onClick={() => this.handleOnRollPlayerGoal()}
                     >
-                      <i className="fas fa-dice-d20"></i> Roll
+                      <i className="fas fa-dice-d20"></i> Goal
                     </button>
                   </div>
                   <input
@@ -200,9 +202,10 @@ class Characters extends Component {
                     <button
                       className="btn btn-dark"
                       type="button"
+                      title="Roll on the oracle"
                       onClick={() => this.handleOnRollPlayerRole()}
                     >
-                      <i className="fas fa-dice-d20"></i> Roll
+                      <i className="fas fa-dice-d20"></i> Role
                     </button>
                   </div>
                   <input
@@ -220,9 +223,10 @@ class Characters extends Component {
                     <button
                       className="btn btn-dark"
                       type="button"
+                      title="Roll on the oracle"
                       onClick={() => this.handleOnRollPlayerDescriptor()}
                     >
-                      <i className="fas fa-dice-d20"></i> Roll
+                      <i className="fas fa-dice-d20"></i> Descriptor
                     </button>
                   </div>
                   <input

@@ -4010,17 +4010,25 @@ const glyphs = [
 
 // }
 
-export default function ComboBox() {
+export default function ComboBox(asset, onInputChange) {
   return (
     <Autocomplete
       id="combo-box-demo"
       className="autocomplete-input"
       options={glyphs}
       placeholder="Icon"
+      data-value="dDD"
+      inputValue={asset.icon}
+      onInputChange={(e) => onInputChange(e)}
+      onChange={(e) => onInputChange(e)}
       getOptionLabel={(option) => option}
       renderOption={(option) => (
         <React.Fragment>
-          <i className={`game-icon game-icon-${option}`}></i>&nbsp;
+          <i
+            className={`game-icon game-icon-${option}`}
+            data-value={option}
+          ></i>
+          &nbsp;
           {option}
         </React.Fragment>
       )}

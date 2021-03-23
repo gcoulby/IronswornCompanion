@@ -4,8 +4,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Sue+Ellen+Francisco&display=swap");
 @font-face {
   font-family: "Modesto";
-  src: url("//db.onlinewebfonts.com/t/962c169da925663d8af1d63c1a36537f.eot");
-  src: url("//db.onlinewebfonts.com/t/962c169da925663d8af1d63c1a36537f.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/962c169da925663d8af1d63c1a36537f.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/962c169da925663d8af1d63c1a36537f.woff") format("woff"), url("//db.onlinewebfonts.com/t/962c169da925663d8af1d63c1a36537f.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/962c169da925663d8af1d63c1a36537f.svg#ModestoW01-Expd") format("svg");
+  src: url("/src/fonts/modesto.eot");
+  src: url("/src/fonts/modesto_ie.eot") format("embedded-opentype"), url("/src/fonts/modesto.woff2") format("woff2"), url("/src/fonts/modesto.woff") format("woff"), url("/src/fonts/modesto.ttf") format("truetype"), url("/src/fonts/modesto.svg") format("svg");
 }
 
 @font-face {
@@ -16562,6 +16562,10 @@ input[type="file"] {
   cursor: pointer;
 }
 
+.border-left-2 {
+  border-left: 2px solid grey !important;
+}
+
 .stat-card {
   padding-top: 1em;
   border-radius: 0% !important;
@@ -17433,13 +17437,29 @@ input.autocomplete-input {
   line-height: 2.1em;
 }
 
+.asset-card .slider-container ul.slider-ticks li.slider-tick-label {
+  margin-top: 0.1em;
+  height: 2.5em !important;
+  line-height: 2.5em !important;
+}
+
+.asset-card .slider-container ul.slider-ticks li.slider-tick-label span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1em !important;
+}
+
 .asset-card .form-control:disabled,
 .asset-card .form-control[readonly] {
   background-color: white;
   opacity: 1;
 }
 
-#oracle_editor textarea {
+#assetBuilderControls {
+  min-height: 2.8em;
+}
+
+#tableEditor {
   background-image: linear-gradient(white 50%, #e2e2e2 50%);
   background-size: 100% 4rem;
   font-size: 20px;

@@ -13,7 +13,6 @@ class Die extends Component {
   };
   constructor(props) {
     super();
-    // console.log(props.die.id);
     switch (props.die.id) {
       case 2:
         this.state.dieImg = d2;

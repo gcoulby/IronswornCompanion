@@ -41,10 +41,22 @@ class Acknowledgements extends Component {
         url: "https://seiyria.com/gameicons-font/",
       },
       {
+        contributor: "Ghost225",
+        contribution:
+          "Ghost provided continued support, feedback, feature suggestions and testing throughout the development",
+        url: "https://github.com/ghost225",
+      },
+      {
         contributor: "nomadsoul1",
         contribution:
           "Credit goes to NOMADSOUL1 from freepik for the homepage image. The colour image was filtered to get the same look and feel as the Ironsworn book.",
         url: "https://www.freepik.com/nomadsoul1",
+      },
+      {
+        contributor: "Online Web Fonts",
+        contribution:
+          "Modesto font made from Online Web Fonts licensed by CC BY 3.0",
+        url: "http://www.onlinewebfonts.com",
       },
     ],
   };

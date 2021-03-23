@@ -33,16 +33,11 @@ class EnterTheFray extends Component {
   }
 
   getRandomFoeType(newFoeCategoryId) {
-    return this.diceRoller.roll(
-      [this.props.foes[newFoeCategoryId].Foes.length],
-      false
-    )[0].value;
+    return this.diceRoller.roll([this.props.foes[newFoeCategoryId].Foes.length], false)[0].value;
   }
 
   getRandomPackFoe(newFoeCategoryId, rank = null) {
-    let foes = this.props.foes[newFoeCategoryId].Foes.filter(
-      (f) => f.Rank === "Dangerous"
-    );
+    let foes = this.props.foes[newFoeCategoryId].Foes.filter((f) => f.Rank === "Dangerous");
     let rn = this.diceRoller.roll([foes.length], false)[0].value;
     let foe = foes[rn];
     return foe;
@@ -61,10 +56,7 @@ class EnterTheFray extends Component {
 
   handleOnRollNewFoeType = () => {
     const newFoe = this.props.newFoe;
-    if (
-      this.props.newFoe.newFoeCategoryId === -1 ||
-      this.props.newFoe.newFoeCategoryId === "Select Foe Category"
-    ) {
+    if (this.props.newFoe.newFoeCategoryId === -1 || this.props.newFoe.newFoeCategoryId === "Select Foe Category") {
       newFoe.newFoeCategoryId = this.getRandomFoeCategory();
     }
     newFoe.newFoeTypeId = this.getRandomFoeType(newFoe.newFoeCategoryId);
@@ -93,9 +85,7 @@ class EnterTheFray extends Component {
       return;
     const activeFoes = this.props.activeFoes;
 
-    const foe = this.props.foes[this.props.newFoe.newFoeCategoryId].Foes[
-      this.props.newFoe.newFoeTypeId
-    ];
+    const foe = this.props.foes[this.props.newFoe.newFoeCategoryId].Foes[this.props.newFoe.newFoeTypeId];
     foe.progress = 0;
     foe.id = this.props.newFoe.nextFoeId;
     activeFoes.loneFoes.push(foe);
@@ -125,17 +115,14 @@ class EnterTheFray extends Component {
   // handleOnAddRandomPack = () => {
   //   let ranks = ["Troublesome", "Dangerous"];
   //   let rank = ranks[this.diceRoller.roll([2], false)[0].value];
-  //   console.log(`Rank ${rank}`);
   //   let rn = this.diceRoller.roll([10], false)[0].value;
   //   const activeFoes = this.props.activeFoes;
   //   const newFoeCategoryId = this.getRandomFoeCategory();
-  //   console.log(`categoryId ${newFoeCategoryId}`);
   //   activeFoes.packs.push([]);
   //   for (let i = 0; i < rn; i++) {
   //     // const newFoeTypeId = this.getRandomFoeType(newFoeCategoryId, true);
   //     // const foe = this.props.foes[newFoeCategoryId].Foes[newFoeTypeId];
   //     const foe = this.getRandomPackFoe(newFoeCategoryId, rank);
-  //     console.log(foe);
 
   //     activeFoes.packs[activeFoes.packs.length - 1].push(foe);
   //   }
@@ -190,10 +177,11 @@ class EnterTheFray extends Component {
             <button
               className="btn btn-dark mt-2 mb-4"
               type="button"
+              title="Roll on the oracle"
               onClick={() => this.handleOnRollNewFoe()}
             >
               <i className="fas fa-dice-d20" aria-hidden="true"></i>
-              &nbsp;Roll Random Foe
+              &nbsp;Random Foe
             </button>
           </div>
         </div>
@@ -225,9 +213,10 @@ class EnterTheFray extends Component {
                 <button
                   className="btn btn-dark"
                   type="button"
+                  title="Roll on the oracle"
                   onClick={() => this.handleOnRollNewFoeType()}
                 >
-                  <i className="fas fa-dice-d20"></i> Roll Foe Type
+                  <i className="fas fa-dice-d20"></i> Foe Type
                 </button>
               </div>
 
@@ -242,17 +231,11 @@ class EnterTheFray extends Component {
                 this.props.newFoe.newFoeCategoryId != "Select Foe Category" ? (
                   <React.Fragment>
                     {this.props.foes
-                      .find(
-                        (f) =>
-                          this.props.foes.indexOf(f) ==
-                          this.props.newFoe.newFoeCategoryId
-                      )
+                      .find((f) => this.props.foes.indexOf(f) == this.props.newFoe.newFoeCategoryId)
                       .Foes.map((f) => (
                         <option
                           key={f.Name}
-                          value={this.props.foes[
-                            this.props.newFoe.newFoeCategoryId
-                          ].Foes.indexOf(f)}
+                          value={this.props.foes[this.props.newFoe.newFoeCategoryId].Foes.indexOf(f)}
                         >
                           {f.Name}
                         </option>
@@ -267,8 +250,7 @@ class EnterTheFray extends Component {
         </div>
         <div className="row">
           <div className="col">
-            {this.props.newFoe.newFoeTypeId != -1 &&
-            this.props.newFoe.newFoeTypeId != "Select Foe Type" ? (
+            {this.props.newFoe.newFoeTypeId != -1 && this.props.newFoe.newFoeTypeId != "Select Foe Type" ? (
               <React.Fragment>
                 {/* <p>
                   <span className="modesto">Description</span>&nbsp;
@@ -286,32 +268,19 @@ class EnterTheFray extends Component {
                   </thead>
                   <tbody>
                     <td>
-                      {
-                        this.props.foes[this.props.newFoe.newFoeCategoryId]
-                          .Foes[this.props.newFoe.newFoeTypeId].Rank
-                      }
+                      {this.props.foes[this.props.newFoe.newFoeCategoryId].Foes[this.props.newFoe.newFoeTypeId].Rank}
                     </td>
                     <td>
-                      {
-                        this.props.foes[this.props.newFoe.newFoeCategoryId]
-                          .Foes[this.props.newFoe.newFoeTypeId].Source
-                      }
+                      {this.props.foes[this.props.newFoe.newFoeCategoryId].Foes[this.props.newFoe.newFoeTypeId].Source}
                     </td>
                     <td>
-                      {
-                        this.props.foes[this.props.newFoe.newFoeCategoryId]
-                          .Foes[this.props.newFoe.newFoeTypeId].Page
-                      }
+                      {this.props.foes[this.props.newFoe.newFoeCategoryId].Foes[this.props.newFoe.newFoeTypeId].Page}
                     </td>
                   </tbody>
                 </table>
                 <div className="row mt-3">
                   <div className="col">
-                    <button
-                      className="btn btn-dark"
-                      type="button"
-                      onClick={() => this.handleOnAddFoe()}
-                    >
+                    <button className="btn btn-dark" type="button" onClick={() => this.handleOnAddFoe()}>
                       <i className="fas fa-plus" aria-hidden="true"></i>
                       &nbsp;Add Foe
                     </button>
@@ -348,9 +317,7 @@ class EnterTheFray extends Component {
                         <div className="row">
                           <div className="col-6">{lf.Name}</div>
                           <div className="col-6 text-right">
-                            <div className="btn btn-tag btn-outline-light">
-                              {lf.Rank}
-                            </div>
+                            <div className="btn btn-tag btn-outline-light">{lf.Rank}</div>
                           </div>
                         </div>
                       </div>
@@ -391,11 +358,7 @@ class EnterTheFray extends Component {
                           key={lf.id}
                           progress={lf.progress}
                           onProgressionChange={(increment) =>
-                            this.handleOnProgressionChanged(
-                              lf.id,
-                              lf.Rank,
-                              increment
-                            )
+                            this.handleOnProgressionChanged(lf.id, lf.Rank, increment)
                           }
                         />
 
@@ -404,24 +367,15 @@ class EnterTheFray extends Component {
                             <div className="col-8">
                               <button
                                 className="btn btn-dark pt-2 pb-2 btn-block"
-                                onClick={() =>
-                                  this.props.onProgressRollClicked(
-                                    lf.id,
-                                    "foe",
-                                    lf.progress
-                                  )
-                                }
+                                onClick={() => this.props.onProgressRollClicked(lf.id, "foe", lf.progress)}
                               >
-                                <i className="fas fa-dice-d20"></i>&nbsp; Roll
-                                Progress
+                                <i className="fas fa-dice-d20"></i>&nbsp; Roll Progress
                               </button>
                             </div>
                             <div className="col-4">
                               <button
                                 className="btn btn-danger pt-2 pb-2 btn-block"
-                                onClick={() =>
-                                  this.handleActiveFoeDelete(lf.id)
-                                }
+                                onClick={() => this.handleActiveFoeDelete(lf.id)}
                               >
                                 <i className="fas fa-times"></i>&nbsp;Delete
                               </button>

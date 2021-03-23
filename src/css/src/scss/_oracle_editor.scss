@@ -1,20 +1,18 @@
-#oracle_editor {
-  textarea {
-    background-image: linear-gradient(white 50%, #e2e2e2 50%);
-    background-size: 100% 4rem;
-    // border: 1px solid #ccc;
-    font-size: 20px;
-    width: 100%;
-    height: 50vh;
-    line-height: 2rem;
-    margin: 0 auto;
-    padding: 4px 8px;
-    font-family: "Modesto";
-    background-attachment: local;
-    white-space: nowrap;
-    overflow-wrap: normal !important;
-    overflow-x: scroll !important;
-  }
+#tableEditor {
+  background-image: linear-gradient(white 50%, #e2e2e2 50%);
+  background-size: 100% 4rem;
+  // border: 1px solid #ccc;
+  font-size: 20px;
+  width: 100%;
+  height: 50vh;
+  line-height: 2rem;
+  margin: 0 auto;
+  padding: 4px 8px;
+  font-family: "Modesto";
+  background-attachment: local;
+  white-space: nowrap;
+  overflow-wrap: normal !important;
+  overflow-x: scroll !important;
 }
 
 input.disabled {

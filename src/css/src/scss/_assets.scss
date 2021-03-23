@@ -358,9 +358,25 @@ input.autocomplete-input {
     line-height: 2.1em;
   }
 
+  .slider-container ul.slider-ticks li.slider-tick-label {
+    margin-top: 0.1em;
+    height: 2.5em !important;
+    line-height: 2.5em !important;
+  }
+
+  .slider-container ul.slider-ticks li.slider-tick-label span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1em !important;
+  }
+
   .form-control:disabled,
   .form-control[readonly] {
     background-color: white;
     opacity: 1;
   }
+}
+
+#assetBuilderControls {
+  min-height: 2.8em;
 }

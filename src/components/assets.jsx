@@ -20,11 +20,7 @@ class Assets extends Component {
   };
 
   handleAddAssetClick = () => {
-    let asset = JSON.parse(
-      JSON.stringify(
-        this.props.assets.find((a) => a.id == this.state.selectedAssetId)
-      )
-    );
+    let asset = JSON.parse(JSON.stringify(this.props.assets.find((a) => a.id == this.state.selectedAssetId)));
 
     const players = this.props.players.map((p) => {
       if (!p.selected) return;
@@ -35,7 +31,6 @@ class Assets extends Component {
     });
     this.setState({ players });
     this.setState({ selectedAssetId: -1 });
-    console.log(players);
   };
 
   handleRemoveAssetClick = () => {
@@ -70,7 +65,7 @@ class Assets extends Component {
 
       p.assets.map((a) => {
         if (a.id === name) {
-          a.trackValue = stat;
+          a.TrackValue = stat;
         }
         return a;
       });
@@ -89,7 +84,7 @@ class Assets extends Component {
 
       p.assets.map((a) => {
         if (a.id === id) {
-          a["Input Fields"][field].value = val;
+          a.InputFields[field].value = val;
         }
         return a;
       });
@@ -129,7 +124,7 @@ class Assets extends Component {
           <div className="col-6">
             <div className="input-group mb-3">
               <div className="input-group-prepend">
-                <label className="btn btn-dark btn-tag">Select Asset</label>
+                <label className="btn btn-dark btn-tag">Select Asset to Add</label>
               </div>
 
               <select
@@ -141,9 +136,7 @@ class Assets extends Component {
                 {this.props.assets.map((a) => {
                   return (
                     <React.Fragment>
-                      {this.props.selectedPlayer.assets.find(
-                        (pa) => pa.id == a.id
-                      ) === undefined ? (
+                      {this.props.selectedPlayer.assets.find((pa) => pa.id == a.id) === undefined ? (
                         <React.Fragment>
                           <option value={a.id}>
                             {a.core ? "(Core)" : React.Fragment} {a.Name}
@@ -157,10 +150,7 @@ class Assets extends Component {
                 })}
               </select>
             </div>
-            <button
-              className="btn btn-sm btn-dark"
-              onClick={this.handleAddAssetClick}
-            >
+            <button className="btn btn-sm btn-dark" onClick={this.handleAddAssetClick}>
               <i class="fa fa-plus" aria-hidden="true"></i> Add Asset
             </button>
           </div>
@@ -168,7 +158,7 @@ class Assets extends Component {
           <div className="col-6">
             <div className="input-group mb-3">
               <div className="input-group-prepend">
-                <label className="btn btn-dark btn-tag">Select Asset</label>
+                <label className="btn btn-dark btn-tag">Select Asset to Remove</label>
               </div>
 
               <select
@@ -180,9 +170,7 @@ class Assets extends Component {
                 {this.props.assets.map((a) => {
                   return (
                     <React.Fragment>
-                      {this.props.selectedPlayer.assets.find(
-                        (pa) => pa.id == a.id
-                      ) !== undefined ? (
+                      {this.props.selectedPlayer.assets.find((pa) => pa.id == a.id) !== undefined ? (
                         <React.Fragment>
                           <option value={a.id}>
                             {a.core ? "(Core)" : React.Fragment} {a.Name}
@@ -196,10 +184,7 @@ class Assets extends Component {
                 })}
               </select>
             </div>
-            <button
-              className="btn btn-sm btn-danger"
-              onClick={this.handleRemoveAssetClick}
-            >
+            <button className="btn btn-sm btn-danger" onClick={this.handleRemoveAssetClick}>
               <i class="fa fa-minus" aria-hidden="true"></i> Remove Asset
             </button>
           </div>
@@ -212,7 +197,7 @@ class Assets extends Component {
               stat={{
                 stat: a.id,
                 hideLabel: true,
-                value: a.trackValue,
+                value: a.TrackValue,
                 trackLabels:
                   a.MultiFieldAssetTrack != null
                     ? a.MultiFieldAssetTrack.Fields.map((f) => {

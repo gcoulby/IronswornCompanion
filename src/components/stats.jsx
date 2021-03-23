@@ -29,6 +29,7 @@ class Stats extends Component {
 
     this.setState({ players });
     if (name == "Momentum") this.checkMomentum();
+    this.props.updateFooterDice();
   };
 
   handleDebilityChange = (evt, name) => {
@@ -60,6 +61,7 @@ class Stats extends Component {
     });
     this.setState({ players });
     this.checkMomentum();
+    this.props.updateFooterDice();
   };
 
   checkMomentum() {
@@ -114,6 +116,7 @@ class Stats extends Component {
     });
 
     this.setState({ players });
+    this.props.updateFooterDice();
   };
 
   handleOnPlayerProgressionChanged = (playerName, increment) => {
@@ -127,6 +130,7 @@ class Stats extends Component {
       return p;
     });
     this.setState({ players });
+    this.props.updateFooterDice();
   };
 
   handleOnPlayerStatChanged = (stat, increment) => {
@@ -144,6 +148,7 @@ class Stats extends Component {
       return p;
     });
     this.setState({ players });
+    this.props.updateFooterDice();
   };
 
   componentDidUpdate() {
