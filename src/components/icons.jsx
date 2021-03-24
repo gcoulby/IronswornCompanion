@@ -1,6 +1,7 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import UniqueKeyGenerator from "./uniqueKeyGenerator";
 // class GameIcons {
 const glyphs = [
   "police-badge",
@@ -4012,36 +4013,35 @@ const glyphs = [
 
 export default function ComboBox(asset, onInputChange) {
   return (
-    <Autocomplete
-      id="combo-box-demo"
-      className="autocomplete-input"
-      options={glyphs}
-      placeholder="Icon"
-      data-value="dDD"
-      inputValue={asset.icon}
-      onInputChange={(e) => onInputChange(e)}
-      onChange={(e) => onInputChange(e)}
-      getOptionLabel={(option) => option}
-      renderOption={(option) => (
-        <React.Fragment>
-          <i
-            className={`game-icon game-icon-${option}`}
-            data-value={option}
-          ></i>
-          &nbsp;
-          {option}
-        </React.Fragment>
-      )}
-      style={{ flex: "auto" }}
-      renderInput={(params) => (
-        <TextField
-          className="form-control"
-          {...params}
-          //   label="Icons"
-          variant="outlined"
-        />
-      )}
-    />
+    <React.Fragment key={UniqueKeyGenerator.generate()}>
+      <Autocomplete
+        id="combo-box-demo"
+        className="autocomplete-input"
+        options={glyphs}
+        placeholder="Icon"
+        data-value="dDD"
+        inputValue={asset.icon}
+        onInputChange={(e) => onInputChange(e)}
+        onChange={(e) => onInputChange(e)}
+        getOptionLabel={(option) => option}
+        renderOption={(option) => (
+          <React.Fragment>
+            <i className={`game-icon game-icon-${option}`} data-value={option}></i>
+            &nbsp;
+            {option}
+          </React.Fragment>
+        )}
+        style={{ flex: "auto" }}
+        renderInput={(params) => (
+          <TextField
+            className="form-control"
+            {...params}
+            //   label="Icons"
+            variant="outlined"
+          />
+        )}
+      />
+    </React.Fragment>
   );
 }
 

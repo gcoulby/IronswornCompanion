@@ -3,18 +3,20 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import AssetCard from "./assetCard";
 import TitleBlock from "./titleBlock";
-import _ from "lodash";
+import _, { last } from "lodash";
 
 // import TextField from "@material-ui/core/TextField";
 // import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import ComboBox from "./icons";
 import DefaultAsset from "../models/defaultAssets";
+import UniqueKeyGenerator from "./uniqueKeyGenerator";
 class AssetBuilder extends Component {
   state = {
     printableCards: [],
     trackLabelCursorPosition: 0,
     defaultAsset: new DefaultAsset(),
+    lastKeyCode: "",
   };
 
   valueToStat(val, steps) {
@@ -108,19 +110,33 @@ class AssetBuilder extends Component {
   getTrackLabels() {
     let out = "";
     this.props.selectedAsset.TrackLabels.map((l) => (out += l + "\n"));
+
+    // console.log(out);
     out.replace(/^\s+|\s+$/g, "");
     return out;
   }
+
+  handleTrackLabelsKeyDown = (evt) => {
+    this.setState({ trackLabelCursorPosition: evt.target.selectionStart });
+    this.setState({ lastKeyCode: evt.code });
+  };
+
+  handleTrackLabelsMouseUp = (evt) => {
+    this.setState({ trackLabelCursorPosition: evt.target.selectionStart });
+  };
 
   handleTrackLabelsChange = (evt) => {
     const selectedAsset = this.props.selectedAsset;
     selectedAsset.TrackLabels = selectedAsset.TrackLabels;
 
+    let selection = evt.target.selectionStart;
+    selection += this.state.lastKeyCode == "Space" ? 1 : 0;
+
     this.setState({ trackLabelCursorPosition: evt.target.selectionStart });
     let text = evt.target.value.replace(/^\s+|\s+$/g, "");
     let labels = [];
     if (text !== "") labels = text.split("\n");
-
+    labels[labels.length - 1] += this.state.lastKeyCode == "Space" ? " " : "";
     selectedAsset.TrackLabels = labels;
     this.setState({ selectedAsset });
     this.setPrintableCardSet();
@@ -176,6 +192,7 @@ class AssetBuilder extends Component {
 
   componentDidUpdate() {
     let el = document.getElementById("tableEditor");
+    // el.selectionStart = this.state.trackLabelCursorPosition;
     el.setSelectionRange(this.state.trackLabelCursorPosition, this.state.trackLabelCursorPosition);
     this.props.onComponentUpdate();
   }
@@ -217,9 +234,11 @@ class AssetBuilder extends Component {
                 onChange={(e) => this.props.onSelectedAssetChange(e.target.value)}
                 value={this.props.selectedAsset ? this.props.selectedAsset.id : -1}
               >
-                <option val="">Select Asset</option>
+                <option key={UniqueKeyGenerator.generate()} val="">
+                  Select Asset
+                </option>
                 {this.props.assets.map((a) => (
-                  <option value={a.id}>
+                  <option key={UniqueKeyGenerator.generate()} value={a.id}>
                     {a.core ? "(Core)" : React.Fragment} {a.Name}
                   </option>
                 ))}
@@ -246,7 +265,7 @@ class AssetBuilder extends Component {
               ) : (
                 <React.Fragment>
                   <button className="btn btn-dark" onClick={() => this.handleOnSaveChanges()}>
-                    <i class="fas fa-save"></i> Save Changes
+                    <i className="fas fa-save"></i> Save Changes
                   </button>
                 </React.Fragment>
               )}
@@ -268,7 +287,7 @@ class AssetBuilder extends Component {
               ) : (
                 <React.Fragment>
                   <button className="btn btn-dark" onClick={() => this.handleOnAddAsset()}>
-                    <i class="fas fa-plus"></i> Add Asset
+                    <i className="fas fa-plus"></i> Add Asset
                   </button>
                 </React.Fragment>
               )}
@@ -284,7 +303,7 @@ class AssetBuilder extends Component {
               ) : (
                 <React.Fragment>
                   <button className="btn btn-dark ml-2" onClick={() => this.handleOnAddAsset()}>
-                    <i class="fas fa-copy"></i> Save As Copy
+                    <i className="fas fa-copy"></i> Save As Copy
                   </button>
                 </React.Fragment>
               )}
@@ -297,14 +316,14 @@ class AssetBuilder extends Component {
               ) : (
                 <React.Fragment>
                   <button className="btn btn-danger ml-2" onClick={() => this.handleOnDeleteUserAsset()}>
-                    <i class="fas fa-minus"></i> Delete Asset
+                    <i className="fas fa-minus"></i> Delete Asset
                   </button>
                 </React.Fragment>
               )}
             </div>
 
             <Tabs defaultActiveKey="header" id="uncontrolled-tab-example">
-              <Tab eventKey="header" title="Header">
+              <Tab key="headertab" eventKey="header" title="Header">
                 <div className="container">
                   <div className="row mt-4">
                     <div className="col">
@@ -347,7 +366,7 @@ class AssetBuilder extends Component {
                   </div>
                 </div>
               </Tab>
-              <Tab eventKey="additional-info" title="Additional Info">
+              <Tab key="additional-infotab" eventKey="additional-info" title="Additional Info">
                 <div className="container mt-4">
                   <div className="row">
                     <div className="col">
@@ -417,7 +436,7 @@ class AssetBuilder extends Component {
                   </div>
                 </div>
               </Tab>
-              <Tab eventKey="abilities" title="Abilities">
+              <Tab key="abilitiestab" eventKey="abilities" title="Abilities">
                 <div className="container mt-4">
                   <div className="row border-left-2 pl-2 py-2 my-4">
                     <div className="container">
@@ -594,7 +613,7 @@ class AssetBuilder extends Component {
                   </div>
                 </div>
               </Tab>
-              <Tab eventKey="track" title="Track">
+              <Tab key="tracktab" eventKey="track" title="Track">
                 <div className="container mt-4">
                   <div className="row">
                     <div className="col">
@@ -628,6 +647,7 @@ class AssetBuilder extends Component {
                       </div>
                       <div className="input-group mb-3">
                         <span className="modesto">Track Labels (Overrides Max Value):</span>
+
                         <textarea
                           id="tableEditor"
                           wrap="off"
@@ -638,13 +658,15 @@ class AssetBuilder extends Component {
                           }
                           // value={this.props.oracles.getOracleTablePrompts(this.props.oracles.selectedOracleTable)}
                           onChange={(e) => this.handleTrackLabelsChange(e)}
+                          onKeyDown={(e) => this.handleTrackLabelsKeyDown(e)}
+                          onMouseUp={(e) => this.handleTrackLabelsMouseUp(e)}
                         ></textarea>
                       </div>
                     </div>
                   </div>
                 </div>
               </Tab>
-              <Tab eventKey="help" title="Help">
+              <Tab key="helptab" eventKey="help" title="Help">
                 <div className="alert alert-light">
                   Assets with (Core) in the name cannot be edited or deleted. They are centrally maintained by the{" "}
                   <strong>Data Management</strong> page. To update assets got to the <strong>Data Management</strong>{" "}
@@ -668,7 +690,7 @@ class AssetBuilder extends Component {
         <div id="assetCards" className="print-hide mb-5">
           <TitleBlock title="Asset Deck" />
           <div className="alert alert-secondary">Use this section to print cards</div>
-          <a class="print-hide btn btn-dark" title="Print" onClick={() => this.handlePrint()}>
+          <a className="print-hide btn btn-dark" title="Print" onClick={() => this.handlePrint()}>
             Print Cards
           </a>
         </div>
@@ -693,12 +715,12 @@ class AssetBuilder extends Component {
             );
           else {
             return (
-              <React.Fragment>
+              <React.Fragment key={UniqueKeyGenerator.generate()}>
                 <div className="card asset-card asset-card-back text-center print-show">
                   <h3>IRONSWORN</h3>
                   <div className="asset-icon">
                     <i
-                      class={`game-icon game-icon-croc-sword`}
+                      className={`game-icon game-icon-croc-sword`}
                       // aria-hidden="true"
                     ></i>
                   </div>
@@ -711,7 +733,7 @@ class AssetBuilder extends Component {
           }
         })}
 
-        <div class="page-break"></div>
+        <div className="page-break"></div>
 
         {/* </div> */}
         {/* </div> */}

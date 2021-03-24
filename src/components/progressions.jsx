@@ -152,7 +152,7 @@ class Progression extends Component {
         <h1>{this.props.title}</h1>
         {this.props.info ? (
           <React.Fragment>
-            <div class="alert alert-secondary" role="alert">
+            <div className="alert alert-secondary" role="alert">
               {this.props.info}
             </div>
           </React.Fragment>
@@ -187,21 +187,14 @@ class Progression extends Component {
                 value={this.getProgressionByType().rank}
               >
                 {this.state.ranks.map((r) => (
-                  <option
-                    key={this.state.ranks.indexOf(r)}
-                    value={this.state.ranks.indexOf(r)}
-                  >
+                  <option key={this.state.ranks.indexOf(r)} value={this.state.ranks.indexOf(r)}>
                     {r}
                   </option>
                 ))}
               </select>
             </div>
 
-            <button
-              className="btn btn-dark"
-              type="button"
-              onClick={() => this.handleOnAddNewProgression()}
-            >
+            <button className="btn btn-dark" type="button" onClick={() => this.handleOnAddNewProgression()}>
               <i className="fas fa-plus" aria-hidden="true"></i>
               &nbsp;Add {this.props.type}
             </button>

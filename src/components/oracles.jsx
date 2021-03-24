@@ -3358,12 +3358,8 @@ class Oracles {
     if (parseInt(this.diceRoller.roll([2])[0].value) - 1) {
       return this.getRandomPromptFromOracleTable("Settlement Names");
     } else {
-      let prefix = this.getRandomPromptFromOracleTable(
-        "Settlement Name Prefixes"
-      );
-      let suffix = this.getRandomPromptFromOracleTable(
-        "Settlement Name Suffixes"
-      );
+      let prefix = this.getRandomPromptFromOracleTable("Settlement Name Prefixes");
+      let suffix = this.getRandomPromptFromOracleTable("Settlement Name Suffixes");
       return prefix + suffix.toLowerCase();
     }
   }

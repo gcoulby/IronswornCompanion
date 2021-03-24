@@ -4,6 +4,7 @@ import parse from "html-react-parser";
 import ReactMarkdown from "react-markdown";
 import { Turndown } from "turndown";
 import StatTrack from "./statTrack";
+import UniqueKeyGenerator from "./uniqueKeyGenerator";
 class AssetCard extends Component {
   state = {
     // stat: this.buildStat(this.props.asset),
@@ -36,13 +37,13 @@ class AssetCard extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <React.Fragment key={UniqueKeyGenerator.generate()}>
         <div className="card asset-card">
           <div className="card-header bg-dark text-light">
             <h6>{this.props.asset.Type}</h6>
 
             <div className="asset-icon">
-              <i class={`game-icon game-icon-${this.props.asset.icon}`} aria-hidden="true"></i>
+              <i className={`game-icon game-icon-${this.props.asset.icon}`} aria-hidden="true"></i>
             </div>
           </div>
           <div className="card-body">
@@ -52,7 +53,7 @@ class AssetCard extends Component {
                 {this.props.asset.InputFields.filter((f) => f.name !== undefined && f.name !== "").map((f) => {
                   let idx = this.props.asset.InputFields.indexOf(f);
                   return (
-                    <React.Fragment>
+                    <React.Fragment key={UniqueKeyGenerator.generate()}>
                       <div className="row input-field">
                         <div className="input-group">
                           <div className="input-group-prepend">
@@ -83,8 +84,8 @@ class AssetCard extends Component {
             {this.props.asset.Abilities.filter(
               (a) => (a.Name !== undefined && a.Name !== "") || (a.Text !== undefined && a.Text !== "")
             ).map((a) => (
-              <div className="row">
-                <label class="control control-checkbox">
+              <div key={UniqueKeyGenerator.generate()} className="row">
+                <label className="control control-checkbox">
                   <input
                     type="checkbox"
                     checked={a.Enabled}
@@ -92,7 +93,7 @@ class AssetCard extends Component {
                       this.props.onAbilityCheckChange(e, this.props.asset.id, this.props.asset.Abilities.indexOf(a))
                     }
                   />
-                  <div class="control_indicator"></div>
+                  <div className="control_indicator"></div>
                 </label>
                 <div className="col">{this.content(a.Name, a.Text)}</div>
               </div>

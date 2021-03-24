@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import AssetCard from "./assetCard";
 import TitleBlock from "./titleBlock";
+import UniqueKeyGenerator from "./uniqueKeyGenerator";
 import UnselectedPlayer from "./unselected_player";
 class Assets extends Component {
   state = {
@@ -132,10 +133,10 @@ class Assets extends Component {
                 onChange={(e) => this.handleOnSelectedAssetChange(e)}
                 value={this.state.selectedAssetId}
               >
-                <option val="">Select Asset</option>
+                <option value="">Select Asset</option>
                 {this.props.assets.map((a) => {
                   return (
-                    <React.Fragment>
+                    <React.Fragment key={UniqueKeyGenerator.generate()}>
                       {this.props.selectedPlayer.assets.find((pa) => pa.id == a.id) === undefined ? (
                         <React.Fragment>
                           <option value={a.id}>
@@ -151,7 +152,7 @@ class Assets extends Component {
               </select>
             </div>
             <button className="btn btn-sm btn-dark" onClick={this.handleAddAssetClick}>
-              <i class="fa fa-plus" aria-hidden="true"></i> Add Asset
+              <i className="fa fa-plus" aria-hidden="true"></i> Add Asset
             </button>
           </div>
 
@@ -166,10 +167,10 @@ class Assets extends Component {
                 onChange={(e) => this.handleOnSelectedRemovalAssetChange(e)}
                 value={this.state.selectedAssetId}
               >
-                <option val="">Select Asset</option>
+                <option value="">Select Asset</option>
                 {this.props.assets.map((a) => {
                   return (
-                    <React.Fragment>
+                    <React.Fragment key={UniqueKeyGenerator.generate()}>
                       {this.props.selectedPlayer.assets.find((pa) => pa.id == a.id) !== undefined ? (
                         <React.Fragment>
                           <option value={a.id}>
@@ -185,25 +186,20 @@ class Assets extends Component {
               </select>
             </div>
             <button className="btn btn-sm btn-danger" onClick={this.handleRemoveAssetClick}>
-              <i class="fa fa-minus" aria-hidden="true"></i> Remove Asset
+              <i className="fa fa-minus" aria-hidden="true"></i> Remove Asset
             </button>
           </div>
         </div>
         <TitleBlock title="Owned Assets" />
         {this.props.selectedPlayer.assets.map((a) => (
-          <React.Fragment>
+          <React.Fragment key={UniqueKeyGenerator.generate()}>
             <AssetCard
               asset={a}
               stat={{
                 stat: a.id,
                 hideLabel: true,
                 value: a.TrackValue,
-                trackLabels:
-                  a.MultiFieldAssetTrack != null
-                    ? a.MultiFieldAssetTrack.Fields.map((f) => {
-                        return f.ActiveText;
-                      })
-                    : [],
+                trackLabels: a.TrackLabels ? a.TrackLabels : [],
               }}
               onTrackProgressChange={this.handleStatTrackChange}
               onInputFieldChange={this.handleInputFieldChange}

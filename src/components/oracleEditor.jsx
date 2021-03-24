@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import OracleRoller from "./oracleRoller";
 class OracleEditor extends Component {
-  state = {};
+  state = {
+    lastKeyCode: "",
+  };
 
   handleNewOracleTableNameChange = (evt) => {
     const oracles = this.props.oracles;
@@ -34,17 +36,31 @@ class OracleEditor extends Component {
 
   handleOracleTablePromptsChange = (evt) => {
     const oracles = this.props.oracles;
+    let selection = evt.target.selectionStart;
+    selection += this.state.lastKeyCode == "Space" ? 1 : 0;
     oracles.editOracleCursorPosition = evt.target.selectionStart;
+
     oracles.tables.map((o) => {
       let text = evt.target.value.replace(/^\s+|\s+$/g, "");
       if (o.title == this.props.oracles.selectedOracleTable) {
         let prompts = text.split("\n");
-
+        prompts[prompts.length - 1] += this.state.lastKeyCode == "Space" ? " " : "";
         o.prompts = prompts;
       }
       return o;
     });
     this.setState({ oracles });
+  };
+
+  handleTrackLabelsKeyDown = (evt) => {
+    const oracles = this.props.oracles;
+    oracles.editOracleCursorPosition = evt.target.selectionStart;
+    this.setState({ lastKeyCode: evt.code });
+  };
+
+  handleTrackLabelsMouseUp = (evt) => {
+    const oracles = this.props.oracles;
+    oracles.editOracleCursorPosition = evt.target.selectionStart;
   };
 
   componentDidUpdate() {
@@ -86,7 +102,7 @@ class OracleEditor extends Component {
         <div className="row">
           <div id="oracle_editor" className="col-5">
             <h3>
-              <i class="fa fa-table" aria-hidden="true"></i> Edit Oracle Table
+              <i className="fa fa-table" aria-hidden="true"></i> Edit Oracle Table
             </h3>
             <div className="input-group mb-3">
               <div className="input-group-prepend">
@@ -112,6 +128,8 @@ class OracleEditor extends Component {
               wrap="off"
               value={this.props.oracles.getOracleTablePrompts(this.props.oracles.selectedOracleTable)}
               onChange={(e) => this.handleOracleTablePromptsChange(e)}
+              onKeyDown={(e) => this.handleTrackLabelsKeyDown(e)}
+              onMouseUp={(e) => this.handleTrackLabelsMouseUp(e)}
             ></textarea>
             {this.props.oracles.isCore(this.props.selectedOracleTable) ? (
               <React.Fragment></React.Fragment>
@@ -135,7 +153,7 @@ class OracleEditor extends Component {
           </div>
           <div className="col-7">
             <h3>
-              <i class="ra ra-crystal-ball" aria-hidden="true"></i> Ask the Oracle
+              <i className="ra ra-crystal-ball" aria-hidden="true"></i> Ask the Oracle
             </h3>
             {this.props.oracles.tables.map((o) => (
               <OracleRoller tableName={o.title} oracles={this.props.oracles} />

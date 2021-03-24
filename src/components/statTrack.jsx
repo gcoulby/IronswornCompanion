@@ -53,7 +53,9 @@ class StatTrack extends Component {
               ) : (
                 <React.Fragment>
                   {ticks.map((t) => (
-                    <li className="slider-tick">{t <= 0 ? `${t}` : `+${t}`}</li>
+                    <li key={UniqueKeyGenerator.generate()} className="slider-tick">
+                      {t <= 0 ? `${t}` : `+${t}`}
+                    </li>
                   ))}
                 </React.Fragment>
               )}

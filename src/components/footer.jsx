@@ -190,9 +190,9 @@ class Footer extends Component {
                 </button>
                 {this.props.footerDice.HitType != "" ? (
                   <React.Fragment>
-                    <div class="btn btn-outline-light tip">
+                    <div className="btn btn-outline-light tip">
                       {this.props.footerDice.HitType}
-                      <div class="top">
+                      <div className="top">
                         <h3>{this.props.footerDice.HitType}</h3>
                         {this.props.footerDice.ProgressId != "" ? (
                           <React.Fragment>

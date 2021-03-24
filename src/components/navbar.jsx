@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { HashRouter, Link } from "react-router-dom";
+import UniqueKeyGenerator from "./uniqueKeyGenerator";
 class Navbar extends Component {
   state = {};
   render() {
@@ -30,18 +31,12 @@ class Navbar extends Component {
                 <div className="input-group">
                   <div className="input-group-prepend">
                     <div className="input-group-prepend">
-                      <label className="btn btn-outline-light btn-tag">
-                        Player
-                      </label>
+                      <label className="btn btn-outline-light btn-tag">Player</label>
                     </div>
                   </div>
                   <select
                     className="form-control bg-dark text-light"
-                    value={
-                      this.props.selectedPlayer
-                        ? this.props.selectedPlayer.name
-                        : -1
-                    }
+                    value={this.props.selectedPlayer ? this.props.selectedPlayer.name : -1}
                     onChange={(e) => this.props.onPlayerSelect(e.target.value)}
                   >
                     <option>Select Character</option>
@@ -70,7 +65,7 @@ class Navbar extends Component {
                 {this.props.selectedPlayer ? (
                   <React.Fragment>
                     {this.props.selectedPlayer.stats.map((s) => (
-                      <li className="nav-item active">
+                      <li key={UniqueKeyGenerator.generate()} className="nav-item active">
                         <HashRouter basename="/">
                           <Link to="/stats" className="btn btn-outline-light">
                             <p className="stat-value">{s.value}</p>

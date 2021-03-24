@@ -420,7 +420,7 @@ class App extends Component {
                 <Route exact path="/">
                   <h3 id="site-title">IRONSWORN</h3>
                   <h1 id="site-subtitle">COMPANION</h1>
-                  <h6 class="text-light">Version {this.version}</h6>
+                  <h6 className="text-light">Version {this.version}</h6>
 
                   <div id="bg-image"></div>
                   <div id="welcome-page-notice" className="alert alert-secondary">
