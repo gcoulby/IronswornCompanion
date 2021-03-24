@@ -17,6 +17,7 @@ class AssetBuilder extends Component {
     trackLabelCursorPosition: 0,
     defaultAsset: new DefaultAsset(),
     lastKeyCode: "",
+    showCards: false,
   };
 
   valueToStat(val, steps) {
@@ -60,7 +61,7 @@ class AssetBuilder extends Component {
       return a;
     });
     this.setState({ assets });
-    this.setPrintableCardSet();
+    this.editorUpdate();
   };
 
   handleOnIconInputChange = (evt) => {
@@ -74,21 +75,21 @@ class AssetBuilder extends Component {
     const selectedAsset = this.props.selectedAsset;
     selectedAsset.icon = value;
     this.setState({ selectedAsset });
-    this.setPrintableCardSet();
+    this.editorUpdate();
   };
 
   handleOnTextInputChange = (evt, field) => {
     const selectedAsset = this.props.selectedAsset;
     selectedAsset[field] = evt.target.value;
     this.setState({ selectedAsset });
-    this.setPrintableCardSet();
+    this.editorUpdate();
   };
 
   handleOnInputFieldNameInputChange = (evt, index) => {
     const selectedAsset = this.props.selectedAsset;
     selectedAsset.InputFields[index] = { name: evt.target.value, value: "" };
     this.setState({ selectedAsset });
-    this.setPrintableCardSet();
+    this.editorUpdate();
   };
 
   handleOnAbilityInputChange = (evt, index, field) => {
@@ -96,7 +97,7 @@ class AssetBuilder extends Component {
     selectedAsset.Abilities[index] = { ...selectedAsset.Abilities[index] };
     selectedAsset.Abilities[index][field] = evt.target.value;
     this.setState({ selectedAsset });
-    this.setPrintableCardSet();
+    this.editorUpdate();
   };
 
   handleOnAbilityCheckboxChange = (evt, index) => {
@@ -104,7 +105,7 @@ class AssetBuilder extends Component {
     selectedAsset.Abilities[index] = { ...selectedAsset.Abilities[index] };
     selectedAsset.Abilities[index].Enabled = evt.target.checked;
     this.setState({ selectedAsset });
-    this.setPrintableCardSet();
+    this.editorUpdate();
   };
 
   getTrackLabels() {
@@ -139,7 +140,7 @@ class AssetBuilder extends Component {
     labels[labels.length - 1] += this.state.lastKeyCode == "Space" ? " " : "";
     selectedAsset.TrackLabels = labels;
     this.setState({ selectedAsset });
-    this.setPrintableCardSet();
+    this.editorUpdate();
   };
 
   handleOnAddAsset = () => {
@@ -150,7 +151,7 @@ class AssetBuilder extends Component {
     assets.push(asset);
     this.setState({ assets });
     this.props.onSelectedAssetChange(asset.id);
-    this.setPrintableCardSet();
+    this.editorUpdate();
   };
 
   handleOnSaveChanges = () => {
@@ -163,7 +164,7 @@ class AssetBuilder extends Component {
     }
     this.setState({ assets });
     this.props.onSelectedAssetChange(this.props.selectedAsset.id);
-    this.setPrintableCardSet();
+    this.editorUpdate();
   };
 
   handleOnDeleteUserAsset = () => {
@@ -179,6 +180,11 @@ class AssetBuilder extends Component {
     if (pos != -1) assets.splice(pos, 1);
     this.setState({ assets });
     this.props.onSelectedAssetChange("");
+    this.editorUpdate();
+  };
+
+  editorUpdate = () => {
+    this.showCards(false);
     this.setPrintableCardSet();
   };
 
@@ -187,15 +193,18 @@ class AssetBuilder extends Component {
   }
 
   componentDidMount() {
-    this.setPrintableCardSet();
+    this.editorUpdate();
   }
 
   componentDidUpdate() {
     let el = document.getElementById("tableEditor");
-    // el.selectionStart = this.state.trackLabelCursorPosition;
     el.setSelectionRange(this.state.trackLabelCursorPosition, this.state.trackLabelCursorPosition);
     this.props.onComponentUpdate();
   }
+
+  showCards = (show) => {
+    this.setState({ showCards: show });
+  };
 
   handlePrint() {
     window.print();
@@ -651,6 +660,7 @@ class AssetBuilder extends Component {
                         <textarea
                           id="tableEditor"
                           wrap="off"
+                          style={{ height: 25 + "vh" }}
                           value={
                             this.props.selectedAsset.TrackLabels && this.props.selectedAsset.TrackLabels.length > 0
                               ? this.getTrackLabels()
@@ -689,49 +699,72 @@ class AssetBuilder extends Component {
         </div>
         <div id="assetCards" className="print-hide mb-5">
           <TitleBlock title="Asset Deck" />
-          <div className="alert alert-secondary">Use this section to print cards</div>
+          <div className="alert alert-secondary">
+            Use this section to print cards. You MUST click <strong>Show Cards</strong> before clicking{" "}
+            <strong>Print Cards</strong>
+          </div>
+
+          {this.state.showCards ? (
+            <React.Fragment>
+              <button className="print-hide btn btn-dark mr-3" onClick={() => this.showCards(false)}>
+                <i class="fa fa-eye-slash" aria-hidden="true"></i>&nbsp;Hide Cards
+              </button>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <button className="print-hide btn btn-dark mr-3" onClick={() => this.showCards(true)}>
+                <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Show Cards
+              </button>
+            </React.Fragment>
+          )}
+
           <a className="print-hide btn btn-dark" title="Print" onClick={() => this.handlePrint()}>
-            Print Cards
+            <i class="fa fa-print" aria-hidden="true"></i>&nbsp; Print Cards
           </a>
         </div>
+        {this.state.showCards ? (
+          <React.Fragment>
+            {this.state.printableCards.map((a) => {
+              if (a.front)
+                return (
+                  <AssetCard
+                    asset={a}
+                    hideThumb={true}
+                    disabled={true}
+                    stat={{
+                      stat: a.id,
+                      hideLabel: true,
+                      value: a.trackValue,
+                      trackLabels: a.TrackLabels ? a.TrackLabels : [],
+                    }}
+                    onTrackProgressChange={() => {}}
+                    onInputFieldChange={() => {}}
+                    onAbilityCheckChange={() => {}}
+                  />
+                );
+              else {
+                return (
+                  <React.Fragment key={UniqueKeyGenerator.generate()}>
+                    <div className="card asset-card asset-card-back text-center print-show">
+                      <h3>IRONSWORN</h3>
+                      <div className="asset-icon">
+                        <i
+                          className={`game-icon game-icon-croc-sword`}
+                          // aria-hidden="true"
+                        ></i>
+                      </div>
+                      <div className="hr"></div>
 
-        {this.state.printableCards.map((a) => {
-          if (a.front)
-            return (
-              <AssetCard
-                asset={a}
-                hideThumb={true}
-                disabled={true}
-                stat={{
-                  stat: a.id,
-                  hideLabel: true,
-                  value: a.trackValue,
-                  trackLabels: a.TrackLabels ? a.TrackLabels : [],
-                }}
-                onTrackProgressChange={() => {}}
-                onInputFieldChange={() => {}}
-                onAbilityCheckChange={() => {}}
-              />
-            );
-          else {
-            return (
-              <React.Fragment key={UniqueKeyGenerator.generate()}>
-                <div className="card asset-card asset-card-back text-center print-show">
-                  <h3>IRONSWORN</h3>
-                  <div className="asset-icon">
-                    <i
-                      className={`game-icon game-icon-croc-sword`}
-                      // aria-hidden="true"
-                    ></i>
-                  </div>
-                  <div className="hr"></div>
-
-                  <h1 className="mt-5">{a.type}</h1>
-                </div>
-              </React.Fragment>
-            );
-          }
-        })}
+                      <h1 className="mt-5">{a.type}</h1>
+                    </div>
+                  </React.Fragment>
+                );
+              }
+            })}
+          </React.Fragment>
+        ) : (
+          <React.Fragment></React.Fragment>
+        )}
 
         <div className="page-break"></div>
 

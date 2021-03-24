@@ -30,6 +30,7 @@ class StatTrack extends Component {
 
   render() {
     let ticks = this.getTicks();
+    let tp = this.getTrackPosition();
     return (
       <React.Fragment>
         <div className={`stat-track stat-track-${this.props.stat.stat == "Momentum" ? "16" : this.props.max} `}>
@@ -65,7 +66,7 @@ class StatTrack extends Component {
               min={this.state.min}
               max={this.state.max}
               step="1"
-              value={this.getTrackPosition()}
+              value={tp === NaN ? "" : tp}
               onChange={(e) => this.props.onChange(e, this.props.stat.stat, ticks.length, -this.state.offset)}
               className="slider gh-slider-option4"
               id="test"

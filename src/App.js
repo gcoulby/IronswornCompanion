@@ -34,7 +34,7 @@ import DefaultAsset from "./models/defaultAssets";
 //TODO Popups for delete buttons
 
 class App extends Component {
-  version = "0.49.4";
+  version = "0.49.5";
   state = {
     save: false,
     updateCore: false,
