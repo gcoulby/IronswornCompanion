@@ -1,14 +1,14 @@
 {
   "short_name": "Ironsworn Companion",
-  "name": "Digital companion for the tabletop RPG Ironsworn.",
+  "name": "Ironsworn digital companion to support the tabletop RPG Ironsworn created by Shawn Tomkin.",
   "icons": [
     {
-      "src": "/android-chrome-192x192.png",
+      "src": "/IronswornCompanion/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/android-chrome-512x512.png",
+      "src": "/IronswornCompanion/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }

@@ -7,7 +7,7 @@ class EditableTable extends Component {
       <React.Fragment>
         <div style={{ clear: "both" }}>
           <button className="btn btn-sm btn-dark mb-2" onClick={() => this.props.onRowAdd()}>
-            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp; Add Row
+            <i className="fa fa-plus" aria-hidden="true"></i>&nbsp; Add Row
           </button>
         </div>
         <div className="editableTable" style={{ maxHeight: 50 + "vh" }}>
@@ -25,7 +25,7 @@ class EditableTable extends Component {
                   />
                   <td className="text-right">
                     <button className="btn btn-sm btn-danger" onClick={() => this.props.onRowDelete(index)}>
-                      <i class="fas fa-times fa-xs"></i>
+                      <i className="fas fa-times fa-xs"></i>
                     </button>
                   </td>
                 </tr>

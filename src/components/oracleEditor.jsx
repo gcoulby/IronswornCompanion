@@ -156,14 +156,6 @@ class OracleEditor extends Component {
             ) : (
               React.Fragment
             )}
-            {/* <textarea
-              id="tableEditor"
-              wrap="off"
-              value={this.props.oracles.getOracleTablePrompts(this.props.oracles.selectedOracleTable)}
-              onChange={(e) => this.handleOracleTablePromptsChange(e)}
-              onKeyDown={(e) => this.handleTrackLabelsKeyDown(e)}
-              onMouseUp={(e) => this.handleTrackLabelsMouseUp(e)}
-            ></textarea> */}
             {table && !this.props.oracles.isCore(this.props.oracles.selectedOracleTable) ? (
               <React.Fragment>
                 <div className="row">
