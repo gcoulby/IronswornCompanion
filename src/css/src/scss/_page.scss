@@ -158,3 +158,12 @@ input[type="file"] {
 .border-left-2 {
   border-left: 2px solid grey !important;
 }
+
+.table-striped {
+  border-bottom: 2px solid lightgray;
+}
+
+.btn-sm {
+  line-height: 0.5 !important;
+  padding: 0.6em 0.6em !important;
+}

@@ -1,0 +1,12 @@
+.editableTable {
+  min-height: 20vh;
+  max-height: 50vh;
+  overflow-y: scroll;
+  td {
+    padding: 0.5em 1em !important;
+  }
+
+  .btn-sm {
+    padding: 0.25rem 0.5rem !important;
+  }
+}

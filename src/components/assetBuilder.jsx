@@ -12,6 +12,7 @@ import ComboBox from "./icons";
 import DefaultAsset from "../models/defaultAssets";
 import UniqueKeyGenerator from "./uniqueKeyGenerator";
 import IconPicker from "./iconPicker";
+import EditableTable from "./editableTable";
 class AssetBuilder extends Component {
   state = {
     printableCards: [],
@@ -121,39 +122,59 @@ class AssetBuilder extends Component {
     this.editorUpdate();
   };
 
-  getTrackLabels() {
-    let out = "";
-    this.props.selectedAsset.TrackLabels.map((l) => (out += l + "\n"));
+  // getTrackLabels() {
+  //   let out = "";
+  //   this.props.selectedAsset.TrackLabels.map((l) => (out += l + "\n"));
 
-    // console.log(out);
-    out.replace(/^\s+|\s+$/g, "");
-    return out;
-  }
+  //   // console.log(out);
+  //   out.replace(/^\s+|\s+$/g, "");
+  //   return out;
+  // }
 
-  handleTrackLabelsKeyDown = (evt) => {
-    this.setState({ trackLabelCursorPosition: evt.target.selectionStart });
-    this.setState({ lastKeyCode: evt.code });
-  };
+  // handleTrackLabelsKeyDown = (evt) => {
+  //   this.setState({ trackLabelCursorPosition: evt.target.selectionStart });
+  //   this.setState({ lastKeyCode: evt.code });
+  // };
 
-  handleTrackLabelsMouseUp = (evt) => {
-    this.setState({ trackLabelCursorPosition: evt.target.selectionStart });
-  };
+  // handleTrackLabelsMouseUp = (evt) => {
+  //   this.setState({ trackLabelCursorPosition: evt.target.selectionStart });
+  // };
 
-  handleTrackLabelsChange = (evt) => {
+  // handleTrackLabelsChange = (evt) => {
+  //   const selectedAsset = this.props.selectedAsset;
+  //   selectedAsset.TrackLabels = selectedAsset.TrackLabels;
+
+  //   let selection = evt.target.selectionStart;
+  //   selection += this.state.lastKeyCode == "Space" ? 1 : 0;
+
+  //   this.setState({ trackLabelCursorPosition: evt.target.selectionStart });
+  //   let text = evt.target.value.replace(/^\s+|\s+$/g, "");
+  //   let labels = [];
+  //   if (text !== "") labels = text.split("\n");
+  //   labels[labels.length - 1] += this.state.lastKeyCode == "Space" ? " " : "";
+  //   selectedAsset.TrackLabels = labels;
+  //   this.setState({ selectedAsset });
+  //   this.editorUpdate();
+  // };
+
+  handleTrackLabelRowInput = (evt, idx) => {
     const selectedAsset = this.props.selectedAsset;
-    selectedAsset.TrackLabels = selectedAsset.TrackLabels;
-
-    let selection = evt.target.selectionStart;
-    selection += this.state.lastKeyCode == "Space" ? 1 : 0;
-
-    this.setState({ trackLabelCursorPosition: evt.target.selectionStart });
-    let text = evt.target.value.replace(/^\s+|\s+$/g, "");
-    let labels = [];
-    if (text !== "") labels = text.split("\n");
-    labels[labels.length - 1] += this.state.lastKeyCode == "Space" ? " " : "";
-    selectedAsset.TrackLabels = labels;
+    selectedAsset.TrackLabels[idx] = evt.target.value;
     this.setState({ selectedAsset });
-    this.editorUpdate();
+  };
+
+  handleTrackLabelRowDelete = (idx) => {
+    const selectedAsset = this.props.selectedAsset;
+    selectedAsset.TrackLabels.splice(idx, 1);
+
+    this.setState({ selectedAsset });
+  };
+
+  handleTrackLabelAddRow = () => {
+    const selectedAsset = this.props.selectedAsset;
+    selectedAsset.TrackLabels = selectedAsset.TrackLabels.length > 0 ? selectedAsset.TrackLabels : [];
+    selectedAsset.TrackLabels.push("");
+    this.setState({ selectedAsset });
   };
 
   handleOnAddAsset = () => {
@@ -409,7 +430,6 @@ class AssetBuilder extends Component {
                       onChange={(e) => this.handleOnTextInputChange(e, "icon")}
                     />
                   </div>
-
                   <IconPicker
                     show={this.state.showIconPicker}
                     onClose={this.handleOnIconPickerToggle}
@@ -696,23 +716,14 @@ class AssetBuilder extends Component {
                           onChange={(e) => this.handleOnTextInputChange(e, "TrackMax")}
                         />
                       </div>
-                      <div className="input-group mb-3">
-                        <span className="modesto">Track Labels (Overrides Max Value):</span>
-
-                        <textarea
-                          id="tableEditor"
-                          wrap="off"
-                          style={{ height: 25 + "vh" }}
-                          value={
-                            this.props.selectedAsset.TrackLabels && this.props.selectedAsset.TrackLabels.length > 0
-                              ? this.getTrackLabels()
-                              : ""
-                          }
-                          // value={this.props.oracles.getOracleTablePrompts(this.props.oracles.selectedOracleTable)}
-                          onChange={(e) => this.handleTrackLabelsChange(e)}
-                          onKeyDown={(e) => this.handleTrackLabelsKeyDown(e)}
-                          onMouseUp={(e) => this.handleTrackLabelsMouseUp(e)}
-                        ></textarea>
+                      <div>
+                        <div className="modesto">Track Labels (Overrides Max Value):</div>
+                        <EditableTable
+                          list={this.props.selectedAsset.TrackLabels}
+                          onRowChange={this.handleTrackLabelRowInput}
+                          onRowDelete={this.handleTrackLabelRowDelete}
+                          onRowAdd={this.handleTrackLabelAddRow}
+                        />
                       </div>
                     </div>
                   </div>

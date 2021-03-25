@@ -16566,6 +16566,15 @@ input[type="file"] {
   border-left: 2px solid grey !important;
 }
 
+.table-striped {
+  border-bottom: 2px solid lightgray;
+}
+
+.btn-sm {
+  line-height: 0.5 !important;
+  padding: 0.6em 0.6em !important;
+}
+
 .stat-card {
   padding-top: 1em;
   border-radius: 0% !important;
@@ -17587,7 +17596,7 @@ input.disabled:focus {
   font-size: 21px;
   line-height: 26px;
   float: left;
-  border-radius: 2px;
+  border-radius: 50%;
   margin: 3px;
   padding: 2px;
   min-width: 30px;
@@ -17598,7 +17607,21 @@ input.disabled:focus {
 #iconPicker .game-icon:hover {
   transform: scale(1.8);
   z-index: 2;
-  box-shadow: 0 0 0 2px #343a40;
+  box-shadow: 0 0 0 2px #fff;
   background: #343a40;
   color: white;
+}
+
+.editableTable {
+  min-height: 20vh;
+  max-height: 50vh;
+  overflow-y: scroll;
+}
+
+.editableTable td {
+  padding: 0.5em 1em !important;
+}
+
+.editableTable .btn-sm {
+  padding: 0.25rem 0.5rem !important;
 }

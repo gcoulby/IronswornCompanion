@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import EditableTable from "./editableTable";
 import OracleRoller from "./oracleRoller";
 class OracleEditor extends Component {
   state = {
@@ -34,41 +35,62 @@ class OracleEditor extends Component {
     this.setState({ oracles });
   };
 
-  handleOracleTablePromptsChange = (evt) => {
-    const oracles = this.props.oracles;
-    let selection = evt.target.selectionStart;
-    selection += this.state.lastKeyCode == "Space" ? 1 : 0;
-    oracles.editOracleCursorPosition = evt.target.selectionStart;
-
-    oracles.tables.map((o) => {
-      let text = evt.target.value.replace(/^\s+|\s+$/g, "");
-      if (o.title == this.props.oracles.selectedOracleTable) {
-        let prompts = text.split("\n");
-        prompts[prompts.length - 1] += this.state.lastKeyCode == "Space" ? " " : "";
-        o.prompts = prompts;
-      }
-      return o;
-    });
-    this.setState({ oracles });
+  handleOracleTablePromptsRowInput = (evt, idx) => {
+    const selectedAsset = this.props.selectedAsset;
+    selectedAsset.TrackLabels[idx] = evt.target.value;
+    this.setState({ selectedAsset });
   };
 
-  handleTrackLabelsKeyDown = (evt) => {
-    const oracles = this.props.oracles;
-    oracles.editOracleCursorPosition = evt.target.selectionStart;
-    this.setState({ lastKeyCode: evt.code });
+  handleOracleTablePromptsRowDelete = (idx) => {
+    const selectedAsset = this.props.selectedAsset;
+    selectedAsset.TrackLabels.splice(idx, 1);
+
+    this.setState({ selectedAsset });
   };
 
-  handleTrackLabelsMouseUp = (evt) => {
-    const oracles = this.props.oracles;
-    oracles.editOracleCursorPosition = evt.target.selectionStart;
+  handleOracleTablePromptsAddRow = () => {
+    const selectedAsset = this.props.selectedAsset;
+    selectedAsset.TrackLabels = selectedAsset.TrackLabels.length > 0 ? selectedAsset.TrackLabels : [];
+    selectedAsset.TrackLabels.push("");
+    this.setState({ selectedAsset });
   };
+
+  // handleOracleTablePromptsChange = (evt) => {
+  //   const oracles = this.props.oracles;
+  //   let selection = evt.target.selectionStart;
+  //   selection += this.state.lastKeyCode == "Space" ? 1 : 0;
+  //   oracles.editOracleCursorPosition = evt.target.selectionStart;
+
+  //   oracles.tables.map((o) => {
+  //     let text = evt.target.value.replace(/^\s+|\s+$/g, "");
+  //     if (o.title == this.props.oracles.selectedOracleTable) {
+  //       let prompts = text.split("\n");
+  //       prompts[prompts.length - 1] += this.state.lastKeyCode == "Space" ? " " : "";
+  //       o.prompts = prompts;
+  //     }
+  //     return o;
+  //   });
+  //   this.setState({ oracles });
+  // };
+
+  // handleTrackLabelsKeyDown = (evt) => {
+  //   const oracles = this.props.oracles;
+  //   oracles.editOracleCursorPosition = evt.target.selectionStart;
+  //   this.setState({ lastKeyCode: evt.code });
+  // };
+
+  // handleTrackLabelsMouseUp = (evt) => {
+  //   const oracles = this.props.oracles;
+  //   oracles.editOracleCursorPosition = evt.target.selectionStart;
+  // };
 
   componentDidUpdate() {
-    let el = document.getElementById("tableEditor");
-    el.setSelectionRange(this.props.oracles.editOracleCursorPosition, this.props.oracles.editOracleCursorPosition);
+    // let el = document.getElementById("tableEditor");
+    // el.setSelectionRange(this.props.oracles.editOracleCursorPosition, this.props.oracles.editOracleCursorPosition);
     this.props.onComponentUpdate();
   }
   render() {
+    let table = this.props.oracles.getOracleTableAsArray(this.props.oracles.selectedOracleTable);
     return (
       <React.Fragment>
         <h1>Oracles</h1>
@@ -111,7 +133,7 @@ class OracleEditor extends Component {
 
               <select
                 className="form-control"
-                value={this.props.selectedOracleTable}
+                value={this.props.oracles.selectedOracleTable}
                 onChange={(e) => this.handleSelectedOracleTableChange(e)}
               >
                 <option val="">Select Table</option>
@@ -123,14 +145,26 @@ class OracleEditor extends Component {
               </select>
             </div>
             {/* <div contenteditable="true"></div> */}
-            <textarea
+            {table ? (
+              <React.Fragment>
+                <EditableTable
+                  list={this.props.oracles.getOracleTableAsArray(this.props.oracles.selectedOracleTable)}
+                  onRowChange={this.handleOracleTablePromptsRowInput}
+                  onRowDelete={this.handleOracleTablePromptsRowDelete}
+                  onRowAdd={this.handleOracleTablePromptsAddRow}
+                />
+              </React.Fragment>
+            ) : (
+              React.Fragment
+            )}
+            {/* <textarea
               id="tableEditor"
               wrap="off"
               value={this.props.oracles.getOracleTablePrompts(this.props.oracles.selectedOracleTable)}
               onChange={(e) => this.handleOracleTablePromptsChange(e)}
               onKeyDown={(e) => this.handleTrackLabelsKeyDown(e)}
               onMouseUp={(e) => this.handleTrackLabelsMouseUp(e)}
-            ></textarea>
+            ></textarea> */}
             {this.props.oracles.isCore(this.props.selectedOracleTable) ? (
               <React.Fragment></React.Fragment>
             ) : (

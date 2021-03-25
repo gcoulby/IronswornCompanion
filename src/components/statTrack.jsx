@@ -43,7 +43,8 @@ class StatTrack extends Component {
           )}
           <div className={`slider-container ${this.props.hideThumb ? "hide-thumb" : ""}`}>
             <ul className="slider-ticks">
-              {this.props.stat.trackLabels !== undefined && this.props.stat.trackLabels.length > 0 ? (
+              {this.props.stat.trackLabels !== undefined &&
+              this.props.stat.trackLabels.filter((tl) => tl != "").length > 0 ? (
                 <React.Fragment>
                   {this.props.stat.trackLabels.map((t) => (
                     <li key={UniqueKeyGenerator.generate()} className="slider-tick slider-tick-label">

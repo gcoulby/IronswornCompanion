@@ -179,6 +179,8 @@ class App extends Component {
           if (asset.MultiFieldAssetTrack) {
             asset.TrackLabels = asset.MultiFieldAssetTrack.Fields.map((f) => f.ActiveText);
             delete asset.MultiFieldAssetTrack;
+          } else {
+            asset.TrackLabels = [];
           }
 
           delete asset["Asset Type"];
@@ -363,6 +365,7 @@ class App extends Component {
   handleOnSelectedAssetChange = (id) => {
     let foundAsset = this.state.assets.find((a) => a.id == id);
     let asset = { ...foundAsset };
+    // asset.TrackLabels = asset.TrackLabels ? asset.TrackLabels : [];
     if (!foundAsset) {
       asset = new DefaultAsset();
     }

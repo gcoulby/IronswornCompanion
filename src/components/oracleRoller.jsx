@@ -1,13 +1,12 @@
 import React, { Component } from "react";
+import UniqueKeyGenerator from "./uniqueKeyGenerator";
 class OracleRoller extends Component {
   state = {
     outputValue: "",
   };
 
   handleOnRoll() {
-    let rand = this.props.oracles.getRandomPromptFromOracleTable(
-      this.props.tableName
-    );
+    let rand = this.props.oracles.getRandomPromptFromOracleTable(this.props.tableName);
     this.setState({ outputValue: rand });
   }
   handleOnClick = (evt) => {
@@ -18,17 +17,10 @@ class OracleRoller extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <div
-          id={`${this.props.tableName}_result`}
-          className="row oracle_result mt-2"
-        >
+      <React.Fragment key={UniqueKeyGenerator.generate()}>
+        <div id={`${this.props.tableName}_result`} className="row oracle_result mt-2">
           <div className="col-6">
-            <button
-              className="btn btn-dark btn-block"
-              type="button"
-              onClick={() => this.handleOnRoll()}
-            >
+            <button className="btn btn-dark btn-block" type="button" onClick={() => this.handleOnRoll()}>
               <i className="fas fa-dice-d20"></i> Roll {this.props.tableName}
             </button>
           </div>
@@ -39,7 +31,7 @@ class OracleRoller extends Component {
               placeholder="Result (click to copy)"
               aria-label="Character Descriptor"
               aria-describedby="basic-addon2"
-              value={this.state.outputValue}
+              defaultValue={this.state.outputValue}
               onFocus={(e) => this.handleOnClick(e)}
               title="Click to copy"
             />

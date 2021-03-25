@@ -14,6 +14,6 @@ class DefaultAsset {
   Description = "";
   TrackMax = 0;
   TrackValue = 0;
-  AssetTrackLabels = [];
+  TrackLabels = [];
 }
 export default DefaultAsset;

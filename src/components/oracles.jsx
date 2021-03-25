@@ -3319,7 +3319,9 @@ class Oracles {
   }
 
   getOracleTableAsArray(table) {
-    return this.tables.find((o) => o.title === table).prompts;
+    if (table == "Select Table") return;
+    let t = this.tables.find((o) => o.title === table).prompts;
+    return t;
   }
 
   getNPCName(race) {
