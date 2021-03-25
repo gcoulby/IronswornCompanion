@@ -11,6 +11,7 @@ import _, { last } from "lodash";
 import ComboBox from "./icons";
 import DefaultAsset from "../models/defaultAssets";
 import UniqueKeyGenerator from "./uniqueKeyGenerator";
+import IconPicker from "./iconPicker";
 class AssetBuilder extends Component {
   state = {
     printableCards: [],
@@ -18,6 +19,7 @@ class AssetBuilder extends Component {
     defaultAsset: new DefaultAsset(),
     lastKeyCode: "",
     showCards: false,
+    showIconPicker: false,
   };
 
   valueToStat(val, steps) {
@@ -75,7 +77,18 @@ class AssetBuilder extends Component {
     const selectedAsset = this.props.selectedAsset;
     selectedAsset.icon = value;
     this.setState({ selectedAsset });
-    this.editorUpdate();
+    // this.editorUpdate();
+  };
+
+  handleOnIconPickerToggle = (show) => {
+    this.setState({ showIconPicker: show });
+  };
+
+  handleOnIconSelect = (iconClass) => {
+    const selectedAsset = this.props.selectedAsset;
+    selectedAsset.icon = iconClass;
+    this.setState({ selectedAsset });
+    this.handleOnIconPickerToggle(false);
   };
 
   handleOnTextInputChange = (evt, field) => {
@@ -197,8 +210,20 @@ class AssetBuilder extends Component {
   }
 
   componentDidUpdate() {
-    let el = document.getElementById("tableEditor");
-    el.setSelectionRange(this.state.trackLabelCursorPosition, this.state.trackLabelCursorPosition);
+    // // if (prevState.selectedAsset?.icon !== this.state.selectedAsset?.icon) {
+    // //TODO: FIX THE ICON BOX!
+    // console.log("GGGG");
+    // let cb = document.getElementById("combo-box-demo");
+    // cb.focus();
+
+    // let cb1 = document.getElementsByClassName("MuiAutocomplete-root")[0];
+    // cb1.classList.add("Mui-focused");
+    // let cb2 = document.getElementsByClassName("MuiInputBase-root")[0];
+    // cb2.classList.add("Mui-focused");
+
+    // // }
+    // let el = document.getElementById("tableEditor");
+    // el.setSelectionRange(this.state.trackLabelCursorPosition, this.state.trackLabelCursorPosition);
     this.props.onComponentUpdate();
   }
 
@@ -369,10 +394,27 @@ class AssetBuilder extends Component {
 
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
-                      <label className="btn btn-dark btn-tag">Icon</label>
+                      <button className="btn btn-dark" onClick={() => this.handleOnIconPickerToggle(true)}>
+                        <i className="fas fa-eye-dropper"></i>&nbsp; Icon Picker
+                      </button>
                     </div>
-                    {ComboBox(this.props.selectedAsset, this.handleOnIconInputChange)}
+                    {/* {ComboBox(this.props.selectedAsset, this.handleOnIconInputChange)} */}
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Asset Icon"
+                      aria-label="Icon"
+                      aria-describedby="basic-addon2"
+                      value={this.props.selectedAsset.icon}
+                      onChange={(e) => this.handleOnTextInputChange(e, "icon")}
+                    />
                   </div>
+
+                  <IconPicker
+                    show={this.state.showIconPicker}
+                    onClose={this.handleOnIconPickerToggle}
+                    onIconSelect={this.handleOnIconSelect}
+                  />
                 </div>
               </Tab>
               <Tab key="additional-infotab" eventKey="additional-info" title="Additional Info">
@@ -707,19 +749,19 @@ class AssetBuilder extends Component {
           {this.state.showCards ? (
             <React.Fragment>
               <button className="print-hide btn btn-dark mr-3" onClick={() => this.showCards(false)}>
-                <i class="fa fa-eye-slash" aria-hidden="true"></i>&nbsp;Hide Cards
+                <i className="fa fa-eye-slash" aria-hidden="true"></i>&nbsp;Hide Cards
               </button>
             </React.Fragment>
           ) : (
             <React.Fragment>
               <button className="print-hide btn btn-dark mr-3" onClick={() => this.showCards(true)}>
-                <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Show Cards
+                <i className="fa fa-eye" aria-hidden="true"></i>&nbsp;Show Cards
               </button>
             </React.Fragment>
           )}
 
           <a className="print-hide btn btn-dark" title="Print" onClick={() => this.handlePrint()}>
-            <i class="fa fa-print" aria-hidden="true"></i>&nbsp; Print Cards
+            <i className="fa fa-print" aria-hidden="true"></i>&nbsp; Print Cards
           </a>
         </div>
         {this.state.showCards ? (
