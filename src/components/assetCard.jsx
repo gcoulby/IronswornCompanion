@@ -37,7 +37,7 @@ class AssetCard extends Component {
 
   render() {
     return (
-      <React.Fragment key={UniqueKeyGenerator.generate()}>
+      <React.Fragment>
         <div className="card asset-card">
           <div className="card-header bg-dark text-light">
             <h6>{this.props.asset.Type}</h6>
@@ -53,7 +53,7 @@ class AssetCard extends Component {
                 {this.props.asset.InputFields.filter((f) => f.name !== undefined && f.name !== "").map((f) => {
                   let idx = this.props.asset.InputFields.indexOf(f);
                   return (
-                    <React.Fragment key={UniqueKeyGenerator.generate()}>
+                    <React.Fragment>
                       <div className="row input-field">
                         <div className="input-group">
                           <div className="input-group-prepend">
@@ -84,7 +84,7 @@ class AssetCard extends Component {
             {this.props.asset.Abilities.filter(
               (a) => (a.Name !== undefined && a.Name !== "") || (a.Text !== undefined && a.Text !== "")
             ).map((a) => (
-              <div key={UniqueKeyGenerator.generate()} className="row">
+              <div className="row">
                 <label className="control control-checkbox">
                   <input
                     type="checkbox"

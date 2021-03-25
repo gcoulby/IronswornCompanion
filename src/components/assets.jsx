@@ -136,7 +136,7 @@ class Assets extends Component {
                 <option value="">Select Asset</option>
                 {this.props.assets.map((a) => {
                   return (
-                    <React.Fragment key={UniqueKeyGenerator.generate()}>
+                    <React.Fragment>
                       {this.props.selectedPlayer.assets.find((pa) => pa.id == a.id) === undefined ? (
                         <React.Fragment>
                           <option value={a.id}>
@@ -170,7 +170,7 @@ class Assets extends Component {
                 <option value="">Select Asset</option>
                 {this.props.assets.map((a) => {
                   return (
-                    <React.Fragment key={UniqueKeyGenerator.generate()}>
+                    <React.Fragment>
                       {this.props.selectedPlayer.assets.find((pa) => pa.id == a.id) !== undefined ? (
                         <React.Fragment>
                           <option value={a.id}>
@@ -192,7 +192,7 @@ class Assets extends Component {
         </div>
         <TitleBlock title="Owned Assets" />
         {this.props.selectedPlayer.assets.map((a) => (
-          <React.Fragment key={UniqueKeyGenerator.generate()}>
+          <React.Fragment>
             <AssetCard
               asset={a}
               stat={{
