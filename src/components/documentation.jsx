@@ -132,10 +132,10 @@ class Documentation extends Component {
         </p>
         <h4 id="editing-oracle-tables">Editing Oracle Tables</h4>
         <p>
-          Once you have added an oracle table you can edit the tables using the left hand column. Simply select an
-          oracle table from the drop down box and start typing in the box below. Every line represents 1 row in the
-          oracle table. For this reason, long oracles will cause a scroll bar to appear along the bottom of the text
-          box... Do not press Enter to make the box look pretty as this will split your oracle in two.
+          Once you have added an oracle table you can edit the tables using the left hand column. Add rows by clicking
+          the `Add Row` button and then it will add a row to the table. This is edited simply by clicking on the row and
+          typing in the value you wish to be in the row. You can add multiple rows and delete rows you no longer
+          require.
         </p>
         <hr />
         <h2 id="characters">Characters</h2>
