@@ -36,42 +36,41 @@ class OracleEditor extends Component {
   };
 
   handleOracleTablePromptsRowInput = (evt, idx) => {
-    const selectedAsset = this.props.selectedAsset;
-    selectedAsset.TrackLabels[idx] = evt.target.value;
-    this.setState({ selectedAsset });
+    const oracles = this.props.oracles;
+    oracles.prompts[idx] = evt.target.value;
+    this.setState({ oracles });
   };
 
   handleOracleTablePromptsRowDelete = (idx) => {
-    const selectedAsset = this.props.selectedAsset;
-    selectedAsset.TrackLabels.splice(idx, 1);
-
-    this.setState({ selectedAsset });
+    const oracles = this.props.oracles;
+    oracles.prompts.splice(idx, 1);
+    this.setState({ oracles });
   };
 
   handleOracleTablePromptsAddRow = () => {
-    const selectedAsset = this.props.selectedAsset;
-    selectedAsset.TrackLabels = selectedAsset.TrackLabels.length > 0 ? selectedAsset.TrackLabels : [];
-    selectedAsset.TrackLabels.push("");
-    this.setState({ selectedAsset });
+    const oracles = this.props.oracles;
+    oracles.prompts = oracles.prompts.length > 0 ? oracles.prompts : [];
+    oracles.prompts.push("");
+    this.setState({ oracles });
   };
 
-  // handleOracleTablePromptsChange = (evt) => {
-  //   const oracles = this.props.oracles;
-  //   let selection = evt.target.selectionStart;
-  //   selection += this.state.lastKeyCode == "Space" ? 1 : 0;
-  //   oracles.editOracleCursorPosition = evt.target.selectionStart;
+  handleOracleTablePromptsChange = (evt) => {
+    const oracles = this.props.oracles;
+    let selection = evt.target.selectionStart;
+    selection += this.state.lastKeyCode == "Space" ? 1 : 0;
+    oracles.editOracleCursorPosition = evt.target.selectionStart;
 
-  //   oracles.tables.map((o) => {
-  //     let text = evt.target.value.replace(/^\s+|\s+$/g, "");
-  //     if (o.title == this.props.oracles.selectedOracleTable) {
-  //       let prompts = text.split("\n");
-  //       prompts[prompts.length - 1] += this.state.lastKeyCode == "Space" ? " " : "";
-  //       o.prompts = prompts;
-  //     }
-  //     return o;
-  //   });
-  //   this.setState({ oracles });
-  // };
+    oracles.tables.map((o) => {
+      let text = evt.target.value.replace(/^\s+|\s+$/g, "");
+      if (o.title == this.props.oracles.selectedOracleTable) {
+        let prompts = text.split("\n");
+        prompts[prompts.length - 1] += this.state.lastKeyCode == "Space" ? " " : "";
+        o.prompts = prompts;
+      }
+      return o;
+    });
+    this.setState({ oracles });
+  };
 
   // handleTrackLabelsKeyDown = (evt) => {
   //   const oracles = this.props.oracles;
@@ -148,7 +147,7 @@ class OracleEditor extends Component {
             {table ? (
               <React.Fragment>
                 <EditableTable
-                  list={this.props.oracles.getOracleTableAsArray(this.props.oracles.selectedOracleTable)}
+                  list={table}
                   onRowChange={this.handleOracleTablePromptsRowInput}
                   onRowDelete={this.handleOracleTablePromptsRowDelete}
                   onRowAdd={this.handleOracleTablePromptsAddRow}
@@ -165,16 +164,14 @@ class OracleEditor extends Component {
               onKeyDown={(e) => this.handleTrackLabelsKeyDown(e)}
               onMouseUp={(e) => this.handleTrackLabelsMouseUp(e)}
             ></textarea> */}
-            {this.props.oracles.isCore(this.props.selectedOracleTable) ? (
-              <React.Fragment></React.Fragment>
-            ) : (
+            {table && !this.props.oracles.isCore(this.props.oracles.selectedOracleTable) ? (
               <React.Fragment>
                 <div className="row">
                   <div className="col">
                     <div
                       id="locationDeleteBtn"
                       className={`mt-2 ${this.state.deleteButtonClass}`}
-                      onClick={() => this.handleDeleteOracleTable(this.props.selectedOracleTable)}
+                      onClick={() => this.handleDeleteOracleTable(this.props.oracles.selectedOracleTable)}
                     >
                       <button className="btn btn-danger">
                         <i className="fas fa-times"></i> Delete Table
@@ -183,6 +180,8 @@ class OracleEditor extends Component {
                   </div>
                 </div>
               </React.Fragment>
+            ) : (
+              <React.Fragment></React.Fragment>
             )}
           </div>
           <div className="col-7">

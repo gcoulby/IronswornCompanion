@@ -3298,8 +3298,9 @@ class Oracles {
   }
 
   isCore(table) {
+    console.log(table);
     let oracleTable = this.tables.find((o) => o.title === table);
-    return oracleTable ? oracleTable.core : true;
+    return oracleTable?.core;
   }
 
   getRandomPromptFromOracleTable(table) {
@@ -3320,7 +3321,7 @@ class Oracles {
 
   getOracleTableAsArray(table) {
     if (table == "Select Table") return;
-    let t = this.tables.find((o) => o.title === table).prompts;
+    let t = this.tables.find((o) => o.title === table)?.prompts;
     return t;
   }
 
