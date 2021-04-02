@@ -26,15 +26,27 @@ import EnterTheFray from "./components/enterTheFray";
 import DataManager from "./components/dataManagement";
 import Assets from "./components/assets";
 import coreAssetIcons from "./models/assetIcons";
+import delveCardIcons from "./models/delveCardIcons";
 import DefaultAsset from "./models/defaultAssets";
+import DefaultDelveCard from "./models/defaultDelveCard";
+import Delve from "./components/delve";
+import { faMagic } from "@fortawesome/free-solid-svg-icons";
+import TitleBlock from "./components/titleBlock";
+import foeTags from "./models/foes";
+import _, { last } from "lodash";
+import DenizenConfig from "./components/denizenConfig";
+import DelveThemeDomainEditor from "./components/delveThemeEditor";
 
-//TODO Asset Importer
-//TODO Asset Exporter
 //TODO Delve
-//TODO Popups for delete buttons
+//TODO delve threats
+//TODO burn mom on delve - revert progress
+//TODO pay the price button
+//TODO dice roller progress roll/action roll split
+//TODO player Export
+//TODO Settings export (assets, denizens oracles, foes)
 
 class App extends Component {
-  version = "0.49.8";
+  version = "0.50.2";
   state = {
     save: false,
     updateCore: false,
@@ -43,6 +55,8 @@ class App extends Component {
     world: {},
     locations: [],
     foes: [],
+    delveThemes: [],
+    delveDomains: [],
     newFoe: {},
     activeFoes: {
       loneFoes: [],
@@ -50,44 +64,65 @@ class App extends Component {
     },
     assets: [],
     assetBuilderSelectedAsset: new DefaultAsset(),
+    delveCardEditorSelectedCard: new DefaultDelveCard(),
     logs: [],
+    denizenConfig: {
+      categoryId: "",
+      nameId: "",
+      denizenThemeMap: [],
+      denizenDomainMap: [],
+      denizenFoeMap: [],
+    },
     newProgressions: [
       {
         type: "vow",
-        text: "",
+        title: "",
+        details: "",
         rank: 0,
         nextId: 0,
         buttonText: "Fulfill Your Vow",
       },
       {
         type: "quest",
-        text: "",
+        title: "",
+        details: "",
         rank: 0,
         nextId: 0,
         buttonText: "Complete Your Quest",
       },
       {
         type: "journey",
-        text: "",
+        title: "",
+        details: "",
         rank: 0,
         nextId: 0,
         buttonText: "Reach Your Destination",
       },
       {
-        type: "combat",
-        text: "",
+        type: "foe",
+        title: "",
+        details: "",
         rank: 0,
         nextId: 0,
         buttonText: "End the Fight",
       },
       {
         type: "epilogue",
-        text: "",
+        title: "",
+        details: "",
         rank: 0,
         nextId: 0,
         buttonText: "Write Your Epilogue",
       },
     ],
+    delves: [],
+    newDelve: {
+      theme: "",
+      domain: "",
+      rank: 0,
+    },
+    selectedDelveId: -1,
+    delveSelectorId: -1,
     imgurAlbumHash: "cFnZi",
     logInput: "",
     backgroundInput: "",
@@ -120,12 +155,11 @@ class App extends Component {
     let gs = localStorage.getItem("game_state");
     let state = JSON.parse(gs);
     if (state != undefined) {
-      this.state = { ...this.state, ...state };
+      this.state = _.merge(this.state, state);
       this.state.lastSaveVersion = this.version;
-      this.state.oracles = new Oracles(this.state.oracles);
+      this.state.oracles = new Oracles(state.oracles);
     } else {
-      this.updateCoreAssets();
-      this.updateFoes();
+      this.updateDataSworn();
       this.state.baseVersion = this.version;
       // this.state.updateCore = true;
     }
@@ -151,6 +185,14 @@ class App extends Component {
   saveGameState() {
     localStorage.setItem("game_state", JSON.stringify(this.state));
   }
+
+  updateDataSworn = () => {
+    // this.setState({ loading: true });
+    this.updateCoreAssets();
+    this.updateFoes();
+    this.updateDelveThemes();
+    this.updateDelveDomains();
+  };
 
   updateCoreAssets = () => {
     fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_assets.json")
@@ -218,13 +260,151 @@ class App extends Component {
   };
 
   updateFoes() {
+    // fetch(
+    //   "https://script.googleusercontent.com/macros/echo?user_content_key=8ADH_3nTqFNUd3jqDoZDWqY6ACkI6BUqRYULzpu_Gb8Yp0nJWZdXJeUoLxt50rhxYoHPz4L6U1BJlyzlZ9gqL65L84z1baYeOJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMWojr9NvTBuBLhyHCd5hHa5V7SzAZj2xBfFDRtNxpfsmuqfjnOYLBpWrI3G8IWJh29l4LSossvEa_fiNHZ0znxEBErwHi9mmijAjx2Qzi6YLFafVHYA-fHoaihMzNmH7H6fRUaYjRqb-wGtNIpK8czCo4suGtgA13VZz-s-VspJx_3Qdvv53yRg&lib=M7OO09pfGNQD9igEAo4bouJoiE_6Oxspk"
+    // )
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     const foes = [...this.state.foes, ...data.records];
+    //     this.state.foes = foes;
+    //     this.saveGameState();
+    //   });
+
     fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_foes.json")
       .then((response) => response.json())
       .then((data) => {
-        const foes = [...this.state.foes, ...data.Categories];
-        this.state.foes = foes;
+        const foes = data.Categories.map((c) => {
+          c.Foes.map((f) => {
+            f.id = `core-foe-${c.Name.toLowerCase()}-${f.Name.toLowerCase().replace(" ", "-")}`;
+            f.Type = c.Name;
+            f.core = true;
+            f.front = true;
+            f.Tags = [];
+            f.icon = "perspective-dice-six-faces-random";
+            f.Source = { Name: f.Source, Page: f.Page };
+            delete f.Page;
+          });
+        });
+        this.state.foes = _.merge(foes, foeTags);
         this.saveGameState();
       });
+
+    //     fetch(
+    //       "https://script.googleusercontent.com/macros/echo?user_content_key=8ADH_3nTqFNUd3jqDoZDWqY6ACkI6BUqRYULzpu_Gb8Yp0nJWZdXJeUoLxt50rhxYoHPz4L6U1BJlyzlZ9gqL65L84z1baYeOJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMWojr9NvTBuBLhyHCd5hHa5V7SzAZj2xBfFDRtNxpfsmuqfjnOYLBpWrI3G8IWJh29l4LSossvEa_fiNHZ0znxEBErwHi9mmijAjx2Qzi6YLFafVHYA-fHoaihMzNmH7H6fRUaYjRqb-wGtNIpK8czCo4suGtgA13VZz-s-VspJx_3Qdvv53yRg&lib=M7OO09pfGNQD9igEAo4bouJoiE_6Oxspk"
+    //     )
+    //       .then((r2) => r2.json())
+    //       .then((d2) => {
+    //         console.log(d2.records);
+    //         this.state.foes.map((f) => {
+    //           f.Foes.map((f2) => {
+    //             f2.Tags = [];
+    //             let record = d2.records.find(
+    //               (d) =>
+    //                 f2.Name.toLowerCase() === d.name.toLowerCase() &&
+    //                 (f.Name.toLowerCase() === d.type.toLowerCase() ||
+    //                   f.Name.toLowerCase() === d.type.toLowerCase() + "s")
+    //             );
+    //             for (let prop in record) {
+    //               if (typeof record[prop] === "boolean") {
+    //                 f2.Tags.push(prop);
+    //                 console.log(prop);
+    //               }
+    //             }
+    //             console.log(f2);
+    //             return f2;
+    //           });
+    //           return f;
+    //         });
+    //         const foes = [...this.state.foes];
+    //         console.log(d2.records);
+    //         // this.state.foes = foes;
+    //         // this.saveGameState();
+    //       });
+    //   });
+    // this.state.foes = foes;
+  }
+
+  updateDelveThemes() {
+    fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_delve_themes.json")
+      .then((r1) => r1.json())
+      .then((d1) => {
+        let themeCards = d1.Themes.map((t) => {
+          t.id = `core-theme-${t.Name.toLowerCase().replace(" ", "-")}`;
+          t.icon = "perspective-dice-six-faces-random";
+          t.Type = "Theme";
+          t.core = true;
+          t.front = true;
+          t.Tags = [];
+          t.Features.map((f, i) => {
+            f.Min = i == 0 ? 1 : t.Features[i - 1].Chance + 1;
+            return f;
+          });
+          t.Dangers.map((f, i) => {
+            f.Min = i == 0 ? 1 : t.Dangers[i - 1].Chance + 1;
+            return f;
+          });
+          let coreIcon = delveCardIcons.find((i) => i.id == t.id);
+          if (coreIcon) t.icon = coreIcon.icon;
+          return t;
+        });
+        // _.merge(this.state.delveCards, themeCards);
+
+        fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_delve_domains.json")
+          .then((r2) => r2.json())
+          .then((d2) => {
+            let domainCards = d2.Domains.map((d) => {
+              d.id = `core-domain-${d.Name.toLowerCase().replace(" ", "-")}`;
+              d.Type = "Domain";
+              d.core = true;
+              d.front = true;
+              d.Tags = [];
+              d.icon = "perspective-dice-six-faces-random";
+              d.Features.map((f, i) => {
+                f.Min = i == 0 ? 21 : d.Features[i - 1].Chance + 1;
+                return f;
+              });
+              d.Dangers.map((f, i) => {
+                f.Min = i == 0 ? 31 : d.Dangers[i - 1].Chance + 1;
+                return f;
+              });
+              let coreIcon = delveCardIcons.find((i) => i.id == d.id);
+              if (coreIcon) d.icon = coreIcon.icon;
+              return d;
+            });
+
+            // this.state.delveCards = delveCards;
+            // console.log(themeCards);
+            let delveCards = _.concat(themeCards, domainCards);
+            console.log(delveCards);
+            if (!this.state.delveCards) this.state.delveCards = delveCards;
+
+            _.merge(this.state.delveCards, delveCards);
+            this.saveGameState();
+            // console.log(
+            //   this.state.delveCards.map((d) => {
+            //     return { id: d.id, icon: "" };
+            //   })
+            // );
+          });
+
+        // this.state.delveCards = delveCards;
+
+        // this.saveGameState();
+      });
+  }
+
+  updateDelveDomains() {
+    // fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_delve_domains.json")
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     const delveCards = data.Domains.map((t) => {
+    //       t.Type = "Domain";
+    //       return t;
+    //     });
+    //     _.merge(this.state.delveCards, delveCards);
+    //     // this.state.delveCards = delveCards;
+    //     this.saveGameState();
+    //   });
   }
 
   resetData() {
@@ -285,6 +465,21 @@ class App extends Component {
     return this.state.players.find((p) => p.selected);
   }
 
+  burnMomentum = () => {
+    const players = this.state.players.map((p) => {
+      if (p.selected) {
+        p.stats.map((s) => {
+          if (s.stat == "Momentum") {
+            console.log("Mom");
+            s.value = p.resetMomentum;
+          }
+        });
+      }
+      return p;
+    });
+    this.setState({ players });
+  };
+
   /*=================================*/
   /*    Log
   /*=================================*/
@@ -293,18 +488,18 @@ class App extends Component {
     this.setState({ logInput: evt.target.value });
   };
 
-  handleAddLog = (isMeta) => {
-    if (this.state.logInput != "") {
+  handleAddLog = (type, logEntry = null) => {
+    if (this.state.logInput != "" || logEntry != null) {
       const logs = this.state.logs;
       logs.push({
         id: this.state.nextLogId,
         ts: new Date(),
-        text: this.state.logInput,
-        isMeta: isMeta,
+        text: logEntry != null ? logEntry : this.state.logInput,
+        type: type,
       });
       this.setState({ nextLogId: this.state.nextLogId + 1 });
       this.setState({ logs: logs });
-      this.setState({ logInput: "" });
+      if (logEntry == null) this.setState({ logInput: "" });
     }
   };
 
@@ -321,7 +516,7 @@ class App extends Component {
     this.setState({ backgroundInput: evt.target.value });
   };
 
-  handleAddBackground = (isMeta) => {
+  handleAddBackground = (type) => {
     if (this.state.backgroundInput != "") {
       const players = this.state.players.map((p) => {
         if (p.selected) {
@@ -329,7 +524,7 @@ class App extends Component {
             id: this.state.nextBackgroundId,
             text: this.state.backgroundInput,
             ts: new Date(),
-            isMeta: isMeta,
+            type: type,
           });
         }
         return p;
@@ -351,16 +546,20 @@ class App extends Component {
   };
 
   /*=================================*/
-  /*    NPCS
+  /*    Filters
   /*=================================*/
+
+  handleDelveSelectChanged = (id) => {
+    this.setState({ delveSelectorId: id });
+  };
+
+  handleDelveSelected = (id) => {
+    this.setState({ selectedDelveId: id });
+  };
 
   handleLocationFilterChanged = (evt) => {
     this.setState({ npcLocationFilterId: parseInt(evt.target.value) });
   };
-
-  /*=================================*/
-  /*    Asset Builder
-  /*=================================*/
 
   handleOnSelectedAssetChange = (id) => {
     let foundAsset = this.state.assets.find((a) => a.id == id);
@@ -370,6 +569,17 @@ class App extends Component {
       asset = new DefaultAsset();
     }
     this.setState({ assetBuilderSelectedAsset: asset });
+  };
+
+  handleOnSelectedDelveCardChange = (id) => {
+    console.log(id);
+    let foundDelveCard = this.state.delveCards.find((d) => d.id == id);
+    console.log(foundDelveCard);
+    let delveCard = { ...foundDelveCard };
+    if (!foundDelveCard) {
+      delveCard = new DefaultDelveCard("Theme");
+    }
+    this.setState({ delveCardEditorSelectedCard: delveCard });
   };
 
   /*=================================*/
@@ -450,6 +660,7 @@ class App extends Component {
                     onLogInputChanged={this.handleLogInputChanged}
                     onAddLog={this.handleAddLog}
                     onLogItemDeleted={this.handleLogItemDeleted}
+                    scrollBottom={this.scrollBottom}
                   />
                 </Route>
                 <Route path="/world">
@@ -468,25 +679,55 @@ class App extends Component {
                     npcs={this.state.npcs}
                     locations={this.state.locations}
                     oracles={this.state.oracles}
+                    addLog={this.handleAddLog}
                   />
                 </Route>
                 <Route path="/locations">
                   <Locations
                     locations={this.state.locations}
+                    oracles={this.state.oracles}
                     nextLocationId={this.state.nextLocationId}
                     npcs={this.state.npcs}
                     players={this.state.players}
                     selectedPlayer={this.getSelectedPlayer()}
                     onComponentUpdate={this.componentDidUpdate}
+                    addLog={this.handleAddLog}
                   />
                 </Route>
                 <Route exact path="/enter-the-fray">
                   <EnterTheFray
-                    foes={this.state.foes}
+                    foes={this.state.foes.filter(function (f) {
+                      return f.Foes.some(function (f2) {
+                        return (f.Foes = f.Foes.filter((f2) => {
+                          return f2.Source === "Ironsworn";
+                        }));
+                      });
+                    })}
                     activeFoes={this.state.activeFoes}
                     newFoe={this.state.newFoe}
                     onComponentUpdate={this.componentDidUpdate}
                     onProgressRollClicked={this.handleOnProgressRollClicked}
+                    showGenerator={true}
+                  />
+                </Route>
+                <Route exact path="/delve">
+                  <Delve
+                    oracles={this.state.oracles}
+                    delves={this.state.delves}
+                    newDelve={this.state.newDelve}
+                    delveThemes={this.state.delveThemes}
+                    delveDomains={this.state.delveDomains}
+                    foes={this.state.foes}
+                    selectedDelveId={this.state.selectedDelveId}
+                    delveSelectorId={this.state.delveSelectorId}
+                    burnMomentum={this.burnMomentum}
+                    selectedPlayer={this.getSelectedPlayer()}
+                    onDelveSelected={this.handleDelveSelected}
+                    onDelveSelectChange={this.handleDelveSelectChanged}
+                    onComponentUpdate={this.componentDidUpdate}
+                    onActionRollClicked={this.handleOnActionRollClicked}
+                    footerDice={this.state.footerDice}
+                    addLog={this.handleAddLog}
                   />
                 </Route>
                 <Route path="/gallery">
@@ -504,6 +745,7 @@ class App extends Component {
                     onLogInputChanged={this.handleBackgroundInputChanged}
                     onAddLog={this.handleAddBackground}
                     onLogItemDeleted={this.handleBackgroundItemDeleted}
+                    scrollBottom={this.scrollBottom}
                   />
                 </Route>
                 <Route exact path="/stats">
@@ -523,7 +765,7 @@ class App extends Component {
                     selectedPlayer={this.getSelectedPlayer()}
                     onProgressRollClicked={this.handleOnProgressRollClicked}
                     onComponentUpdate={this.componentDidUpdate}
-                    updateFooterDice={this.updateFooterDice}
+                    addLog={this.handleAddLog}
                   />
                 </Route>
                 <Route exact path="/quests">
@@ -536,7 +778,7 @@ class App extends Component {
                     selectedPlayer={this.getSelectedPlayer()}
                     onProgressRollClicked={this.handleOnProgressRollClicked}
                     onComponentUpdate={this.componentDidUpdate}
-                    updateFooterDice={this.updateFooterDice}
+                    addLog={this.handleAddLog}
                   />
                 </Route>
                 <Route exact path="/journeys">
@@ -548,8 +790,42 @@ class App extends Component {
                     selectedPlayer={this.getSelectedPlayer()}
                     onProgressRollClicked={this.handleOnProgressRollClicked}
                     onComponentUpdate={this.componentDidUpdate}
-                    updateFooterDice={this.updateFooterDice}
+                    addLog={this.handleAddLog}
                   />
+                </Route>
+
+                <Route exact path="/enter-the-fray">
+                  <Progression
+                    title="Foes"
+                    supressTitle={true}
+                    type="foe"
+                    newProgressions={this.state.newProgressions}
+                    players={this.state.players}
+                    selectedPlayer={this.getSelectedPlayer()}
+                    onProgressRollClicked={this.handleOnProgressRollClicked}
+                    onComponentUpdate={this.componentDidUpdate}
+                    onAddLog={this.handleAddLog}
+                  />
+                </Route>
+
+                <Route exact path="/delve">
+                  {this.state.selectedDelveId != -1 ? (
+                    <React.Fragment>
+                      <TitleBlock title="Create a Foe" />
+                      <Progression
+                        title="Foes"
+                        supressTitle={true}
+                        type="foe"
+                        newProgressions={this.state.newProgressions}
+                        players={this.state.players}
+                        selectedPlayer={this.getSelectedPlayer()}
+                        onProgressRollClicked={this.handleOnProgressRollClicked}
+                        onComponentUpdate={this.componentDidUpdate}
+                      />
+                    </React.Fragment>
+                  ) : (
+                    React.Fragment
+                  )}
                 </Route>
 
                 <Route exact path="/assets">
@@ -581,6 +857,26 @@ class App extends Component {
                   />
                 </Route>
 
+                <Route path="/delve-card-editor">
+                  <DelveThemeDomainEditor
+                    delveCards={this.state.delveCards}
+                    oracles={this.state.oracles}
+                    selectedDelveCard={this.state.delveCardEditorSelectedCard}
+                    onSelectedDelveCardChange={this.handleOnSelectedDelveCardChange}
+                    onComponentUpdate={this.componentDidUpdate}
+                  />
+                </Route>
+                <Route exact path="/denizen-config">
+                  <DenizenConfig
+                    denizenConfig={this.state.denizenConfig}
+                    oracles={this.state.oracles}
+                    foes={this.state.foes}
+                    denizenThemeMap={this.state.denizenThemeMap}
+                    denizenDomainMap={this.state.denizenDomainMap}
+                    onComponentUpdate={this.componentDidUpdate}
+                  />
+                </Route>
+
                 <Route path="/documentation">
                   <Documentation />
                 </Route>
@@ -589,7 +885,7 @@ class App extends Component {
                     onResetClick={this.resetData}
                     onDownloadClick={this.saveData}
                     onLoadClick={this.loadData}
-                    onUpdateAssetClick={this.updateCoreAssets}
+                    onUpdateDataswornClick={this.updateDataSworn}
                   />
                 </Route>
                 {/* </Switch> */}
@@ -602,6 +898,7 @@ class App extends Component {
           npcs={this.state.npcs}
           foes={this.state.activeFoes.loneFoes}
           footerDice={this.state.footerDice}
+          oracles={this.state.oracles}
           onComponentUpdate={this.componentDidUpdate}
         />
 

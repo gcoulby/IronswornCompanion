@@ -98,12 +98,12 @@ class Sidebar extends Component {
             icon: "fas fa-hiking",
             active: false,
           },
-          // {
-          //   url: "/delve",
-          //   pageName: "Delve",
-          //   icon: "fas fa-dungeon",
-          //   active: false,
-          // },
+          {
+            url: "/delve",
+            pageName: "Delve",
+            icon: "fas fa-dungeon",
+            active: false,
+          },
           // {
           //   url: "/companions",
           //   pageName: "Companions",
@@ -136,7 +136,7 @@ class Sidebar extends Component {
           {
             url: "/oracle-editor",
             // title: <h6 className="menu-title">Tools</h6>,
-            pageName: "Oracles",
+            pageName: "Oracle Editor",
             icon: "game-icon game-icon-crystal-ball icon-md",
             active: false,
           },
@@ -147,9 +147,22 @@ class Sidebar extends Component {
             active: false,
           },
           {
+            url: "/delve-card-editor",
+            // title: <h6 className="menu-title">Tools</h6>,
+            pageName: "Delve Card Editor",
+            icon: "game-icon game-icon-card-draw",
+            active: false,
+          },
+          {
+            url: "/denizen-config",
+            pageName: "Denizen Config",
+            icon: "game-icon game-icon-pokecog",
+            active: false,
+          },
+          {
             url: "/roll",
             pageName: "Roll",
-            icon: "fas fa-dice-d20",
+            icon: "game-icon game-icon-d10",
             active: false,
           },
           {
@@ -183,23 +196,14 @@ class Sidebar extends Component {
             <HashRouter basename="/">
               {this.state.sections.map((section) => {
                 return (
-                  <li
-                    key={UniqueKeyGenerator.generate("section")}
-                    className="sidebarGroup"
-                  >
+                  <li key={UniqueKeyGenerator.generate("section")} className="sidebarGroup">
                     <h6 className="menu-title">{section.title}</h6>
                     <ul>
                       {section.pages.map((page) => (
-                        <li
-                          key={UniqueKeyGenerator.generate("page")}
-                          className={`${page.active ? "active" : ""}`}
-                        >
+                        <li key={UniqueKeyGenerator.generate("page")} className={`${page.active ? "active" : ""}`}>
                           {page.title}
                           <Link to={page.url}>
-                            <i
-                              className={`menu-icon ${page.icon}`}
-                              aria-hidden="true"
-                            ></i>
+                            <i className={`menu-icon ${page.icon}`} aria-hidden="true"></i>
                             &nbsp;{page.pageName}
                           </Link>
                           {/* <a
@@ -222,8 +226,8 @@ class Sidebar extends Component {
               })}
             </HashRouter>
             <li className="credit">
-              This companion is an unofficial product building to support the
-              table top game Ironsworn, developed by Shawn Tomkin
+              This companion is an unofficial product building to support the table top game Ironsworn, developed by
+              Shawn Tomkin
               <a
                 className="btn btn-outline-light m-2"
                 href="https://www.ironswornrpg.com/"
@@ -233,8 +237,7 @@ class Sidebar extends Component {
                 @ironswornrpg
               </a>
               <br />
-              It is distributed for free under the
-              Attribution-NonCommercial-ShareAlike 4.0 International license
+              It is distributed for free under the Attribution-NonCommercial-ShareAlike 4.0 International license
               <a
                 className="m-2"
                 href="https://creativecommons.org/licenses/by/4.0/"

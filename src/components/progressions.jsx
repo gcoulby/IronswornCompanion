@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import DiceRoller from "./dice_roller";
 import ProgressCard from "./progressCard";
 import TitleBlock from "./titleBlock";
 import UnselectedPlayer from "./unselected_player";
@@ -12,12 +13,22 @@ class Progression extends Component {
   // handleUpdate() {
   //   this.props.selectedPlayer.rank = 2;
   //   this.props.onProgressUpdate();
+  // // }
+
+  // constructor() {
+  //   super();
+  //   // this.oracles = props.oracles;
+
   // }
 
-  handleOnNewProgressionTextChanged = (evt) => {
+  componentDidMount() {
+    this.diceRoller = new DiceRoller();
+  }
+
+  handleOnNewProgressionTextChanged = (evt, field) => {
     const newProgressions = this.props.newProgressions.map((np) => {
       if (np.type == this.state.type) {
-        np.text = evt.target.value;
+        np[field] = evt.target.value;
       }
       return np;
     });
@@ -36,16 +47,20 @@ class Progression extends Component {
 
   handleOnAddNewProgression = () => {
     // let type = "vow";
-    if (this.getProgressionByType(this.state.type).text != "") {
+    if (this.getProgressionByType(this.state.type).title != "") {
       const players = this.props.players.map((p) => {
         if (p.selected) {
           p.progressions.push({
             id: this.getProgressionByType(this.state.type).nextId,
             type: this.state.type,
             progress: 0,
-            text: this.getProgressionByType(this.state.type).text,
+            title: this.getProgressionByType(this.state.type).title,
+            details: this.getProgressionByType(this.state.type).details,
             rank: this.getProgressionByType(this.state.type).rank,
+            complete: false,
+            progressRoll: null,
           });
+          this.logProgressionStart();
         }
         return p;
       });
@@ -60,8 +75,51 @@ class Progression extends Component {
       });
       this.setState({ players });
       this.setState({ newProgressions });
-      this.props.updateFooterDice();
     }
+  };
+
+  logProgressionStart = () => {
+    let logText = "";
+    switch (this.state.type) {
+      case "vow":
+        logText = "swore a vow";
+        break;
+      case "quest":
+        logText = "began a quest";
+        break;
+      case "journey":
+        logText = "embarked on a journey";
+        break;
+      case "foe":
+        logText = "discovered a new foe";
+        break;
+    }
+    this.props.addLog(
+      "event",
+      `${this.props.selectedPlayer.name} ${logText}: ${this.getProgressionByType(this.state.type).title}`
+    );
+  };
+
+  logProgressionComplete = () => {
+    let logText = "";
+    switch (this.state.type) {
+      case "vow":
+        logText = "fulfilled a vow";
+        break;
+      case "quest":
+        logText = "completed a quest";
+        break;
+      case "journey":
+        logText = "completed their journey";
+        break;
+      case "foe":
+        logText = "defeated the foe";
+        break;
+    }
+    this.props.addLog(
+      "event",
+      `${this.props.selectedPlayer.name} ${logText}: ${this.getProgressionByType(this.state.type).title}`
+    );
   };
 
   handleOnProgressionChanged = (id, rank, increment) => {
@@ -99,17 +157,16 @@ class Progression extends Component {
       return p;
     });
     this.setState({ players });
-    this.props.updateFooterDice();
   };
 
-  handleOnProgressionRankChanged = (evt, id) => {
+  handleOnProgressionPropertyChanged = (evt, id, field) => {
     const players = this.props.players.map((p) => {
       if (p.selected) {
         p.progressions
           .filter((p1) => p1.type === this.state.type)
           .map((p2) => {
             if (p2.id == id) {
-              p2.rank = evt.target.value;
+              p2[field] = evt.target.value;
             }
           });
       }
@@ -132,8 +189,28 @@ class Progression extends Component {
       }
       return p;
     });
+
     this.setState({ players });
-    this.props.updateFooterDice();
+  };
+
+  handleOnProgressRollClicked = (id, type, progress) => {
+    const players = this.props.players.map((p) => {
+      if (p.selected) {
+        p.progressions
+          .filter((p1) => p1.type === this.state.type)
+          .map((p2) => {
+            if (p2.id == id) {
+              p2.progressRoll = this.diceRoller.progressionRoll(Math.floor(p2.progress / 4));
+              if (p2.progressRoll.HitType.includes("Hit")) {
+                p2.complete = true;
+                this.logProgressionComplete();
+              }
+            }
+          });
+      }
+      return p;
+    });
+    this.setState({ players });
   };
 
   getProgressionByType(type = null) {
@@ -149,7 +226,7 @@ class Progression extends Component {
     if (this.props.selectedPlayer == null) return <UnselectedPlayer />;
     return (
       <React.Fragment>
-        <h1>{this.props.title}</h1>
+        {this.props.supressTitle ? React.Fragment : <h1>{this.props.title}</h1>}
         {this.props.info ? (
           <React.Fragment>
             <div className="alert alert-secondary" role="alert">
@@ -162,22 +239,34 @@ class Progression extends Component {
 
         <div className="row">
           <div className="col-6">
-            <div className="input-group mb-3">
+            <div className="input-group mb-2">
               <div className="input-group-prepend">
-                <label className="btn btn-dark btn-tag">Description</label>
+                <label className="btn btn-dark btn-tag">Name</label>
               </div>
               <input
                 type="text"
                 className="form-control"
-                placeholder="Description"
+                placeholder="Title"
                 aria-label="Name"
                 aria-describedby="basic-addon2"
-                value={this.getProgressionByType().text}
-                onChange={(e) => this.handleOnNewProgressionTextChanged(e)}
+                value={this.getProgressionByType().title}
+                onChange={(e) => this.handleOnNewProgressionTextChanged(e, "title")}
               />
             </div>
 
-            <div className="input-group mb-3">
+            <span className="modesto mt-2">Additional Details:</span>
+            <textarea
+              type="text"
+              className="form-control"
+              placeholder="Description"
+              aria-label="Name"
+              aria-describedby="basic-addon2"
+              rows="4"
+              value={this.getProgressionByType().details}
+              onChange={(e) => this.handleOnNewProgressionTextChanged(e, "details")}
+            ></textarea>
+
+            <div className="input-group mt-3 mb-2">
               <div className="input-group-prepend">
                 <label className="btn btn-dark btn-tag">Difficulty</label>
               </div>
@@ -203,7 +292,7 @@ class Progression extends Component {
         <TitleBlock title={`ACTIVE ${this.props.title}`} />
         <div className="row">
           {this.props.selectedPlayer.progressions
-            .filter((pr) => pr.type == this.props.type)
+            .filter((pr) => pr.type == this.props.type && !pr.complete)
             .map((p) => (
               <ProgressCard
                 key={p.id}
@@ -214,10 +303,34 @@ class Progression extends Component {
                 rank={p.rank}
                 progress={p.progress}
                 progressText={p.text}
+                progression={p}
                 rollText={this.getProgressionByType().buttonText}
                 onProgressionChange={this.handleOnProgressionChanged}
-                onProgressionRankChange={this.handleOnProgressionRankChanged}
-                onProgressRollClicked={this.props.onProgressRollClicked}
+                onProgressionPropertyChange={this.handleOnProgressionPropertyChanged}
+                onProgressRollClicked={this.handleOnProgressRollClicked}
+                onProgressCancel={this.handleProgressionDelete}
+              />
+            ))}
+        </div>
+        <TitleBlock title={`${this.props.title === "Foes" ? "DEFEATED" : "COMPLETED"} ${this.props.title}`} />
+        <div className="row">
+          {this.props.selectedPlayer.progressions
+            .filter((pr) => pr.type == this.props.type && pr.complete)
+            .map((p) => (
+              <ProgressCard
+                key={p.id}
+                id={p.id}
+                type={this.state.type}
+                showRank={p.type != "bond"}
+                ranks={this.state.ranks}
+                rank={p.rank}
+                progress={p.progress}
+                progressText={p.text}
+                progression={p}
+                rollText={this.getProgressionByType().buttonText}
+                onProgressionChange={this.handleOnProgressionChanged}
+                onProgressionPropertyChange={this.handleOnProgressionPropertyChanged}
+                onProgressRollClicked={this.handleOnProgressRollClicked}
                 onProgressCancel={this.handleProgressionDelete}
               />
             ))}

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import DiceRoller from "./dice_roller";
+import RollIcon from "./rollIcon";
 import UniqueKeyGenerator from "./uniqueKeyGenerator";
 class World extends Component {
   state = {
@@ -160,8 +161,7 @@ class World extends Component {
               "Someone close to you is accused of cursing a settlement, causing fields to go fallow and cattle to become sick. What is the evidence of this? Will you defend this person and uncover the true cause of the settlement’s troubles?",
           },
           {
-            truth:
-              "Magic is rare and dangerous, but those few who wield the power are truly gifted.",
+            truth: "Magic is rare and dangerous, but those few who wield the power are truly gifted.",
             questStarter:
               "You have heard stories of someone who wields true power. They live in an isolated settlement far away. Who told you of this mystic? Are they feared or respected? Why do you swear to seek them out?",
           },
@@ -184,8 +184,7 @@ class World extends Component {
               "A charismatic Ironlander, encouraging her followers to renounce the vestiges of Old World religions, proposes a new path for this new world. What doctrine does she teach? What does she seek to achieve? Are you sworn to aid or stop her?",
           },
           {
-            truth:
-              "The people honor old gods and new. In this harsh land, a prayer is a simple but powerful comfort.",
+            truth: "The people honor old gods and new. In this harsh land, a prayer is a simple but powerful comfort.",
             questStarter:
               "An Ironlander is determined to make a pilgrimage into dangerous lands. What holy place do they seek? Why do you swear to aid them on this journey? Who seeks to stop them and why?",
           },
@@ -208,8 +207,7 @@ class World extends Component {
               "Someone obsessed with the firstborn wants to find evidence of their existence. This will require an expedition into the far reaches of the Ironlands. What is your role in this mission?",
           },
           {
-            truth:
-              "The firstborn live in isolation and are fiercely protective of their own lands.",
+            truth: "The firstborn live in isolation and are fiercely protective of their own lands.",
             questStarter:
               "The elf, outcast from his kind, lives with Ironlanders. Over time, he became a part of the community. Now, he is dying. He yearns to return to his people before he passes. Does he seek absolution or justice? Why do you swear to help him? What force opposes his return?",
           },
@@ -335,12 +333,8 @@ class World extends Component {
   render() {
     return (
       <React.Fragment>
-        <button
-          className="btn btn-dark mb-3"
-          id="world-oracle"
-          onClick={() => this.handleRollWorldClick()}
-        >
-          <i className="fas fa-dice-d20"></i> Roll a Random World
+        <button className="btn btn-dark mb-3" id="world-oracle" onClick={() => this.handleRollWorldClick()}>
+          <RollIcon /> Roll a Random World
         </button>
         <div className="world-tabs">
           <Tabs defaultActiveKey="old-world" id="uncontrolled-tab-example">
@@ -348,10 +342,7 @@ class World extends Component {
               <Tab eventKey={tab.eventKey} title={tab.title}>
                 <ul className="mt-4">
                   {tab.truths.map((truth) => (
-                    <li
-                      key={UniqueKeyGenerator.generate()}
-                      className="card mb-2"
-                    >
+                    <li key={UniqueKeyGenerator.generate()} className="card mb-2">
                       <label className="checkbox-card-label">
                         <input
                           key={UniqueKeyGenerator.generate()}
@@ -360,21 +351,15 @@ class World extends Component {
                           className="card-input-element d-none"
                           datatype={tab.eventKey}
                           checked={
-                            this.props.world.categories.find(
-                              (w) => w.id == tab.eventKey
-                            ).truths[
-                              this.state.tabs
-                                .find((t) => t.eventKey == tab.eventKey)
-                                .truths.indexOf(truth)
+                            this.props.world.categories.find((w) => w.id == tab.eventKey).truths[
+                              this.state.tabs.find((t) => t.eventKey == tab.eventKey).truths.indexOf(truth)
                             ]
                           }
                           onChange={(e) =>
                             this.handleWorldTruthSelector(
                               e,
                               tab.eventKey,
-                              this.state.tabs
-                                .find((t) => t.eventKey == tab.eventKey)
-                                .truths.indexOf(truth)
+                              this.state.tabs.find((t) => t.eventKey == tab.eventKey).truths.indexOf(truth)
                             )
                           }
                         ></input>
@@ -400,17 +385,13 @@ class World extends Component {
                   <textarea
                     className="form-control"
                     rows="15"
-                    onChange={(e) =>
-                      this.handleCustomWorldDetailsInputChanged(e, this)
-                    }
+                    onChange={(e) => this.handleCustomWorldDetailsInputChanged(e, this)}
                     value={this.props.world.customWorldDetails}
                   ></textarea>
                   <span className="modesto mt-3">Quest Starter:</span>
                   <textarea
                     className="form-control"
-                    onChange={(e) =>
-                      this.handleCustomWorldQuestStarterInputChanged(e, this)
-                    }
+                    onChange={(e) => this.handleCustomWorldQuestStarterInputChanged(e, this)}
                     value={this.props.world.customWorldQuestStarter}
                   ></textarea>
                 </div>

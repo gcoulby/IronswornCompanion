@@ -24,11 +24,28 @@
   align-items: center;
   margin-bottom: 2em;
 }
-input[type="checkbox"],
-input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  z-index: -1;
+.deb-cb {
+  input[type="checkbox"],
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+  }
+  input[type="radio"] + label::before {
+    border-radius: 1em;
+  }
+  /* Checked */
+  input[type="checkbox"]:checked + label,
+  input[type="radio"]:checked + label {
+    padding-left: 1em;
+    color: white;
+    &:before {
+      top: 0;
+      width: 100%;
+      height: 2.7em;
+      background: $dark;
+    }
+  }
 }
 label {
   position: relative;
@@ -47,21 +64,6 @@ label {
     height: 1.4em;
     border-radius: 0.25em;
     z-index: -1;
-  }
-}
-input[type="radio"] + label::before {
-  border-radius: 1em;
-}
-/* Checked */
-input[type="checkbox"]:checked + label,
-input[type="radio"]:checked + label {
-  padding-left: 1em;
-  color: white;
-  &:before {
-    top: 0;
-    width: 100%;
-    height: 2.7em;
-    background: $dark;
   }
 }
 

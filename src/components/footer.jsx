@@ -1,5 +1,8 @@
 import React, { Component } from "react";
+import DiceResult from "./diceResult";
 import DiceRoller from "./dice_roller";
+import OracleRoller from "./oracleRoller";
+import RollIcon from "./rollIcon";
 class Footer extends Component {
   constructor(props) {
     super();
@@ -41,7 +44,7 @@ class Footer extends Component {
           id: `${p.type}_${p.id}`,
           progress: p.progress,
           type: p.type,
-          name: p.text,
+          name: p.title,
         });
       });
     }
@@ -124,11 +127,11 @@ class Footer extends Component {
           <div className="col-12">
             <div className="row modesto">
               <div className="col-auto">
-                <p>
-                  <i className="pt-4 fas fa-dice-d20 fa-3x"></i>
-                </p>
+                {/* <p> */}
+                <i className="mt-5 game-icon game-icon-d10 fa-4x"></i>
+                {/* </p> */}
               </div>
-              <div className="col-auto">
+              {/* <div className="col-auto">
                 <label htmlFor="progress-select">Progress</label>
                 <select
                   id="progress-select"
@@ -145,7 +148,7 @@ class Footer extends Component {
                     </React.Fragment>
                   ))}
                 </select>
-              </div>
+              </div> */}
               <div className="col-auto">
                 <label htmlFor="stat-select">Add Stat</label>
                 <select
@@ -183,7 +186,7 @@ class Footer extends Component {
                 <label>&nbsp;</label>
                 <br />
                 <button className="btn btn-outline-light" onClick={this.handleOnRollClicked}>
-                  <i className="fas fa-dice-d20"></i>&nbsp;ROLL
+                  <RollIcon /> ROLL
                 </button>
                 <button className="btn btn-outline-secondary" onClick={() => this.handleOnResetClick()}>
                   <i className="fas fa-redo"></i>&nbsp;RESET
@@ -226,10 +229,13 @@ class Footer extends Component {
                         <i></i>
                       </div>
                     </div>
+                    {/* <DiceResult diceResult={this.props.footerDice} /> */}
                   </React.Fragment>
                 ) : (
                   React.Fragment
                 )}
+
+                <OracleRoller oracles={this.props.oracles} onComponentUpdate={this.props.onComponentUpdate} />
               </div>
             </div>
           </div>

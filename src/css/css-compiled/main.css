@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Carrois+Gothic&family=Forum&display=swap");
@@ -16142,7 +16143,7 @@ nav ul {
   width: 100%;
   color: white;
   position: fixed !important;
-  z-index: 100000;
+  z-index: 1000;
 }
 
 .navbar .btn {
@@ -16168,7 +16169,7 @@ nav ul {
   position: fixed;
   top: 3.5em;
   width: 100vw;
-  z-index: 10000;
+  z-index: 999;
 }
 
 .nav-key,
@@ -16396,7 +16397,7 @@ nav ul {
   display: block;
   background-size: contain;
   position: fixed;
-  bottom: 5.8em;
+  bottom: 6.4em;
   width: 100vw;
   z-index: 1000;
 }
@@ -16575,6 +16576,22 @@ input[type="file"] {
   padding: 0.6em 0.6em !important;
 }
 
+.roll-icon {
+  font-size: 1.5em;
+  line-height: 0;
+  vertical-align: sub;
+}
+
+.roll-button {
+  padding: 0.4em 0.1em 0.3em 0.3em !important;
+  margin: 0 1em 0 0;
+}
+
+.roll-button i {
+  padding: 0 0.1em;
+  margin: 0;
+}
+
 .stat-card {
   padding-top: 1em;
   border-radius: 0% !important;
@@ -16603,11 +16620,33 @@ input[type="file"] {
   margin-bottom: 2em;
 }
 
-input[type="checkbox"],
-input[type="radio"] {
+.deb-cb {
+  /* Checked */
+}
+
+.deb-cb input[type="checkbox"],
+.deb-cb input[type="radio"] {
   position: absolute;
   opacity: 0;
   z-index: -1;
+}
+
+.deb-cb input[type="radio"] + label::before {
+  border-radius: 1em;
+}
+
+.deb-cb input[type="checkbox"]:checked + label,
+.deb-cb input[type="radio"]:checked + label {
+  padding-left: 1em;
+  color: white;
+}
+
+.deb-cb input[type="checkbox"]:checked + label:before,
+.deb-cb input[type="radio"]:checked + label:before {
+  top: 0;
+  width: 100%;
+  height: 2.7em;
+  background: #343a40;
 }
 
 label {
@@ -16629,25 +16668,6 @@ label:before {
   height: 1.4em;
   border-radius: 0.25em;
   z-index: -1;
-}
-
-input[type="radio"] + label::before {
-  border-radius: 1em;
-}
-
-/* Checked */
-input[type="checkbox"]:checked + label,
-input[type="radio"]:checked + label {
-  padding-left: 1em;
-  color: white;
-}
-
-input[type="checkbox"]:checked + label:before,
-input[type="radio"]:checked + label:before {
-  top: 0;
-  width: 100%;
-  height: 2.7em;
-  background: #343a40;
 }
 
 /* Transition */
@@ -17557,14 +17577,14 @@ input.disabled:focus {
   z-index: 99999999 !important;
 }
 
-#iconPicker {
+.popup {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100000;
+  z-index: 9999;
 }
 
-#iconPicker .overlay {
+.popup .overlay {
   background: black;
   width: 100vw;
   height: 100vh;
@@ -17573,12 +17593,8 @@ input.disabled:focus {
   opacity: 0.5;
 }
 
-#iconPicker .card {
+.popup .card {
   position: fixed;
-  top: calc(50% - 300px);
-  left: calc(50% - 400px);
-  width: 800px;
-  height: 600px;
   display: block;
 }
 
@@ -17593,8 +17609,8 @@ input.disabled:focus {
   cursor: pointer;
   position: relative;
   transition: all 0.2s ease-in-out;
-  font-size: 21px;
-  line-height: 26px;
+  font-size: 45px;
+  line-height: 46px;
   float: left;
   border-radius: 50%;
   margin: 3px;
@@ -17612,6 +17628,234 @@ input.disabled:focus {
   color: white;
 }
 
+[data-width="100"] .card {
+  left: calc(50% - 50px);
+  width: 100px;
+}
+
+[data-height="100"] .card {
+  top: calc(50% - 50px);
+  height: 100px;
+}
+
+[data-width="200"] .card {
+  left: calc(50% - 100px);
+  width: 200px;
+}
+
+[data-height="200"] .card {
+  top: calc(50% - 100px);
+  height: 200px;
+}
+
+[data-width="300"] .card {
+  left: calc(50% - 150px);
+  width: 300px;
+}
+
+[data-height="300"] .card {
+  top: calc(50% - 150px);
+  height: 300px;
+}
+
+[data-width="400"] .card {
+  left: calc(50% - 200px);
+  width: 400px;
+}
+
+[data-height="400"] .card {
+  top: calc(50% - 200px);
+  height: 400px;
+}
+
+[data-width="500"] .card {
+  left: calc(50% - 250px);
+  width: 500px;
+}
+
+[data-height="500"] .card {
+  top: calc(50% - 250px);
+  height: 500px;
+}
+
+[data-width="600"] .card {
+  left: calc(50% - 300px);
+  width: 600px;
+}
+
+[data-height="600"] .card {
+  top: calc(50% - 300px);
+  height: 600px;
+}
+
+[data-width="700"] .card {
+  left: calc(50% - 350px);
+  width: 700px;
+}
+
+[data-height="700"] .card {
+  top: calc(50% - 350px);
+  height: 700px;
+}
+
+[data-width="800"] .card {
+  left: calc(50% - 400px);
+  width: 800px;
+}
+
+[data-height="800"] .card {
+  top: calc(50% - 400px);
+  height: 800px;
+}
+
+[data-width="900"] .card {
+  left: calc(50% - 450px);
+  width: 900px;
+}
+
+[data-height="900"] .card {
+  top: calc(50% - 450px);
+  height: 900px;
+}
+
+[data-width="1000"] .card {
+  left: calc(50% - 500px);
+  width: 1000px;
+}
+
+[data-height="1000"] .card {
+  top: calc(50% - 500px);
+  height: 1000px;
+}
+
+[data-width="1100"] .card {
+  left: calc(50% - 550px);
+  width: 1100px;
+}
+
+[data-height="1100"] .card {
+  top: calc(50% - 550px);
+  height: 1100px;
+}
+
+[data-width="1200"] .card {
+  left: calc(50% - 600px);
+  width: 1200px;
+}
+
+[data-height="1200"] .card {
+  top: calc(50% - 600px);
+  height: 1200px;
+}
+
+[data-width="1300"] .card {
+  left: calc(50% - 650px);
+  width: 1300px;
+}
+
+[data-height="1300"] .card {
+  top: calc(50% - 650px);
+  height: 1300px;
+}
+
+[data-width="1400"] .card {
+  left: calc(50% - 700px);
+  width: 1400px;
+}
+
+[data-height="1400"] .card {
+  top: calc(50% - 700px);
+  height: 1400px;
+}
+
+[data-width="1500"] .card {
+  left: calc(50% - 750px);
+  width: 1500px;
+}
+
+[data-height="1500"] .card {
+  top: calc(50% - 750px);
+  height: 1500px;
+}
+
+[data-width="1600"] .card {
+  left: calc(50% - 800px);
+  width: 1600px;
+}
+
+[data-height="1600"] .card {
+  top: calc(50% - 800px);
+  height: 1600px;
+}
+
+[data-width="1700"] .card {
+  left: calc(50% - 850px);
+  width: 1700px;
+}
+
+[data-height="1700"] .card {
+  top: calc(50% - 850px);
+  height: 1700px;
+}
+
+[data-width="1800"] .card {
+  left: calc(50% - 900px);
+  width: 1800px;
+}
+
+[data-height="1800"] .card {
+  top: calc(50% - 900px);
+  height: 1800px;
+}
+
+[data-width="1900"] .card {
+  left: calc(50% - 950px);
+  width: 1900px;
+}
+
+[data-height="1900"] .card {
+  top: calc(50% - 950px);
+  height: 1900px;
+}
+
+[data-width="2000"] .card {
+  left: calc(50% - 1000px);
+  width: 2000px;
+}
+
+[data-height="2000"] .card {
+  top: calc(50% - 1000px);
+  height: 2000px;
+}
+
+#oracle-body {
+  height: 450px;
+}
+
+#oracle-body .tab-content {
+  height: 390px;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding: 2em;
+}
+
+#oracle-body li {
+  list-style: none;
+}
+
+#oracle-body ul {
+  padding: 0.5em;
+}
+
+#oracle-body .oracle-roller-themes {
+  background: #343a40;
+  color: white;
+}
+
+#oracle-body tbody {
+  font-family: sans-serif;
+}
+
 .editableTable {
   min-height: 20vh;
   max-height: 50vh;
@@ -17624,4 +17868,522 @@ input.disabled:focus {
 
 .editableTable .btn-sm {
   padding: 0.25rem 0.5rem !important;
+}
+
+.delve-step-card {
+  min-height: 21em;
+}
+
+.diamond {
+  margin-top: 2em;
+  display: inline-block !important;
+  width: 50px;
+  height: 50px;
+  background-color: #fff;
+  border: 2px solid #343a40;
+  transform: rotate(45deg);
+}
+
+.tagTableContainer {
+  max-height: 500px;
+  overflow: auto;
+}
+
+.denizenTable {
+  text-align: left;
+  position: relative;
+  border-collapse: collapse;
+}
+
+.denizenTable thead {
+  border-top: 2px solid white;
+}
+
+.denizenTable th {
+  background: white;
+  position: sticky;
+  top: 0em;
+  height: 100px;
+  padding: 6px 0;
+  vertical-align: bottom;
+}
+
+.denizenTable td {
+  padding: 0.75em 0 0 0;
+}
+
+.denizenTable td:nth-child(n) {
+  padding: 0.75em 0 0 0.75em;
+}
+
+.denizenTable .tag-col {
+  bottom: 0;
+  display: inline-block;
+  text-transform: capitalize;
+  height: 20px;
+  margin: 0 0 0 18px;
+  padding: 0;
+  text-align: left;
+  transform: rotate(315deg);
+  transform-origin: left;
+  white-space: nowrap;
+  width: 20px;
+}
+
+.denizenTable .name-col {
+  padding: 0.8em;
+}
+
+.cross-check {
+  /* Base for label styling */
+  /* checkbox aspect */
+  /* checked mark aspect */
+  /* checked mark aspect changes */
+  /* Disabled checkbox */
+  /* Accessibility */
+}
+
+.cross-check [type="checkbox"]:not(:checked),
+.cross-check [type="checkbox"]:checked {
+  position: absolute;
+  left: 0;
+  opacity: 0;
+}
+
+.cross-check [type="checkbox"]:not(:checked) + label,
+.cross-check [type="checkbox"]:checked + label {
+  position: relative;
+  padding-left: 0em;
+  font-size: 1.05em;
+  line-height: 1.7;
+  cursor: pointer;
+}
+
+.cross-check [type="checkbox"]:not(:checked) + label:before,
+.cross-check [type="checkbox"]:checked + label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.4em;
+  height: 1.4em;
+  border: 1px solid #aaa;
+  background: #fff;
+  border-radius: 0.2em;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.275s;
+}
+
+.cross-check [type="checkbox"]:not(:checked) + label:after,
+.cross-check [type="checkbox"]:checked + label:after {
+  content: "✕";
+  position: absolute;
+  top: 0.525em;
+  left: 0.12em;
+  font-size: 1.375em;
+  color: #343a40;
+  z-index: -1;
+  line-height: 0;
+  transition: all 0.2s;
+}
+
+.cross-check [type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  transform: scale(0) rotate(45deg);
+}
+
+.cross-check [type="checkbox"]:checked + label:after {
+  opacity: 1;
+  transform: scale(1) rotate(0);
+}
+
+.cross-check [type="checkbox"]:disabled:not(:checked) + label:before,
+.cross-check [type="checkbox"]:disabled:checked + label:before {
+  box-shadow: none;
+  border-color: #bbb;
+  background-color: #e9e9e9;
+}
+
+.cross-check [type="checkbox"]:disabled:checked + label:after {
+  color: #777;
+}
+
+.cross-check [type="checkbox"]:disabled + label {
+  color: #aaa;
+}
+
+.cross-check [type="checkbox"]:checked:focus + label:before,
+.cross-check [type="checkbox"]:not(:checked):focus + label:before {
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.delve-card {
+  font-size: 9.6pt;
+  position: relative;
+  width: 9.8cm;
+  height: 16.94cm;
+  float: left;
+}
+
+.delve-card table td {
+  padding: 0.3em 0;
+}
+
+.delve-card table td:first-child {
+  padding: 0.3em 0 0.3em 0.5em !important;
+}
+
+.delve-card table {
+  border-bottom: none;
+}
+
+.delve-card .input-field {
+  padding: 0 1em;
+}
+
+.delve-card .input-field .hr {
+  border-bottom: 2px solid black;
+  margin-bottom: 1em;
+  display: block;
+  width: 100%;
+  z-index: 5;
+}
+
+.delve-card .input-field ul {
+  padding-left: 1.2em;
+}
+
+.delve-card .input-field label {
+  line-height: 0;
+  margin-bottom: 0;
+  margin-top: 1.5em;
+}
+
+.delve-card .input-field .form-control-sm {
+  z-index: 1;
+  top: 0em;
+  line-height: 0;
+  height: 1.4em;
+  font-family: "Sue Ellen Francisco" !important;
+  text-transform: uppercase;
+  font-size: 20px;
+  padding: 0.2em 0 0 0.2em;
+  border: none;
+}
+
+.delve-card .card-header {
+  padding: 0.5em 2em;
+}
+
+.delve-card h6 {
+  margin: 0;
+  font-size: 12pt;
+  text-transform: uppercase;
+}
+
+.delve-card .delve-icon {
+  border-radius: 50%;
+  top: 1em;
+  right: 1em;
+  border: 4px solid white;
+  background: #343a40;
+  width: 4em;
+  height: 4em;
+  position: absolute;
+}
+
+.delve-card .delve-icon i {
+  position: absolute;
+  left: 0.15em;
+  font-size: 32px;
+}
+
+.delve-card input[type="checkbox"] {
+  position: initial;
+  opacity: 1 !important;
+}
+
+.delve-card input[type="checkbox"]:checked + label:before {
+  background: #fff;
+  color: #333;
+  content: "\2713";
+  text-align: center;
+}
+
+.delve-card label {
+  padding: 0;
+}
+
+.delve-card .control {
+  font-family: arial;
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.delve-card .control input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.delve-card .control_indicator {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  height: 0.3cm;
+  width: 0.3cm;
+  background: #ffffff;
+  border: 1px solid #444444;
+  border-radius: 20px;
+}
+
+.delve-card .control:hover input ~ .control_indicator,
+.delve-card .control input:focus ~ .control_indicator {
+  background: white;
+}
+
+.delve-card .control input:checked ~ .control_indicator {
+  background: #424242;
+}
+
+.delve-card .control:hover input:not([disabled]):checked ~ .control_indicator,
+.delve-card .control input:checked:focus ~ .control_indicator {
+  background: #343a40;
+}
+
+.delve-card .control input:disabled ~ .control_indicator {
+  background: #ffffff;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.delve-card .control_indicator:after {
+  box-sizing: unset;
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.delve-card .control input:checked ~ .control_indicator:after {
+  display: block;
+}
+
+.delve-card label.control.control-checkbox {
+  margin-left: 1em;
+  margin-right: 0.6em;
+}
+
+.delve-card .control-checkbox input:disabled ~ .control_indicator:after {
+  border-color: #7b7b7b;
+}
+
+.delve-card .control-checkbox .control_indicator::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1rem;
+  height: 1rem;
+  margin-left: -0.25rem;
+  margin-top: -0.25rem;
+  background: #353535;
+  border-radius: 3rem;
+  opacity: 0.6;
+  z-index: 99999;
+  transform: scale(0);
+}
+
+@keyframes s-ripple {
+  0% {
+    transform: scale(0);
+  }
+  20% {
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+@keyframes s-ripple-dup {
+  0% {
+    transform: scale(0);
+  }
+  30% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+.delve-card .control-checkbox input + .control_indicator::before {
+  animation: s-ripple 250ms ease-out;
+}
+
+.delve-card .control-checkbox input:checked + .control_indicator::before {
+  animation-name: s-ripple-dup;
+}
+
+.print-show {
+  display: none !important;
+}
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+  }
+  .table-striped tbody tr:nth-of-type(odd) td {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+  }
+  .page-break {
+    display: block;
+    page-break-before: always;
+  }
+  .print-show {
+    display: block !important;
+  }
+  .print-hide {
+    display: none !important;
+  }
+  #page-container {
+    margin: 0;
+    padding: 0;
+  }
+  .delve-card-back {
+    display: block;
+  }
+  .delve-card-0 {
+    position: relative;
+    top: 3cm;
+    left: 3cm;
+  }
+  .delve-card-1 {
+    position: relative;
+    top: 3cm;
+    left: 3.5cm;
+  }
+  .delve-card-2 {
+    position: relative;
+    top: 3.5cm;
+    left: 3cm;
+    margin-bottom: 4cm;
+  }
+  .delve-card-3 {
+    page-break-after: always;
+    position: relative;
+    top: 3.5cm;
+    left: 3.5cm;
+    margin-bottom: 6cm;
+  }
+  .delve-card .slider-container .slider {
+    box-shadow: none;
+  }
+  .delve-card .slider-container .slider::-webkit-slider-thumb {
+    display: none;
+  }
+  .delve-card .slider-container .slider::-moz-range-thumb {
+    display: none;
+  }
+}
+
+.MuiFormControl-root {
+  flex-direction: inherit !important;
+  width: 100%;
+}
+
+.MuiAutocomplete-input {
+  padding: 0 !important;
+}
+
+.MuiAutocomplete-inputRoot .MuiAutocomplete-input {
+  width: 100% !important;
+  min-width: 100%;
+}
+
+input.autocomplete-input {
+  margin-top: -0.2em !important;
+  padding: 0 !important;
+}
+
+.delve-card-back h3 {
+  position: relative;
+  top: 4em;
+}
+
+.delve-card-back .delve-card-back-line {
+  border-top: 2px solid black;
+}
+
+.delve-card-back .container {
+  position: relative;
+}
+
+.delve-card-back .delve-icon {
+  color: white;
+  transform: rotate(45deg);
+  left: 50%;
+  margin-left: -1.5em;
+  top: 12em;
+}
+
+.delve-card-back .hr {
+  height: 5px;
+  border-top: 2px solid black;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 11em;
+}
+
+.delve-card .slider-container {
+  width: 88%;
+  position: absolute;
+  bottom: 1em;
+}
+
+.delve-card .slider-container ul.slider-ticks li:not(:last-child):before {
+  content: "";
+  border: 0 !important;
+  clear: both;
+}
+
+.delve-card .slider-container ul.slider-ticks li:not(:last-child):after {
+  content: "";
+  border: 0 !important;
+  clear: both;
+}
+
+.delve-card .slider-container ul.slider-ticks li {
+  margin-top: 0.1em;
+  line-height: 2.1em;
+}
+
+.delve-card .slider-container ul.slider-ticks li.slider-tick-label {
+  margin-top: 0.1em;
+  height: 2.5em !important;
+  line-height: 2.5em !important;
+}
+
+.delve-card .slider-container ul.slider-ticks li.slider-tick-label span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1em !important;
+}
+
+.delve-card .form-control:disabled,
+.delve-card .form-control[readonly] {
+  background-color: white;
+  opacity: 1;
+}
+
+#assetBuilderControls {
+  min-height: 2.8em;
 }

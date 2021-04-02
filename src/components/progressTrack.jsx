@@ -20,7 +20,7 @@ class ProgressTrack extends Component {
               <IronswornCheck count={c} />
             </li>
           ))}
-          {this.props.hideButtons ? (
+          {this.props.hideButtons || this.props.complete ? (
             <React.Fragment></React.Fragment>
           ) : (
             <React.Fragment>
@@ -33,10 +33,7 @@ class ProgressTrack extends Component {
                 </button>
               </li>
               <li>
-                <button
-                  className="btn btn-dark progressTrackBtn"
-                  onClick={() => this.props.onProgressionChange(true)}
-                >
+                <button className="btn btn-dark progressTrackBtn" onClick={() => this.props.onProgressionChange(true)}>
                   <i className="fa fa-plus" aria-hidden="true"></i>
                 </button>
               </li>

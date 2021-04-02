@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AssetCard from "./assetCard";
+import DangerButton from "./dangerButton";
 import TitleBlock from "./titleBlock";
 import UniqueKeyGenerator from "./uniqueKeyGenerator";
 import UnselectedPlayer from "./unselected_player";
@@ -165,7 +166,7 @@ class Assets extends Component {
               <select
                 className="form-control"
                 onChange={(e) => this.handleOnSelectedRemovalAssetChange(e)}
-                value={this.state.selectedAssetId}
+                value={this.state.selectedRemovalAssetId}
               >
                 <option value="">Select Asset</option>
                 {this.props.assets.map((a) => {
@@ -185,9 +186,13 @@ class Assets extends Component {
                 })}
               </select>
             </div>
-            <button className="btn btn-sm btn-danger" onClick={this.handleRemoveAssetClick}>
-              <i className="fa fa-minus" aria-hidden="true"></i> Remove Asset
-            </button>
+            <DangerButton
+              buttonText="Remove Asset"
+              additionalButtonClasses="btn-sm"
+              iconClass="fas fa-minus"
+              onDangerClick={this.handleRemoveAssetClick}
+              deleteMessage="Are you sure you want to remove this asset from your character?"
+            />
           </div>
         </div>
         <TitleBlock title="Owned Assets" />

@@ -6,6 +6,8 @@ import ProgressTrack from "./progressTrack";
 import TitleBlock from "./titleBlock";
 import mapImg from "../img/map.jpg";
 import mapMarker from "../img/MapMarker.png";
+import DangerButton from "./dangerButton";
+import RollIcon from "./rollIcon";
 
 class Locations extends Component {
   state = {
@@ -23,9 +25,9 @@ class Locations extends Component {
     markers: [],
   };
 
-  constructor() {
+  constructor(props) {
     super();
-    this.oracles = new Oracles();
+    this.oracles = props.oracles;
     // const L = Leaflet;
     // let map = this.createMap(L);
   }
@@ -140,6 +142,12 @@ class Locations extends Component {
           return p;
         });
         this.setState({ players });
+        this.props.addLog(
+          "event",
+          `The bond between ${this.props.selectedPlayer.name} and the ${l.name} settlement ${
+            increment ? "increases" : "diminishes"
+          }`
+        );
       }
       return l;
     });
@@ -151,7 +159,7 @@ class Locations extends Component {
   /*=================================*/
 
   onMapClick = (ev) => {
-    this.clearState();
+    if (this.state.id != -1) this.clearState();
     let x = Math.round(ev.latlng.lng);
     let y = Math.round(ev.latlng.lat);
     this.setXY(x, y);
@@ -199,6 +207,7 @@ class Locations extends Component {
         additionalInfo: this.state.additionalInfo,
         bond: 0,
       };
+      this.props.addLog("event", `${this.props.selectedPlayer.name} discovered the ${this.state.name} settlement`);
       this.setState({ locations: locations });
     }
 
@@ -330,7 +339,7 @@ class Locations extends Component {
                   title="Roll on the oracle"
                   onClick={() => this.handleOnRollName()}
                 >
-                  <i className="fas fa-dice-d20"></i> Name
+                  <RollIcon /> Name
                 </button>
               </div>
               <input
@@ -366,7 +375,7 @@ class Locations extends Component {
                   title="Roll on the oracle"
                   onClick={() => this.handleOnRollDescriptor()}
                 >
-                  <i className="fas fa-dice-d20"></i> Descriptor
+                  <RollIcon /> Descriptor
                 </button>
               </div>
               <input
@@ -388,7 +397,7 @@ class Locations extends Component {
                   title="Roll on the oracle"
                   onClick={() => this.handleOnRollFeature()}
                 >
-                  <i className="fas fa-dice-d20"></i> Mainland
+                  <RollIcon /> Mainland
                 </button>
               </div>
               <div className="input-group-prepend">
@@ -398,7 +407,7 @@ class Locations extends Component {
                   title="Roll on the oracle"
                   onClick={() => this.handleOnRollCoastalFeature()}
                 >
-                  <i className="fas fa-dice-d20"></i> Coastal
+                  <RollIcon /> Coastal
                 </button>
               </div>
 
@@ -421,7 +430,7 @@ class Locations extends Component {
                   title="Roll on the oracle"
                   onClick={() => this.handleOnRollLocationTrouble()}
                 >
-                  <i className="fas fa-dice-d20"></i> Trouble
+                  <RollIcon /> Trouble
                 </button>
               </div>
               <input
@@ -481,11 +490,18 @@ class Locations extends Component {
             <div
               id="locationDeleteBtn"
               className={`mt-5 ${this.state.deleteButtonClass}`}
-              onClick={() => this.handleOnDeleteLocation()}
+              // onClick={() => this.handleOnDeleteLocation()}
             >
-              <button className="btn btn-danger">
+              <DangerButton
+                buttonText="Delete Location"
+                additionalButtonClasses=""
+                iconClass="fas fa-times"
+                onDangerClick={this.handleOnDeleteLocation}
+                deleteMessage="Are you sure you want to delete this location?"
+              />
+              {/* <button className="btn btn-danger">
                 <i className="fas fa-times"></i> Delete Location
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

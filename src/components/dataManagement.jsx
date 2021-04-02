@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import DangerButton from "./dangerButton";
 import TitleBlock from "./titleBlock";
 class DataManager extends Component {
   state = {};
@@ -10,9 +11,12 @@ class DataManager extends Component {
         <div className="alert alert-secondary">
           Use the reset button to reset the local gamestate to default settings
         </div>
-        <button className="btn btn-danger" onClick={() => this.props.onResetClick()}>
-          <i className="fas fa-refresh"></i>&nbsp;Reset
-        </button>
+        <DangerButton
+          buttonText="Reset"
+          iconClass="fas fa-refresh"
+          onDangerClick={this.props.onResetClick}
+          deleteMessage="Are you sure you want to reset the gamestate?"
+        />
         <TitleBlock title="Load" />
         <div className="alert alert-secondary">Load a game state from a JSON file stored on your computer</div>
         <label for="file-upload" className="custom-file-upload btn btn-dark">
@@ -29,10 +33,12 @@ class DataManager extends Component {
           <i className="fas fa-download"></i>&nbsp;Save
         </button>
 
-        <TitleBlock title="Update Core Assets" />
-        <div className="alert alert-secondary">Update core assets from RSEK's Datasworn</div>
-        <button className="btn btn-dark" onClick={() => this.props.onUpdateAssetClick()}>
-          <i className="fas fa-refresh"></i>&nbsp;Update Core Assets
+        <TitleBlock title="Update RSEK's Datasworn" />
+        <div className="alert alert-secondary">
+          Update RSEK's Datasworn - Updates Core Assets and Foes as well as Delve core tables
+        </div>
+        <button className="btn btn-dark" onClick={() => this.props.onUpdateDataswornClick()}>
+          <i className="fas fa-refresh"></i>&nbsp;Update Datasworn
         </button>
       </React.Fragment>
     );

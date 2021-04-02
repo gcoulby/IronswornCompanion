@@ -12,8 +12,8 @@ class IconPicker extends Component {
       <React.Fragment>
         {this.props.show ? (
           <React.Fragment>
-            <div id="iconPicker">
-              <div className="overlay"></div>
+            <div id="iconPicker" className="popup" data-width="800" data-height="600">
+              <div className="overlay" onClick={() => this.props.onClose(false)}></div>
               <div className="card">
                 <div className="card-header bg-dark text-light modesto">
                   <div className="row">
