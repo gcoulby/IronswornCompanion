@@ -402,13 +402,17 @@ class Delve extends Component {
 
   handleOpportunity = (evt) => {
     if (evt.target.value == -1) return;
-    this.findAnOpportunity(evt.target.value);
-    console.log(this.getSelectedDelve());
-    if (evt.target.value.includes("denizen")) {
-      // const delves = this.props.delves;
-      // delves[this.props.selectedDelveId].denizen = this.getDenizen();
-      // this.setState({ delves });
-    }
+    // this.findAnOpportunity(evt.target.value);
+    // console.log(this.getSelectedDelve());
+    // if (evt.target.value.includes("denizen")) {
+    //   // const delves = this.props.delves;
+    //   // delves[this.props.selectedDelveId].denizen = this.getDenizen();
+    //   // this.setState({ delves });
+    // }
+
+    const delves = this.props.delves;
+    delves[this.props.selectedDelveId].opportunity = evt.target.value;
+    this.setState({ delves });
   };
 
   denizenReplace(str, denizen) {
@@ -999,15 +1003,12 @@ class Delve extends Component {
                               <React.Fragment>
                                 <select
                                   className="form-control"
-                                  // value={this.props.newDelve.domain}
+                                  value={this.getSelectedDelve().opportunity}
                                   onChange={(e) => this.handleOpportunity(e)}
                                 >
                                   <option value="-1">Select an Opportunity</option>
                                   {this.props.oracles.getOracleTableAsArray("Delve Opportunity").map((d) => (
-                                    <option
-                                      key={`delve_opportunity_select_${this.denizenReplace(d)}`}
-                                      value={this.denizenReplace(d)}
-                                    >
+                                    <option key={`delve_opportunity_select_${this.denizenReplace(d)}`} value={d}>
                                       {this.denizenReplace(d)}
                                     </option>
                                   ))}

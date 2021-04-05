@@ -46,7 +46,7 @@ import Inventory from "./components/inventory";
 //TODO burn mom on delve - revert progress
 
 class App extends Component {
-  version = "0.63.5";
+  version = "0.64.1";
   state = {
     save: false,
     updateCore: false,
