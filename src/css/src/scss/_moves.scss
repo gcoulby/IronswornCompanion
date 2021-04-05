@@ -1,0 +1,20 @@
+.moves-list {
+  height: 350px;
+  overflow-y: scroll;
+  padding: 0 0 0 1.1em !important;
+  cursor: pointer;
+  table {
+    border-bottom: none;
+  }
+}
+
+.move-display {
+  height: 350px;
+  overflow-y: scroll;
+  font-family: sans-serif;
+}
+
+.table-hover tbody tr:hover {
+  color: #212529;
+  background-color: rgba(0, 0, 0, 0.2);
+}

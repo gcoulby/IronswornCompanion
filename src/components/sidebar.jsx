@@ -45,12 +45,6 @@ class Sidebar extends Component {
             icon: "fas fa-map-signs",
             active: false,
           },
-          {
-            url: "/enter-the-fray",
-            pageName: "Enter the Fray",
-            icon: "fas fa-fist-raised",
-            active: false,
-          },
           // {
           //   url: "/gallery",
           //   pageName: "Gallery",
@@ -99,17 +93,41 @@ class Sidebar extends Component {
             active: false,
           },
           {
+            url: "/inventory",
+            pageName: "Inventory",
+            icon: "game-icon game-icon-swap-bag",
+            active: false,
+          },
+          {
+            url: "/assets",
+            pageName: "Assets",
+            icon: "fas fa-toolbox",
+            active: false,
+          },
+        ],
+      },
+      {
+        title: "Combat",
+        pages: [
+          {
+            url: "/combat",
+            pageName: "Quick Combat",
+            icon: "game-icon game-icon-sword-wound",
+            active: false,
+          },
+          {
+            url: "/enter-the-fray",
+            pageName: "Enter the Fray",
+            icon: "fas fa-fist-raised",
+            active: false,
+          },
+          {
             url: "/delve",
             pageName: "Delve",
             icon: "fas fa-dungeon",
             active: false,
           },
-          // {
-          //   url: "/companions",
-          //   pageName: "Companions",
-          //   icon: "fab fa-sticker-mule",
-          //   active: false,
-          // },
+
           // {
           //   url: "/bonds",
           //   pageName: "Bonds",
@@ -122,16 +140,10 @@ class Sidebar extends Component {
           //   icon: "fas fa-crown",
           //   active: false,
           // },
-          {
-            url: "/assets",
-            pageName: "Assets",
-            icon: "fas fa-toolbox",
-            active: false,
-          },
         ],
       },
       {
-        title: "Tools and Information",
+        title: "Editors",
         pages: [
           {
             url: "/oracle-editor",
@@ -154,11 +166,23 @@ class Sidebar extends Component {
             active: false,
           },
           {
+            url: "/foe-editor",
+            // title: <h6 className="menu-title">Tools</h6>,
+            pageName: "Foe Editor",
+            icon: "game-icon game-icon-shield-bash",
+            active: false,
+          },
+          {
             url: "/denizen-config",
             pageName: "Denizen Config",
             icon: "game-icon game-icon-pokecog",
             active: false,
           },
+        ],
+      },
+      {
+        title: "Information",
+        pages: [
           {
             url: "/roll",
             pageName: "Roll",

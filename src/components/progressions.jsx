@@ -6,7 +6,7 @@ import UnselectedPlayer from "./unselected_player";
 class Progression extends Component {
   state = {
     title: this.props.title,
-    ranks: ["Troublesome", "Dangerous", "Formidable", "Extreme", "Epic"],
+    ranks: this.props.ranks,
     type: this.props.type,
     // newProgression: this.getProgressionByType(this.props.type),
   };

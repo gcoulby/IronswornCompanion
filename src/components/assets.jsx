@@ -113,6 +113,22 @@ class Assets extends Component {
     this.setState({ players });
   };
 
+  augment = (id) => {
+    const players = this.props.players.map((p) => {
+      if (!p.selected) return;
+
+      p.assets.map((a) => {
+        if (a.id === id) {
+          a.augment = !a.augment;
+        }
+        return a;
+      });
+
+      return p;
+    });
+    this.setState({ players });
+  };
+
   componentDidUpdate() {
     this.props.onComponentUpdate();
   }
@@ -196,6 +212,10 @@ class Assets extends Component {
           </div>
         </div>
         <TitleBlock title="Owned Assets" />
+        <div className="alert alert-secondary">
+          (Optional) Track augmentations on assets by clicking the icon on the asset card. Augmented assets will have a
+          gold icon.
+        </div>
         {this.props.selectedPlayer.assets.map((a) => (
           <React.Fragment>
             <AssetCard
@@ -206,6 +226,7 @@ class Assets extends Component {
                 value: a.TrackValue,
                 trackLabels: a.TrackLabels ? a.TrackLabels : [],
               }}
+              augment={this.augment}
               onTrackProgressChange={this.handleStatTrackChange}
               onInputFieldChange={this.handleInputFieldChange}
               onAbilityCheckChange={this.handleOnAbilityCheckChange}

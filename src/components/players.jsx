@@ -32,6 +32,9 @@ class Characters extends Component {
     player.role = this.props.newPlayer.Role;
     player.goal = this.props.newPlayer.Goal;
     player.descriptor = this.props.newPlayer.Descriptor;
+    player.failure = 0;
+    player.failureRoll = null;
+    player.inventory = [];
     player.stats = this.props.newPlayer.Stats;
     if (this.props.newPlayer.Name != "" && !players.find((p) => p.name == this.props.newPlayer.Name)) {
       players.push(player);

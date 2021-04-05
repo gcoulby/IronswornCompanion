@@ -1,9 +1,11 @@
 import { faGrinTongueSquint } from "@fortawesome/free-solid-svg-icons";
 import { Tab, Tabs } from "@material-ui/core";
 import React, { Component } from "react";
+import DangerButton from "./dangerButton";
 import DiceResult from "./diceResult";
 import DiceRoller from "./dice_roller";
 import EnterTheFray from "./enterTheFray";
+import FoeCard from "./foeCard";
 import Oracles from "./oracles";
 import ProgressTrack from "./progressTrack";
 import RollButton from "./rollButton";
@@ -78,13 +80,17 @@ class Delve extends Component {
 
   handleOnRollNewTheme = () => {
     const newDelve = this.props.newDelve;
-    newDelve.theme = this.oracles.DelveTheme;
+    let themes = this.props.delveCards.filter((d) => d.Type === "Theme");
+    let rn = this.diceRoller.roll([themes.length], false, false)[0].value;
+    newDelve.theme = themes[rn].Name;
     this.setState({ newDelve });
   };
 
   handleOnRollNewDomain = () => {
     const newDelve = this.props.newDelve;
-    newDelve.domain = this.oracles.DelveDomain;
+    let domains = this.props.delveCards.filter((d) => d.Type === "Domain");
+    let rn = this.diceRoller.roll([domains.length], false, false)[0].value;
+    newDelve.domain = domains[rn].Name;
     this.setState({ newDelve });
   };
 
@@ -106,6 +112,8 @@ class Delve extends Component {
         siteName: this.oracles.getDelveSiteName(this.props.newDelve.domain),
         complete: false,
         progressRoll: null,
+        activeFoes: [],
+        nextFoeId: 0,
       },
     };
     newDelve.theme = "";
@@ -115,6 +123,20 @@ class Delve extends Component {
     this.setState({ delves });
     this.setState({ newDelve });
     this.props.onDelveSelectChange(id);
+  };
+
+  handleDelveDelete = (id) => {
+    const delves = this.props.delves;
+    let pos = -1;
+    for (let i = 0; i < delves.length; i++) {
+      let d = delves[i];
+      console.log(d);
+      if (d.id == id) {
+        pos = i;
+      }
+    }
+    if (pos != -1) delves.splice(pos, 1);
+    this.setState({ delves });
   };
 
   clearDelve = () => {
@@ -195,7 +217,6 @@ class Delve extends Component {
     let rn = this.diceRoller.roll([100], true, false)[0].value;
     let themeText = selectedDelve.theme;
     let domainText = selectedDelve.domain;
-    console.log(rn);
     switch (rn) {
       case 99:
         themeText = this.oracles.DelveTheme;
@@ -211,8 +232,8 @@ class Delve extends Component {
         return;
     }
     delves[this.props.selectedDelveId].changeThemeOrDomain = changeThemeOrDomain;
-    let theme = this.props.delveThemes.find((t) => t.Name == themeText);
-    let domain = this.props.delveDomains.find((d) => d.Name == domainText);
+    let theme = this.props.delveCards.find((t) => t.Name == themeText);
+    let domain = this.props.delveCards.find((d) => d.Name == domainText);
 
     let features = [...theme.Features, ...domain.Features];
     let feature = features.filter((f) => f.Chance <= rn).slice(-1)[0]?.Description ?? features[0].Description;
@@ -236,19 +257,25 @@ class Delve extends Component {
     switch (step) {
       case 0:
         delves[this.props.selectedDelveId].feature = "";
+        delves[this.props.selectedDelveId].denizen = null;
         break;
       case 1:
         delves[this.props.selectedDelveId].approachLevel = -1;
+        delves[this.props.selectedDelveId].denizen = null;
         break;
       case 2:
         delves[this.props.selectedDelveId].weakHitResult = -1;
         delves[this.props.selectedDelveId].actionRoll = null;
+        delves[this.props.selectedDelveId].denizen = null;
         break;
       case 3:
+        this.revealDenizen();
         break;
       case 4:
         break;
       case 5:
+        this.revealDenizen();
+        this.findAnOpportunity();
         break;
     }
     this.setState({ delves });
@@ -346,8 +373,8 @@ class Delve extends Component {
     let themeText = selectedDelve.theme;
     let domainText = selectedDelve.domain;
 
-    let theme = this.props.delveThemes.find((t) => t.Name == themeText);
-    let domain = this.props.delveDomains.find((d) => d.Name == domainText);
+    let theme = this.props.delveCards.find((t) => t.Name == themeText);
+    let domain = this.props.delveCards.find((d) => d.Name == domainText);
 
     let dangers = [...theme.Dangers, ...domain.Dangers, ...this.state.dangers];
     let danger = dangers.filter((d) => d.Chance <= rn).slice(-1)[0]?.Description ?? dangers[0].Description;
@@ -362,6 +389,129 @@ class Delve extends Component {
     delves[this.props.selectedDelveId].danger = danger;
 
     // this.changeDelveStep(1);
+    this.setState({ delves });
+  };
+
+  findAnOpportunity = (opportunity) => {
+    const delves = this.props.delves;
+    // let selectedDelve = this.getSelectedDelve();
+    let op = opportunity ? opportunity : this.oracles.DelveOpportunity;
+    delves[this.props.selectedDelveId].opportunity = op;
+    this.setState({ delves });
+  };
+
+  handleOpportunity = (evt) => {
+    if (evt.target.value == -1) return;
+    this.findAnOpportunity(evt.target.value);
+    console.log(this.getSelectedDelve());
+    if (evt.target.value.includes("denizen")) {
+      // const delves = this.props.delves;
+      // delves[this.props.selectedDelveId].denizen = this.getDenizen();
+      // this.setState({ delves });
+    }
+  };
+
+  denizenReplace(str, denizen) {
+    if (!denizen) denizen = this.getSelectedDelve().denizen.Name;
+    let den = denizen;
+    return str.replace("denizen", den).replace("Denizen", den);
+  }
+
+  revealDenizen = () => {
+    const delves = this.props.delves;
+    delves[this.props.selectedDelveId].denizen = this.getDenizen();
+    this.setState({ delves });
+  };
+
+  getDenizen = () => {
+    let rn = this.diceRoller.roll([this.props.foes.length], false, false)[0].value;
+    let denizen = this.props.foes[rn];
+
+    return denizen;
+  };
+
+  fightDenizen = () => {
+    let selectedDelve = this.getSelectedDelve();
+    let denizen = { ...selectedDelve.denizen };
+    denizen.id = selectedDelve.nextFoeId;
+    const delves = this.props.delves;
+    delves[this.props.selectedDelveId].nextFoeId = delves[this.props.selectedDelveId].nextFoeId + 1;
+    delves[this.props.selectedDelveId].activeFoes.push(denizen);
+    this.setState({ delves });
+  };
+
+  handleOnFoeProgressionChanged = (id, rank, increment) => {
+    const delves = this.props.delves;
+    delves[this.props.selectedDelveId].activeFoes.map((f) => {
+      if (f.id === id) {
+        let val = 0;
+        switch (rank) {
+          case "Troublesome":
+            val = increment ? 12 : -12;
+            break;
+          case "Dangerous":
+            val = increment ? 8 : -8;
+            break;
+          case "Formidable":
+            val = increment ? 4 : -4;
+            break;
+          case "Extreme":
+            val = increment ? 2 : -2;
+            break;
+          case "Epic":
+            val = increment ? 1 : -1;
+            break;
+        }
+        f.progress += val;
+        f.progress = f.progress > 40 ? 40 : f.progress;
+        f.progress = f.progress < 0 ? 0 : f.progress;
+      }
+      return f;
+    });
+    this.setState({ delves });
+  };
+
+  handleOnFoeRankChanged = (evt, id) => {
+    const delves = this.props.delves;
+    delves[this.props.selectedDelveId].activeFoes.map((f) => {
+      if (f.id === id) {
+        f.Rank = evt.target.value;
+      }
+      return f;
+    });
+
+    this.setState({ delves });
+  };
+
+  handleOnFoeProgressRollClicked = (id) => {
+    const delves = this.props.delves;
+    delves[this.props.selectedDelveId].activeFoes.map((f) => {
+      if (f.id === id) {
+        f.progressRoll = this.diceRoller.progressionRoll(Math.floor(f.progress / 4));
+        if (f.progressRoll.HitType.includes("Hit")) {
+          f.complete = true;
+          // this.logProgressionComplete();
+        }
+        console.log(f.progressRoll);
+      }
+      return f;
+    });
+
+    this.setState({ delves });
+  };
+
+  handleFoeDelete = (id) => {
+    const delves = this.props.delves;
+
+    let pos = -1;
+    for (let i = 0; i < delves[this.props.selectedDelveId].activeFoes.length; i++) {
+      let foe = delves[this.props.selectedDelveId].activeFoes[i];
+      if (foe.id === id) {
+        pos = i;
+      }
+    }
+    if (pos != -1) delves[this.props.selectedDelveId].activeFoes.splice(pos, 1);
+
     this.setState({ delves });
   };
 
@@ -390,7 +540,7 @@ class Delve extends Component {
                 title=""
                 onClick={() => this.props.onDelveSelected(-1)}
               >
-                <i class="game-icon game-icon-exit-door"></i> Exit Site
+                <i className="game-icon game-icon-exit-door"></i> Exit Site
               </button>
             ) : (
               React.Fragment
@@ -420,11 +570,13 @@ class Delve extends Component {
                     onChange={(e) => this.handleNewThemeDomainSelectChanged(e, "theme")}
                   >
                     <option value="-1">Select Theme</option>
-                    {this.oracles.getOracleTableAsArray("Delve Theme").map((r) => (
-                      <option key={r} value={r}>
-                        {r}
-                      </option>
-                    ))}
+                    {this.props.delveCards
+                      .filter((f) => f.Type === "Theme")
+                      .map((d) => (
+                        <option key={`delve_theme_select_${d.Name}`} value={d.Name}>
+                          {d.Name}
+                        </option>
+                      ))}
                   </select>
                 </div>
               </div>
@@ -446,11 +598,13 @@ class Delve extends Component {
                     onChange={(e) => this.handleNewThemeDomainSelectChanged(e, "domain")}
                   >
                     <option value="-1">Select Domain</option>
-                    {this.oracles.getOracleTableAsArray("Delve Domain").map((r) => (
-                      <option key={r} value={r}>
-                        {r}
-                      </option>
-                    ))}
+                    {this.props.delveCards
+                      .filter((f) => f.Type === "Domain")
+                      .map((d) => (
+                        <option key={`delve_theme_select_${d.Name}`} value={d.Name}>
+                          {d.Name}
+                        </option>
+                      ))}
                   </select>
                 </div>
               </div>
@@ -464,7 +618,7 @@ class Delve extends Component {
                     onChange={(e) => this.handleOnNewProgressionRankChanged(e)}
                     // value={this.getProgressionByType().rank}
                   >
-                    {this.oracles.getOracleTableAsArray("Challenge Rank").map((r, i) => (
+                    {this.props.ranks.map((r, i) => (
                       <option key={r} value={i}>
                         {r}
                       </option>
@@ -486,7 +640,7 @@ class Delve extends Component {
                       title="Roll on the oracle"
                       onClick={() => this.handleOnDiscoverSite()}
                     >
-                      <i class="fas fa-dungeon"></i> Discover a Site
+                      <i className="fas fa-dungeon"></i> Discover a Site
                     </button>
                   </React.Fragment>
                 )}
@@ -518,12 +672,22 @@ class Delve extends Component {
                   </div>
                   <div className="col-6">
                     {this.props.delveSelectorId != -1 ? (
-                      <button
-                        className="btn btn-dark"
-                        onClick={() => this.props.onDelveSelected(this.props.delveSelectorId)}
-                      >
-                        <i class="game-icon game-icon-dungeon-gate"></i>&nbsp; Enter the Site
-                      </button>
+                      <React.Fragment>
+                        <button
+                          className="btn btn-dark"
+                          onClick={() => this.props.onDelveSelected(this.props.delveSelectorId)}
+                        >
+                          <i className="game-icon game-icon-dungeon-gate"></i>&nbsp; Enter the Site
+                        </button>
+                        <DangerButton
+                          buttonText="Delete Site"
+                          additionalButtonClasses="ml-2"
+                          iconClass="fas fa-times"
+                          onDangerClick={this.handleDelveDelete}
+                          deleteId={this.props.delveSelectorId}
+                          deleteMessage="Are you sure you want to delete this delve?"
+                        />
+                      </React.Fragment>
                     ) : (
                       React.Fragment
                     )}
@@ -547,6 +711,7 @@ class Delve extends Component {
                   {this.getSelectedDelve().theme} {this.getSelectedDelve().domain}"
                 </h3>
                 <TitleBlock title="PROGRESS" /> */}
+
                 <ProgressTrack
                   progress={this.getSelectedDelve().progress}
                   hideButtons={this.getSelectedDelve().complete}
@@ -565,7 +730,7 @@ class Delve extends Component {
                   title="Reverse a step to make a change"
                   onClick={() => this.handleOnReverseDelveStep()}
                 >
-                  <i class="fa fa-chevron-left" aria-hidden="true"></i> Back Step
+                  <i className="fa fa-chevron-left" aria-hidden="true"></i> Back Step
                 </button>
               </div>
               <div className="col-6">
@@ -591,7 +756,7 @@ class Delve extends Component {
                       this.getSelectedDelve().step == 0 ? "light" : "dark"
                     } modesto`}
                   >
-                    <i class="fa fa-eye"></i>&nbsp;Envision your surroundings
+                    <i className="fa fa-eye"></i>&nbsp;Envision your surroundings
                   </div>
                   <div className="card-body py-5">
                     <button
@@ -601,7 +766,7 @@ class Delve extends Component {
                       title="Delve deeper into the depths"
                       onClick={() => this.handleOnEnvisionSurroundings()}
                     >
-                      <i class="fa fa-eye" aria-hidden="true"></i> Reveal
+                      <i className="fa fa-eye" aria-hidden="true"></i> Reveal
                     </button>
                     <h6 className="my-2">
                       {this.getSelectedDelve().feature ? (
@@ -632,7 +797,7 @@ class Delve extends Component {
                       this.getSelectedDelve().step == 1 ? "light" : "dark"
                     } modesto`}
                   >
-                    <i class="game-icon game-icon-walk"></i>&nbsp;Consider your approach
+                    <i className="game-icon game-icon-walk"></i>&nbsp;Consider your approach
                   </div>
                   <div className="card-body py-5">
                     <button
@@ -642,7 +807,7 @@ class Delve extends Component {
                       title="Delve deeper into the depths"
                       onClick={() => this.handleOnApproachLevelChange("Edge")}
                     >
-                      <i class="game-icon game-icon-running-ninja" aria-hidden="true"></i> HASTE
+                      <i className="game-icon game-icon-running-ninja" aria-hidden="true"></i> HASTE
                     </button>
 
                     <button
@@ -654,7 +819,7 @@ class Delve extends Component {
                       title="Delve deeper into the depths"
                       onClick={() => this.handleOnApproachLevelChange("Shadow")}
                     >
-                      <i class="game-icon game-icon-hood" aria-hidden="true"></i>STEALTH
+                      <i className="game-icon game-icon-hood" aria-hidden="true"></i>STEALTH
                     </button>
 
                     <button
@@ -664,7 +829,7 @@ class Delve extends Component {
                       title="Delve deeper into the depths"
                       onClick={() => this.handleOnApproachLevelChange("Wits")}
                     >
-                      <i class="fa fa-eye" aria-hidden="true"></i> OBSERVATION
+                      <i className="fa fa-eye" aria-hidden="true"></i> OBSERVATION
                     </button>
                     {this.getSelectedDelve().approachLevel != -1 ? (
                       <React.Fragment>
@@ -692,7 +857,7 @@ class Delve extends Component {
                       this.getSelectedDelve().step == 2 ? "light" : "dark"
                     } modesto`}
                   >
-                    <i class="game-icon game-icon-swords-emblem"></i>&nbsp;Action
+                    <i className="game-icon game-icon-swords-emblem"></i>&nbsp;Action
                   </div>
                   <div className="card-body py-5">
                     <RollButton
@@ -727,7 +892,7 @@ class Delve extends Component {
                       this.getSelectedDelve().step == 3 ? "light" : "dark"
                     } modesto`}
                   >
-                    <i class="game-icon game-icon-wolf-trap"></i>&nbsp;Reveal a Danger
+                    <i className="game-icon game-icon-wolf-trap"></i>&nbsp;Reveal a Danger
                   </div>
                   <div className="card-body py-5">
                     <button
@@ -737,9 +902,42 @@ class Delve extends Component {
                       title="Delve deeper into the depths"
                       onClick={() => this.handleOnRevealDanger()}
                     >
-                      <i class="fa fa-eye" aria-hidden="true"></i> Reveal
+                      <i className="fa fa-eye" aria-hidden="true"></i> Reveal
                     </button>
-                    <h6 className="my-2">{this.getSelectedDelve().danger}</h6>
+                    {this.getSelectedDelve().step === 3 && this.getSelectedDelve().denizen ? (
+                      <React.Fragment>
+                        <h6 className="my-2">{this.denizenReplace(this.getSelectedDelve().danger)}</h6>
+
+                        {this.getSelectedDelve().danger &&
+                        this.getSelectedDelve().danger.toLowerCase().includes("denizen") ? (
+                          <React.Fragment>
+                            <button
+                              className={`btn btn-dark mt-4`}
+                              type="button"
+                              disabled={this.getSelectedDelve().step != 3}
+                              onClick={() => this.fightDenizen()}
+                            >
+                              <i className="game-icon game-icon-sword-clash"></i> Fight{" "}
+                              {this.getSelectedDelve().denizen.Name}
+                            </button>
+                          </React.Fragment>
+                        ) : (
+                          <React.Fragment></React.Fragment>
+                        )}
+
+                        <button
+                          className={`btn btn-dark mt-4 ml-2`}
+                          type="button"
+                          disabled={this.getSelectedDelve().step != 3 || this.getSelectedDelve().complete}
+                          title="Reverse a step to make a change"
+                          onClick={() => this.changeDelveStep(0)}
+                        >
+                          <i className="game-icon game-icon-doorway" aria-hidden="true"></i> Delve Deeper
+                        </button>
+                      </React.Fragment>
+                    ) : (
+                      React.Fragment
+                    )}
                   </div>
                 </div>
               </div>
@@ -750,7 +948,7 @@ class Delve extends Component {
                       this.getSelectedDelve().step == 5 ? "light" : "dark"
                     } modesto`}
                   >
-                    <i class="game-icon game-icon-gold-bar"></i>&nbsp;Find an Opportunity
+                    <i className="game-icon game-icon-gold-bar"></i>&nbsp;Find an Opportunity
                   </div>
                   <div className="card-body">
                     {this.getSelectedDelve().step === 4 ? (
@@ -765,7 +963,7 @@ class Delve extends Component {
                               title="Mark Progress"
                               onClick={() => this.handleOnOpportunityChoice()}
                             >
-                              <i class="game-icon game-icon-cross-mark"></i> Mark Progress
+                              <i className="game-icon game-icon-cross-mark"></i> Mark Progress
                             </button>
                           </div>
                           <div className="col-2">
@@ -781,13 +979,71 @@ class Delve extends Component {
                               title="Mark Progress"
                               onClick={() => this.handleOnOpportunityChoice(true)}
                             >
-                              <i class="game-icon game-icon-gold-bar"></i> Find an opportunity
+                              <i className="game-icon game-icon-gold-bar"></i> Find an opportunity
                             </button>
                           </div>
                         </div>
                       </React.Fragment>
                     ) : (
-                      <React.Fragment></React.Fragment>
+                      <React.Fragment>
+                        {this.getSelectedDelve().step === 5 ? (
+                          <React.Fragment>
+                            {this.getSelectedDelve().actionRoll &&
+                            this.getSelectedDelve().actionRoll.HitType.includes("Weak") ? (
+                              <React.Fragment>
+                                <h6 className="my-2 mt-5">
+                                  {this.denizenReplace(this.getSelectedDelve().opportunity)}
+                                </h6>
+                              </React.Fragment>
+                            ) : (
+                              <React.Fragment>
+                                <select
+                                  className="form-control"
+                                  // value={this.props.newDelve.domain}
+                                  onChange={(e) => this.handleOpportunity(e)}
+                                >
+                                  <option value="-1">Select an Opportunity</option>
+                                  {this.props.oracles.getOracleTableAsArray("Delve Opportunity").map((d) => (
+                                    <option
+                                      key={`delve_opportunity_select_${this.denizenReplace(d)}`}
+                                      value={this.denizenReplace(d)}
+                                    >
+                                      {this.denizenReplace(d)}
+                                    </option>
+                                  ))}
+                                </select>
+                              </React.Fragment>
+                            )}
+                            {this.getSelectedDelve().opportunity &&
+                            this.getSelectedDelve().opportunity.toLowerCase().includes("denizen") ? (
+                              <React.Fragment>
+                                <button
+                                  className={`btn btn-dark mt-4`}
+                                  type="button"
+                                  disabled={this.getSelectedDelve().step != 5}
+                                  onClick={() => this.fightDenizen()}
+                                >
+                                  <i className="game-icon game-icon-sword-clash"></i> Fight{" "}
+                                  {this.getSelectedDelve().denizen.Name}
+                                </button>
+                              </React.Fragment>
+                            ) : (
+                              <React.Fragment></React.Fragment>
+                            )}
+                            <button
+                              className={`btn btn-dark mt-4 ml-2`}
+                              type="button"
+                              disabled={this.getSelectedDelve().step != 5 || this.getSelectedDelve().complete}
+                              title="Reverse a step to make a change"
+                              onClick={() => this.changeDelveStep(0)}
+                            >
+                              <i className="game-icon game-icon-doorway" aria-hidden="true"></i> Delve Deeper
+                            </button>
+                          </React.Fragment>
+                        ) : (
+                          React.Fragment
+                        )}
+                      </React.Fragment>
                     )}
                   </div>
                 </div>
@@ -795,6 +1051,57 @@ class Delve extends Component {
             </div>
           </React.Fragment>
         )}
+        <TitleBlock title="Active Encounters" />
+        <div className="row">
+          <div className="col">
+            {this.props.selectedDelveId !== -1 ? (
+              <React.Fragment>
+                {this.getSelectedDelve()
+                  .activeFoes.filter((f) => !f.complete)
+                  .map((f) => (
+                    <React.Fragment>
+                      <FoeCard
+                        foe={f}
+                        ranks={this.props.ranks}
+                        onProgressionChange={this.handleOnFoeProgressionChanged}
+                        onRankChange={this.handleOnFoeRankChanged}
+                        onProgressRollClicked={this.handleOnFoeProgressRollClicked}
+                        onFoeDelete={this.handleFoeDelete}
+                      />
+                    </React.Fragment>
+                  ))}
+              </React.Fragment>
+            ) : (
+              React.Fragment
+            )}
+          </div>
+        </div>
+
+        <TitleBlock title="Defeated Denizens" />
+        <div className="row">
+          <div className="col">
+            {this.props.selectedDelveId !== -1 ? (
+              <React.Fragment>
+                {this.getSelectedDelve()
+                  .activeFoes.filter((f) => f.complete)
+                  .map((f) => (
+                    <React.Fragment>
+                      <FoeCard
+                        foe={f}
+                        ranks={this.props.ranks}
+                        onProgressionChange={this.handleOnFoeProgressionChanged}
+                        onRankChange={this.handleOnFoeRankChanged}
+                        onProgressRollClicked={this.handleOnFoeProgressRollClicked}
+                        onFoeDelete={this.handleFoeDelete}
+                      />
+                    </React.Fragment>
+                  ))}
+              </React.Fragment>
+            ) : (
+              React.Fragment
+            )}
+          </div>
+        </div>
         {/* <EnterTheFray
 
           //foes={this.getSelectedDelve().denizens}

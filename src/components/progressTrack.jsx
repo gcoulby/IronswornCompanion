@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 import IronswornCheck from "./ironswornCheck";
-import UniqueKeyGenerator from "./uniqueKeyGenerator";
 class ProgressTrack extends Component {
-  state = {};
+  state = {
+    trackLength: this.props.trackLength != undefined ? this.props.trackLength : 10,
+  };
   getChecks() {
-    let checks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    let checks = [];
+    for (let i = 0; i < this.state.trackLength; i++) {
+      checks.push(0);
+    }
+    // let checks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     for (let i = 0; i < this.props.progress; i++) {
       let idx = i == 0 ? 0 : Math.floor(i / 4);
       checks[idx] = (i % 4) + 1;
@@ -15,8 +20,9 @@ class ProgressTrack extends Component {
     return (
       <React.Fragment>
         <ul className="progressTrack mt-3 text-center">
-          {this.getChecks().map((c) => (
-            <li key={UniqueKeyGenerator.generate()}>
+          {this.props.title ? <span className="modesto mt-3">{this.props.title}</span> : React.Fragment}
+          {this.getChecks().map((c, i) => (
+            <li key={`progress_track_checks_${i}`}>
               <IronswornCheck count={c} />
             </li>
           ))}

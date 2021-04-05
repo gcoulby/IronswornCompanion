@@ -6,9 +6,11 @@ class RollButton extends Component {
   render() {
     return (
       <React.Fragment>
-        <div class="btn-group d-flex" data-toggle="buttons">
+        <div className="btn-group d-flex" data-toggle="buttons">
           <button
-            className={`btn btn-${this.props.disabled ? "outline-" : ""}dark`}
+            className={`btn btn-${this.props.disabled ? "outline-" : ""}dark ${
+              this.props.additionalClass ? this.props.additionalClass : ""
+            }`}
             type="button"
             disabled={this.props.disabled}
             title="Delve deeper into the depths"
@@ -22,10 +24,10 @@ class RollButton extends Component {
               burnMomentum={this.props.burnMomentum}
               postRollAction={this.props.postRollAction}
               selectedPlayer={this.props.selectedPlayer}
-              color="btn-outline-dark"
+              color={this.props.resultColor ? this.props.resultColor : "btn-outline-dark"}
             />
           ) : (
-            <div className="btn-tag btn btn-outline-dark">Result</div>
+            <div className={`btn ${this.props.resultColor ? this.props.resultColor : "btn-outline-dark"}`}>Result</div>
           )}
         </div>
       </React.Fragment>

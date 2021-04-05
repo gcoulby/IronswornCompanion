@@ -50,10 +50,10 @@ class DangerButton extends Component {
                     <div className="row">
                       <div className="col">
                         <button className="btn btn-dark mx-2" onClick={() => this.changeModalState(false)}>
-                          <i class="fa fa-times" aria-hidden="true"></i>&nbsp;No
+                          <i className="fa fa-times" aria-hidden="true"></i>&nbsp;No
                         </button>
                         <button className="btn btn-danger mx-2" onClick={() => this.handleDanger(this.props.deleteId)}>
-                          <i class="fa fa-check" aria-hidden="true"></i>&nbsp;Yes
+                          <i className="fa fa-check" aria-hidden="true"></i>&nbsp;Yes
                         </button>
                       </div>
                     </div>

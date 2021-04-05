@@ -50,7 +50,6 @@ class OracleEditor extends Component {
   handleSelectedOracleTableChange = (evt) => {
     const oracles = this.props.oracles;
     oracles.selectedOracleTable = evt.target.value;
-    console.log(evt.target.value);
     oracles.selectedOracleTheme = this.props.oracles.tables.find((t) => t.title == evt.target.value)?.theme;
     this.setState({ oracles });
   };
@@ -79,7 +78,12 @@ class OracleEditor extends Component {
 
   handleOracleTablePromptsRowInput = (evt, idx) => {
     const oracles = this.props.oracles;
-    oracles.prompts[idx] = evt.target.value;
+    oracles.tables.map((t) => {
+      if (t.title === oracles.selectedOracleTable) {
+        t.prompts[idx] = evt.target.value;
+      }
+      return t;
+    });
     this.setState({ oracles });
   };
 
@@ -145,7 +149,6 @@ class OracleEditor extends Component {
   }
   render() {
     let table = this.props.oracles.getOracleTableAsArray(this.props.oracles.selectedOracleTable);
-    console.log(this.props.oracles.selectedOracleTheme);
     return (
       <React.Fragment>
         <h1>Oracle Editor</h1>

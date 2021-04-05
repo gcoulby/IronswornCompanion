@@ -127,7 +127,6 @@ class AssetBuilder extends Component {
   //   let out = "";
   //   this.props.selectedAsset.TrackLabels.map((l) => (out += l + "\n"));
 
-  //   // console.log(out);
   //   out.replace(/^\s+|\s+$/g, "");
   //   return out;
   // }
@@ -183,6 +182,7 @@ class AssetBuilder extends Component {
     let asset = { ...this.props.selectedAsset };
     asset.id = this.getUserAssetId(asset.Name);
     asset.core = false;
+    asset.augmented = false;
     assets.push(asset);
     this.setState({ assets });
     this.props.onSelectedAssetChange(asset.id);
@@ -234,7 +234,6 @@ class AssetBuilder extends Component {
   componentDidUpdate() {
     // // if (prevState.selectedAsset?.icon !== this.state.selectedAsset?.icon) {
     // //TODO: FIX THE ICON BOX!
-    // console.log("GGGG");
     // let cb = document.getElementById("combo-box-demo");
     // cb.focus();
 
@@ -267,6 +266,7 @@ class AssetBuilder extends Component {
             onTrackProgressChange={() => {}}
             onInputFieldChange={() => {}}
             onAbilityCheckChange={() => {}}
+            augment={() => {}}
             hideThumb={true}
             disabled={true}
             stat={{
@@ -795,6 +795,7 @@ class AssetBuilder extends Component {
                     asset={a}
                     hideThumb={true}
                     disabled={true}
+                    augment={() => {}}
                     stat={{
                       stat: a.id,
                       hideLabel: true,

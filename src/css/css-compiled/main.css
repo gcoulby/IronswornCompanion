@@ -17216,6 +17216,7 @@ label::before {
   width: 4em;
   height: 4em;
   position: absolute;
+  cursor: pointer;
 }
 
 .asset-card .asset-icon i {
@@ -17902,7 +17903,7 @@ input.disabled:focus {
 .denizenTable th {
   background: white;
   position: sticky;
-  top: 0em;
+  top: -0.1em;
   height: 100px;
   padding: 6px 0;
   vertical-align: bottom;
@@ -18275,14 +18276,14 @@ input.disabled:focus {
     position: relative;
     top: 3.5cm;
     left: 3cm;
-    margin-bottom: 4cm;
+    margin-bottom: 6cm;
   }
   .delve-card-3 {
     page-break-after: always;
     position: relative;
     top: 3.5cm;
     left: 3.5cm;
-    margin-bottom: 6cm;
+    margin-bottom: 6.075cm;
   }
   .delve-card .slider-container .slider {
     box-shadow: none;
@@ -18386,4 +18387,412 @@ input.autocomplete-input {
 
 #assetBuilderControls {
   min-height: 2.8em;
+}
+
+.foe-card {
+  font-size: 9.6pt;
+  position: relative;
+  width: 13.02cm;
+  height: 19.6cm;
+  float: left;
+}
+
+.foe-card table td {
+  padding: 0.6em 0;
+}
+
+.foe-card .controls {
+  position: absolute;
+  bottom: 1.4em;
+  width: calc(100% - 2.5rem);
+}
+
+.foe-card table th {
+  padding: 0.6em 0 0.6em 1em;
+}
+
+.foe-card table {
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  position: absolute;
+  bottom: 4.5em;
+  width: calc(100% - 2.5rem);
+  min-height: 22em;
+}
+
+.foe-card table ul {
+  margin-bottom: 0;
+}
+
+.foe-card .input-field {
+  padding: 0 1em;
+}
+
+.foe-card .input-field .hr {
+  border-bottom: 2px solid black;
+  margin-bottom: 1em;
+  display: block;
+  width: 100%;
+  z-index: 5;
+}
+
+.foe-card .input-field ul {
+  padding-left: 1.2em;
+}
+
+.foe-card .input-field label {
+  line-height: 0;
+  margin-bottom: 0;
+  margin-top: 1.5em;
+}
+
+.foe-card .input-field .form-control-sm {
+  z-index: 1;
+  top: 0em;
+  line-height: 0;
+  height: 1.4em;
+  font-family: "Sue Ellen Francisco" !important;
+  text-transform: uppercase;
+  font-size: 20px;
+  padding: 0.2em 0 0 0.2em;
+  border: none;
+}
+
+.foe-card .card-header {
+  padding: 0.5em 2em;
+}
+
+.foe-card h6 {
+  margin: 0;
+  font-size: 12pt;
+  text-transform: uppercase;
+}
+
+.foe-card .foe-icon {
+  border-radius: 50%;
+  top: 1em;
+  right: 1em;
+  border: 4px solid white;
+  background: #343a40;
+  width: 4em;
+  height: 4em;
+  position: absolute;
+}
+
+.foe-card .foe-icon i {
+  position: absolute;
+  left: 0.15em;
+  font-size: 32px;
+}
+
+.foe-card input[type="checkbox"] {
+  position: initial;
+  opacity: 1 !important;
+}
+
+.foe-card input[type="checkbox"]:checked + label:before {
+  background: #fff;
+  color: #333;
+  content: "\2713";
+  text-align: center;
+}
+
+.foe-card label {
+  padding: 0;
+}
+
+.foe-card .control {
+  font-family: arial;
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.foe-card .control input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.foe-card .control_indicator {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  height: 0.3cm;
+  width: 0.3cm;
+  background: #ffffff;
+  border: 1px solid #444444;
+  border-radius: 20px;
+}
+
+.foe-card .control:hover input ~ .control_indicator,
+.foe-card .control input:focus ~ .control_indicator {
+  background: white;
+}
+
+.foe-card .control input:checked ~ .control_indicator {
+  background: #424242;
+}
+
+.foe-card .control:hover input:not([disabled]):checked ~ .control_indicator,
+.foe-card .control input:checked:focus ~ .control_indicator {
+  background: #343a40;
+}
+
+.foe-card .control input:disabled ~ .control_indicator {
+  background: #ffffff;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.foe-card .control_indicator:after {
+  box-sizing: unset;
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.foe-card .control input:checked ~ .control_indicator:after {
+  display: block;
+}
+
+.foe-card label.control.control-checkbox {
+  margin-left: 1em;
+  margin-right: 0.6em;
+}
+
+.foe-card .control-checkbox input:disabled ~ .control_indicator:after {
+  border-color: #7b7b7b;
+}
+
+.foe-card .control-checkbox .control_indicator::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1rem;
+  height: 1rem;
+  margin-left: -0.25rem;
+  margin-top: -0.25rem;
+  background: #353535;
+  border-radius: 3rem;
+  opacity: 0.6;
+  z-index: 99999;
+  transform: scale(0);
+}
+
+@keyframes s-ripple {
+  0% {
+    transform: scale(0);
+  }
+  20% {
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+@keyframes s-ripple-dup {
+  0% {
+    transform: scale(0);
+  }
+  30% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+.foe-card .control-checkbox input + .control_indicator::before {
+  animation: s-ripple 250ms ease-out;
+}
+
+.foe-card .control-checkbox input:checked + .control_indicator::before {
+  animation-name: s-ripple-dup;
+}
+
+.print-show {
+  display: none !important;
+}
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+  }
+  .table-striped tbody tr:nth-of-type(odd) td {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+  }
+  .page-break {
+    display: block;
+    page-break-before: always;
+  }
+  .print-show {
+    display: block !important;
+  }
+  .print-hide {
+    display: none !important;
+  }
+  #page-container {
+    margin: 0;
+    padding: 0;
+  }
+  .foe-card-back {
+    display: block;
+  }
+  .foe-card-0 {
+    position: relative;
+    top: 1cm;
+    left: 0.5cm;
+  }
+  .foe-card-1 {
+    position: relative;
+    top: 1cm;
+    left: 0.5cm;
+  }
+  .foe-card-2 {
+    position: relative;
+    top: 0.5cm;
+    left: 0.5cm;
+    margin-bottom: 0.775cm;
+  }
+  .foe-card-3 {
+    page-break-after: always;
+    position: relative;
+    top: 0.5cm;
+    left: 0.5cm;
+    margin-bottom: 0.775cm;
+  }
+  .foe-card .slider-container .slider {
+    box-shadow: none;
+  }
+  .foe-card .slider-container .slider::-webkit-slider-thumb {
+    display: none;
+  }
+  .foe-card .slider-container .slider::-moz-range-thumb {
+    display: none;
+  }
+}
+
+.MuiFormControl-root {
+  flex-direction: inherit !important;
+  width: 100%;
+}
+
+.MuiAutocomplete-input {
+  padding: 0 !important;
+}
+
+.MuiAutocomplete-inputRoot .MuiAutocomplete-input {
+  width: 100% !important;
+  min-width: 100%;
+}
+
+input.autocomplete-input {
+  margin-top: -0.2em !important;
+  padding: 0 !important;
+}
+
+.foe-card-back h3 {
+  position: relative;
+  top: 4em;
+}
+
+.foe-card-back .foe-card-back-line {
+  border-top: 2px solid black;
+}
+
+.foe-card-back .container {
+  position: relative;
+}
+
+.foe-card-back .foe-icon {
+  color: white;
+  transform: rotate(45deg);
+  left: 50%;
+  margin-left: -1.5em;
+  top: 12em;
+}
+
+.foe-card-back .hr {
+  height: 5px;
+  border-top: 2px solid black;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 11em;
+}
+
+.foe-card .slider-container {
+  width: 88%;
+  position: absolute;
+  bottom: 1em;
+}
+
+.foe-card .slider-container ul.slider-ticks li:not(:last-child):before {
+  content: "";
+  border: 0 !important;
+  clear: both;
+}
+
+.foe-card .slider-container ul.slider-ticks li:not(:last-child):after {
+  content: "";
+  border: 0 !important;
+  clear: both;
+}
+
+.foe-card .slider-container ul.slider-ticks li {
+  margin-top: 0.1em;
+  line-height: 2.1em;
+}
+
+.foe-card .slider-container ul.slider-ticks li.slider-tick-label {
+  margin-top: 0.1em;
+  height: 2.5em !important;
+  line-height: 2.5em !important;
+}
+
+.foe-card .slider-container ul.slider-ticks li.slider-tick-label span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1em !important;
+}
+
+.foe-card .form-control:disabled,
+.foe-card .form-control[readonly] {
+  background-color: white;
+  opacity: 1;
+}
+
+#assetBuilderControls {
+  min-height: 2.8em;
+}
+
+.moves-list {
+  height: 350px;
+  overflow-y: scroll;
+  padding: 0 0 0 1.1em !important;
+  cursor: pointer;
+}
+
+.moves-list table {
+  border-bottom: none;
+}
+
+.move-display {
+  height: 350px;
+  overflow-y: scroll;
+  font-family: sans-serif;
+}
+
+.table-hover tbody tr:hover {
+  color: #212529;
+  background-color: rgba(0, 0, 0, 0.2);
 }

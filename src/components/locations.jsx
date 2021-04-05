@@ -5,6 +5,7 @@ import Oracles from "./oracles";
 import ProgressTrack from "./progressTrack";
 import TitleBlock from "./titleBlock";
 import mapImg from "../img/map.jpg";
+import DeepWilds from "../img/DeepWilds.svg";
 import mapMarker from "../img/MapMarker.png";
 import DangerButton from "./dangerButton";
 import RollIcon from "./rollIcon";
@@ -385,7 +386,7 @@ class Locations extends Component {
                 aria-label="Name"
                 aria-describedby="basic-addon2"
                 value={this.state.descriptor}
-                onChange={(e) => this.handleOnRollDescriptor(e)}
+                onChange={(e) => this.handleOnDescriptorChanged(e)}
               />
             </div>
 

@@ -6,6 +6,8 @@ class DefaultDelveCard {
   front = true;
   icon = "perspective-dice-six-faces-random";
   Tags = [];
+  Features = [];
+  Dangers = [];
   Source = {
     Name: "User",
     Page: "n/a",

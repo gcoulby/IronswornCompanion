@@ -41,13 +41,17 @@ class AssetCard extends Component {
         <div className="card asset-card">
           <div className="card-header bg-dark text-light">
             <h6>{this.props.asset.Type}</h6>
-
-            <div className="asset-icon">
+            <div
+              className={`asset-icon ${this.props.asset.augment ? "text-warning" : ""}`}
+              onClick={() => this.props.augment(this.props.asset.id)}
+              title="Augment Asset"
+            >
               <i className={`game-icon game-icon-${this.props.asset.icon}`} aria-hidden="true"></i>
             </div>
           </div>
           <div className="card-body">
             <h4>{this.props.asset.Name}</h4>
+
             {this.props.asset.InputFields ? (
               <React.Fragment>
                 {this.props.asset.InputFields.filter((f) => f.name !== undefined && f.name !== "").map((f) => {

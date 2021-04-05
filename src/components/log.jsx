@@ -24,7 +24,6 @@ class Log extends Component {
   handleLogEntryChanged = (evt, id) => {
     const logs = this.props.logs.map((l) => {
       if (l.id == id) {
-        console.log(evt.target.value);
         l.text = evt.target.value;
       }
       return l;

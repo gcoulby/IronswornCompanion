@@ -2,13 +2,13 @@ import { result } from "lodash-es";
 
 class DiceRoller {
   /*
-    Pass in an array of dice by specifying
-    the number of sides in each array position
-    e.g. 2 x D4 and 1 x D20 = [4, 4, 20]
-    use plusOne = true if you want a die result
-    e.g. 1-6, use plusOne = false if you want
-    to roll on an array
-    */
+  Pass in an array of dice by specifying
+  the number of sides in each array position
+  e.g. 2 x D4 and 1 x D20 = [4, 4, 20]
+  use plusOne = true if you want a die result
+  e.g. 1-6, use plusOne = false if you want
+  to roll on an array
+  */
   roll(dice, plusOne = false, roundD100 = true) {
     let dice_results = new Array(dice.length);
     for (let i = 0; i < dice.length; i++) {
@@ -25,7 +25,7 @@ class DiceRoller {
     let actionRoll = 6;
     let dice = this.roll([actionRoll, 10, 10], true);
 
-    let ActionScore = parseInt(dice[0].value) + parseInt(stat) + addValue;
+    let ActionScore = parseInt(dice[0].value) + parseInt(stat) + parseInt(addValue);
     let HitType =
       ActionScore > dice[1].value && ActionScore > dice[2].value
         ? "Strong Hit"

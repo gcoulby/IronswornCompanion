@@ -79,18 +79,6 @@ h6 {
   color: white;
 }
 
-.oracleIcon {
-  // background-image: url("/src/img/Fate.svg");
-  // background-repeat: no-repeat;
-  // background-position: center;
-  // display: block;
-  // width: 10px !important;
-  // height: 20px;
-  // float: left;
-  // padding: 0.5em 0.5em 0.5em 1.5em;
-  // margin-top: -2px;
-}
-
 .oracleIcon::before {
   content: "p";
   font-family: "runic";

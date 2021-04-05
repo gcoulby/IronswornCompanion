@@ -12,7 +12,6 @@ class OracleRoller extends Component {
 
   handleOnRoll(tbl) {
     let rand = this.props.oracles.getRandomPromptFromOracleTable(tbl);
-    console.log(rand);
     this.setState({ outputValue: rand });
   }
   handleOnClick = (evt) => {
@@ -33,19 +32,19 @@ class OracleRoller extends Component {
     return (
       <React.Fragment>
         <button className="btn btn-outline-light" onClick={() => this.changeModalState(true)}>
-          <i class="game-icon game-icon-crystal-ball icon-md" aria-hidden="true"></i> Oracles
+          <i className="game-icon game-icon-crystal-ball icon-md" aria-hidden="true"></i> Oracles
         </button>
         {this.state.showOracles ? (
           <React.Fragment>
-            <div id="dangerConfirm" className="popup text-left" data-width="1000" data-height="600">
+            <div id="oracle" className="popup text-left" data-width="1000" data-height="600">
               <div className="overlay" onClick={() => this.changeModalState(false)}></div>
               <div className="card text-dark">
                 <div className="card-header bg-dark text-light modesto" style={{ height: 60 + "px" }}>
                   <div className="row">
                     <div className="col-8">
                       <h6>
-                        <i class="game-icon game-icon-crystal-ball icon-md" aria-hidden="true"></i> Oracles (Click the
-                        textbox at the bottom to copy)
+                        <i className="game-icon game-icon-crystal-ball icon-md" aria-hidden="true"></i> Oracles (Click
+                        the textbox at the bottom to copy)
                       </h6>
                     </div>
                     <div className="col text-right">

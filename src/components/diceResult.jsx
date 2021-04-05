@@ -12,7 +12,10 @@ class DiceResult extends Component {
     ) {
       if (this.props.selectedPlayer) {
         let momentum = this.props.selectedPlayer.stats.find((p) => p.stat == "Momentum").value;
-        if (momentum > this.props.diceResult.Challenge1Value || momentum > this.props.diceResult.Challenge2Value)
+        if (
+          momentum > this.props.selectedPlayer.resetMomentum &&
+          (momentum > this.props.diceResult.Challenge1Value || momentum > this.props.diceResult.Challenge2Value)
+        )
           return true;
       }
     }
@@ -20,6 +23,11 @@ class DiceResult extends Component {
 
   missedHitBurn = (mouseOver) => {
     this.setState({ resultText: mouseOver && this.canBurn() ? "Burn?" : this.props.diceResult.HitType });
+  };
+
+  getHitType = () => {
+    let suffix = this.props.diceResult.Challenge1Value === this.props.diceResult.Challenge2Value ? "!" : "";
+    return this.props.diceResult.HitType + suffix;
   };
 
   burnClick = () => {
@@ -44,7 +52,7 @@ class DiceResult extends Component {
     return (
       <React.Fragment>
         <div
-          className={`btn ${!this.canBurn() ? "btn-tag" : ""} ${this.props.color} tip`}
+          className={`btn ${!this.canBurn() ? "btn-tag" : ""} ${this.props.color} tip text-center`}
           onMouseOver={() => this.missedHitBurn(true)}
           onMouseLeave={() => this.missedHitBurn(false)}
           onClick={() => this.burnClick()}
@@ -55,9 +63,9 @@ class DiceResult extends Component {
             <React.Fragment>{this.props.diceResult.ResultText}</React.Fragment>
           )} */}
 
-          {this.state.resultText}
+          {this.canBurn() ? this.state.resultText : this.getHitType()}
           <div className="top">
-            <h3>{this.props.diceResult.HitType}</h3>
+            <h3>{this.getHitType()}</h3>
             <React.Fragment>
               <span>{this.props.diceResult.RollType} Score:</span>
               {this.props.diceResult.RollType === "Action" ? (

@@ -64,8 +64,8 @@ class Navbar extends Component {
               <ul key="playerName" className="navbar-nav mr-auto">
                 {this.props.selectedPlayer ? (
                   <React.Fragment>
-                    {this.props.selectedPlayer.stats.map((s) => (
-                      <li key={UniqueKeyGenerator.generate()} className="nav-item active">
+                    {this.props.selectedPlayer.stats.map((s, i) => (
+                      <li key={`quick_stat_${i}`} className="nav-item active">
                         <HashRouter basename="/">
                           <Link to="/stats" className="btn btn-outline-light">
                             <p className="stat-value">{s.value}</p>

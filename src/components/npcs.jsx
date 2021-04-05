@@ -34,7 +34,6 @@ class NPCs extends Component {
     npc.bond = 0;
     npc.locationId = this.props.newNPC.Location;
     if (this.props.newNPC.Name != "" && !npcs.find((n) => n.id == this.props.newNPC.id)) {
-      console.log("npc wipe");
       npcs.push(npc);
       newNPC.Race = "";
       newNPC.Name = "";

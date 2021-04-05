@@ -1,7 +1,26 @@
 import React, { Component } from "react";
 import ContentEditable from "react-contenteditable";
 class EditableTable extends Component {
-  state = {};
+  state = {
+    enterPressed: false,
+  };
+
+  handleRowKeyDown = (evt) => {
+    if (evt.key === "Enter") {
+      evt.preventDefault();
+      this.props.onRowAdd();
+      this.state.enterPressed = true;
+    }
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.enterPressed == true) {
+      let table = document.getElementById("oracleTable");
+      table.rows[table.rows.length - 1].firstChild.focus();
+      this.setState({ enterPressed: false });
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -11,15 +30,17 @@ class EditableTable extends Component {
           </button>
         </div>
         <div className="editableTable" style={{ maxHeight: 50 + "vh" }}>
-          <table className="table table-striped modesto">
+          <table id="oracleTable" className="table table-striped modesto">
             <tbody>
               {this.props.list.map((l, index) => (
                 <tr>
                   <ContentEditable
+                    // id={`oracle_table_edit_row_${index}`}
                     innerRef={this.contentEditable}
                     html={l}
                     disabled={false}
                     onChange={(e) => this.props.onRowChange(e, index)}
+                    onKeyPress={(e) => this.handleRowKeyDown(e)}
                     tagName="td"
                     width="90%"
                   />

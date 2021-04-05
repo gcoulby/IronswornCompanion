@@ -32,21 +32,21 @@ import DefaultDelveCard from "./models/defaultDelveCard";
 import Delve from "./components/delve";
 import { faMagic } from "@fortawesome/free-solid-svg-icons";
 import TitleBlock from "./components/titleBlock";
-import foeTags from "./models/foes";
+import Tags from "./models/tags";
 import _, { last } from "lodash";
 import DenizenConfig from "./components/denizenConfig";
 import DelveThemeDomainEditor from "./components/delveThemeEditor";
+import DefaultFoe from "./models/defaultFoe";
+import FoeEditor from "./components/foeEditor";
+import Inventory from "./components/inventory";
 
-//TODO Delve
+//TODO moves
+//TODO Region roll
 //TODO delve threats
 //TODO burn mom on delve - revert progress
-//TODO pay the price button
-//TODO dice roller progress roll/action roll split
-//TODO player Export
-//TODO Settings export (assets, denizens oracles, foes)
 
 class App extends Component {
-  version = "0.50.2";
+  version = "0.63.5";
   state = {
     save: false,
     updateCore: false,
@@ -57,15 +57,21 @@ class App extends Component {
     foes: [],
     delveThemes: [],
     delveDomains: [],
+    delveCards: [],
+    moves: [],
     newFoe: {},
-    activeFoes: {
-      loneFoes: [],
-      packs: [],
-    },
+    activeFoes: [],
     assets: [],
+    ranks: ["Troublesome", "Dangerous", "Formidable", "Extreme", "Epic"],
     assetBuilderSelectedAsset: new DefaultAsset(),
-    delveCardEditorSelectedCard: new DefaultDelveCard(),
+    delveCardEditorSelectedCard: new DefaultDelveCard("Theme"),
+    foeCardEditorSelectedFoe: new DefaultFoe(),
     logs: [],
+    newItem: {
+      Name: "",
+      NextId: 0,
+      Description: "",
+    },
     denizenConfig: {
       categoryId: "",
       nameId: "",
@@ -123,7 +129,6 @@ class App extends Component {
     },
     selectedDelveId: -1,
     delveSelectorId: -1,
-    imgurAlbumHash: "cFnZi",
     logInput: "",
     backgroundInput: "",
     npcs: [],
@@ -143,6 +148,8 @@ class App extends Component {
     nextBackgroundId: 0,
     nextNPCId: 0,
     footerDice: {},
+    dataSize: 0,
+    showGameStateModal: false,
     oracles: new Oracles(),
   };
 
@@ -150,8 +157,6 @@ class App extends Component {
     super();
     this.diceRoller = new DiceRoller();
 
-    //TODO: MERGE SAVEDATA Rather than replace to allow for updates
-    //Load game state - can only happen in constructor
     let gs = localStorage.getItem("game_state");
     let state = JSON.parse(gs);
     if (state != undefined) {
@@ -161,7 +166,6 @@ class App extends Component {
     } else {
       this.updateDataSworn();
       this.state.baseVersion = this.version;
-      // this.state.updateCore = true;
     }
   }
 
@@ -182,16 +186,49 @@ class App extends Component {
     this.setState({ key, value });
   };
 
-  saveGameState() {
-    localStorage.setItem("game_state", JSON.stringify(this.state));
+  checkDataQuota = () => {
+    const data = JSON.stringify(this.state);
+    const dataSize = data.length;
+    this.setState({ dataSize });
+  };
+
+  saveGameState(reload = false) {
+    const data = JSON.stringify(this.state);
+    const dataSize = data.length;
+    if (dataSize != this.state.dataSize) {
+      this.setState({ dataSize });
+    }
+
+    localStorage.setItem("game_state", data);
   }
 
+  getQuotaUsage = () => {
+    return `${(this.state.dataSize / 5000000).toFixed(2)}%`;
+  };
+
   updateDataSworn = () => {
-    // this.setState({ loading: true });
     this.updateCoreAssets();
     this.updateFoes();
-    this.updateDelveThemes();
-    this.updateDelveDomains();
+    this.updateDelveCards();
+    this.updateMoves();
+    this.saveGameState();
+  };
+
+  checkState = () => {
+    if (
+      this.state.assets &&
+      this.state.assets.length > 0 &&
+      this.state.foes &&
+      this.state.foes.length > 0 &&
+      this.state.delveCards &&
+      this.state.delveCards.length > 0 &&
+      this.state.moves &&
+      this.state.moves.length > 0
+    ) {
+      console.log("REFRESH");
+      this.saveGameState();
+      window.location.reload("/");
+    }
   };
 
   updateCoreAssets = () => {
@@ -205,6 +242,7 @@ class App extends Component {
           asset.core = true;
           asset.front = true;
           asset.icon = "crystal-ball";
+          asset.augmented = false;
           let coreIcon = coreAssetIcons.find((c) => c.id == asset.id);
           if (coreIcon) asset.icon = coreIcon.icon;
           asset.Type = asset["Asset Type"] ? asset["Asset Type"] : [];
@@ -256,75 +294,66 @@ class App extends Component {
         }
         this.state.assets = assets;
         this.saveGameState();
+        this.checkState();
       });
   };
 
   updateFoes() {
-    // fetch(
-    //   "https://script.googleusercontent.com/macros/echo?user_content_key=8ADH_3nTqFNUd3jqDoZDWqY6ACkI6BUqRYULzpu_Gb8Yp0nJWZdXJeUoLxt50rhxYoHPz4L6U1BJlyzlZ9gqL65L84z1baYeOJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMWojr9NvTBuBLhyHCd5hHa5V7SzAZj2xBfFDRtNxpfsmuqfjnOYLBpWrI3G8IWJh29l4LSossvEa_fiNHZ0znxEBErwHi9mmijAjx2Qzi6YLFafVHYA-fHoaihMzNmH7H6fRUaYjRqb-wGtNIpK8czCo4suGtgA13VZz-s-VspJx_3Qdvv53yRg&lib=M7OO09pfGNQD9igEAo4bouJoiE_6Oxspk"
-    // )
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     const foes = [...this.state.foes, ...data.records];
-    //     this.state.foes = foes;
-    //     this.saveGameState();
-    //   });
-
     fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_foes.json")
       .then((response) => response.json())
       .then((data) => {
-        const foes = data.Categories.map((c) => {
+        const foes = [];
+        data.Categories.map((c) => {
           c.Foes.map((f) => {
             f.id = `core-foe-${c.Name.toLowerCase()}-${f.Name.toLowerCase().replace(" ", "-")}`;
             f.Type = c.Name;
             f.core = true;
             f.front = true;
             f.Tags = [];
+            f.complete = false;
+            f.progress = 0;
+            f.progressRoll = null;
             f.icon = "perspective-dice-six-faces-random";
-            f.Source = { Name: f.Source, Page: f.Page };
+            // f.Source = { Name: f.Source, Page: f.Page };
+
+            function padStats(list) {
+              let padAmount = 4 - list.length;
+              if (padAmount < 0) return list;
+              for (let i = 0; i < padAmount; i++) {
+                list.push("");
+              }
+              return list;
+            }
+
+            f.Tactics = padStats(f.Tactics);
+            f.Features = padStats(f.Features);
+            f.Drives = padStats(f.Drives);
             delete f.Page;
+            foes.push(f);
           });
         });
-        this.state.foes = _.merge(foes, foeTags);
-        this.saveGameState();
-      });
+        let foeIcons = [];
+        fetch("https://raw.githubusercontent.com/rsek/datasworn-community-extras/main/foe-icons.json")
+          .then((r2) => r2.json())
+          .then((d2) => {
+            d2.map((f2) => {
+              if (f2.Type == "Ironlander") f2.Type = "Ironlanders";
+              foeIcons.push(f2);
+              return f2;
+            });
 
-    //     fetch(
-    //       "https://script.googleusercontent.com/macros/echo?user_content_key=8ADH_3nTqFNUd3jqDoZDWqY6ACkI6BUqRYULzpu_Gb8Yp0nJWZdXJeUoLxt50rhxYoHPz4L6U1BJlyzlZ9gqL65L84z1baYeOJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMWojr9NvTBuBLhyHCd5hHa5V7SzAZj2xBfFDRtNxpfsmuqfjnOYLBpWrI3G8IWJh29l4LSossvEa_fiNHZ0znxEBErwHi9mmijAjx2Qzi6YLFafVHYA-fHoaihMzNmH7H6fRUaYjRqb-wGtNIpK8czCo4suGtgA13VZz-s-VspJx_3Qdvv53yRg&lib=M7OO09pfGNQD9igEAo4bouJoiE_6Oxspk"
-    //     )
-    //       .then((r2) => r2.json())
-    //       .then((d2) => {
-    //         console.log(d2.records);
-    //         this.state.foes.map((f) => {
-    //           f.Foes.map((f2) => {
-    //             f2.Tags = [];
-    //             let record = d2.records.find(
-    //               (d) =>
-    //                 f2.Name.toLowerCase() === d.name.toLowerCase() &&
-    //                 (f.Name.toLowerCase() === d.type.toLowerCase() ||
-    //                   f.Name.toLowerCase() === d.type.toLowerCase() + "s")
-    //             );
-    //             for (let prop in record) {
-    //               if (typeof record[prop] === "boolean") {
-    //                 f2.Tags.push(prop);
-    //                 console.log(prop);
-    //               }
-    //             }
-    //             console.log(f2);
-    //             return f2;
-    //           });
-    //           return f;
-    //         });
-    //         const foes = [...this.state.foes];
-    //         console.log(d2.records);
-    //         // this.state.foes = foes;
-    //         // this.saveGameState();
-    //       });
-    //   });
-    // this.state.foes = foes;
+            let foesWithTags = _.merge(foes, Tags.Foes);
+            let foesWithTagsAndIcons = _.merge(foesWithTags, foeIcons);
+            // this.state.foes = _.merge(foes, Tags.Foes);
+            this.state.foes = foesWithTagsAndIcons;
+            this.state.foeCardEditorSelectedFoe = new DefaultFoe();
+            this.saveGameState();
+            this.checkState();
+          });
+      });
   }
 
-  updateDelveThemes() {
+  updateDelveCards() {
     fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_delve_themes.json")
       .then((r1) => r1.json())
       .then((d1) => {
@@ -372,39 +401,44 @@ class App extends Component {
               return d;
             });
 
-            // this.state.delveCards = delveCards;
-            // console.log(themeCards);
             let delveCards = _.concat(themeCards, domainCards);
-            console.log(delveCards);
             if (!this.state.delveCards) this.state.delveCards = delveCards;
 
-            _.merge(this.state.delveCards, delveCards);
+            this.state.delveCards = _.merge(delveCards, Tags.DelveCards);
+            this.state.delveCardEditorSelectedCard = new DefaultDelveCard("Theme");
+
             this.saveGameState();
-            // console.log(
-            //   this.state.delveCards.map((d) => {
-            //     return { id: d.id, icon: "" };
-            //   })
-            // );
+            this.checkState();
           });
-
-        // this.state.delveCards = delveCards;
-
-        // this.saveGameState();
       });
   }
 
-  updateDelveDomains() {
-    // fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_delve_domains.json")
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     const delveCards = data.Domains.map((t) => {
-    //       t.Type = "Domain";
-    //       return t;
-    //     });
-    //     _.merge(this.state.delveCards, delveCards);
-    //     // this.state.delveCards = delveCards;
-    //     this.saveGameState();
-    //   });
+  updateMoves() {
+    fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_moves.json")
+      .then((r1) => r1.json())
+      .then((d1) => {
+        let moves = [];
+        d1.Categories.map((c) => {
+          let type = c.Name.replace(" Moves", "").replace("Optional ", "");
+          c.Moves.map((m) => {
+            m.Type = type;
+            if (m.Name === "Ask the Oracle") {
+              m.Text =
+                "When **you seek to resolve questions, discover details in the world, determine how other characters respond, or trigger encounters or events**, you may…\n\n  * Draw a conclusion: Decide the answer based on the most interesting and obvious result.\n  * Ask a yes/no question: Decide the odds of a ‘yes’, and roll on the table below to check the answer.\n  * Pick two: Envision two options. Rate one as ‘likely’, and roll on the table below to see if it is true. If not, it is the other.\n  * Spark an idea: Brainstorm or use a random prompt.\n\n```Odds          \tThe answer is ‘yes’ if you roll... \n\n|Odds|Result|\n|Almost Certain|11 or greater|\n|Likely|26 or greater|\n|50/50|51 or greater|\n|Unlikely|76 or greater|\n|Small chance|91 or greater|\n||*On a match, an extreme result or twist has occurred*|";
+            }
+            moves.push(m);
+          });
+        });
+        console.log(moves);
+        this.state.moves = moves;
+        this.saveGameState();
+        this.checkState();
+        // fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_move_oracles.json")
+        //   .then((r2) => r2.json())
+        //   .then((d2) => {
+
+        //   });
+      });
   }
 
   resetData() {
@@ -420,24 +454,78 @@ class App extends Component {
       blob = new Blob([json], { type: "octet/stream" }),
       url = window.URL.createObjectURL(blob);
     a.href = url;
-    a.download = "ironsworn_save_data.json";
+    let d = new Date();
+    a.download = `isc_game_state_${d.toLocaleDateString()}_${d.toLocaleTimeString()}.isc_gamedata`;
     a.click();
     window.URL.revokeObjectURL(url);
   };
 
-  loadData = (evt) => {
+  // createZipFile = () => {
+  //   let categories = this.state.categories.filter((c) => c.checked);
+  //   if (categories.length === 0) {
+  //     this.setState({
+  //       status:
+  //         "No categories selected. Please select a cateogory before clicking download",
+  //     });
+  //     this.setState({
+  //       alertLevel: "danger",
+  //     });
+  //     return;
+  //   }
+
+  //   let zip = new JSZip();
+  //   let date = new Date();
+  //   let d = date.toDateString();
+  //   let t = date.toLocaleTimeString().replace(/:/gm, "_");
+  //   categories.map((c) => {
+  //     zip.file(
+  //       `${c.name}_${d}-${t}.csv`,
+  //       this.arrayToCsv(this.state.records[c.name])
+  //     );
+  //     return c;
+  //   });
+  //   zip.generateAsync({ type: "blob" }).then((content) => {
+  //     this.saveData(content, `health_data_${d}-${t}.zip`);
+  //   });
+  // };
+
+  saveObject = (obj) => {
+    var a = document.createElement("a");
+    document.body.appendChild(a);
+    a.setAttribute("style", "display:none");
+    var json = JSON.stringify(JSON.stringify(obj)),
+      blob = new Blob([json], { type: "octet/stream" }),
+      url = window.URL.createObjectURL(blob);
+    a.href = url;
+    let d = new Date();
+    a.download = `isc_${d.toLocaleDateString()}_${d.toLocaleTimeString()}.isgs`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
+  loadData = (evt, keys) => {
     let file = evt.target.files[0];
     const reader = new FileReader();
     reader.readAsText(file);
-    reader.onload = function () {
+    reader.onload = () => {
       let json = JSON.parse(reader.result);
-      localStorage.setItem("game_state", json);
-      window.location.reload("/");
+      let obj = JSON.parse(json);
+
+      Object.keys(obj).map((k) => {
+        if (!keys.includes(k)) {
+          delete obj[k];
+        }
+      });
+      let gs = { ...this.state };
+      let state = _.merge(gs, obj);
+      let js = JSON.stringify(state);
+      localStorage.setItem("game_state", js);
     };
 
     reader.onerror = function () {
       console.log(reader.error);
     };
+    window.location.reload("/");
   };
 
   componentDidUpdate = () => {
@@ -470,7 +558,6 @@ class App extends Component {
       if (p.selected) {
         p.stats.map((s) => {
           if (s.stat == "Momentum") {
-            console.log("Mom");
             s.value = p.resetMomentum;
           }
         });
@@ -572,14 +659,21 @@ class App extends Component {
   };
 
   handleOnSelectedDelveCardChange = (id) => {
-    console.log(id);
     let foundDelveCard = this.state.delveCards.find((d) => d.id == id);
-    console.log(foundDelveCard);
     let delveCard = { ...foundDelveCard };
     if (!foundDelveCard) {
       delveCard = new DefaultDelveCard("Theme");
     }
     this.setState({ delveCardEditorSelectedCard: delveCard });
+  };
+
+  handleOnSelectedFoeChange = (id) => {
+    let foundFoe = this.state.foes.find((f) => f.id == id);
+    let foe = { ...foundFoe };
+    if (!foundFoe) {
+      foe = new DefaultFoe();
+    }
+    this.setState({ foeCardEditorSelectedFoe: foe });
   };
 
   /*=================================*/
@@ -634,13 +728,27 @@ class App extends Component {
                   <h3 id="site-title">IRONSWORN</h3>
                   <h1 id="site-subtitle">COMPANION</h1>
                   <h6 className="text-light">Version {this.version}</h6>
-
+                  <h6 className="text-light">You've used {this.getQuotaUsage()} of the 5MB storage quota</h6>
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="progress">
+                        <div
+                          className="progress-bar bg-dark"
+                          role="progressbar"
+                          style={{ width: this.getQuotaUsage() }}
+                          aria-valuenow="25"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
                   <div id="bg-image"></div>
-                  <div id="welcome-page-notice" className="alert alert-secondary">
+                  {/* <div id="welcome-page-notice" className="alert alert-secondary my-4">
                     This application is still heavilly under development and is live only to demonstrate functionality
                     and receive feedback. As a result, it cannot be guaranteed that save files created in this version
                     of the application will work in all future versions.
-                  </div>
+                  </div> */}
                 </Route>
                 <Route path="/characters">
                   <Characters
@@ -696,18 +804,14 @@ class App extends Component {
                 </Route>
                 <Route exact path="/enter-the-fray">
                   <EnterTheFray
-                    foes={this.state.foes.filter(function (f) {
-                      return f.Foes.some(function (f2) {
-                        return (f.Foes = f.Foes.filter((f2) => {
-                          return f2.Source === "Ironsworn";
-                        }));
-                      });
-                    })}
+                    foes={this.state.foes}
+                    ranks={this.state.ranks}
                     activeFoes={this.state.activeFoes}
                     newFoe={this.state.newFoe}
                     onComponentUpdate={this.componentDidUpdate}
                     onProgressRollClicked={this.handleOnProgressRollClicked}
                     showGenerator={true}
+                    selectedPlayer={this.getSelectedPlayer()}
                   />
                 </Route>
                 <Route exact path="/delve">
@@ -715,9 +819,9 @@ class App extends Component {
                     oracles={this.state.oracles}
                     delves={this.state.delves}
                     newDelve={this.state.newDelve}
-                    delveThemes={this.state.delveThemes}
-                    delveDomains={this.state.delveDomains}
+                    delveCards={this.state.delveCards}
                     foes={this.state.foes}
+                    ranks={this.state.ranks}
                     selectedDelveId={this.state.selectedDelveId}
                     delveSelectorId={this.state.delveSelectorId}
                     burnMomentum={this.burnMomentum}
@@ -726,7 +830,6 @@ class App extends Component {
                     onDelveSelectChange={this.handleDelveSelectChanged}
                     onComponentUpdate={this.componentDidUpdate}
                     onActionRollClicked={this.handleOnActionRollClicked}
-                    footerDice={this.state.footerDice}
                     addLog={this.handleAddLog}
                   />
                 </Route>
@@ -752,14 +855,15 @@ class App extends Component {
                   <Stats
                     players={this.state.players}
                     selectedPlayer={this.getSelectedPlayer()}
+                    updatePlayerSelect={this.handlePlayerSelect}
                     onComponentUpdate={this.componentDidUpdate}
-                    updateFooterDice={this.updateFooterDice}
                   />
                 </Route>
                 <Route exact path="/vows">
                   <Progression
                     title="Vows"
                     type="vow"
+                    ranks={this.state.ranks}
                     newProgressions={this.state.newProgressions}
                     players={this.state.players}
                     selectedPlayer={this.getSelectedPlayer()}
@@ -773,6 +877,7 @@ class App extends Component {
                     title="Quests"
                     type="quest"
                     info="Quests are mechanically identical to vows except they are not as much of a commitment to your character. Use quests when swearing an iron vow does not seem appropriate to the fiction. However, quests do not grant experience upon completion."
+                    ranks={this.state.ranks}
                     newProgressions={this.state.newProgressions}
                     players={this.state.players}
                     selectedPlayer={this.getSelectedPlayer()}
@@ -785,6 +890,31 @@ class App extends Component {
                   <Progression
                     title="Journeys"
                     type="journey"
+                    ranks={this.state.ranks}
+                    newProgressions={this.state.newProgressions}
+                    players={this.state.players}
+                    selectedPlayer={this.getSelectedPlayer()}
+                    onProgressRollClicked={this.handleOnProgressRollClicked}
+                    onComponentUpdate={this.componentDidUpdate}
+                    addLog={this.handleAddLog}
+                  />
+                </Route>
+                <Route exact path="/inventory">
+                  <Inventory
+                    players={this.state.players}
+                    selectedPlayer={this.getSelectedPlayer()}
+                    newItem={this.state.newItem}
+                    onComponentUpdate={this.componentDidUpdate}
+                  />
+                </Route>
+
+                <Route exact path="/combat">
+                  <Progression
+                    title="Foes"
+                    info="In most scenarios 'Enter the Fray' will be more suitable for combat situations. 'Enter the Fray' combat allows you to choose specific Foes to fight. This tool should be used for edge cases like custom one-off Foes or packs."
+                    // supressTitle={true}
+                    type="foe"
+                    ranks={this.state.ranks}
                     newProgressions={this.state.newProgressions}
                     players={this.state.players}
                     selectedPlayer={this.getSelectedPlayer()}
@@ -794,21 +924,7 @@ class App extends Component {
                   />
                 </Route>
 
-                <Route exact path="/enter-the-fray">
-                  <Progression
-                    title="Foes"
-                    supressTitle={true}
-                    type="foe"
-                    newProgressions={this.state.newProgressions}
-                    players={this.state.players}
-                    selectedPlayer={this.getSelectedPlayer()}
-                    onProgressRollClicked={this.handleOnProgressRollClicked}
-                    onComponentUpdate={this.componentDidUpdate}
-                    onAddLog={this.handleAddLog}
-                  />
-                </Route>
-
-                <Route exact path="/delve">
+                {/* <Route exact path="/delve">
                   {this.state.selectedDelveId != -1 ? (
                     <React.Fragment>
                       <TitleBlock title="Create a Foe" />
@@ -826,7 +942,7 @@ class App extends Component {
                   ) : (
                     React.Fragment
                   )}
-                </Route>
+                </Route> */}
 
                 <Route exact path="/assets">
                   <Assets
@@ -866,11 +982,24 @@ class App extends Component {
                     onComponentUpdate={this.componentDidUpdate}
                   />
                 </Route>
+
+                <Route path="/foe-editor">
+                  <FoeEditor
+                    foes={this.state.foes}
+                    oracles={this.state.oracles}
+                    ranks={this.state.ranks}
+                    selectedFoe={this.state.foeCardEditorSelectedFoe}
+                    onSelectedFoeChange={this.handleOnSelectedFoeChange}
+                    onComponentUpdate={this.componentDidUpdate}
+                  />
+                </Route>
+
                 <Route exact path="/denizen-config">
                   <DenizenConfig
                     denizenConfig={this.state.denizenConfig}
                     oracles={this.state.oracles}
                     foes={this.state.foes}
+                    delveCards={this.state.delveCards}
                     denizenThemeMap={this.state.denizenThemeMap}
                     denizenDomainMap={this.state.denizenDomainMap}
                     onComponentUpdate={this.componentDidUpdate}
@@ -884,8 +1013,12 @@ class App extends Component {
                   <DataManager
                     onResetClick={this.resetData}
                     onDownloadClick={this.saveData}
+                    onDownloadObjectClick={this.saveObject}
                     onLoadClick={this.loadData}
                     onUpdateDataswornClick={this.updateDataSworn}
+                    players={this.state.players}
+                    selectedPlayer={this.getSelectedPlayer()}
+                    gamestate={this.state}
                   />
                 </Route>
                 {/* </Switch> */}
@@ -899,6 +1032,8 @@ class App extends Component {
           foes={this.state.activeFoes.loneFoes}
           footerDice={this.state.footerDice}
           oracles={this.state.oracles}
+          moves={this.state.moves}
+          burnMomentum={this.burnMomentum}
           onComponentUpdate={this.componentDidUpdate}
         />
 

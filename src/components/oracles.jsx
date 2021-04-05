@@ -3336,40 +3336,40 @@ class Oracles {
         "Roll twice more on this table. Both results occur. If they are the same result, make it more dramatic.",
       ],
     },
-    {
-      source: "Ironsworn",
-      theme: "Plot",
-      title: "Challenge Rank",
-      core: true,
-      prompts: ["Troublesome", "Dangerous", "Formidable", "Extreme", "Epic"],
-    },
-    {
-      source: "Delve",
-      theme: "Site",
-      title: "Delve Theme",
-      core: true,
-      prompts: ["Ancient", "Corrupted", "Fortified", "Hallowed", "Haunted", "Infested", "Ravaged", "Wild"],
-    },
-    {
-      source: "Delve",
-      theme: "Site",
-      title: "Delve Domain",
-      core: true,
-      prompts: [
-        "Barrow",
-        "Cavern",
-        "Frozen Cavern",
-        "Ice Reach",
-        "Mine",
-        "Pass",
-        "Ruin",
-        "Sea Cave",
-        "Shadowfen",
-        "Stronghold",
-        "Tanglewood",
-        "Underkeep",
-      ],
-    },
+    // {
+    //   source: "Ironsworn",
+    //   theme: "Plot",
+    //   title: "Challenge Rank",
+    //   core: true,
+    //   prompts: ["Troublesome", "Dangerous", "Formidable", "Extreme", "Epic"],
+    // },
+    // {
+    //   source: "Delve",
+    //   theme: "Site",
+    //   title: "Delve Theme",
+    //   core: true,
+    //   prompts: ["Ancient", "Corrupted", "Fortified", "Hallowed", "Haunted", "Infested", "Ravaged", "Wild"],
+    // },
+    // {
+    //   source: "Delve",
+    //   theme: "Site",
+    //   title: "Delve Domain",
+    //   core: true,
+    //   prompts: [
+    //     "Barrow",
+    //     "Cavern",
+    //     "Frozen Cavern",
+    //     "Ice Reach",
+    //     "Mine",
+    //     "Pass",
+    //     "Ruin",
+    //     "Sea Cave",
+    //     "Shadowfen",
+    //     "Stronghold",
+    //     "Tanglewood",
+    //     "Underkeep",
+    //   ],
+    // },
     {
       source: "Delve",
       theme: "Site",
@@ -3514,6 +3514,24 @@ class Oracles {
     },
     {
       source: "Delve",
+      theme: "Plot",
+      title: "Delve Opportunity",
+      core: true,
+      prompts: [
+        "The terrain favors you, or you find a hidden path.",
+        "An aspect of the history or nature of this place is revealed.",
+        "You locate a secure area.",
+        "A clue offers insight or direction.",
+        "You get the drop on a denizen.",
+        "This area provides an opportunity to scavenge, forage, or hunt.",
+        "You locate an interesting or helpful object.",
+        "You are alerted to a potential threat.",
+        "You encounter a denizen who might support you.",
+        "You encounter a denizen in need of help.",
+      ],
+    },
+    {
+      source: "Delve",
       theme: "Place",
       title: "Delve Place, Barrow Type",
       core: true,
@@ -3630,7 +3648,6 @@ class Oracles {
   }
 
   isCore(table) {
-    console.log(table);
     let oracleTable = this.tables.find((o) => o.title === table);
     return oracleTable?.core;
   }
@@ -3768,6 +3785,10 @@ class Oracles {
 
   get PrimaryStat() {
     return this.diceRoller.roll([5], true)[0].value;
+  }
+
+  get DelveOpportunity() {
+    return this.getRandomPromptFromOracleTable("Delve Opportunity");
   }
 
   getOracleTableSources() {

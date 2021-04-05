@@ -28,7 +28,7 @@ class DelveThemeDomainEditor extends Component {
     let remainder = 4 - (delveCards.length % 4);
     if (remainder < 4) {
       for (let i = 0; i < remainder; i++) {
-        delveCards.push(new DefaultDelveCard());
+        delveCards.push(new DefaultDelveCard("Theme"));
       }
     }
     for (let i = 0; i < delveCards.length; i++) {
@@ -88,6 +88,7 @@ class DelveThemeDomainEditor extends Component {
     delveCard.core = false;
     delveCard.Source.Name = "User";
     delveCard.Source.Page = "n/a";
+    delveCard.Tags = [];
     delveCards.push(delveCard);
     this.setState({ delveCards });
     this.props.onSelectedDelveCardChange(delveCard.id);
@@ -146,7 +147,6 @@ class DelveThemeDomainEditor extends Component {
       selectedDelveCard.Tags = selectedDelveCard.Tags.filter((t) => t != tag);
     }
     selectedDelveCard.Tags = [...new Set(selectedDelveCard.Tags)];
-    console.log(selectedDelveCard.Tags);
     this.setState({ selectedDelveCard });
 
     // denizenConfig.denizenThemeMap.map((t) => {
@@ -463,7 +463,7 @@ class DelveThemeDomainEditor extends Component {
                   </tbody>
                 </table>
               </Tab>
-              <Tab key="tags" eventKey="tags" title="Tags">
+              {/* <Tab key="tags" eventKey="tags" title="Tags">
                 <div className="row p-4">
                   {this.props.oracles.getOracleTableAsArray("Delve Denizen Tags").map((d) => {
                     return (
@@ -483,19 +483,10 @@ class DelveThemeDomainEditor extends Component {
                         </div>
                         <br />
                       </React.Fragment>
-                      // <tr>
-                      //   <td key={`denizen_tag_${d}`}>
-                      //   </td>
-                      //   <td>{d}</td>
-                      // </tr>
                     );
                   })}
                 </div>
-                {/* <table className="table table-striped">
-                  <tbody>
-                  </tbody>
-                </table> */}
-              </Tab>
+              </Tab> */}
             </Tabs>
           </div>
         </div>
