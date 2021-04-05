@@ -1,0 +1,36 @@
+{
+  "files": {
+    "main.css": "/IronswornCompanion/static/css/main.49b7c073.chunk.css",
+    "main.js": "/IronswornCompanion/static/js/main.a540d8a6.chunk.js",
+    "main.js.map": "/IronswornCompanion/static/js/main.a540d8a6.chunk.js.map",
+    "runtime-main.js": "/IronswornCompanion/static/js/runtime-main.13a8eb99.js",
+    "runtime-main.js.map": "/IronswornCompanion/static/js/runtime-main.13a8eb99.js.map",
+    "static/css/2.d424be97.chunk.css": "/IronswornCompanion/static/css/2.d424be97.chunk.css",
+    "static/js/2.19578155.chunk.js": "/IronswornCompanion/static/js/2.19578155.chunk.js",
+    "static/js/2.19578155.chunk.js.map": "/IronswornCompanion/static/js/2.19578155.chunk.js.map",
+    "static/js/3.c1829d6c.chunk.js": "/IronswornCompanion/static/js/3.c1829d6c.chunk.js",
+    "static/js/3.c1829d6c.chunk.js.map": "/IronswornCompanion/static/js/3.c1829d6c.chunk.js.map",
+    "index.html": "/IronswornCompanion/index.html",
+    "static/css/2.d424be97.chunk.css.map": "/IronswornCompanion/static/css/2.d424be97.chunk.css.map",
+    "static/css/main.49b7c073.chunk.css.map": "/IronswornCompanion/static/css/main.49b7c073.chunk.css.map",
+    "static/js/2.19578155.chunk.js.LICENSE.txt": "/IronswornCompanion/static/js/2.19578155.chunk.js.LICENSE.txt",
+    "static/media/main.css": "/IronswornCompanion/static/media/viking-with-axes-hands-rocky-mountains.5f039fef.jpg",
+    "static/media/DeepWilds.3da7ab46.svg": "/IronswornCompanion/static/media/DeepWilds.3da7ab46.svg",
+    "static/media/d10.01d91c70.svg": "/IronswornCompanion/static/media/d10.01d91c70.svg",
+    "static/media/d12.6f2618a7.svg": "/IronswornCompanion/static/media/d12.6f2618a7.svg",
+    "static/media/d2.372b5cd6.svg": "/IronswornCompanion/static/media/d2.372b5cd6.svg",
+    "static/media/d20.5cab3580.svg": "/IronswornCompanion/static/media/d20.5cab3580.svg",
+    "static/media/d4.bed3bf55.svg": "/IronswornCompanion/static/media/d4.bed3bf55.svg",
+    "static/media/d6.67daa769.svg": "/IronswornCompanion/static/media/d6.67daa769.svg",
+    "static/media/d8.496c6879.svg": "/IronswornCompanion/static/media/d8.496c6879.svg",
+    "static/media/font-awesome.min.css": "/IronswornCompanion/static/media/fontawesome-webfont.f691f37e.woff",
+    "static/media/map.b478c343.jpg": "/IronswornCompanion/static/media/map.b478c343.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.13a8eb99.js",
+    "static/css/2.d424be97.chunk.css",
+    "static/js/2.19578155.chunk.js",
+    "static/css/main.49b7c073.chunk.css",
+    "static/js/main.a540d8a6.chunk.js"
+  ]
+}
