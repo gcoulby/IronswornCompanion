@@ -10,7 +10,8 @@
 }
 
 .roller-body {
-  td {
+  td,
+  th {
     padding: 0.1em !important;
   }
   .oracle-tables {
@@ -21,5 +22,5 @@
 
 .oracle-results {
   height: 50vh;
-  overflow: scroll;
+  overflow: auto;
 }

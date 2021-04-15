@@ -175,3 +175,29 @@ input[type="file"] {
 .leaflet-bottom {
   z-index: 900 !important;
 }
+
+// table {
+//   width: 100%;
+//   margin-bottom: 1rem;
+//   color: #212529;
+
+//   th,
+//   td {
+//     padding: 0.75rem;
+//     vertical-align: top;
+//     border-top: 1px solid #dee2e6;
+//   }
+
+//   thead th {
+//     vertical-align: bottom;
+//     border-bottom: 2px solid #dee2e6;
+//   }
+
+//   tbody + tbody {
+//     border-top: 2px solid #dee2e6;
+//   }
+
+//   tbody tr:nth-of-type(odd) {
+//     background-color: rgba(0, 0, 0, 0.05);
+//   }
+// }

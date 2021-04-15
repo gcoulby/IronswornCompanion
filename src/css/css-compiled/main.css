@@ -18778,26 +18778,20 @@ input.autocomplete-input {
   min-height: 2.8em;
 }
 
-.moves-list {
-  height: 350px;
-  overflow-y: scroll;
-  padding: 0 0 0 1.1em !important;
+.moves-roller td,
+.moves-roller th {
+  padding: 0.1em !important;
+  min-width: 50px;
+}
+
+.moves-roller td {
   cursor: pointer;
 }
 
-.moves-list table {
-  border-bottom: none;
-}
-
-.move-display {
-  height: 350px;
-  overflow-y: scroll;
-  font-family: sans-serif;
-}
-
-.table-hover tbody tr:hover {
-  color: #212529;
-  background-color: rgba(0, 0, 0, 0.2);
+.moves-roller .move-display,
+.moves-roller .moves-list {
+  height: 70vh;
+  overflow-y: auto;
 }
 
 @media screen and (max-width: 1300px) {
@@ -18847,7 +18841,8 @@ input.autocomplete-input {
   z-index: 900 !important;
 }
 
-.roller-body td {
+.roller-body td,
+.roller-body th {
   padding: 0.1em !important;
 }
 
@@ -18858,5 +18853,5 @@ input.autocomplete-input {
 
 .oracle-results {
   height: 50vh;
-  overflow: scroll;
+  overflow: auto;
 }

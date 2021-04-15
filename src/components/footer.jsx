@@ -26,17 +26,17 @@ class Footer extends Component {
               <div className="col-auto">
                 <label>&nbsp;</label>
                 <br />
-                <OracleModal oracles={this.props.oracles} onComponentUpdate={this.props.onComponentUpdate} />
+                {/* <OracleModal oracles={this.props.oracles} onComponentUpdate={this.props.onComponentUpdate} /> */}
               </div>
               <div className="col-auto">
                 <label>&nbsp;</label>
                 <br />
-                <Moves
+                {/* <Moves
                   moves={this.props.moves}
                   onComponentUpdate={this.props.onComponentUpdate}
                   selectedPlayer={this.props.selectedPlayer}
                   footerDice={this.props.footerDice}
-                />
+                /> */}
               </div>
             </div>
           </div>

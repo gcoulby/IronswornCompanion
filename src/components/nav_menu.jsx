@@ -143,6 +143,29 @@ class NavMenu extends Component {
         ],
       },
       {
+        title: "Fate",
+        pages: [
+          {
+            url: "/oracle-roller",
+            pageName: "Oracle Roller",
+            icon: "game-icon game-icon-crystal-ball icon-md",
+            active: false,
+          },
+          {
+            url: "/moves",
+            pageName: "Moves",
+            icon: "game-icon game-icon-move icon-md",
+            active: false,
+          },
+          {
+            url: "/roll",
+            pageName: "Roll",
+            icon: "game-icon game-icon-d10",
+            active: false,
+          },
+        ],
+      },
+      {
         title: "Editors",
         pages: [
           {
@@ -183,18 +206,6 @@ class NavMenu extends Component {
       {
         title: "Information",
         pages: [
-          {
-            url: "/oracle-roller",
-            pageName: "Oracle Roller",
-            icon: "game-icon game-icon-crystal-ball icon-md",
-            active: false,
-          },
-          {
-            url: "/roll",
-            pageName: "Roll",
-            icon: "game-icon game-icon-d10",
-            active: false,
-          },
           {
             url: "/acknowledgements",
             pageName: "Acknowledgements",

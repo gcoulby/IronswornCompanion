@@ -42,6 +42,7 @@ import FoeEditor from "./components/foeEditor";
 import Inventory from "./components/inventory";
 import OracleModal from "./components/oracleModal";
 import OracleRoller from "./components/oracleRoller";
+import Moves from "./components/moves";
 
 //TODO moves
 //TODO Region roll
@@ -425,10 +426,10 @@ class App extends Component {
           let type = c.Name.replace(" Moves", "").replace("Optional ", "");
           c.Moves.map((m) => {
             m.Type = type;
-            if (m.Name === "Ask the Oracle") {
-              m.Text =
-                "When **you seek to resolve questions, discover details in the world, determine how other characters respond, or trigger encounters or events**, you may…\n\n  * Draw a conclusion: Decide the answer based on the most interesting and obvious result.\n  * Ask a yes/no question: Decide the odds of a ‘yes’, and roll on the table below to check the answer.\n  * Pick two: Envision two options. Rate one as ‘likely’, and roll on the table below to see if it is true. If not, it is the other.\n  * Spark an idea: Brainstorm or use a random prompt.\n\n```Odds          \tThe answer is ‘yes’ if you roll... \n\n|Odds|Result|\n|Almost Certain|11 or greater|\n|Likely|26 or greater|\n|50/50|51 or greater|\n|Unlikely|76 or greater|\n|Small chance|91 or greater|\n||*On a match, an extreme result or twist has occurred*|";
-            }
+            // if (m.Name === "Ask the Oracle") {
+            //   m.Text =
+            //     "When **you seek to resolve questions, discover details in the world, determine how other characters respond, or trigger encounters or events**, you may…\n\n  * Draw a conclusion: Decide the answer based on the most interesting and obvious result.\n  * Ask a yes/no question: Decide the odds of a ‘yes’, and roll on the table below to check the answer.\n  * Pick two: Envision two options. Rate one as ‘likely’, and roll on the table below to see if it is true. If not, it is the other.\n  * Spark an idea: Brainstorm or use a random prompt.\n\n```Odds          \tThe answer is ‘yes’ if you roll... \n\n|Odds|Result|\n|Almost Certain|11 or greater|\n|Likely|26 or greater|\n|50/50|51 or greater|\n|Unlikely|76 or greater|\n|Small chance|91 or greater|\n||*On a match, an extreme result or twist has occurred*|";
+            // }
             moves.push(m);
           });
         });
@@ -958,6 +959,15 @@ class App extends Component {
 
                 <Route exact path="/oracle-roller">
                   <OracleRoller oracles={this.state.oracles} onComponentUpdate={this.componentDidUpdate} />
+                </Route>
+
+                <Route exact path="/moves">
+                  <Moves
+                    moves={this.state.moves}
+                    onComponentUpdate={this.componentDidUpdate}
+                    selectedPlayer={this.getSelectedPlayer}
+                    // footerDice={this.props.footerDice}
+                  />
                 </Route>
 
                 <Route exact path="/roll">
