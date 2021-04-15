@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { HashRouter, Route, Link } from "react-router-dom";
 import "./css/css-compiled/main.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/js/bootstrap.js";
 import "font-awesome/css/font-awesome.min.css";
 import Sidebar from "./components/sidebar";
 import Navbar from "./components/navbar";
@@ -39,6 +40,8 @@ import DelveThemeDomainEditor from "./components/delveThemeEditor";
 import DefaultFoe from "./models/defaultFoe";
 import FoeEditor from "./components/foeEditor";
 import Inventory from "./components/inventory";
+import OracleModal from "./components/oracleModal";
+import OracleRoller from "./components/oracleRoller";
 
 //TODO moves
 //TODO Region roll
@@ -951,6 +954,10 @@ class App extends Component {
                     selectedPlayer={this.getSelectedPlayer()}
                     onComponentUpdate={this.componentDidUpdate}
                   />
+                </Route>
+
+                <Route exact path="/oracle-roller">
+                  <OracleRoller oracles={this.state.oracles} onComponentUpdate={this.componentDidUpdate} />
                 </Route>
 
                 <Route exact path="/roll">

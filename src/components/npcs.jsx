@@ -52,7 +52,7 @@ class NPCs extends Component {
         `${this.props.selectedPlayer.name} met ${npc.name} the ${npc.race} ${
           npc.locationId != -1
             ? `at the ${this.props.locations.find((l) => l.id == npc.locationId).name} settlement`
-            : React.Fragment
+            : ""
         }`
       );
     }

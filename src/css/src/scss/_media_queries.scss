@@ -1,0 +1,36 @@
+@media screen and (max-width: 1300px) {
+  .footer-pre,
+  .stat-button {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .mobile-menu {
+    display: block !important;
+  }
+  .desktop-menu {
+    display: none !important;
+  }
+  .sidebar-wrapper {
+    display: none !important;
+  }
+  #page-container {
+    margin-left: 0;
+  }
+  .navbar.fixed-bottom {
+    display: none !important;
+  }
+  .btn {
+    margin-bottom: 1em;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .mobile-menu {
+    display: none !important;
+  }
+  .desktop-menu {
+    display: flex !important;
+  }
+}

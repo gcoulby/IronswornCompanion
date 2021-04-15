@@ -153,7 +153,7 @@ class Characters extends Component {
         <div className="row">
           <div className="col">
             <div className="row">
-              <div className="col-6">
+              <div className="col-md-6 col-sm-12">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <button
@@ -198,7 +198,7 @@ class Characters extends Component {
                   />
                 </div>
               </div>
-              <div className="col-6">
+              <div className="col-md-6 col-sm-12">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <button
@@ -253,7 +253,7 @@ class Characters extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="col-2">
+              <div className="col-md-2 col-sm-12">
                 <h6>&nbsp;</h6>
                 <button
                   className="btn btn-dark btn-block"
@@ -264,7 +264,7 @@ class Characters extends Component {
                 </button>
               </div>
               {this.props.newPlayer.Stats.filter((s) => s.type == "core").map((s) => (
-                <div className="col-2">
+                <div className="col-md-2 col-sm-12">
                   <h6>{s.stat.toUpperCase()}</h6>
                   <input
                     data-name={s.stat}

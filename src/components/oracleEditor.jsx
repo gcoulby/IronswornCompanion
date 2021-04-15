@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import DangerButton from "./dangerButton";
 import EditableTable from "./editableTable";
-import OracleRoller from "./oracleRoller";
+import OracleModal from "./oracleModal";
 import TitleBlock from "./titleBlock";
 class OracleEditor extends Component {
   state = {
@@ -207,7 +207,7 @@ class OracleEditor extends Component {
           <div id="oracle_editor" className="col">
             <TitleBlock title="Edit Existing Oracle Table" />
             <div className="row">
-              <div className="col-4">
+              <div className="col-md-4 col-sm-12">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <label className="btn btn-dark btn-tag">Source</label>
@@ -227,7 +227,7 @@ class OracleEditor extends Component {
                   </select>
                 </div>
               </div>
-              <div className="col-4">
+              <div className="col-md-4 col-sm-6">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <label className="btn btn-dark btn-tag">Theme</label>
@@ -247,7 +247,7 @@ class OracleEditor extends Component {
                   </select>
                 </div>
               </div>
-              <div className="col-4">
+              <div className="col-md-4 col-sm-6">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <label className="btn btn-dark btn-tag">Name</label>

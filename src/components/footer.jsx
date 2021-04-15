@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import DiceResult from "./diceResult";
 import DiceRoller from "./dice_roller";
 import Moves from "./moves";
-import OracleRoller from "./oracleRoller";
+import OracleModal from "./oracleModal";
 import Roller from "./roller";
 import RollIcon from "./rollIcon";
 class Footer extends Component {
@@ -26,7 +26,7 @@ class Footer extends Component {
               <div className="col-auto">
                 <label>&nbsp;</label>
                 <br />
-                <OracleRoller oracles={this.props.oracles} onComponentUpdate={this.props.onComponentUpdate} />
+                <OracleModal oracles={this.props.oracles} onComponentUpdate={this.props.onComponentUpdate} />
               </div>
               <div className="col-auto">
                 <label>&nbsp;</label>
