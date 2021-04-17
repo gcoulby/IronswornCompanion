@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AssetCard from "./assetCard";
+import DangerButton from "./dangerButton";
 import TitleBlock from "./titleBlock";
 import UniqueKeyGenerator from "./uniqueKeyGenerator";
 import UnselectedPlayer from "./unselected_player";
@@ -112,6 +113,22 @@ class Assets extends Component {
     this.setState({ players });
   };
 
+  augment = (id) => {
+    const players = this.props.players.map((p) => {
+      if (!p.selected) return;
+
+      p.assets.map((a) => {
+        if (a.id === id) {
+          a.augment = !a.augment;
+        }
+        return a;
+      });
+
+      return p;
+    });
+    this.setState({ players });
+  };
+
   componentDidUpdate() {
     this.props.onComponentUpdate();
   }
@@ -165,7 +182,7 @@ class Assets extends Component {
               <select
                 className="form-control"
                 onChange={(e) => this.handleOnSelectedRemovalAssetChange(e)}
-                value={this.state.selectedAssetId}
+                value={this.state.selectedRemovalAssetId}
               >
                 <option value="">Select Asset</option>
                 {this.props.assets.map((a) => {
@@ -185,12 +202,20 @@ class Assets extends Component {
                 })}
               </select>
             </div>
-            <button className="btn btn-sm btn-danger" onClick={this.handleRemoveAssetClick}>
-              <i className="fa fa-minus" aria-hidden="true"></i> Remove Asset
-            </button>
+            <DangerButton
+              buttonText="Remove Asset"
+              additionalButtonClasses="btn-sm"
+              iconClass="fas fa-minus"
+              onDangerClick={this.handleRemoveAssetClick}
+              deleteMessage="Are you sure you want to remove this asset from your character?"
+            />
           </div>
         </div>
         <TitleBlock title="Owned Assets" />
+        <div className="alert alert-secondary">
+          (Optional) Track augmentations on assets by clicking the icon on the asset card. Augmented assets will have a
+          gold icon.
+        </div>
         {this.props.selectedPlayer.assets.map((a) => (
           <React.Fragment>
             <AssetCard
@@ -201,6 +226,7 @@ class Assets extends Component {
                 value: a.TrackValue,
                 trackLabels: a.TrackLabels ? a.TrackLabels : [],
               }}
+              augment={this.augment}
               onTrackProgressChange={this.handleStatTrackChange}
               onInputFieldChange={this.handleInputFieldChange}
               onAbilityCheckChange={this.handleOnAbilityCheckChange}

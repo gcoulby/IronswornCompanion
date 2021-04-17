@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import TitleBlock from "./titleBlock";
 import Character from "../models/character";
 import { HashRouter, Link } from "react-router-dom";
+import DangerButton from "./dangerButton";
+import RollIcon from "./rollIcon";
 class Characters extends Component {
   //TODO: implement props.newPlayer
 
@@ -30,11 +32,11 @@ class Characters extends Component {
     player.role = this.props.newPlayer.Role;
     player.goal = this.props.newPlayer.Goal;
     player.descriptor = this.props.newPlayer.Descriptor;
+    player.failure = 0;
+    player.failureRoll = null;
+    player.inventory = [];
     player.stats = this.props.newPlayer.Stats;
-    if (
-      this.props.newPlayer.Name != "" &&
-      !players.find((p) => p.name == this.props.newPlayer.Name)
-    ) {
+    if (this.props.newPlayer.Name != "" && !players.find((p) => p.name == this.props.newPlayer.Name)) {
       players.push(player);
       this.setState({ players: players });
       this.resetNewPlayer();
@@ -151,7 +153,7 @@ class Characters extends Component {
         <div className="row">
           <div className="col">
             <div className="row">
-              <div className="col-6">
+              <div className="col-md-6 col-sm-12">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <button
@@ -160,7 +162,7 @@ class Characters extends Component {
                       title="Roll on the oracle"
                       onClick={() => this.handleOnRollPlayerName()}
                     >
-                      <i className="fas fa-dice-d20"></i> Name
+                      <RollIcon /> Name
                     </button>
                   </div>
                   <input
@@ -182,7 +184,7 @@ class Characters extends Component {
                       title="Roll on the oracle"
                       onClick={() => this.handleOnRollPlayerGoal()}
                     >
-                      <i className="fas fa-dice-d20"></i> Goal
+                      <RollIcon /> Goal
                     </button>
                   </div>
                   <input
@@ -196,7 +198,7 @@ class Characters extends Component {
                   />
                 </div>
               </div>
-              <div className="col-6">
+              <div className="col-md-6 col-sm-12">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <button
@@ -205,7 +207,7 @@ class Characters extends Component {
                       title="Roll on the oracle"
                       onClick={() => this.handleOnRollPlayerRole()}
                     >
-                      <i className="fas fa-dice-d20"></i> Role
+                      <RollIcon /> Role
                     </button>
                   </div>
                   <input
@@ -226,7 +228,7 @@ class Characters extends Component {
                       title="Roll on the oracle"
                       onClick={() => this.handleOnRollPlayerDescriptor()}
                     >
-                      <i className="fas fa-dice-d20"></i> Descriptor
+                      <RollIcon /> Descriptor
                     </button>
                   </div>
                   <input
@@ -244,49 +246,42 @@ class Characters extends Component {
             <div className="row">
               <div className="col">
                 <div className="alert alert-secondary">
-                  There are five stats in total. Each is given a value from 1 to
-                  3. To start, arrange these bonuses across your five stats in
-                  any order: <b>3, 2, 2, 1, 1.</b> You can also roll on the
-                  oracle to leave your primary stat choice down to fate.
+                  There are five stats in total. Each is given a value from 1 to 3. To start, arrange these bonuses
+                  across your five stats in any order: <b>3, 2, 2, 1, 1.</b> You can also roll on the oracle to leave
+                  your primary stat choice down to fate.
                 </div>
               </div>
             </div>
             <div className="row">
-              <div className="col-2">
+              <div className="col-md-2 col-sm-12">
                 <h6>&nbsp;</h6>
                 <button
                   className="btn btn-dark btn-block"
                   type="button"
                   onClick={() => this.handleOnRollPlayerPrimaryStat()}
                 >
-                  <i className="fas fa-dice-d20"></i> Roll Primary Stat
+                  <RollIcon /> Primary Stat
                 </button>
               </div>
-              {this.props.newPlayer.Stats.filter((s) => s.type == "core").map(
-                (s) => (
-                  <div className="col-2">
-                    <h6>{s.stat.toUpperCase()}</h6>
-                    <input
-                      data-name={s.stat}
-                      className="form-control"
-                      type="number"
-                      min="1"
-                      max="3"
-                      value={s.value == 0 ? "" : s.value}
-                      placeholder={s.stat}
-                      onChange={(e) => this.handleNewPlayerStatChanged(e)}
-                    />
-                  </div>
-                )
-              )}
+              {this.props.newPlayer.Stats.filter((s) => s.type == "core").map((s) => (
+                <div className="col-md-2 col-sm-12">
+                  <h6>{s.stat.toUpperCase()}</h6>
+                  <input
+                    data-name={s.stat}
+                    className="form-control"
+                    type="number"
+                    min="1"
+                    max="3"
+                    value={s.value == 0 ? "" : s.value}
+                    placeholder={s.stat}
+                    onChange={(e) => this.handleNewPlayerStatChanged(e)}
+                  />
+                </div>
+              ))}
             </div>
             <div className="row mt-5">
               <div className="col">
-                <button
-                  className="btn btn-dark"
-                  type="button"
-                  onClick={() => this.handleAddCharacter()}
-                >
+                <button className="btn btn-dark" type="button" onClick={() => this.handleAddCharacter()}>
                   <i className="fas fa-plus" aria-hidden="true"></i>
                   &nbsp;Add Character
                 </button>
@@ -322,10 +317,7 @@ class Characters extends Component {
                           className="btn btn-dark btn-block"
                           onClick={() => this.props.onPlayerSelect(player.name)}
                         >
-                          <i
-                            className="fas fa-user-plus"
-                            aria-hidden="true"
-                          ></i>
+                          <i className="fas fa-user-plus" aria-hidden="true"></i>
                           &nbsp;Select
                         </Link>
                       </HashRouter>
@@ -338,13 +330,14 @@ class Characters extends Component {
                       </button> */}
                     </div>
                     <div className="col-md-6 col-sm-12">
-                      <button
-                        className="btn btn-danger btn-block"
-                        onClick={() => this.handlePlayerDelete(player.name)}
-                      >
-                        <i className="fas fa-times" aria-hidden="true"></i>
-                        &nbsp;Delete
-                      </button>
+                      <DangerButton
+                        buttonText="Delete"
+                        additionalButtonClasses="btn-block"
+                        iconClass="fas fa-times"
+                        onDangerClick={this.handlePlayerDelete}
+                        deleteId={player.name}
+                        deleteMessage="Are you sure you want to delete this player?"
+                      />
                     </div>
                   </div>
                 </div>

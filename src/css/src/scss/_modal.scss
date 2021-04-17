@@ -1,0 +1,101 @@
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  .overlay {
+    background: black;
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    position: absolute;
+    opacity: 0.5;
+  }
+  .card {
+    position: fixed;
+    // top: calc(50% - 300px);
+    // left: calc(50% - 400px);
+    // width: 800px;
+    // height: 600px;
+    display: block;
+  }
+}
+
+#iconPicker {
+  #iconPickerIcons {
+    overflow-y: scroll;
+    height: 430px !important;
+    display: block;
+    padding: 2em;
+  }
+
+  .game-icon {
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    font-size: 45px;
+    line-height: 46px;
+    float: left;
+    // border-radius: 2px;
+    border-radius: 50%;
+    margin: 3px;
+    padding: 2px;
+    min-width: 30px;
+    text-align: center;
+    padding: 0.2em 0.3em 0;
+  }
+  .game-icon:hover {
+    transform: scale(1.8);
+    z-index: 2;
+    // -moz-box-shadow: 0 0 14px -6px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 0 2px $white;
+    background: $dark;
+    color: white;
+  }
+}
+
+$start: 1;
+$end: 20;
+
+@for $i from $start through $end {
+  $value: $i * 100;
+  $valHalf: $value / 2;
+  $valHalfPx: $valHalf + 0px;
+
+  [data-width="#{$value}"] .card {
+    left: calc(50% - #{$valHalfPx});
+    width: $value + 0px;
+  }
+
+  [data-height="#{$value}"] .card {
+    top: calc(50% - #{$valHalfPx});
+    height: $value + 0px;
+  }
+}
+
+#oracle-body {
+  height: 450px;
+
+  .tab-content {
+    height: 370px;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding: 2em;
+  }
+
+  li {
+    list-style: none;
+  }
+  ul {
+    padding: 0.5em;
+  }
+
+  .oracle-roller-themes {
+    background: $dark;
+    color: white;
+  }
+
+  tbody {
+    font-family: sans-serif;
+  }
+}

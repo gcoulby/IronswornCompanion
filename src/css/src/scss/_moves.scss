@@ -1,0 +1,47 @@
+// .moves-roller {
+//   height: 350px;
+//   overflow-y: scroll;
+//   padding: 0 0 0 1.1em !important;
+//   cursor: pointer;
+//   table {
+//     border-bottom: none;
+//   }
+// }
+
+// .move-display {
+//   height: 350px;
+//   overflow-y: scroll;
+//   font-family: sans-serif;
+// }
+
+// .table-hover tbody tr:hover {
+//   color: #212529;
+//   background-color: rgba(0, 0, 0, 0.2);
+// }
+
+// .moves-roller {
+//   position: fixed;
+
+//   padding: 4em 0;
+//   top: 3em !important;
+//   background: white;
+//   display: block;
+//   width: 100%;
+//   z-index: 900 !important;
+// }
+
+.moves-roller {
+  td,
+  th {
+    padding: 0.1em !important;
+    min-width: 50px;
+  }
+  td {
+    cursor: pointer;
+  }
+  .move-display,
+  .moves-list {
+    height: 70vh;
+    overflow-y: auto;
+  }
+}

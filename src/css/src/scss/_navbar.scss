@@ -2,7 +2,7 @@
   width: 100%;
   color: white;
   position: fixed !important;
-  z-index: 100000;
+  z-index: 1000;
 }
 
 .navbar .btn {
@@ -28,7 +28,7 @@
   position: fixed;
   top: 3.5em;
   width: 100vw;
-  z-index: 10000;
+  z-index: 999;
 }
 
 .nav-key,

@@ -1,12 +1,17 @@
 import DiceRoller from "./dice_roller";
 
 class Oracles {
+  newOracleTableTheme = "";
   newOracleTableName = "";
   selectedOracleTable = "";
+  selectedOracleSource = "";
+  selectedOracleTheme = "";
   editOracleList = "";
   editOracleCursorPosition = 0;
   tables = [
     {
+      source: "Ironsworn",
+      theme: "Plot",
       title: "Actions",
       core: true,
       prompts: [
@@ -313,6 +318,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Plot",
       title: "Theme",
       core: true,
       prompts: [
@@ -619,6 +626,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Location",
       title: "Region",
       core: true,
       prompts: [
@@ -635,6 +644,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Location",
       title: "Location",
       core: true,
       prompts: [
@@ -793,6 +804,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Location",
       title: "Coastal Waters Location",
       core: true,
       prompts: [
@@ -848,6 +861,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Location",
       title: "Location Descriptor",
       core: true,
       prompts: [
@@ -1004,6 +1019,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Location",
       title: "Settlement Names",
       core: true,
       prompts: [
@@ -1080,6 +1097,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Location",
       title: "Settlement Name Prefixes",
       core: true,
       prompts: [
@@ -1161,6 +1180,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Location",
       title: "Settlement Name Suffixes",
       core: true,
       prompts: [
@@ -1242,6 +1263,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Plot",
       title: "Settlement Trouble",
       core: true,
       prompts: [
@@ -1384,6 +1407,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Character",
       title: "Character Role",
       core: true,
       prompts: [
@@ -1478,6 +1503,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Character",
       title: "Character Goal",
       core: true,
       prompts: [
@@ -1579,6 +1606,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Character",
       title: "Character Descriptor",
       core: true,
       prompts: [
@@ -1885,6 +1914,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Character",
       title: "Character Disposition",
       core: true,
       prompts: [
@@ -1927,6 +1958,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Character",
       title: "NPC Conversation",
       core: true,
       prompts: [
@@ -1991,6 +2024,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Character",
       title: "NPC Knowledge Type",
       core: true,
       prompts: [
@@ -2031,6 +2066,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Character",
       title: "NPC Knowledge Topic",
       core: true,
       prompts: [
@@ -2071,6 +2108,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Names",
       title: "Ironlander Names",
       core: true,
       prompts: [
@@ -2677,6 +2716,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Names",
       title: "Elf Names",
       core: true,
       prompts: [
@@ -2833,6 +2874,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Names",
       title: "Giant Names",
       core: true,
       prompts: [
@@ -2914,6 +2957,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Names",
       title: "Varou Names",
       core: true,
       prompts: [
@@ -2995,6 +3040,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Names",
       title: "Troll Names",
       core: true,
       prompts: [
@@ -3076,11 +3123,15 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Character",
       title: "Races",
       core: true,
       prompts: ["Ironlander", "Elf", "Giant", "Varou", "Troll"],
     },
     {
+      source: "Ironsworn",
+      theme: "Plot",
       title: "Combat Actions",
       core: true,
       prompts: [
@@ -3139,6 +3190,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Plot",
       title: "Mystic Backlash",
       core: true,
       prompts: [
@@ -3218,6 +3271,8 @@ class Oracles {
       ],
     },
     {
+      source: "Ironsworn",
+      theme: "Plot",
       title: "Major Plot Twist",
       core: true,
       prompts: [
@@ -3281,10 +3336,294 @@ class Oracles {
         "Roll twice more on this table. Both results occur. If they are the same result, make it more dramatic.",
       ],
     },
+    // {
+    //   source: "Ironsworn",
+    //   theme: "Plot",
+    //   title: "Challenge Rank",
+    //   core: true,
+    //   prompts: ["Troublesome", "Dangerous", "Formidable", "Extreme", "Epic"],
+    // },
+    // {
+    //   source: "Delve",
+    //   theme: "Site",
+    //   title: "Delve Theme",
+    //   core: true,
+    //   prompts: ["Ancient", "Corrupted", "Fortified", "Hallowed", "Haunted", "Infested", "Ravaged", "Wild"],
+    // },
+    // {
+    //   source: "Delve",
+    //   theme: "Site",
+    //   title: "Delve Domain",
+    //   core: true,
+    //   prompts: [
+    //     "Barrow",
+    //     "Cavern",
+    //     "Frozen Cavern",
+    //     "Ice Reach",
+    //     "Mine",
+    //     "Pass",
+    //     "Ruin",
+    //     "Sea Cave",
+    //     "Shadowfen",
+    //     "Stronghold",
+    //     "Tanglewood",
+    //     "Underkeep",
+    //   ],
+    // },
     {
-      title: "Challenge Rank",
+      source: "Delve",
+      theme: "Site",
+      title: "Delve Denizen Tags",
       core: true,
-      prompts: ["Troublesome", "Dangerous", "Formidable", "Extreme", "Epic"],
+      prompts: [
+        "arctic",
+        "marine",
+        "pass",
+        "shadowfen",
+        "subterranean",
+        "tanglewood",
+        "vermin",
+        "corrupted",
+        "faithful",
+        "wild",
+        "remnant",
+        "sentient",
+        "squatter",
+        "undead",
+        "immobile",
+        "flying",
+        "plains",
+        "wastes",
+      ],
+    },
+    {
+      source: "Delve",
+      theme: "Site",
+      title: "Delve Descriptor",
+      core: true,
+      prompts: [
+        "deep",
+        "tainted",
+        "gray",
+        "forgotten",
+        "flooded",
+        "forbidden",
+        "barren",
+        "lost",
+        "cursed",
+        "fell",
+        "sunken",
+        "nightmare",
+        "infernal",
+        "dark",
+        "bloodstained",
+        "haunted",
+        "white",
+        "shrouded",
+        "wasted",
+        "grim",
+        "endless",
+        "crumbling",
+        "undying",
+        "bloodied",
+        "forsaken",
+        "silent",
+        "blighted",
+        "iron",
+        "frozen",
+        "abyssal",
+        "crimson",
+        "silver",
+        "desecrated",
+        "ashen",
+        "elder",
+        "scorched",
+        "unknown",
+        "scarred",
+        "broken",
+        "chaotic",
+        "black",
+        "hidden",
+        "sundered",
+        "shattered",
+        "dreaded",
+        "secret",
+        "high",
+        "sacred",
+        "fallen",
+        "ruined",
+      ],
+    },
+    {
+      source: "Delve",
+      theme: "Site",
+      title: "Delve Detail",
+      core: true,
+      prompts: [
+        "blight",
+        "strife",
+        "nightfall",
+        "fury",
+        "terror",
+        "truth",
+        "spring",
+        "sanctuary",
+        "bone",
+        "specters",
+        "daybreak",
+        "doom",
+        "treachery",
+        "blood",
+        "war",
+        "torment",
+        "iron",
+        "silence",
+        "mist",
+        "isolation",
+        "runes",
+        "rot",
+        "corruption",
+        "prophecy",
+        "fate",
+        "twilight",
+        "power",
+        "darkness",
+        "gloom",
+        "storms",
+        "hope",
+        "lament",
+        "frost",
+        "souls",
+        "winter",
+        "sadness",
+        "desolation",
+        "bane",
+        "lies",
+        "ash",
+        "banishment",
+        "shadow",
+        "madness",
+        "stone",
+        "secrets",
+        "despair",
+        "blades",
+        "dread",
+        "light",
+        "wrath",
+      ],
+    },
+    {
+      source: "Delve",
+      theme: "Plot",
+      title: "Delve Opportunity",
+      core: true,
+      prompts: [
+        "The terrain favors you, or you find a hidden path.",
+        "An aspect of the history or nature of this place is revealed.",
+        "You locate a secure area.",
+        "A clue offers insight or direction.",
+        "You get the drop on a denizen.",
+        "This area provides an opportunity to scavenge, forage, or hunt.",
+        "You locate an interesting or helpful object.",
+        "You are alerted to a potential threat.",
+        "You encounter a denizen who might support you.",
+        "You encounter a denizen in need of help.",
+      ],
+    },
+    {
+      source: "Delve",
+      theme: "Place",
+      title: "Delve Place, Barrow Type",
+      core: true,
+      prompts: ["sepulcher", "grave", "crypt", "mound", "tomb", "barrow"],
+    },
+    {
+      source: "Delve",
+      theme: "Place",
+      title: "Delve Place, Cavern Type",
+      core: true,
+      prompts: ["abyss", "hollow", "caverns", "lair", "caves", "rift", "chasm", "tunnels", "depths", "warren"],
+    },
+    {
+      source: "Delve",
+      theme: "Place",
+      title: "Delve Place, Frozen Cavern Type",
+      core: true,
+      prompts: ["abyss", "hollow", "caverns", "lair", "caves", "rift", "chasm", "tunnels", "depths", "warren"],
+    },
+    {
+      source: "Delve",
+      theme: "Place",
+      title: "Delve Place, Ice Reach Type",
+      core: true,
+      prompts: ["icemark", "waste", "wintertide", "expanse", "reach", "barrens"],
+    },
+    {
+      source: "Delve",
+      theme: "Place",
+      title: "Delve Place, Mine Type",
+      core: true,
+      prompts: ["lode", "dig", "forge", "mine", "tunnels", "cut"],
+    },
+    {
+      source: "Delve",
+      theme: "Place",
+      title: "Delve Place, Pass Type",
+      core: true,
+      prompts: ["cliffs", "heights", "crag", "highlands", "cut", "pass", "gap", "reach", "gorge", "ridge"],
+    },
+    {
+      source: "Delve",
+      theme: "Place",
+      title: "Delve Place, Ruin Type",
+      core: true,
+      prompts: ["citadel", "sanctuary", "enclave", "sanctum", "fortress", "spire", "hall", "temple", "keep", "tower"],
+    },
+    {
+      source: "Delve",
+      theme: "Place",
+      title: "Delve Place, Sea Cave Type",
+      core: true,
+      prompts: ["caves", "hollow", "channel", "pools", "cove", "gouge"],
+    },
+    {
+      source: "Delve",
+      theme: "Place",
+      title: "Delve Place, Shadowfen Type",
+      core: true,
+      prompts: ["bog", "morass", "fen", "quagmire", "lowland", "floodlands", "marsh", "slough", "mire", "wetlands"],
+    },
+    {
+      source: "Delve",
+      theme: "Place",
+      title: "Delve Place, Stronghold Type",
+      core: true,
+      prompts: [
+        "bastion",
+        "keep",
+        "citadel",
+        "outpost",
+        "fortress",
+        "refuge",
+        "garrison",
+        "sanctuary",
+        "haven",
+        "watch",
+      ],
+    },
+    {
+      source: "Delve",
+      theme: "Place",
+      title: "Delve Place, Tanglewood Type",
+      core: true,
+      prompts: ["weald", "thicket", "tangle", "forest", "bramble", "wilds", "briar", "wood"],
+    },
+    {
+      source: "Delve",
+      theme: "Place",
+      title: "Delve Place, Underkeep Type",
+      core: true,
+      prompts: ["catacomb", "maze", "chambers", "pit", "den", "sanctum", "hall", "underkeep", "labyrinth", "vault"],
     },
   ];
 
@@ -3294,11 +3633,21 @@ class Oracles {
     this.editOracleList = state.editOracleList;
     this.newOracleTableName = state.newOracleTableName;
     this.tables = state.tables;
+    this.selectedOracleSource = state.selectedOracleSource;
+    this.selectedOracleTheme = state.selectedOracleTheme;
     this.selectedOracleTable = state.selectedOracleTable;
   }
 
+  titleCase(str) {
+    str = str.toLowerCase();
+    str = str.split(" ");
+    for (var i = 0; i < str.length; i++) {
+      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+    }
+    return str.join(" ");
+  }
+
   isCore(table) {
-    console.log(table);
     let oracleTable = this.tables.find((o) => o.title === table);
     return oracleTable?.core;
   }
@@ -3323,6 +3672,39 @@ class Oracles {
     if (table == "Select Table") return;
     let t = this.tables.find((o) => o.title === table)?.prompts;
     return t;
+  }
+
+  getDelveSiteName(domain) {
+    let out = "";
+    let rn = this.diceRoller.roll([7])[0].value;
+    let descriptor = this.titleCase(this.getRandomPromptFromOracleTable("Delve Descriptor"));
+    let detail = this.titleCase(this.getRandomPromptFromOracleTable("Delve Detail"));
+    let place = this.titleCase(this.getRandomPromptFromOracleTable(`Delve Place, ${domain} Type`));
+    let namesake = this.getRandomPromptFromOracleTable("Ironlander Names");
+    switch (rn) {
+      case 0:
+        out += `the ${descriptor} ${place}`;
+        break;
+      case 1:
+        out += `the ${place} of ${descriptor}`;
+        break;
+      case 2:
+        out += `the ${place} of ${descriptor} ${detail}`;
+        break;
+      case 3:
+        out += `the ${place} of ${namesake}'s ${detail}`;
+        break;
+      case 4:
+        out += `${namesake}'s ${place}`;
+        break;
+      case 5:
+        out += `the ${descriptor} ${place} of ${namesake}`;
+        break;
+      case 6:
+        out += `the ${place} of ${namesake}`;
+        break;
+    }
+    return out;
   }
 
   getNPCName(race) {
@@ -3405,10 +3787,40 @@ class Oracles {
     return this.diceRoller.roll([5], true)[0].value;
   }
 
-  get OracleTableNames() {
+  get DelveOpportunity() {
+    return this.getRandomPromptFromOracleTable("Delve Opportunity");
+  }
+
+  getOracleTableSources() {
     let tn = [];
-    this.tables.map((o) => tn.push(o.title));
+    this.tables.map((o) => {
+      if (!tn.includes(o.source)) tn.push(o.source);
+    });
     return tn;
+  }
+
+  getOracleTableThemes(source) {
+    let tn = [];
+    this.tables
+      .filter((t) => t.source.match(source))
+      .map((o) => {
+        if (!tn.includes(o.theme)) tn.push(o.theme);
+      });
+    return tn;
+  }
+
+  getOracleTableNames(source, theme) {
+    let tn = [];
+    this.tables.filter((t) => t.source.match(source) && t.theme.match(theme)).map((o) => tn.push(o.title));
+    return tn;
+  }
+
+  get DelveTheme() {
+    return this.getRandomPromptFromOracleTable("Delve Theme");
+  }
+
+  get DelveDomain() {
+    return this.getRandomPromptFromOracleTable("Delve Domain");
   }
 }
 

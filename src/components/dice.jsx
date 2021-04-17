@@ -45,23 +45,22 @@ class Dice extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-8">
-            <div className="row">
-              {this.state.dice.map((die) => (
-                <Die key={die.id} die={die} onChange={this.handleChange} />
-              ))}
+      <React.Fragment>
+        <div className="container">
+          <div className="row">
+            <div className="col-8">
+              <div className="row">
+                {this.state.dice.map((die) => (
+                  <Die key={die.id} die={die} onChange={this.handleChange} />
+                ))}
+              </div>
+            </div>
+            <div className="col-4">
+              <DiceResults results={this.state.results} onRollClick={this.handleRollClick} />
             </div>
           </div>
-          <div className="col-4">
-            <DiceResults
-              results={this.state.results}
-              onRollClick={this.handleRollClick}
-            />
-          </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

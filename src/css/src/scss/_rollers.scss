@@ -1,0 +1,26 @@
+.roll-result {
+  position: fixed;
+
+  padding: 4em 0;
+  top: 3em !important;
+  background: white;
+  display: block;
+  width: 100%;
+  z-index: 900 !important;
+}
+
+.roller-body {
+  td,
+  th {
+    padding: 0.1em !important;
+  }
+  .oracle-tables {
+    height: 50vh;
+    overflow-y: scroll;
+  }
+}
+
+.oracle-results {
+  height: 50vh;
+  overflow: auto;
+}

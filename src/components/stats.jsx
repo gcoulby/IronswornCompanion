@@ -1,11 +1,18 @@
 import React, { Component } from "react";
+import DiceRoller from "./dice_roller";
 import ExperienceTrack from "./experienceTrack";
 import ProgressTrack from "./progressTrack";
+import RollButton from "./rollButton";
 import StatTrack from "./statTrack";
 import TitleBlock from "./titleBlock";
 import UnselectedPlayer from "./unselected_player";
 class Stats extends Component {
   state = { health: 5, spirit: 5, momentum: -2 };
+
+  constructor() {
+    super();
+    this.diceRoller = new DiceRoller();
+  }
 
   valueToStat(val, steps) {
     let n = 100 / (steps - 1);
@@ -29,7 +36,7 @@ class Stats extends Component {
 
     this.setState({ players });
     if (name == "Momentum") this.checkMomentum();
-    this.props.updateFooterDice();
+    this.props.updatePlayerSelect(this.props.selectedPlayer.name);
   };
 
   handleDebilityChange = (evt, name) => {
@@ -61,7 +68,7 @@ class Stats extends Component {
     });
     this.setState({ players });
     this.checkMomentum();
-    this.props.updateFooterDice();
+    this.props.updatePlayerSelect(this.props.selectedPlayer.name);
   };
 
   checkMomentum() {
@@ -85,52 +92,49 @@ class Stats extends Component {
       if (p.selected) {
         switch (type) {
           case "INC":
-            p.totalExperience =
-              p.totalExperience + 1 >= 30 ? 30 : p.totalExperience + 1;
+            p.totalExperience = p.totalExperience + 1 >= 30 ? 30 : p.totalExperience + 1;
             break;
           case "DEC":
-            p.totalExperience =
-              p.totalExperience - 1 <= 0 ? 0 : p.totalExperience - 1;
+            p.totalExperience = p.totalExperience - 1 <= 0 ? 0 : p.totalExperience - 1;
 
-            p.spentExperience =
-              p.totalExperience < p.spentExperience
-                ? p.totalExperience
-                : p.spentExperience;
+            p.spentExperience = p.totalExperience < p.spentExperience ? p.totalExperience : p.spentExperience;
             break;
           case "REG":
-            p.spentExperience =
-              p.spentExperience - 1 <= 0 ? 0 : p.spentExperience - 1;
+            p.spentExperience = p.spentExperience - 1 <= 0 ? 0 : p.spentExperience - 1;
             break;
           case "ADV":
-            p.spentExperience =
-              p.spentExperience + 1 >= 30 ? 30 : p.spentExperience + 1;
+            p.spentExperience = p.spentExperience + 1 >= 30 ? 30 : p.spentExperience + 1;
 
-            p.totalExperience =
-              p.spentExperience > p.totalExperience
-                ? p.spentExperience
-                : p.totalExperience;
+            p.totalExperience = p.spentExperience > p.totalExperience ? p.spentExperience : p.totalExperience;
             break;
         }
       }
       return p;
     });
-
+    this.props.updatePlayerSelect(this.props.selectedPlayer.name);
     this.setState({ players });
-    this.props.updateFooterDice();
   };
 
-  handleOnPlayerProgressionChanged = (playerName, increment) => {
+  handleOnPlayerProgressionChanged = (playerName, field, increment) => {
+    let val = 0;
+    switch (field) {
+      case "bonds":
+        val = increment ? 1 : -1;
+        break;
+      case "failure":
+        val = increment ? 4 : -4;
+        break;
+    }
     const players = this.props.players.map((p) => {
       if (p.name == playerName) {
-        let val = increment ? 1 : -1;
-        p.bonds += val;
-        p.bonds = p.bonds > 40 ? 40 : p.bonds;
-        p.bonds = p.bonds < 0 ? 0 : p.bonds;
+        p[field] += val;
+        p[field] = p[field] > 40 ? 40 : p[field];
+        p[field] = p[field] < 0 ? 0 : p[field];
       }
       return p;
     });
     this.setState({ players });
-    this.props.updateFooterDice();
+    this.props.updatePlayerSelect(this.props.selectedPlayer.name);
   };
 
   handleOnPlayerStatChanged = (stat, increment) => {
@@ -148,7 +152,18 @@ class Stats extends Component {
       return p;
     });
     this.setState({ players });
-    this.props.updateFooterDice();
+    this.props.updatePlayerSelect(this.props.selectedPlayer.name);
+  };
+
+  handleOnProgressRollClicked = () => {
+    const players = this.props.players.map((p) => {
+      if (p.selected) {
+        p.failureRoll = this.diceRoller.progressionRoll(Math.floor(p.failure / 4));
+      }
+      return p;
+    });
+    this.setState({ players });
+    this.props.updatePlayerSelect(this.props.selectedPlayer.name);
   };
 
   componentDidUpdate() {
@@ -180,9 +195,7 @@ class Stats extends Component {
                         <div className="col-4">
                           <button
                             className="btn btn-outline-dark progressTrackBtn"
-                            onClick={() =>
-                              this.handleOnPlayerStatChanged(s.stat, false)
-                            }
+                            onClick={() => this.handleOnPlayerStatChanged(s.stat, false)}
                           >
                             <i className="fa fa-minus" aria-hidden="true"></i>
                           </button>
@@ -193,9 +206,7 @@ class Stats extends Component {
                         <div className="col-4">
                           <button
                             className="btn btn-outline-dark progressTrackBtn"
-                            onClick={() =>
-                              this.handleOnPlayerStatChanged(s.stat, true)
-                            }
+                            onClick={() => this.handleOnPlayerStatChanged(s.stat, true)}
                           >
                             <i className="fa fa-plus" aria-hidden="true"></i>
                           </button>
@@ -215,53 +226,60 @@ class Stats extends Component {
             key={this.props.selectedPlayer}
             progress={this.props.selectedPlayer.bonds}
             onProgressionChange={(increment) =>
-              this.handleOnPlayerProgressionChanged(
-                this.props.selectedPlayer.name,
-                increment
-              )
+              this.handleOnPlayerProgressionChanged(this.props.selectedPlayer.name, "bonds", increment)
             }
             // hideButtons={true}
           />
+          <TitleBlock title="FAILURE" />
+
+          <ProgressTrack
+            key={this.props.selectedPlayer}
+            progress={this.props.selectedPlayer.failure}
+            onProgressionChange={(increment) =>
+              this.handleOnPlayerProgressionChanged(this.props.selectedPlayer.name, "failure", increment)
+            }
+            // hideButtons={true}
+          />
+          <div className="row">
+            <div className="col-4"></div>
+            <div className="col-4">
+              <RollButton
+                buttonText="Learn from your Failures"
+                roll={this.props.selectedPlayer.failureRoll}
+                onRoll={() => this.handleOnProgressRollClicked()}
+              />
+            </div>
+            <div className="col-4"></div>
+          </div>
           <TitleBlock title="TRACKS" />
           <StatTrack
             min={0}
             max={5}
             onChange={this.handleStatTrackChange}
-            stat={this.props.selectedPlayer.stats.find(
-              (s) => s.stat == "Health"
-            )}
-            value={
-              this.props.selectedPlayer.stats.find((s) => s.stat == "Health")
-                .value
-            }
+            stat={this.props.selectedPlayer.stats.find((s) => s.stat == "Health")}
+            value={this.props.selectedPlayer.stats.find((s) => s.stat == "Health").value}
           />
           <StatTrack
             min={0}
             max={5}
-            value={0}
+            value={this.props.selectedPlayer.stats.find((s) => s.stat == "Spirit").value}
             onChange={this.handleStatTrackChange}
-            stat={this.props.selectedPlayer.stats.find(
-              (s) => s.stat == "Spirit"
-            )}
+            stat={this.props.selectedPlayer.stats.find((s) => s.stat == "Spirit")}
           />
           <StatTrack
             min={0}
             max={5}
-            value={0}
+            value={this.props.selectedPlayer.stats.find((s) => s.stat == "Supply").value}
             onChange={this.handleStatTrackChange}
-            stat={this.props.selectedPlayer.stats.find(
-              (s) => s.stat == "Supply"
-            )}
+            stat={this.props.selectedPlayer.stats.find((s) => s.stat == "Supply")}
           />
           <StatTrack
             min={-6}
             max={10}
             // onChange={this.handleMomentumTrackChange}
             onChange={this.handleStatTrackChange}
-            value={this.state.momentum}
-            stat={this.props.selectedPlayer.stats.find(
-              (s) => s.stat == "Momentum"
-            )}
+            value={this.props.selectedPlayer.stats.find((s) => s.stat == "Momentum").value}
+            stat={this.props.selectedPlayer.stats.find((s) => s.stat == "Momentum")}
           />
         </div>
         <div className="row text-center">

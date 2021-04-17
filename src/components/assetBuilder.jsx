@@ -13,6 +13,7 @@ import DefaultAsset from "../models/defaultAssets";
 import UniqueKeyGenerator from "./uniqueKeyGenerator";
 import IconPicker from "./iconPicker";
 import EditableTable from "./editableTable";
+import DangerButton from "./dangerButton";
 class AssetBuilder extends Component {
   state = {
     printableCards: [],
@@ -67,19 +68,19 @@ class AssetBuilder extends Component {
     this.editorUpdate();
   };
 
-  handleOnIconInputChange = (evt) => {
-    if (evt === null) return;
+  // handleOnIconInputChange = (evt) => {
+  //   if (evt === null) return;
 
-    let value = evt.target.value;
-    if (value === 0) {
-      value = evt.target.children[0].dataset.value;
-    }
+  //   let value = evt.target.value;
+  //   if (value === 0) {
+  //     value = evt.target.children[0].dataset.value;
+  //   }
 
-    const selectedAsset = this.props.selectedAsset;
-    selectedAsset.icon = value;
-    this.setState({ selectedAsset });
-    // this.editorUpdate();
-  };
+  //   const selectedAsset = this.props.selectedAsset;
+  //   selectedAsset.icon = value;
+  //   this.setState({ selectedAsset });
+  //   // this.editorUpdate();
+  // };
 
   handleOnIconPickerToggle = (show) => {
     this.setState({ showIconPicker: show });
@@ -126,7 +127,6 @@ class AssetBuilder extends Component {
   //   let out = "";
   //   this.props.selectedAsset.TrackLabels.map((l) => (out += l + "\n"));
 
-  //   // console.log(out);
   //   out.replace(/^\s+|\s+$/g, "");
   //   return out;
   // }
@@ -182,6 +182,7 @@ class AssetBuilder extends Component {
     let asset = { ...this.props.selectedAsset };
     asset.id = this.getUserAssetId(asset.Name);
     asset.core = false;
+    asset.augmented = false;
     assets.push(asset);
     this.setState({ assets });
     this.props.onSelectedAssetChange(asset.id);
@@ -233,7 +234,6 @@ class AssetBuilder extends Component {
   componentDidUpdate() {
     // // if (prevState.selectedAsset?.icon !== this.state.selectedAsset?.icon) {
     // //TODO: FIX THE ICON BOX!
-    // console.log("GGGG");
     // let cb = document.getElementById("combo-box-demo");
     // cb.focus();
 
@@ -266,6 +266,7 @@ class AssetBuilder extends Component {
             onTrackProgressChange={() => {}}
             onInputFieldChange={() => {}}
             onAbilityCheckChange={() => {}}
+            augment={() => {}}
             hideThumb={true}
             disabled={true}
             stat={{
@@ -370,9 +371,13 @@ class AssetBuilder extends Component {
                 React.Fragment
               ) : (
                 <React.Fragment>
-                  <button className="btn btn-danger ml-2" onClick={() => this.handleOnDeleteUserAsset()}>
-                    <i className="fas fa-minus"></i> Delete Asset
-                  </button>
+                  <DangerButton
+                    buttonText="Delete Asset"
+                    additionalButtonClasses="ml-2"
+                    iconClass="fas fa-times"
+                    onDangerClick={this.handleOnDeleteUserAsset}
+                    deleteMessage="Are you sure you want to delete this asset?"
+                  />
                 </React.Fragment>
               )}
             </div>
@@ -533,19 +538,21 @@ class AssetBuilder extends Component {
                           </div>
                         </div>
                         <div className="col-4">
-                          <input
-                            type="checkbox"
-                            //   name="cb"
-                            id="cb_ability1"
-                            checked={
-                              this.props.selectedAsset.Abilities.length > 0 &&
-                              this.props.selectedAsset.Abilities[0].Enabled == true
-                                ? true
-                                : false
-                            }
-                            onChange={(e) => this.handleOnAbilityCheckboxChange(e, 0)}
-                          />
-                          <label htmlFor={`cb_ability1`}>Checked</label>
+                          <div className="deb-cb">
+                            <input
+                              type="checkbox"
+                              //   name="cb"
+                              id="cb_ability1"
+                              checked={
+                                this.props.selectedAsset.Abilities.length > 0 &&
+                                this.props.selectedAsset.Abilities[0].Enabled == true
+                                  ? true
+                                  : false
+                              }
+                              onChange={(e) => this.handleOnAbilityCheckboxChange(e, 0)}
+                            />
+                            <label htmlFor={`cb_ability1`}>Checked</label>
+                          </div>
                         </div>
                       </div>
                       <div className="row">
@@ -591,19 +598,21 @@ class AssetBuilder extends Component {
                           </div>
                         </div>
                         <div className="col-4">
-                          <input
-                            type="checkbox"
-                            //   name="cb"
-                            id="cb_ability2"
-                            checked={
-                              this.props.selectedAsset.Abilities.length > 0 &&
-                              this.props.selectedAsset.Abilities[1].Enabled == true
-                                ? true
-                                : false
-                            }
-                            onChange={(e) => this.handleOnAbilityCheckboxChange(e, 1)}
-                          />
-                          <label htmlFor={`cb_ability2`}>Checked</label>
+                          <div className="deb-cb">
+                            <input
+                              type="checkbox"
+                              //   name="cb"
+                              id="cb_ability2"
+                              checked={
+                                this.props.selectedAsset.Abilities.length > 0 &&
+                                this.props.selectedAsset.Abilities[1].Enabled == true
+                                  ? true
+                                  : false
+                              }
+                              onChange={(e) => this.handleOnAbilityCheckboxChange(e, 1)}
+                            />
+                            <label htmlFor={`cb_ability2`}>Checked</label>
+                          </div>
                         </div>
                       </div>
                       <div className="row">
@@ -649,19 +658,21 @@ class AssetBuilder extends Component {
                           </div>
                         </div>
                         <div className="col-4">
-                          <input
-                            type="checkbox"
-                            //   name="cb"
-                            id="cb_ability3"
-                            checked={
-                              this.props.selectedAsset.Abilities.length > 0 &&
-                              this.props.selectedAsset.Abilities[2].Enabled == true
-                                ? true
-                                : false
-                            }
-                            onChange={(e) => this.handleOnAbilityCheckboxChange(e, 2)}
-                          />
-                          <label htmlFor={`cb_ability3`}>Checked</label>
+                          <div className="deb-cb">
+                            <input
+                              type="checkbox"
+                              //   name="cb"
+                              id="cb_ability3"
+                              checked={
+                                this.props.selectedAsset.Abilities.length > 0 &&
+                                this.props.selectedAsset.Abilities[2].Enabled == true
+                                  ? true
+                                  : false
+                              }
+                              onChange={(e) => this.handleOnAbilityCheckboxChange(e, 2)}
+                            />
+                            <label htmlFor={`cb_ability3`}>Checked</label>
+                          </div>
                         </div>
                       </div>
                       <div className="row">
@@ -784,6 +795,7 @@ class AssetBuilder extends Component {
                     asset={a}
                     hideThumb={true}
                     disabled={true}
+                    augment={() => {}}
                     stat={{
                       stat: a.id,
                       hideLabel: true,

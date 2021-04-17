@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import DangerButton from "./dangerButton";
 import ProgressTrack from "./progressTrack";
+import RollIcon from "./rollIcon";
 import TitleBlock from "./titleBlock";
 class NPCs extends Component {
   state = {};
@@ -12,6 +14,7 @@ class NPCs extends Component {
 
   handleAddNPC = () => {
     const npcs = this.props.npcs;
+    const newNPC = this.props.newNPC;
     const npc = {};
 
     let id = 0;
@@ -32,20 +35,26 @@ class NPCs extends Component {
     npc.locationId = this.props.newNPC.Location;
     if (this.props.newNPC.Name != "" && !npcs.find((n) => n.id == this.props.newNPC.id)) {
       npcs.push(npc);
-      const newNPC = {
-        Race: "",
-        Name: "",
-        Role: "",
-        Goal: "",
-        Descriptor: "",
-        Disposition: "",
-        Conversation: "",
-        Knowledge: "",
-        Location: -1,
-      };
+      newNPC.Race = "";
+      newNPC.Name = "";
+      newNPC.Role = "";
+      newNPC.Goal = "";
+      newNPC.Descriptor = "";
+      newNPC.Disposition = "";
+      newNPC.Conversation = "";
+      newNPC.Knowledge = "";
+      newNPC.Location = -1;
 
       this.setState({ npcs });
       this.setState({ newNPC });
+      this.props.addLog(
+        "event",
+        `${this.props.selectedPlayer.name} met ${npc.name} the ${npc.race} ${
+          npc.locationId != -1
+            ? `at the ${this.props.locations.find((l) => l.id == npc.locationId).name} settlement`
+            : ""
+        }`
+      );
     }
   };
 
@@ -196,6 +205,12 @@ class NPCs extends Component {
           return p;
         });
         this.setState({ players });
+        this.props.addLog(
+          "event",
+          `The bond between ${this.props.selectedPlayer.name} and ${n.name} the ${n.race} ${
+            increment ? "increases" : "diminishes"
+          }`
+        );
       }
       return n;
     });
@@ -206,6 +221,13 @@ class NPCs extends Component {
     const npcs = this.props.npcs.map((n) => {
       if (n.id == id) {
         n.locationId = evt.target.value;
+        if (n.locationId != -1)
+          this.props.addLog(
+            "event",
+            `${n.name} the ${n.race} was last seen at the ${
+              this.props.locations.find((l) => l.id == n.locationId).name
+            } settlement`
+          );
       }
       return n;
     });
@@ -224,8 +246,7 @@ class NPCs extends Component {
               title="Roll on the oracle"
               onClick={() => this.handleOnAddRandomNPC()}
             >
-              <i className="fas fa-dice-d20" aria-hidden="true"></i>
-              &nbsp;Random NPC
+              <RollIcon /> Random NPC
             </button>
             <div className="row">
               <div className="col-6">
@@ -237,7 +258,7 @@ class NPCs extends Component {
                       title="Roll on the oracle"
                       onClick={() => this.handleOnRollNPCRace()}
                     >
-                      <i className="fas fa-dice-d20"></i> Race
+                      <RollIcon /> Race
                     </button>
                   </div>
                   <select
@@ -262,7 +283,7 @@ class NPCs extends Component {
                       title="Roll on the oracle"
                       onClick={() => this.handleOnRollNewNPCGoal()}
                     >
-                      <i className="fas fa-dice-d20"></i> Goal
+                      <RollIcon /> Goal
                     </button>
                   </div>
                   <input
@@ -283,7 +304,7 @@ class NPCs extends Component {
                       title="Roll on the oracle"
                       onClick={() => this.handleOnRollNewNPCDescriptor()}
                     >
-                      <i className="fas fa-dice-d20"></i> Descriptor
+                      <RollIcon /> Descriptor
                     </button>
                   </div>
                   <input
@@ -304,7 +325,7 @@ class NPCs extends Component {
                       title="Roll on the oracle"
                       onClick={() => this.handleOnRollNewNPCConversation()}
                     >
-                      <i className="fas fa-dice-d20"></i> Conversation
+                      <RollIcon /> Conversation
                     </button>
                   </div>
                   <input
@@ -346,7 +367,7 @@ class NPCs extends Component {
                       title="Roll on the oracle"
                       onClick={() => this.handleOnRollNewNPCName()}
                     >
-                      <i className="fas fa-dice-d20"></i> Name
+                      <RollIcon /> Name
                     </button>
                   </div>
                   <input
@@ -368,7 +389,7 @@ class NPCs extends Component {
                       title="Roll on the oracle"
                       onClick={() => this.handleOnRollNewNPCRole()}
                     >
-                      <i className="fas fa-dice-d20"></i> Role
+                      <RollIcon /> Role
                     </button>
                   </div>
                   <input
@@ -389,7 +410,7 @@ class NPCs extends Component {
                       title="Roll on the oracle"
                       onClick={() => this.handleOnRollNewNPCDisposition()}
                     >
-                      <i className="fas fa-dice-d20"></i> Disposition
+                      <RollIcon /> Disposition
                     </button>
                   </div>
                   <input
@@ -411,7 +432,7 @@ class NPCs extends Component {
                       title="Roll on the oracle"
                       onClick={() => this.handleOnRollNewNPCKnowledge()}
                     >
-                      <i className="fas fa-dice-d20"></i> Knowledge
+                      <RollIcon /> Knowledge
                     </button>
                   </div>
                   <textarea
@@ -548,10 +569,14 @@ class NPCs extends Component {
                         </div>
                       </div>
                       <div className="col-3 text-right">
-                        <button className="btn btn-danger btn" onClick={() => this.handleNPCDelete(npc.id)}>
-                          <i className="fas fa-times" aria-hidden="true"></i>
-                          &nbsp;Delete
-                        </button>
+                        <DangerButton
+                          buttonText="Delete"
+                          additionalButtonClasses=""
+                          iconClass="fas fa-times"
+                          onDangerClick={this.handleNPCDelete}
+                          deleteId={npc.id}
+                          deleteMessage="Are you sure you want to delete this npc?"
+                        />
                       </div>
                     </div>
                     {this.props.selectedPlayer != null ? (
