@@ -157,7 +157,7 @@ class DenizenConfig extends Component {
                                 <input
                                   id={`${f.Type}_check_${f.Name}_tag_${d}`}
                                   type="checkbox"
-                                  onChange={(e) => this.handleDenizenTagCheckChange(e, f, d)}
+                                  onChange={(e) => this.handleDelveCardTagChange(e, f, d)}
                                   checked={f.Tags.includes(d)}
                                 />
                                 <label htmlFor={`${f.Type}_check_${f.Name}_tag_${d}`}>&nbsp;</label>

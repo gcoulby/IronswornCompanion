@@ -1,0 +1,35 @@
+.denizen-matrix {
+  padding: 0 1em;
+  .col-4 {
+    border: 1px solid black;
+    padding: 1em;
+  }
+  .col {
+    margin-bottom: 0.85em;
+    font-size: 9.5pt;
+  }
+
+  .denizen-matrix-rank {
+    color: $secondary;
+    font-style: italic;
+    text-align: left;
+  }
+
+  .denizen-matrix-chance {
+    color: $secondary;
+    font-style: italic;
+    text-align: right;
+  }
+
+  .denizen-matrix-name {
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .denizen-matrix-source {
+    color: $secondary;
+    margin-top: 1.1em;
+    font-style: italic;
+    text-align: center;
+  }
+}

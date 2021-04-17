@@ -50,7 +50,7 @@ import Moves from "./components/moves";
 //TODO burn mom on delve - revert progress
 
 class App extends Component {
-  version = "0.64.1";
+  version = "0.65.0";
   state = {
     save: false,
     updateCore: false,

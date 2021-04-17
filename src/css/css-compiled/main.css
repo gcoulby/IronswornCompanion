@@ -16162,7 +16162,8 @@ nav ul {
 
 .nav-post {
   background-image: url("/src/img/footer.svg");
-  transform: scale(-1, -1);
+  -webkit-transform: scale(-1, -1);
+          transform: scale(-1, -1);
   height: 50px;
   display: block;
   background-size: contain;
@@ -16202,7 +16203,8 @@ nav ul {
 
 .log-li {
   margin: 0.5em;
-  box-shadow: 1px 1px 1px #6c757d;
+  -webkit-box-shadow: 1px 1px 1px #6c757d;
+          box-shadow: 1px 1px 1px #6c757d;
 }
 
 .log-ul {
@@ -16214,7 +16216,8 @@ nav ul {
   overflow-x: hidden;
   background: #e4e4e4;
   border-radius: 5px;
-  box-shadow: inset 0 0 2px #000000;
+  -webkit-box-shadow: inset 0 0 2px #000000;
+          box-shadow: inset 0 0 2px #000000;
 }
 
 .keys {
@@ -16229,7 +16232,8 @@ nav ul {
   padding: 1em 1.5em 0.2em 1em;
   border-radius: 5px;
   border: 1px solid white;
-  box-shadow: 1px 1px 1px #eee;
+  -webkit-box-shadow: 1px 1px 1px #eee;
+          box-shadow: 1px 1px 1px #eee;
 }
 
 .world-tabs ul {
@@ -16266,6 +16270,7 @@ nav ul {
 }
 
 .card-input-element + .card {
+  -webkit-box-shadow: none;
   box-shadow: none;
   border: 2px solid transparent;
   border-radius: 4px;
@@ -16277,6 +16282,7 @@ nav ul {
 
 .card-input-element:checked + .card {
   border: 6px solid var(--dark);
+  -webkit-transition: border 0.3s;
   transition: border 0.3s;
 }
 
@@ -16285,19 +16291,35 @@ nav ul {
   color: --dark;
   font-family: "Material Icons";
   font-size: 24px;
+  -webkit-animation-name: fadeInCheckbox;
   animation-name: fadeInCheckbox;
+  -webkit-animation-duration: 0.5s;
   animation-duration: 0.5s;
+  -webkit-animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@-webkit-keyframes fadeInCheckbox {
+  from {
+    opacity: 0;
+    -webkit-transform: rotateZ(-20deg);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: rotateZ(0deg);
+  }
 }
 
 @keyframes fadeInCheckbox {
   from {
     opacity: 0;
-    transform: rotateZ(-20deg);
+    -webkit-transform: rotateZ(-20deg);
+            transform: rotateZ(-20deg);
   }
   to {
     opacity: 1;
-    transform: rotateZ(0deg);
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg);
   }
 }
 
@@ -16334,6 +16356,7 @@ nav ul {
   display: block;
   width: 200%;
   margin-left: -100%;
+  -webkit-transition: margin 0.3s ease-in 0s;
   transition: margin 0.3s ease-in 0s;
 }
 
@@ -16348,7 +16371,8 @@ nav ul {
   font-size: 14px;
   color: white;
   font-family: Trebuchet, Arial, sans-serif;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   border: 2px solid transparent;
   background-clip: padding-box;
 }
@@ -16379,6 +16403,7 @@ nav ul {
   top: 0;
   bottom: 0;
   right: 108px;
+  -webkit-transition: all 0.3s ease-in 0s;
   transition: all 0.3s ease-in 0s;
   border-radius: 3px;
 }
@@ -16457,6 +16482,7 @@ h6 {
   top: 0;
   left: 0;
   z-index: -1000;
+  -webkit-filter: grayscale(100%);
   /* Safari 6.0 - 9.0 */
   filter: brightness(40%) grayscale(100%);
 }
@@ -16475,7 +16501,8 @@ h6 {
   background-color: #fff;
   border-color: #495057 !important;
   outline: 0;
-  box-shadow: 0 0 0 0.1rem #495011 !important;
+  -webkit-box-shadow: 0 0 0 0.1rem #495011 !important;
+          box-shadow: 0 0 0 0.1rem #495011 !important;
 }
 
 .modesto {
@@ -16512,11 +16539,13 @@ h6 {
 }
 
 .card {
-  box-shadow: 2px 2px 2px black;
+  -webkit-box-shadow: 2px 2px 2px black;
+          box-shadow: 2px 2px 2px black;
 }
 
 .world-card {
-  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
 }
 
 .form-control {
@@ -16598,7 +16627,8 @@ input[type="file"] {
 .stat-card {
   padding-top: 1em;
   border-radius: 0% !important;
-  box-shadow: 4px 4px 1px black;
+  -webkit-box-shadow: 4px 4px 1px black;
+          box-shadow: 4px 4px 1px black;
   margin: 0 0em;
 }
 
@@ -16618,8 +16648,12 @@ input[type="file"] {
 }
 
 .group {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin-bottom: 2em;
 }
 
@@ -16661,7 +16695,8 @@ label {
 }
 
 label:before {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   content: " ";
   position: absolute;
   top: 0.3em;
@@ -16676,6 +16711,7 @@ label:before {
 /* Transition */
 label,
 label::before {
+  -webkit-transition: 0.25s all ease;
   transition: 0.25s all ease;
 }
 
@@ -16687,7 +16723,9 @@ label::before {
 }
 
 .slider-container .slider {
-  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
   background: none;
   border: 1px solid black;
   height: 3.3em;
@@ -16695,7 +16733,8 @@ label::before {
   outline: none;
   padding: 0;
   width: 100%;
-  box-shadow: 1px 1px 2px black;
+  -webkit-box-shadow: 1px 1px 2px black;
+          box-shadow: 1px 1px 2px black;
   cursor: pointer;
 }
 
@@ -16785,6 +16824,7 @@ label::before {
 
 /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 .slider-container .slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
   appearance: none;
   background: url("/src/img/Clip.svg");
   background-repeat: no-repeat;
@@ -16795,7 +16835,9 @@ label::before {
 }
 
 .slider-container .slider::-moz-range-thumb {
-  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
   background: url("/src/img/Clip.svg");
   background-repeat: no-repeat;
   background-position-x: center;
@@ -17112,13 +17154,15 @@ label::before {
 .progressTick-1 {
   background: url("/src/img/Check1.svg");
   background-repeat: no-repeat;
-  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
 }
 
 .progressTick-2 {
   background: url("/src/img/Check1.svg");
   background-repeat: no-repeat;
-  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
 }
 
 .progressTick-3 {
@@ -17129,7 +17173,8 @@ label::before {
 .progressTick-4 {
   background: url("/src/img/Check2.svg");
   background-repeat: no-repeat;
-  transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
 }
 
 .progressTick-10 {
@@ -17290,7 +17335,8 @@ label::before {
 }
 
 .asset-card .control_indicator:after {
-  box-sizing: unset;
+  -webkit-box-sizing: unset;
+          box-sizing: unset;
   content: "";
   position: absolute;
   display: none;
@@ -17323,44 +17369,90 @@ label::before {
   border-radius: 3rem;
   opacity: 0.6;
   z-index: 99999;
-  transform: scale(0);
+  -webkit-transform: scale(0);
+          transform: scale(0);
+}
+
+@-webkit-keyframes s-ripple {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  20% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
 }
 
 @keyframes s-ripple {
   0% {
-    transform: scale(0);
+    -webkit-transform: scale(0);
+            transform: scale(0);
   }
   20% {
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
   100% {
     opacity: 0;
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@-webkit-keyframes s-ripple-dup {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  30% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  60% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
 }
 
 @keyframes s-ripple-dup {
   0% {
-    transform: scale(0);
+    -webkit-transform: scale(0);
+            transform: scale(0);
   }
   30% {
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
   60% {
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
   100% {
     opacity: 0;
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
 }
 
 .asset-card .control-checkbox input + .control_indicator::before {
-  animation: s-ripple 250ms ease-out;
+  -webkit-animation: s-ripple 250ms ease-out;
+          animation: s-ripple 250ms ease-out;
 }
 
 .asset-card .control-checkbox input:checked + .control_indicator::before {
-  animation-name: s-ripple-dup;
+  -webkit-animation-name: s-ripple-dup;
+          animation-name: s-ripple-dup;
 }
 
 .print-show {
@@ -17389,7 +17481,8 @@ label::before {
     display: block;
   }
   .asset-card .slider-container .slider {
-    box-shadow: none;
+    -webkit-box-shadow: none;
+            box-shadow: none;
   }
   .asset-card .slider-container .slider::-webkit-slider-thumb {
     display: none;
@@ -17400,7 +17493,10 @@ label::before {
 }
 
 .MuiFormControl-root {
-  flex-direction: inherit !important;
+  -webkit-box-orient: inherit !important;
+  -webkit-box-direction: inherit !important;
+      -ms-flex-direction: inherit !important;
+          flex-direction: inherit !important;
   width: 100%;
 }
 
@@ -17433,7 +17529,8 @@ input.autocomplete-input {
 
 .asset-card-back .asset-icon {
   color: white;
-  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
   left: 50%;
   margin-left: -1.5em;
   top: 12em;
@@ -17493,6 +17590,7 @@ input.autocomplete-input {
 }
 
 #tableEditor {
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(50%, white), color-stop(50%, #e2e2e2));
   background-image: linear-gradient(white 50%, #e2e2e2 50%);
   background-size: 100% 4rem;
   font-size: 20px;
@@ -17509,7 +17607,8 @@ input.autocomplete-input {
 }
 
 input.disabled {
-  user-select: none;
+  -ms-user-select: none;
+      user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
   color: gray;
@@ -17519,7 +17618,8 @@ input.disabled {
 
 input.disabled:focus {
   border: 1px solid #ced4da !important;
-  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
   color: transparent !important;
   text-shadow: 0px 0px 0px #6c757d !important;
 }
@@ -17534,7 +17634,8 @@ input.disabled:focus {
   min-width: 300px;
   top: -20px;
   left: 50%;
-  transform: translate(-50%, -100%);
+  -webkit-transform: translate(-50%, -100%);
+          transform: translate(-50%, -100%);
   padding: 10px 20px;
   color: #ffffff;
   background-color: #212529;
@@ -17543,11 +17644,14 @@ input.disabled:focus {
   border-radius: 8px;
   position: absolute;
   z-index: 99999999;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   border: 1px solid #ffffff;
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
   visibility: hidden;
   opacity: 0;
+  -webkit-transition: opacity 0.8s;
   transition: opacity 0.8s;
 }
 
@@ -17568,10 +17672,12 @@ input.disabled:focus {
   width: 12px;
   height: 12px;
   left: 50%;
-  transform: translate(-50%, -50%) rotate(45deg);
+  -webkit-transform: translate(-50%, -50%) rotate(45deg);
+          transform: translate(-50%, -50%) rotate(45deg);
   background-color: #212529;
   border: 1px solid #ffffff;
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
   z-index: 99999999 !important;
 }
 
@@ -17612,6 +17718,7 @@ input.disabled:focus {
 #iconPicker .game-icon {
   cursor: pointer;
   position: relative;
+  -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
   font-size: 45px;
   line-height: 46px;
@@ -17625,9 +17732,11 @@ input.disabled:focus {
 }
 
 #iconPicker .game-icon:hover {
-  transform: scale(1.8);
+  -webkit-transform: scale(1.8);
+          transform: scale(1.8);
   z-index: 2;
-  box-shadow: 0 0 0 2px #fff;
+  -webkit-box-shadow: 0 0 0 2px #fff;
+          box-shadow: 0 0 0 2px #fff;
   background: #343a40;
   color: white;
 }
@@ -17885,7 +17994,8 @@ input.disabled:focus {
   height: 50px;
   background-color: #fff;
   border: 2px solid #343a40;
-  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
 }
 
 .tagTableContainer {
@@ -17905,6 +18015,7 @@ input.disabled:focus {
 
 .denizenTable th {
   background: white;
+  position: -webkit-sticky;
   position: sticky;
   top: -0.1em;
   height: 100px;
@@ -17928,8 +18039,10 @@ input.disabled:focus {
   margin: 0 0 0 18px;
   padding: 0;
   text-align: left;
-  transform: rotate(315deg);
-  transform-origin: left;
+  -webkit-transform: rotate(315deg);
+          transform: rotate(315deg);
+  -webkit-transform-origin: left;
+          transform-origin: left;
   white-space: nowrap;
   width: 20px;
 }
@@ -17974,7 +18087,9 @@ input.disabled:focus {
   border: 1px solid #aaa;
   background: #fff;
   border-radius: 0.2em;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 0 rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 0 rgba(0, 0, 0, 0.2);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 0 rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 0.275s;
   transition: all 0.275s;
 }
 
@@ -17988,22 +18103,26 @@ input.disabled:focus {
   color: #343a40;
   z-index: -1;
   line-height: 0;
+  -webkit-transition: all 0.2s;
   transition: all 0.2s;
 }
 
 .cross-check [type="checkbox"]:not(:checked) + label:after {
   opacity: 0;
+  -webkit-transform: scale(0) rotate(45deg);
   transform: scale(0) rotate(45deg);
 }
 
 .cross-check [type="checkbox"]:checked + label:after {
   opacity: 1;
+  -webkit-transform: scale(1) rotate(0);
   transform: scale(1) rotate(0);
 }
 
 .cross-check [type="checkbox"]:disabled:not(:checked) + label:before,
 .cross-check [type="checkbox"]:disabled:checked + label:before {
-  box-shadow: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
   border-color: #bbb;
   background-color: #e9e9e9;
 }
@@ -18018,7 +18137,8 @@ input.disabled:focus {
 
 .cross-check [type="checkbox"]:checked:focus + label:before,
 .cross-check [type="checkbox"]:not(:checked):focus + label:before {
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.2);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.2);
 }
 
 .delve-card {
@@ -18164,7 +18284,8 @@ input.disabled:focus {
 }
 
 .delve-card .control_indicator:after {
-  box-sizing: unset;
+  -webkit-box-sizing: unset;
+          box-sizing: unset;
   content: "";
   position: absolute;
   display: none;
@@ -18197,44 +18318,54 @@ input.disabled:focus {
   border-radius: 3rem;
   opacity: 0.6;
   z-index: 99999;
-  transform: scale(0);
+  -webkit-transform: scale(0);
+          transform: scale(0);
 }
 
 @keyframes s-ripple {
   0% {
-    transform: scale(0);
+    -webkit-transform: scale(0);
+            transform: scale(0);
   }
   20% {
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
   100% {
     opacity: 0;
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
 }
 
 @keyframes s-ripple-dup {
   0% {
-    transform: scale(0);
+    -webkit-transform: scale(0);
+            transform: scale(0);
   }
   30% {
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
   60% {
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
   100% {
     opacity: 0;
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
 }
 
 .delve-card .control-checkbox input + .control_indicator::before {
-  animation: s-ripple 250ms ease-out;
+  -webkit-animation: s-ripple 250ms ease-out;
+          animation: s-ripple 250ms ease-out;
 }
 
 .delve-card .control-checkbox input:checked + .control_indicator::before {
-  animation-name: s-ripple-dup;
+  -webkit-animation-name: s-ripple-dup;
+          animation-name: s-ripple-dup;
 }
 
 .print-show {
@@ -18289,7 +18420,8 @@ input.disabled:focus {
     margin-bottom: 6.075cm;
   }
   .delve-card .slider-container .slider {
-    box-shadow: none;
+    -webkit-box-shadow: none;
+            box-shadow: none;
   }
   .delve-card .slider-container .slider::-webkit-slider-thumb {
     display: none;
@@ -18300,7 +18432,10 @@ input.disabled:focus {
 }
 
 .MuiFormControl-root {
-  flex-direction: inherit !important;
+  -webkit-box-orient: inherit !important;
+  -webkit-box-direction: inherit !important;
+      -ms-flex-direction: inherit !important;
+          flex-direction: inherit !important;
   width: 100%;
 }
 
@@ -18333,7 +18468,8 @@ input.autocomplete-input {
 
 .delve-card-back .delve-icon {
   color: white;
-  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
   left: 50%;
   margin-left: -1.5em;
   top: 12em;
@@ -18550,7 +18686,8 @@ input.autocomplete-input {
 }
 
 .foe-card .control_indicator:after {
-  box-sizing: unset;
+  -webkit-box-sizing: unset;
+          box-sizing: unset;
   content: "";
   position: absolute;
   display: none;
@@ -18583,44 +18720,54 @@ input.autocomplete-input {
   border-radius: 3rem;
   opacity: 0.6;
   z-index: 99999;
-  transform: scale(0);
+  -webkit-transform: scale(0);
+          transform: scale(0);
 }
 
 @keyframes s-ripple {
   0% {
-    transform: scale(0);
+    -webkit-transform: scale(0);
+            transform: scale(0);
   }
   20% {
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
   100% {
     opacity: 0;
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
 }
 
 @keyframes s-ripple-dup {
   0% {
-    transform: scale(0);
+    -webkit-transform: scale(0);
+            transform: scale(0);
   }
   30% {
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
   60% {
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
   100% {
     opacity: 0;
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
 }
 
 .foe-card .control-checkbox input + .control_indicator::before {
-  animation: s-ripple 250ms ease-out;
+  -webkit-animation: s-ripple 250ms ease-out;
+          animation: s-ripple 250ms ease-out;
 }
 
 .foe-card .control-checkbox input:checked + .control_indicator::before {
-  animation-name: s-ripple-dup;
+  -webkit-animation-name: s-ripple-dup;
+          animation-name: s-ripple-dup;
 }
 
 .print-show {
@@ -18675,7 +18822,8 @@ input.autocomplete-input {
     margin-bottom: 0.775cm;
   }
   .foe-card .slider-container .slider {
-    box-shadow: none;
+    -webkit-box-shadow: none;
+            box-shadow: none;
   }
   .foe-card .slider-container .slider::-webkit-slider-thumb {
     display: none;
@@ -18686,7 +18834,10 @@ input.autocomplete-input {
 }
 
 .MuiFormControl-root {
-  flex-direction: inherit !important;
+  -webkit-box-orient: inherit !important;
+  -webkit-box-direction: inherit !important;
+      -ms-flex-direction: inherit !important;
+          flex-direction: inherit !important;
   width: 100%;
 }
 
@@ -18719,7 +18870,8 @@ input.autocomplete-input {
 
 .foe-card-back .foe-icon {
   color: white;
-  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
   left: 50%;
   margin-left: -1.5em;
   top: 12em;
@@ -18827,6 +18979,8 @@ input.autocomplete-input {
     display: none !important;
   }
   .desktop-menu {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
     display: flex !important;
   }
 }
@@ -18855,3 +19009,42 @@ input.autocomplete-input {
   height: 50vh;
   overflow: auto;
 }
+
+.denizen-matrix {
+  padding: 0 1em;
+}
+
+.denizen-matrix .col-4 {
+  border: 1px solid black;
+  padding: 1em;
+}
+
+.denizen-matrix .col {
+  margin-bottom: 0.85em;
+  font-size: 9.5pt;
+}
+
+.denizen-matrix .denizen-matrix-rank {
+  color: #6c757d;
+  font-style: italic;
+  text-align: left;
+}
+
+.denizen-matrix .denizen-matrix-chance {
+  color: #6c757d;
+  font-style: italic;
+  text-align: right;
+}
+
+.denizen-matrix .denizen-matrix-name {
+  font-weight: 700;
+  text-align: center;
+}
+
+.denizen-matrix .denizen-matrix-source {
+  color: #6c757d;
+  margin-top: 1.1em;
+  font-style: italic;
+  text-align: center;
+}
+/*# sourceMappingURL=main.css.map */

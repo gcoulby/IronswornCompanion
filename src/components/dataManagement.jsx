@@ -8,6 +8,7 @@ class DataManager extends Component {
       allDataSelected: true,
       assetsDataSelected: true,
       delveCardsDataSelected: true,
+      delvesDataSelected: true,
       foesDataSelected: true,
       locationsDataSelected: true,
       logsDataSelected: true,
@@ -19,6 +20,7 @@ class DataManager extends Component {
       allDataSelected: true,
       assetsDataSelected: true,
       delveCardsDataSelected: true,
+      delvesDataSelected: true,
       foesDataSelected: true,
       locationsDataSelected: true,
       logsDataSelected: true,
@@ -32,6 +34,7 @@ class DataManager extends Component {
     // this.state.data.all = props.gamestate;
     this.state.data.assets = props.gamestate.assets;
     this.state.data.delveCards = props.gamestate.delveCards;
+    this.state.data.delves = props.gamestate.delves;
     this.state.data.foes = props.gamestate.foes;
     this.state.data.locations = props.gamestate.locations;
     this.state.data.logs = props.gamestate.logs;

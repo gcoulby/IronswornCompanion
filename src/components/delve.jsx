@@ -1,11 +1,15 @@
 import { faGrinTongueSquint } from "@fortawesome/free-solid-svg-icons";
 import { Tab, Tabs } from "@material-ui/core";
 import React, { Component } from "react";
+import { Col, Row } from "react-bootstrap";
 import DangerButton from "./dangerButton";
+import DelveCard from "./delveCard";
+import DenizenMatrix from "./denizenMatrix";
 import DiceResult from "./diceResult";
 import DiceRoller from "./dice_roller";
 import EnterTheFray from "./enterTheFray";
 import FoeCard from "./foeCard";
+import Modal from "./modal";
 import Oracles from "./oracles";
 import ProgressTrack from "./progressTrack";
 import RollButton from "./rollButton";
@@ -114,6 +118,7 @@ class Delve extends Component {
         progressRoll: null,
         activeFoes: [],
         nextFoeId: 0,
+        denizens: this.getDenizens(this.props.newDelve.theme, this.props.newDelve.domain),
       },
     };
     newDelve.theme = "";
@@ -428,11 +433,95 @@ class Delve extends Component {
   };
 
   getDenizen = () => {
-    let rn = this.diceRoller.roll([this.props.foes.length], false, false)[0].value;
-    let denizen = this.props.foes[rn];
-
-    return denizen;
+    let rn = this.diceRoller.roll([100], true, false)[0].value;
+    let denizen = this.getSelectedDelve()
+      .denizens.filter((d) => d.Min <= rn)
+      .slice(-1)[0];
+    return denizen.denizen;
   };
+
+  getDenizens = (theme, domain) => {
+    let tempDenizens = [];
+    //Set the blank matrix
+    const denizens = [
+      { Min: 1, Max: 27, Rank: "Very Common", denizen: {} },
+      { Min: 28, Max: 41, Rank: "Common", denizen: {} },
+      { Min: 42, Max: 55, Rank: "Common", denizen: {} },
+      { Min: 56, Max: 69, Rank: "Common", denizen: {} },
+      { Min: 70, Max: 75, Rank: "Uncommon", denizen: {} },
+      { Min: 76, Max: 81, Rank: "Uncommon", denizen: {} },
+      { Min: 82, Max: 87, Rank: "Uncommon", denizen: {} },
+      { Min: 88, Max: 93, Rank: "Uncommon", denizen: {} },
+      { Min: 94, Max: 95, Rank: "Rare", denizen: {} },
+      { Min: 96, Max: 97, Rank: "Rare", denizen: {} },
+      { Min: 98, Max: 99, Rank: "Rare", denizen: {} },
+      { Min: 100, Max: 100, Rank: "Unforeseen", denizen: {} },
+    ];
+    //Push denizens into a temp table if they share tags with themes and/or domains
+    let themeCard = this.props.delveCards.find((t) => t.Name == theme);
+    let domainCard = this.props.delveCards.find((d) => d.Name == domain);
+    this.props.foes.map((f) => {
+      f.Tags.map((t) => {
+        if (themeCard.Tags.includes(t)) {
+          tempDenizens.push(f);
+          tempDenizens.push(f);
+        }
+        if (domainCard.Tags.includes(t)) {
+          tempDenizens.push(f);
+          tempDenizens.push(f);
+        }
+      });
+    });
+    //suffle the denizens
+    this.shuffleArray(tempDenizens);
+    //remove the extreme and epics from the temp table so that they don't come out as commons
+    let filteredDenizens = tempDenizens.filter((d) => d.Rank != "Extreme" && d.Rank != "Epic");
+    let denizenFilters = [];
+    let rank = 0;
+    //populate the denizen matrix based on rank, ensuring that e.g., common denizens do not come out as rare
+
+    denizens.map((d) => {
+      switch (d.Rank) {
+        case "Very Common":
+          rank = 0;
+          break;
+        case "Common":
+          rank = 1;
+          break;
+        case "Uncommon":
+          rank = 2;
+          break;
+        case "Rare":
+          filteredDenizens = tempDenizens;
+          rank = 3;
+          break;
+        case "Unforeseen":
+          filteredDenizens = tempDenizens;
+          rank = 4;
+          break;
+      }
+      let df = [];
+      denizenFilters.filter((f) => {
+        if (f.Rank < rank) {
+          if (!df.includes(f.Name)) return df.push(f.Name);
+        }
+      });
+      filteredDenizens = filteredDenizens.filter((d) => !df.includes(d.Name));
+      let rn = Math.floor(Math.random() * filteredDenizens.length);
+      d.denizen = filteredDenizens[rn];
+      denizenFilters.push({ Rank: rank, Name: filteredDenizens[rn]?.Name });
+    });
+    return denizens;
+  };
+
+  shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+  }
 
   fightDenizen = () => {
     let selectedDelve = this.getSelectedDelve();
@@ -708,6 +797,47 @@ class Delve extends Component {
               "{this.getPreposition(this.getSelectedDelve().theme)}&nbsp;
               {this.getSelectedDelve().theme} {this.getSelectedDelve().domain}"
             </h3>
+            <div className="row text-center">
+              <div className="col-4">
+                <Modal
+                  modalWidth={500}
+                  modalHeight={700}
+                  buttonText="Show Theme Card"
+                  modalComponent={
+                    <DelveCard
+                      delveCard={this.props.delveCards.find((d) => d.Name === this.getSelectedDelve().theme)}
+                    />
+                  }
+                  icon="game-icon game-icon-card-pick icon-md"
+                  title="Delve Theme"
+                />
+              </div>
+              <div className="col-4">
+                <Modal
+                  modalWidth={500}
+                  modalHeight={700}
+                  buttonText="Show Domain Card"
+                  modalComponent={
+                    <DelveCard
+                      delveCard={this.props.delveCards.find((d) => d.Name === this.getSelectedDelve().domain)}
+                    />
+                  }
+                  icon="game-icon game-icon-card-pick icon-md"
+                  title="Delve Theme"
+                />
+              </div>
+              <div className="col-4">
+                <Modal
+                  modalWidth={1000}
+                  modalHeight={600}
+                  buttonText="Show Denizen Matrix"
+                  modalComponent={<DenizenMatrix denizens={this.getSelectedDelve().denizens} />}
+                  icon="game-icon game-icon-meeple-army icon-md"
+                  title="Denizen Matrix"
+                />
+                {/* <DenizenMatrix /> */}
+              </div>
+            </div>
             <div className="row">
               <div className="col text-center ">
                 {/* <h3 className="font-italic  text-secondary">
