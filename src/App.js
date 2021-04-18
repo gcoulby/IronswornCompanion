@@ -331,7 +331,6 @@ class App extends Component {
             f.Features = padStats(f.Features);
             f.Drives = padStats(f.Drives);
             delete f.Page;
-            console.log(f);
             foes.push(f);
           });
         });
@@ -345,7 +344,6 @@ class App extends Component {
               foeIcons.push(f2);
               return f2;
             });
-            console.log(d2);
             // let foesWithTags = _.merge(foes, Tags.Foes);
             // let foesWithTagsAndIcons = _.merge(foes, foeIcons);
             // this.state.foes = _.merge(foes, Tags.Foes);
