@@ -229,7 +229,7 @@ class App extends Component {
       this.state.moves.length > 0
     ) {
       this.saveGameState();
-      // window.location.reload("/");
+      window.location.reload("/");
     }
   };
 
@@ -311,8 +311,7 @@ class App extends Component {
             f.Type = c.Name;
             f.core = true;
             f.front = true;
-            // f.Tags = [];
-            f.Tags = Tags.Foes.find((t) => t.id === f.id);
+            f.Tags = Tags.Foes.find((t) => t.id === f.id)?.Tags ?? [];
             f.complete = false;
             f.progress = 0;
             f.progressRoll = null;
@@ -332,6 +331,7 @@ class App extends Component {
             f.Features = padStats(f.Features);
             f.Drives = padStats(f.Drives);
             delete f.Page;
+            console.log(f);
             foes.push(f);
           });
         });
@@ -349,7 +349,8 @@ class App extends Component {
             // let foesWithTags = _.merge(foes, Tags.Foes);
             // let foesWithTagsAndIcons = _.merge(foes, foeIcons);
             // this.state.foes = _.merge(foes, Tags.Foes);
-            let foesWithTagsAndIcons = _.merge(_.keyBy(foes, "id"), _.keyBy(foeIcons, "userId"));
+            let foesWithTagsAndIcons = _.merge(_.keyBy(foes, "id"), _.keyBy(foeIcons, "id"));
+            console.log(foesWithTagsAndIcons);
             this.state.foes = _.values(foesWithTagsAndIcons);
             this.state.foeCardEditorSelectedFoe = new DefaultFoe();
             this.saveGameState();
