@@ -44,13 +44,12 @@ import OracleModal from "./components/oracleModal";
 import OracleRoller from "./components/oracleRoller";
 import Moves from "./components/moves";
 
-//TODO moves
 //TODO Region roll
 //TODO delve threats
 //TODO burn mom on delve - revert progress
 
 class App extends Component {
-  version = "0.66.5";
+  version = "0.67.0";
   state = {
     save: false,
     updateCore: false,
@@ -230,7 +229,7 @@ class App extends Component {
       this.state.moves.length > 0
     ) {
       this.saveGameState();
-      window.location.reload("/");
+      // window.location.reload("/");
     }
   };
 
@@ -307,13 +306,13 @@ class App extends Component {
       .then((data) => {
         const foes = [];
         data.Categories.map((c) => {
-          console.log(c);
           c.Foes.map((f) => {
             f.id = `core-foe-${c.Name.toLowerCase()}-${f.Name.toLowerCase().replace(" ", "-")}`;
             f.Type = c.Name;
             f.core = true;
             f.front = true;
-            f.Tags = [];
+            // f.Tags = [];
+            f.Tags = Tags.Foes.find((t) => t.id === f.id);
             f.complete = false;
             f.progress = 0;
             f.progressRoll = null;
@@ -342,14 +341,16 @@ class App extends Component {
           .then((d2) => {
             d2.map((f2) => {
               if (f2.Type == "Ironlander") f2.Type = "Ironlanders";
+              f2.id = `core-foe-${f2.Type.toLowerCase()}-${f2.Name.toLowerCase().replace(" ", "-")}`;
               foeIcons.push(f2);
               return f2;
             });
-
-            let foesWithTags = _.merge(foes, Tags.Foes);
-            let foesWithTagsAndIcons = _.merge(foesWithTags, foeIcons);
+            console.log(d2);
+            // let foesWithTags = _.merge(foes, Tags.Foes);
+            // let foesWithTagsAndIcons = _.merge(foes, foeIcons);
             // this.state.foes = _.merge(foes, Tags.Foes);
-            this.state.foes = foesWithTagsAndIcons;
+            let foesWithTagsAndIcons = _.merge(_.keyBy(foes, "id"), _.keyBy(foeIcons, "userId"));
+            this.state.foes = _.values(foesWithTagsAndIcons);
             this.state.foeCardEditorSelectedFoe = new DefaultFoe();
             this.saveGameState();
             this.checkState();
@@ -745,6 +746,21 @@ class App extends Component {
                         ></div>
                       </div>
                     </div>
+                  </div>
+                  <div className="alert alert-secondary mt-4">
+                    <p>
+                      This app has been made publically available in an alpha state for testing purposes. As such, there
+                      are expected to be bugs in the application.
+                    </p>
+                    <p>Should you find a bug please report it here:</p>
+                    <a
+                      className="btn btn-dark"
+                      href="https://docs.google.com/spreadsheets/d/1GXvsk8f_Kx_lVNN78J1027Np0T7-pF1pLZsqnJA6-fE/edit#gid=1386834576"
+                      rel="noreferrer noopener"
+                      target="_blank"
+                    >
+                      <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp; Report an Issue
+                    </a>
                   </div>
                   <div id="bg-image"></div>
                   {/* <div id="welcome-page-notice" className="alert alert-secondary my-4">
