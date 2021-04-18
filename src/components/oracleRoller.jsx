@@ -22,6 +22,10 @@ class OracleRoller extends Component {
     this.setState({ outputValue: rand });
   }
 
+  clearOutputValue = () => {
+    this.setState({ outputValue: "" });
+  };
+
   handleRollHistoryRowClick = (result) => {
     const outputValue = `${this.state.outputValue} ${result}`;
     this.setState({ outputValue });
@@ -96,7 +100,7 @@ class OracleRoller extends Component {
                       <div className="col mt-4">
                         <Modal
                           modalWidth={1000}
-                          modalHeight={700}
+                          modalHeight={800}
                           buttonText="Roll History (newest first)"
                           modalComponent={
                             <React.Fragment>
@@ -105,6 +109,9 @@ class OracleRoller extends Component {
                                 clipboard. To copy multiple results at once (e.g., Action + Theme) click multiple rows
                                 to add each result to the box. You can then click the result box to copy.
                               </div>
+                              <button className="btn btn-dark" onClick={() => this.clearOutputValue()}>
+                                <i class="fa fa-times" aria-hidden="true"></i>&nbsp; Clear
+                              </button>
                               <textarea
                                 type="text"
                                 className="form-control my-4"

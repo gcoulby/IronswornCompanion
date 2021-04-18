@@ -249,9 +249,9 @@ class Characters extends Component {
             <div className="row">
               <div className="col">
                 <div className="alert alert-secondary">
-                  There are five stats in total. Each is given a value from 1 to 4 (Level depending). To start, arrange
-                  the bonuses from the table below across your five stats in any order You can also roll on the oracle
-                  to leave your primary stat choice down to fate.
+                  There are five stats in total. Each is given a value from 1 to 4 (Level depending). To start, choose a
+                  difficulty and place the bonuses for that difficulty across your five stats in any order. You can also
+                  roll on the oracle to leave your primary stat choice down to fate.
                   <div className="difficulty-tags">
                     <div className="row">
                       <div className="col">
