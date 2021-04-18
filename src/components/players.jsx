@@ -36,7 +36,8 @@ class Characters extends Component {
     player.failureRoll = null;
     player.inventory = [];
     player.stats = this.props.newPlayer.Stats.map((s) => {
-      if (s.value === "") s.value = 0;
+      if (s.value === "" || s.value < 0) s.value = 0;
+      else if (s.value > 4) s.value = 4;
       return s;
     });
     if (this.props.newPlayer.Name != "" && !players.find((p) => p.name == this.props.newPlayer.Name)) {
