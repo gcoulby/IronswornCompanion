@@ -296,7 +296,7 @@ $end: 20;
   }
   .btn {
     border-radius: 0;
-    min-width: 20rem;
+    // min-width: 20rem;
   }
 
   .btn-secondary {
@@ -322,5 +322,13 @@ $end: 20;
     border-top-width: 1.4em;
     border-left: 1.4em solid $secondary;
     clear: both;
+  }
+
+  .btn-group-justified {
+    display: flex;
+    .btn {
+      flex-grow: 1;
+      margin-top: 0;
+    }
   }
 }

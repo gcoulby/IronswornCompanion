@@ -229,7 +229,7 @@ class App extends Component {
       this.state.moves.length > 0
     ) {
       this.saveGameState();
-      window.location.reload("/");
+      // window.location.reload("/");
     }
   };
 
@@ -307,6 +307,7 @@ class App extends Component {
         const foes = [];
         data.Categories.map((c) => {
           c.Foes.map((f) => {
+            console.log(f);
             f.id = `core-foe-${c.Name.toLowerCase()}-${f.Name.toLowerCase().replace(" ", "-")}`;
             f.Type = c.Name;
             f.core = true;

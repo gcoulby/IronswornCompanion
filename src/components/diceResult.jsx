@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import ChallengeDie from "./challengeDie";
+import GraphicDice from "./graphicDice";
 import RollIcon from "./rollIcon";
 class DiceResult extends Component {
   state = {
@@ -63,7 +65,21 @@ class DiceResult extends Component {
             <React.Fragment>{this.props.diceResult.ResultText}</React.Fragment>
           )} */}
 
-          {this.canBurn() ? this.state.resultText : this.getHitType()}
+          {this.canBurn() ? (
+            this.state.resultText
+          ) : (
+            <React.Fragment>
+              {this.getHitType()}{" "}
+              {this.props.hidePreview ? (
+                React.Fragment
+              ) : (
+                <React.Fragment>
+                  ({this.props.diceResult.ActionValue} vs {this.props.diceResult.Challenge1Value} &amp;{" "}
+                  {this.props.diceResult.Challenge2Value})
+                </React.Fragment>
+              )}
+            </React.Fragment>
+          )}
           <div className="top">
             <h3>{this.getHitType()}</h3>
             <React.Fragment>
@@ -89,12 +105,19 @@ class DiceResult extends Component {
               ) : (
                 <React.Fragment>
                   {/* <span>{this.props.diceResult.RollType} Score:</span> */}
-                  <p>Progress: {this.props.diceResult.ActionScore}</p>
+                  {/* <p>Progress: {this.props.diceResult.ActionScore}</p> */}
                 </React.Fragment>
               )}
 
-              <p>Challenge Die A: {this.props.diceResult.Challenge1Value}</p>
-              <p>Challenge Die B: {this.props.diceResult.Challenge2Value}</p>
+              <div className="graphic-dice">
+                <GraphicDice
+                  ActionScore={this.props.diceResult.ActionScore}
+                  Challenge1Value={this.props.diceResult.Challenge1Value}
+                  Challenge2Value={this.props.diceResult.Challenge2Value}
+                />
+                {/* <ChallengeDie value={this.props.diceResult.Challenge2Value} />
+                <ChallengeDie value={this.props.diceResult.Challenge1Value} /> */}
+              </div>
             </React.Fragment>
           </div>
         </div>

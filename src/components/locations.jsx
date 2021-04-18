@@ -301,11 +301,12 @@ class Locations extends Component {
               </div>
             </div>
 
-            <p className="mt-3">
-              Click on the map to choose an X,Y coordinate for your new location. Then fill out the details for each
-              field either by typing into the boxes or consulting the oracle. You can edit locations by clicking on a
-              map pin and changing the details.
-            </p>
+            <div className="alert alert-secondary">
+              <strong>Click on the map to choose an X,Y coordinate for your new location.</strong> Then fill out the
+              details for each field either by typing into the boxes or consulting the oracle. You can edit locations by
+              clicking on a map pin and changing the details. The location <strong>MUST</strong> have an XY coordinate
+              and a name in order to save.
+            </div>
 
             <input type="hidden" className="form-control" value={this.state.id} disabled />
 

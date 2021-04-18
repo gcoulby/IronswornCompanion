@@ -25,6 +25,7 @@ class RollButton extends Component {
               postRollAction={this.props.postRollAction}
               selectedPlayer={this.props.selectedPlayer}
               color={this.props.resultColor ? this.props.resultColor : "btn-outline-dark"}
+              hidePreview={this.props.hidePreview}
             />
           ) : (
             <div className={`btn ${this.props.resultColor ? this.props.resultColor : "btn-outline-dark"}`}>Result</div>

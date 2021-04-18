@@ -255,26 +255,26 @@ class Characters extends Component {
                   roll on the oracle to leave your primary stat choice down to fate.
                   <div className="difficulty-tags">
                     <div className="row">
-                      <div className="col">
-                        <div className="btn-group">
-                          <button className="btn btn-secondary btn-tag">CHALLENGING</button>
-                          <button className="btn btn-dark btn-tag">4,3,3,2,2</button>
+                      <div className="col-12">
+                        <div className="btn-group btn-group-justified">
+                          <button className="btn btn-block btn-secondary btn-tag">CHALLENGING</button>
+                          <button className="btn btn-block btn-dark btn-tag">4,3,3,2,2</button>
                         </div>
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col">
-                        <div className="btn-group">
-                          <button className="btn btn-secondary btn-tag">PERILOUS (DEFAULT)</button>
-                          <button className="btn btn-dark btn-tag">3,2,2,1,1</button>
+                      <div className="col-12">
+                        <div className="btn-group btn-group-justified">
+                          <button className="btn btn-block btn-secondary btn-tag">PERILOUS (DEFAULT)</button>
+                          <button className="btn btn-block btn-dark btn-tag">3,2,2,1,1</button>
                         </div>
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col">
-                        <div className="btn-group">
-                          <button className="btn btn-secondary btn-tag">GRIM</button>
-                          <button className="btn btn-dark btn-tag">3,2,1,1,0</button>
+                      <div className="col-12">
+                        <div className="btn-group btn-group-justified">
+                          <button className="btn btn-block btn-secondary btn-tag">GRIM</button>
+                          <button className="btn btn-block btn-dark btn-tag">3,2,1,1,0</button>
                         </div>
                       </div>
                     </div>

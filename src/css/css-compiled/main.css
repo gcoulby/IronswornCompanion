@@ -17135,7 +17135,6 @@ label::before {
 
 .difficulty-tags .btn {
   border-radius: 0;
-  min-width: 20rem;
 }
 
 .difficulty-tags .btn-secondary {
@@ -17162,6 +17161,19 @@ label::before {
   border-top-width: 1.4em;
   border-left: 1.4em solid #6c757d;
   clear: both;
+}
+
+.difficulty-tags .btn-group-justified {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.difficulty-tags .btn-group-justified .btn {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  margin-top: 0;
 }
 
 .progressTrack {
@@ -19043,6 +19055,57 @@ input.autocomplete-input {
 .oracle-results {
   height: 50vh;
   overflow: auto;
+}
+
+.challenge-dice {
+  width: 60px;
+  position: relative;
+  float: left;
+  margin: 0.5em;
+}
+
+.challenge-dice .dice-value {
+  position: absolute;
+  color: black;
+  left: 25px;
+  top: 12px;
+}
+
+.graphic-dice {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.graphic-dice .action-score {
+  width: 40px;
+  height: 40px;
+  display: block;
+  border-radius: 50%;
+  background: 414042;
+  margin-top: 1.5em;
+  border: 2px solid #cacaca;
+  color: #343a40;
+}
+
+.graphic-dice .action-score span {
+  position: relative;
+  top: 2px;
+  left: 2px;
+  width: 32px;
+  height: 32px;
+  display: block;
+  border-radius: 50%;
+  background: white;
+  line-height: 2.5em;
+}
+
+.graphic-dice .graphicDicePlus {
+  display: block;
+  width: 1.5em;
+  line-height: 4em;
+  margin-left: 0.5em;
+  font-size: 15pt;
 }
 
 .denizen-matrix {

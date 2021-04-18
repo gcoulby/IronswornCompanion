@@ -249,7 +249,7 @@ class NPCs extends Component {
               <RollIcon /> Random NPC
             </button>
             <div className="row">
-              <div className="col-6">
+              <div className="col-md-6 col-sm-12">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <button
@@ -358,7 +358,7 @@ class NPCs extends Component {
                   </select>
                 </div>
               </div>
-              <div className="col-6">
+              <div className="col-md-6 col-sm-12">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <button
@@ -465,7 +465,7 @@ class NPCs extends Component {
         <TitleBlock title="NPCs" />
 
         <div className="row my-4">
-          <div className="col-6">
+          <div className="col-md-12 col-lg-6">
             <div className="input-group mb-3">
               <div className="input-group-prepend">
                 <label className="btn btn-dark btn-tag">Filter by Location</label>
@@ -510,21 +510,21 @@ class NPCs extends Component {
                   <div className="card-body">
                     <h4 className="mb-2">{npc.name}</h4>
                     <div className="row">
-                      <div className="col-6">
+                      <div className="col-md-6 col-sm-12">
                         <span className="modesto">Race: </span>
                         <span>{npc.race}</span>
                       </div>
-                      <div className="col-6">
+                      <div className="col-md-6 col-sm-12">
                         <span className="modesto">Role: </span>
                         <span>{npc.role}</span>
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-6">
+                      <div className="col-md-6 col-sm-12">
                         <span className="modesto">Goal: </span>
                         <span>{npc.goal}</span>
                       </div>
-                      <div className="col-6">
+                      <div className="col-md-6 col-sm-12">
                         <span className="modesto">Descriptor: </span>
                         <span>{npc.descriptor}</span>
                       </div>
@@ -548,7 +548,7 @@ class NPCs extends Component {
                       </div>
                     </div>
                     <div className="row mt-4">
-                      <div className="col-9">
+                      <div className="col-md-9 col-sm-12">
                         <div className="input-group mb-3">
                           <div className="input-group-prepend">
                             <label className="btn btn-dark btn-tag btn-tag-sm">Last Location</label>
@@ -568,7 +568,7 @@ class NPCs extends Component {
                           </select>
                         </div>
                       </div>
-                      <div className="col-3 text-right">
+                      <div className="col-md-3 col-sm-12 text-right">
                         <DangerButton
                           buttonText="Delete"
                           additionalButtonClasses=""

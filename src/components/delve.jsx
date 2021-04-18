@@ -1030,6 +1030,7 @@ class Delve extends Component {
                       disabled={this.getSelectedDelve().step != 2}
                       roll={this.getSelectedDelve().actionRoll}
                       onRoll={this.handleOnActionRollClicked}
+                      hidePreview={true}
                     />
 
                     <br />
