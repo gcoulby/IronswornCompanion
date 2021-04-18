@@ -98,7 +98,7 @@ class Locations extends Component {
       const location = this.props.locations[i];
       var loc = L.latLng([location.y, location.x]);
       let marker = L.marker(loc, { icon: myIcon });
-      marker.on("click", (e) => this.onMarkerClick(e));
+      marker.on("click", () => this.onMarkerClick(location.id));
       markers.push({
         marker: marker,
         locationId: location.id,
@@ -166,13 +166,18 @@ class Locations extends Component {
     this.setXY(x, y);
   };
 
-  onMarkerClick = (ev) => {
-    let popup = ev.target._popup._content.toString();
-    let id = popup.substr(0, popup.indexOf(":"));
-    let x = Math.round(ev.latlng.lng);
-    let y = Math.round(ev.latlng.lat);
+  selectorChanged = (id) => {
+    console.log(id);
+    if (id != -1) this.onMarkerClick(id);
+    else {
+      this.clearState();
+    }
+  };
 
+  onMarkerClick = (id) => {
     let location = this.props.locations.find((l) => l.id == id);
+    let x = location.x;
+    let y = location.y;
     this.setState({ id: location.id });
     this.setState({ name: location.name });
     this.setState({ descriptor: location.descriptor });
@@ -309,6 +314,25 @@ class Locations extends Component {
             </div>
 
             <input type="hidden" className="form-control" value={this.state.id} disabled />
+
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <label className="btn btn-dark btn-tag">Select Location</label>
+              </div>
+
+              <select
+                className="form-control"
+                value={this.state.id}
+                onChange={(e) => this.selectorChanged(e.target.value)}
+              >
+                <option value="-1">Select Location (can also click on the map)</option>
+                {this.props.locations.map((l) => (
+                  <option key={l.id} value={l.id}>
+                    {l.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             <div className="input-group mb-3">
               <label className="input-group-prepend btn btn-dark btn-tag">X:</label>
