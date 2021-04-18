@@ -3,6 +3,8 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import RollIcon from "./rollIcon";
 import DiceRoller from "./dice_roller";
+import Modal from "./modal";
+
 class OracleRoller extends Component {
   state = {
     outputValue: "",
@@ -19,6 +21,11 @@ class OracleRoller extends Component {
     let rand = this.props.oracles.getRandomPromptFromOracleTable(tbl);
     this.setState({ outputValue: rand });
   }
+
+  handleRollHistoryRowClick = (result) => {
+    const outputValue = `${this.state.outputValue} ${result}`;
+    this.setState({ outputValue });
+  };
 
   handleAskOracleRoll(min) {
     let rn = this.diceRoller.roll([100], true, false)[0].value;
@@ -86,7 +93,49 @@ class OracleRoller extends Component {
                 <Tab eventKey={`oracle_source_${src}`} title={src}>
                   <React.Fragment>
                     <div className="row">
-                      <div className="col">
+                      <div className="col mt-4">
+                        <Modal
+                          modalWidth={1000}
+                          modalHeight={700}
+                          buttonText="Roll History (newest first)"
+                          modalComponent={
+                            <React.Fragment>
+                              <div className="alert alert-secondary">
+                                Click on a result to add it to the result box. Then click the result box to copy it to
+                                clipboard. To copy multiple results at once (e.g., Action + Theme) click multiple rows
+                                to add each result to the box. You can then click the result box to copy.
+                              </div>
+                              <textarea
+                                type="text"
+                                className="form-control my-4"
+                                placeholder="Result (click to copy)"
+                                aria-label="Character Descriptor"
+                                aria-describedby="basic-addon2"
+                                value={this.state.outputValue}
+                                onFocus={(e) => this.handleOnClick(e)}
+                                title="Click to copy"
+                              />
+                              <table className="table table-striped table-hover">
+                                <thead>
+                                  <th>Theme</th>
+                                  <th>Table</th>
+                                  <th>Result</th>
+                                </thead>
+                                {this.props.oracles.rollHistory.map((r) => (
+                                  <React.Fragment>
+                                    <tr onClick={() => this.handleRollHistoryRowClick(r.Result)}>
+                                      <td>{r.Theme}</td>
+                                      <td>{r.Table}</td>
+                                      <td>{r.Result}</td>
+                                    </tr>
+                                  </React.Fragment>
+                                ))}
+                              </table>
+                            </React.Fragment>
+                          }
+                          icon="fas fa-history"
+                          title="Roll History"
+                        />
                         <textarea
                           type="text"
                           className="form-control my-4"

@@ -316,9 +316,25 @@ class FoeEditor extends Component {
                           placeholder="Foe Description"
                           aria-label="Name"
                           aria-describedby="basic-addon2"
-                          rows="9"
+                          rows="6"
                           value={this.props.selectedFoe.Description}
                           onChange={(e) => this.handleOnTextInputChange(e, "Description")}
+                        />
+                      </div>
+                      <span className="modesto mt-3">Quest</span>
+                      <div className="input-group mb-3">
+                        {/* <div className="input-group-prepend">
+                          <label className="btn btn-dark btn-tag">Summary</label>
+                        </div> */}
+                        <textarea
+                          type="text"
+                          className="form-control"
+                          placeholder="Foe Quest"
+                          aria-label="Name"
+                          aria-describedby="basic-addon2"
+                          rows="4"
+                          value={this.props.selectedFoe.Quest}
+                          onChange={(e) => this.handleOnTextInputChange(e, "Quest")}
                         />
                       </div>
                     </div>

@@ -1,3 +1,4 @@
+import { result } from "lodash-es";
 import DiceRoller from "./dice_roller";
 
 class Oracles {
@@ -8,6 +9,7 @@ class Oracles {
   selectedOracleTheme = "";
   editOracleList = "";
   editOracleCursorPosition = 0;
+  rollHistory = [];
   tables = [
     {
       source: "Ironsworn",
@@ -3633,6 +3635,7 @@ class Oracles {
     this.editOracleList = state.editOracleList;
     this.newOracleTableName = state.newOracleTableName;
     this.tables = state.tables;
+    this.rollHistory = state.rollHistory;
     this.selectedOracleSource = state.selectedOracleSource;
     this.selectedOracleTheme = state.selectedOracleTheme;
     this.selectedOracleTable = state.selectedOracleTable;
@@ -3655,7 +3658,14 @@ class Oracles {
   getRandomPromptFromOracleTable(table) {
     let oracle = this.tables.find((o) => o.title === table);
     let rn = this.diceRoller.roll([oracle.prompts.length]);
-    return oracle.prompts[rn[0].value];
+    let result = oracle.prompts[rn[0].value];
+    this.addRollHistory(oracle.theme, oracle.title, result);
+    return result;
+  }
+
+  addRollHistory(theme, table, result) {
+    this.rollHistory.unshift({ Theme: theme, Table: table, Result: result });
+    if (this.rollHistory.length > 15) this.rollHistory = this.rollHistory.slice(0, 14);
   }
 
   getOracleTablePrompts(table) {
