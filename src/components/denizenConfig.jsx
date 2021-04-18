@@ -70,7 +70,7 @@ class DenizenConfig extends Component {
                                 id={`${f.Type}_check_${f.Name}_tag_${d}`}
                                 type="checkbox"
                                 onChange={(e) => this.handleFoeTagCheckChange(e, f, d)}
-                                checked={f.Tags.includes(d)}
+                                checked={f.Tags?.includes(d)}
                               />
                               <label htmlFor={`${f.Type}_check_${f.Name}_tag_${d}`}>&nbsp;</label>
                             </div>

@@ -339,7 +339,7 @@ class App extends Component {
           .then((r2) => r2.json())
           .then((d2) => {
             d2.map((f2) => {
-              if (f2.Type == "Ironlander") f2.Type = "Ironlanders";
+              // if (f2.Type == "Ironlander") f2.Type = "Ironlanders";
               f2.id = `core-foe-${f2.Type.toLowerCase()}-${f2.Name.toLowerCase().replace(" ", "-")}`;
               foeIcons.push(f2);
               return f2;
