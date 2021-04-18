@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/IronswornCompanion/static/css/main.3b3df917.chunk.css",
-    "main.js": "/IronswornCompanion/static/js/main.eb5b0717.chunk.js",
-    "main.js.map": "/IronswornCompanion/static/js/main.eb5b0717.chunk.js.map",
+    "main.js": "/IronswornCompanion/static/js/main.0d4c7e11.chunk.js",
+    "main.js.map": "/IronswornCompanion/static/js/main.0d4c7e11.chunk.js.map",
     "runtime-main.js": "/IronswornCompanion/static/js/runtime-main.13a8eb99.js",
     "runtime-main.js.map": "/IronswornCompanion/static/js/runtime-main.13a8eb99.js.map",
     "static/css/2.d424be97.chunk.css": "/IronswornCompanion/static/css/2.d424be97.chunk.css",
-    "static/js/2.c2f0cfe9.chunk.js": "/IronswornCompanion/static/js/2.c2f0cfe9.chunk.js",
-    "static/js/2.c2f0cfe9.chunk.js.map": "/IronswornCompanion/static/js/2.c2f0cfe9.chunk.js.map",
+    "static/js/2.d894f6c5.chunk.js": "/IronswornCompanion/static/js/2.d894f6c5.chunk.js",
+    "static/js/2.d894f6c5.chunk.js.map": "/IronswornCompanion/static/js/2.d894f6c5.chunk.js.map",
     "static/js/3.c1829d6c.chunk.js": "/IronswornCompanion/static/js/3.c1829d6c.chunk.js",
     "static/js/3.c1829d6c.chunk.js.map": "/IronswornCompanion/static/js/3.c1829d6c.chunk.js.map",
     "index.html": "/IronswornCompanion/index.html",
     "static/css/2.d424be97.chunk.css.map": "/IronswornCompanion/static/css/2.d424be97.chunk.css.map",
     "static/css/main.3b3df917.chunk.css.map": "/IronswornCompanion/static/css/main.3b3df917.chunk.css.map",
-    "static/js/2.c2f0cfe9.chunk.js.LICENSE.txt": "/IronswornCompanion/static/js/2.c2f0cfe9.chunk.js.LICENSE.txt",
+    "static/js/2.d894f6c5.chunk.js.LICENSE.txt": "/IronswornCompanion/static/js/2.d894f6c5.chunk.js.LICENSE.txt",
     "static/media/main.css": "/IronswornCompanion/static/media/viking-with-axes-hands-rocky-mountains.5f039fef.jpg",
     "static/media/DeepWilds.3da7ab46.svg": "/IronswornCompanion/static/media/DeepWilds.3da7ab46.svg",
     "static/media/d10.01d91c70.svg": "/IronswornCompanion/static/media/d10.01d91c70.svg",
@@ -29,8 +29,8 @@
   "entrypoints": [
     "static/js/runtime-main.13a8eb99.js",
     "static/css/2.d424be97.chunk.css",
-    "static/js/2.c2f0cfe9.chunk.js",
+    "static/js/2.d894f6c5.chunk.js",
     "static/css/main.3b3df917.chunk.css",
-    "static/js/main.eb5b0717.chunk.js"
+    "static/js/main.0d4c7e11.chunk.js"
   ]
 }
