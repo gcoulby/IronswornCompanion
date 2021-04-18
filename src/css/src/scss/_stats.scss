@@ -289,3 +289,38 @@ $end: 20;
   font-size: 16px !important;
   line-height: 1.2em !important;
 }
+
+.difficulty-tags {
+  .row {
+    margin-top: 1em;
+  }
+  .btn {
+    border-radius: 0;
+    min-width: 20rem;
+  }
+
+  .btn-secondary {
+    z-index: 100;
+  }
+
+  .btn-dark:hover {
+    background: $dark;
+  }
+
+  .btn-secondary:hover {
+    background: $secondary;
+  }
+  .btn-secondary:after {
+    content: "";
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 0;
+    height: 0;
+    border: 0 solid transparent;
+    border-bottom-width: 1.4em;
+    border-top-width: 1.4em;
+    border-left: 1.4em solid $secondary;
+    clear: both;
+  }
+}

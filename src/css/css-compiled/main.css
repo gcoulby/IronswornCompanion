@@ -17129,6 +17129,41 @@ label::before {
   line-height: 1.2em !important;
 }
 
+.difficulty-tags .row {
+  margin-top: 1em;
+}
+
+.difficulty-tags .btn {
+  border-radius: 0;
+  min-width: 20rem;
+}
+
+.difficulty-tags .btn-secondary {
+  z-index: 100;
+}
+
+.difficulty-tags .btn-dark:hover {
+  background: #343a40;
+}
+
+.difficulty-tags .btn-secondary:hover {
+  background: #6c757d;
+}
+
+.difficulty-tags .btn-secondary:after {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 0;
+  width: 0;
+  height: 0;
+  border: 0 solid transparent;
+  border-bottom-width: 1.4em;
+  border-top-width: 1.4em;
+  border-left: 1.4em solid #6c757d;
+  clear: both;
+}
+
 .progressTrack {
   list-style: none;
   padding-left: 0;

@@ -249,9 +249,35 @@ class Characters extends Component {
             <div className="row">
               <div className="col">
                 <div className="alert alert-secondary">
-                  There are five stats in total. Each is given a value from 1 to 3. To start, arrange these bonuses
-                  across your five stats in any order: <b>3, 2, 2, 1, 1.</b> You can also roll on the oracle to leave
-                  your primary stat choice down to fate.
+                  There are five stats in total. Each is given a value from 1 to 4 (Level depending). To start, arrange
+                  the bonuses from the table below across your five stats in any order You can also roll on the oracle
+                  to leave your primary stat choice down to fate.
+                  <div className="difficulty-tags">
+                    <div className="row">
+                      <div className="col">
+                        <div className="btn-group">
+                          <button className="btn btn-secondary btn-tag">CHALLENGING</button>
+                          <button className="btn btn-dark btn-tag">4,3,3,2,2</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col">
+                        <div className="btn-group">
+                          <button className="btn btn-secondary btn-tag">PERILOUS (DEFAULT)</button>
+                          <button className="btn btn-dark btn-tag">3,2,2,1,1</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col">
+                        <div className="btn-group">
+                          <button className="btn btn-secondary btn-tag">GRIM</button>
+                          <button className="btn btn-dark btn-tag">3,2,1,1,0</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
