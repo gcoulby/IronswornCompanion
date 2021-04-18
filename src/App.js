@@ -50,7 +50,7 @@ import Moves from "./components/moves";
 //TODO burn mom on delve - revert progress
 
 class App extends Component {
-  version = "0.66.0";
+  version = "0.66.5";
   state = {
     save: false,
     updateCore: false,
@@ -700,9 +700,9 @@ class App extends Component {
   /*=================================*/
 
   scrollBottom() {
-    let items = document.getElementsByClassName("log-li");
-    let last = items[items.length - 1];
-    last?.scrollIntoView(false);
+    let log = document.getElementsByClassName("log-ul")[0];
+    if (log === undefined) return;
+    log.scrollTop = log.scrollHeight;
   }
 
   render() {
