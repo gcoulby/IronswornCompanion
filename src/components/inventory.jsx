@@ -18,7 +18,6 @@ class Inventory extends Component {
       }
       return p;
     });
-    console.log(players);
     this.setState({ players });
   };
 

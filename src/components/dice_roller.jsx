@@ -44,7 +44,6 @@ class DiceRoller {
       ActionScore: ActionScore,
       HitType: HitType,
     };
-    console.log(result);
     return result;
   }
 
@@ -67,7 +66,6 @@ class DiceRoller {
       ActionScore: ActionScore,
       HitType: HitType,
     };
-    console.log(result);
     return result;
   }
 }

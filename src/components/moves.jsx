@@ -30,10 +30,8 @@ class Moves extends Component {
     let el = document.getElementById("move-preview");
     let tables = el.getElementsByTagName("table");
     if (tables.length > 0) {
-      console.log(tables[0]);
       for (let i = 0; i < tables.length; i++) {
         const table = tables[i];
-        // console.log(table);
         table.classList.add("table");
         table.classList.add("table-striped");
         table.classList.add("move-table");

@@ -2,6 +2,7 @@ import { faGrinTongueSquint } from "@fortawesome/free-solid-svg-icons";
 import { Tab, Tabs } from "@material-ui/core";
 import React, { Component } from "react";
 import { Col, Row } from "react-bootstrap";
+import ContentEditable from "react-contenteditable";
 import DangerButton from "./dangerButton";
 import DelveCard from "./delveCard";
 import DenizenMatrix from "./denizenMatrix";
@@ -135,7 +136,6 @@ class Delve extends Component {
     let pos = -1;
     for (let i = 0; i < delves.length; i++) {
       let d = delves[i];
-      console.log(d);
       if (d.id == id) {
         pos = i;
       }
@@ -408,7 +408,6 @@ class Delve extends Component {
   handleOpportunity = (evt) => {
     if (evt.target.value == -1) return;
     // this.findAnOpportunity(evt.target.value);
-    // console.log(this.getSelectedDelve());
     // if (evt.target.value.includes("denizen")) {
     //   // const delves = this.props.delves;
     //   // delves[this.props.selectedDelveId].denizen = this.getDenizen();
@@ -585,7 +584,6 @@ class Delve extends Component {
           f.complete = true;
           // this.logProgressionComplete();
         }
-        console.log(f.progressRoll);
       }
       return f;
     });
@@ -608,6 +606,17 @@ class Delve extends Component {
     this.setState({ delves });
   };
 
+  handleNameChange = (evt) => {
+    const delves = this.props.delves.map((d) => {
+      if (d.id == this.props.selectedDelveId) {
+        d.siteName = evt.target.value;
+      }
+      return d;
+    });
+
+    this.setState({ delves });
+  };
+
   componentDidUpdate() {
     this.props.onComponentUpdate();
   }
@@ -618,7 +627,26 @@ class Delve extends Component {
       <React.Fragment>
         <div className="row">
           <div className="col-10">
-            <h1>Delve {this.props.selectedDelveId !== -1 ? this.getSelectedDelve().siteName : ""}</h1>
+            <h1>
+              Delve{" "}
+              {this.props.selectedDelveId !== -1 ? (
+                <React.Fragment>
+                  <ContentEditable
+                    innerRef={this.contentEditable}
+                    html={this.props.delves[this.props.selectedDelveId].siteName}
+                    disabled={false}
+                    onChange={(e) => this.handleNameChange(e)}
+                    tagName="span"
+                  />
+                  <span>
+                    &nbsp;
+                    <i className="fas fa-pen-square" />
+                  </span>
+                </React.Fragment>
+              ) : (
+                React.Fragment
+              )}
+            </h1>
             {/* <h3 className="font-italic  text-secondary">
               "{this.getPreposition(this.getSelectedDelve().theme)}&nbsp;
               {this.getSelectedDelve().theme} {this.getSelectedDelve().domain}"

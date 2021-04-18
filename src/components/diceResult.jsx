@@ -67,11 +67,11 @@ class DiceResult extends Component {
           <div className="top">
             <h3>{this.getHitType()}</h3>
             <React.Fragment>
-              <span>{this.props.diceResult.RollType} Score:</span>
               {this.props.diceResult.RollType === "Action" ? (
                 <React.Fragment>
+                  <span>Action Score:</span>
                   <p>
-                    Dice ({this.props.diceResult.ActionValue})
+                    Die ({this.props.diceResult.ActionValue})
                     {this.props.diceResult.StatName != "" ? (
                       <React.Fragment>
                         &nbsp;+&nbsp;
@@ -88,12 +88,13 @@ class DiceResult extends Component {
                 </React.Fragment>
               ) : (
                 <React.Fragment>
+                  {/* <span>{this.props.diceResult.RollType} Score:</span> */}
                   <p>Progress: {this.props.diceResult.ActionScore}</p>
                 </React.Fragment>
               )}
 
-              <p>Challenge Dice 1: {this.props.diceResult.Challenge1Value}</p>
-              <p>Challenge Dice 2: {this.props.diceResult.Challenge2Value}</p>
+              <p>Challenge Die A: {this.props.diceResult.Challenge1Value}</p>
+              <p>Challenge Die B: {this.props.diceResult.Challenge2Value}</p>
             </React.Fragment>
           </div>
         </div>

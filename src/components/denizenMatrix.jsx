@@ -2,7 +2,6 @@ import React, { Component } from "react";
 class DenizenMatrix extends Component {
   state = {};
   render() {
-    console.log(this.props.denizens);
     return (
       <React.Fragment>
         <div className="row denizen-matrix">

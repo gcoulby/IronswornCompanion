@@ -117,14 +117,14 @@ class Stats extends Component {
 
   handleOnPlayerProgressionChanged = (playerName, field, increment) => {
     let val = 0;
-    switch (field) {
-      case "bonds":
-        val = increment ? 1 : -1;
-        break;
-      case "failure":
-        val = increment ? 4 : -4;
-        break;
-    }
+    val = increment ? 1 : -1;
+    // switch (field) {
+    //   case "bonds":
+    //     break;
+    //   case "failure":
+    //     val = increment ? 1 : -1;
+    //     break;
+    // }
     const players = this.props.players.map((p) => {
       if (p.name == playerName) {
         p[field] += val;
@@ -143,8 +143,8 @@ class Stats extends Component {
         let val = increment ? 1 : -1;
         p.stats.map((s) => {
           if (s.stat !== stat) return s;
-          s.value += val;
-          s.value = s.value > 3 ? 3 : s.value;
+          s.value = parseInt(s.value) + val;
+          s.value = s.value > 4 ? 4 : s.value;
           s.value = s.value < 0 ? 0 : s.value;
           return s;
         });

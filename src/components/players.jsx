@@ -35,7 +35,10 @@ class Characters extends Component {
     player.failure = 0;
     player.failureRoll = null;
     player.inventory = [];
-    player.stats = this.props.newPlayer.Stats;
+    player.stats = this.props.newPlayer.Stats.map((s) => {
+      if (s.value === "") s.value = 0;
+      return s;
+    });
     if (this.props.newPlayer.Name != "" && !players.find((p) => p.name == this.props.newPlayer.Name)) {
       players.push(player);
       this.setState({ players: players });
@@ -123,7 +126,7 @@ class Characters extends Component {
   handleOnRollPlayerPrimaryStat = () => {
     let rn = this.props.oracles.PrimaryStat;
     const newPlayerStats = this.props.newPlayer.Stats.map((s) => {
-      if (s.type == "core") s.value = s.id == rn ? 3 : "";
+      if (s.type == "core") s.value = s.id == rn ? 3 : 0;
       return s;
     });
     this.setState({ newPlayerStats });
@@ -271,7 +274,7 @@ class Characters extends Component {
                     className="form-control"
                     type="number"
                     min="1"
-                    max="3"
+                    max="4"
                     value={s.value == 0 ? "" : s.value}
                     placeholder={s.stat}
                     onChange={(e) => this.handleNewPlayerStatChanged(e)}

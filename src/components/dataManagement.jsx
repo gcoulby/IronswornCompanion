@@ -89,7 +89,6 @@ class DataManager extends Component {
         }
       }
     });
-    console.log(save);
     this.props.onDownloadObjectClick(save);
   };
 

@@ -1,7 +1,5 @@
 # Ironsworn Companion
 
-
-
 # Introduction
 
 ## What is Ironsworn?
@@ -27,6 +25,8 @@ This app is not designed to replace the rules, though it may clear your desk of 
 # Using the app
 
 The following sections will provide instruction on how to use the individual components in the app.
+
+Should you experience issues with this app please log them in the Github issues or here [https://docs.google.com/spreadsheets/d/1GXvsk8f_Kx_lVNN78J1027Np0T7-pF1pLZsqnJA6-fE/edit#gid=1386834576](https://docs.google.com/spreadsheets/d/1GXvsk8f_Kx_lVNN78J1027Np0T7-pF1pLZsqnJA6-fE/edit#gid=1386834576)
 
 ---
 
@@ -76,7 +76,7 @@ New Oracle tables can be created using the form at the top of the page. Simply e
 
 #### Editing Oracle Tables
 
-Once you have added an oracle table you can edit the tables using the left hand column. Add rows by clicking the `Add Row` button and then it will add a row to the table. This is edited simply by clicking on the row and typing in the value you wish to be in the row. You can add multiple rows and delete rows you no longer require. 
+Once you have added an oracle table you can edit the tables using the left hand column. Add rows by clicking the `Add Row` button and then it will add a row to the table. This is edited simply by clicking on the row and typing in the value you wish to be in the row. You can add multiple rows and delete rows you no longer require.
 
 ---
 
@@ -244,11 +244,11 @@ The only difference between these progressions is what happens at completion. Wh
 
 ## Assets
 
-Assets screen allows you add assets to your character and make live changes to the asset card. If assets have tracks an interactive track will appear, with the same paper clip user experience found on the stats page. 
+Assets screen allows you add assets to your character and make live changes to the asset card. If assets have tracks an interactive track will appear, with the same paper clip user experience found on the stats page.
 
-There a few controls to this page. The leftmost drop down allows you to select and an asset to you character. Whereas the rightmost allows you to select and remove an asset from your character. 
+There a few controls to this page. The leftmost drop down allows you to select and an asset to you character. Whereas the rightmost allows you to select and remove an asset from your character.
 
-Once an asset is added you can input text into the Input Fields, modify tracks, upgrade the assets (but remember to spend your experience when  you do)
+Once an asset is added you can input text into the Input Fields, modify tracks, upgrade the assets (but remember to spend your experience when you do)
 
 ---
 
@@ -256,7 +256,7 @@ Once an asset is added you can input text into the Input Fields, modify tracks, 
 
 ### Asset Creation
 
-The asset builder allows you to create, copy, edit and delete assets. 
+The asset builder allows you to create, copy, edit and delete assets.
 
 Assets with (Core) in the name cannot be edited or deleted. They are centrally maintained by the **Data Management** page. To update assets got to the **Data Management** page and press **Update Core Assets**
 
@@ -266,26 +266,22 @@ To create a new Asset either fill out the various fields and press **Save Asset*
 
 #### Buttons
 
-The buttons on this page are dynamic. A button will only appear if an action is allowed. For example, since you can't delete or modify a core asset. When a core asset is selected, the only button available to you is `Save as Copy`. However, this button only appears when the name is unique. Similarly, if you're creating a new asset, then the `Delete`, `Save as Copy` and `Save Changes` button are hidden. 
+The buttons on this page are dynamic. A button will only appear if an action is allowed. For example, since you can't delete or modify a core asset. When a core asset is selected, the only button available to you is `Save as Copy`. However, this button only appears when the name is unique. Similarly, if you're creating a new asset, then the `Delete`, `Save as Copy` and `Save Changes` button are hidden.
 
-There are four buttons in total: 
+There are four buttons in total:
 
-| Button         | Action                                      | Rules                                                        |
-| -------------- | ------------------------------------------- | ------------------------------------------------------------ |
-| Add Asset      | Adds a new Asset                            | Is not shown if existing asset is selected<br />Name cannot be blank |
-| Save Changes   | Saves changes to an existing asset          | Cannot add if Name is blank, <br />Can only save changes if the selected assets is not a core asset, <br />The asset Name cannot be different to the previous version. <br />At least one other field must be different to the previous version. |
+| Button         | Action                                      | Rules                                                                                                                                                                                                                                                                                                                                                 |
+| -------------- | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Add Asset      | Adds a new Asset                            | Is not shown if existing asset is selected<br />Name cannot be blank                                                                                                                                                                                                                                                                                  |
+| Save Changes   | Saves changes to an existing asset          | Cannot add if Name is blank, <br />Can only save changes if the selected assets is not a core asset, <br />The asset Name cannot be different to the previous version. <br />At least one other field must be different to the previous version.                                                                                                      |
 | Save as a Copy | Creates a new Asset based on previous asset | Cannot add if Name is blank, <br />Cannot add asset if selected asset is core asset. <br />Cannot add if an asset exists with same name<br />cannot add if the asset is same as default asset (ie no changes)<br />cannot add if asset with same id already exists<br />add button is not shown when modifying an existing asset (copy shown instead) |
-| Delete         | Delete an Existing Asset                    | Existing asset cannot be a core asset<br />Cannot be an asset that is not yet created |
-
-
+| Delete         | Delete an Existing Asset                    | Existing asset cannot be a core asset<br />Cannot be an asset that is not yet created                                                                                                                                                                                                                                                                 |
 
 ### Asset Deck
 
-At the bottom of the Asset Builder page, all the existing assets can be viewed on the page.  At the top of the Asset Deck, there is a `Print Cards` button, which will modify the page and hide non essential visual elements to create an automated printable page. This process will also automatically generate card backs and place them in order so that they print correctly on double sided printers. (if you don't want card backs you can select those pages not to print in the printer options)
+At the bottom of the Asset Builder page, all the existing assets can be viewed on the page. At the top of the Asset Deck, there is a `Print Cards` button, which will modify the page and hide non essential visual elements to create an automated printable page. This process will also automatically generate card backs and place them in order so that they print correctly on double sided printers. (if you don't want card backs you can select those pages not to print in the printer options)
 
-
-
-> **KNOWN ISSUE:** The way the page is generate the last page always generates an almost blank page. This should be removed in the printer settings.  
+> **KNOWN ISSUE:** The way the page is generate the last page always generates an almost blank page. This should be removed in the printer settings.
 
 ---
 
@@ -329,17 +325,17 @@ To honour the labour of love created by Shawn, this companion is distributed (fo
 
 There were several content developers from the Ironsworn community that deserve an honourable mention here. During the creation of this companion the following people provided direct or indirect support to this app.
 
-| Contributor       | Contribution                                                 | URL                                                          |
-| ----------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| SHAWN TOMKIN      | Without Shawn's work none of this could be possible. When reading the game, you realise the care, effort and devotion that has gone in to creating this game and yet, the game is released as open-source under the creative commons 4.0. True Legend! | https://www.ironswornrpg.com/                                |
-| JOSIAH VAN EGMOND | The coloured version of the map was created by Josiah Van Egmond from Black Hawk Cartography (who make some amazing maps I might add). Additional thanks to Shawn Tomkin for providing me with explicit permission to use this image outside of the CC4.0 license. | https://www.blackhawkcartography.com/                        |
-| RSEK              | RSEK provided continued support and feedback throughout development and their Datasworn repository was used to build the core assets in this companion. | https://github.com/rsek                                      |
-| ERIC BRIGHT       | To provide more variety and options when rolling on oracle tables, Eric's expanded oracles were used to populate the core oracle tables | https://www.drivethrurpg.com/browse/pub/8584/Eric-Bright     |
-| DELAPOUITE & LORC | The icons used at Game-Icons.net are fundamental for achieving the Ironsworn look-and-feel. Therefore the icon selector for asset creation is driven by Game-Icons.net fonts. | https://game-icons.net/                                      |
-| KYLE KEMP         | To integrate the Game-Icons.net icons into the application, Kyle's game-icons.net web-font was used, which was evidently inspired by FontAwesome. | https://seiyria.com/gameicons-font/                          |
-| GHOST225          | Ghost provided continued support, feedback, feature suggestions and testing throughout the development | https://github.com/ghost225                                  |
-| NOMADSOUL1        | Credit goes to NOMADSOUL1 from freepik for the homepage image. The colour image was filtered to get the same look and feel as the Ironsworn book. | https://www.freepik.com/nomadsoul1                           |
-| ONLINE WEB FONTS  | Modesto font made from Online Web Fonts licensed by CC BY 3.0 | [http://www.onlinewebfonts.com](http://www.onlinewebfonts.com/) |
+| Contributor       | Contribution                                                                                                                                                                                                                                                       | URL                                                             |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
+| SHAWN TOMKIN      | Without Shawn's work none of this could be possible. When reading the game, you realise the care, effort and devotion that has gone in to creating this game and yet, the game is released as open-source under the creative commons 4.0. True Legend!             | https://www.ironswornrpg.com/                                   |
+| JOSIAH VAN EGMOND | The coloured version of the map was created by Josiah Van Egmond from Black Hawk Cartography (who make some amazing maps I might add). Additional thanks to Shawn Tomkin for providing me with explicit permission to use this image outside of the CC4.0 license. | https://www.blackhawkcartography.com/                           |
+| RSEK              | RSEK provided continued support and feedback throughout development and their Datasworn repository was used to build the core assets in this companion.                                                                                                            | https://github.com/rsek                                         |
+| ERIC BRIGHT       | To provide more variety and options when rolling on oracle tables, Eric's expanded oracles were used to populate the core oracle tables                                                                                                                            | https://www.drivethrurpg.com/browse/pub/8584/Eric-Bright        |
+| DELAPOUITE & LORC | The icons used at Game-Icons.net are fundamental for achieving the Ironsworn look-and-feel. Therefore the icon selector for asset creation is driven by Game-Icons.net fonts.                                                                                      | https://game-icons.net/                                         |
+| KYLE KEMP         | To integrate the Game-Icons.net icons into the application, Kyle's game-icons.net web-font was used, which was evidently inspired by FontAwesome.                                                                                                                  | https://seiyria.com/gameicons-font/                             |
+| GHOST225          | Ghost provided continued support, feedback, feature suggestions and testing throughout the development                                                                                                                                                             | https://github.com/ghost225                                     |
+| NOMADSOUL1        | Credit goes to NOMADSOUL1 from freepik for the homepage image. The colour image was filtered to get the same look and feel as the Ironsworn book.                                                                                                                  | https://www.freepik.com/nomadsoul1                              |
+| ONLINE WEB FONTS  | Modesto font made from Online Web Fonts licensed by CC BY 3.0                                                                                                                                                                                                      | [http://www.onlinewebfonts.com](http://www.onlinewebfonts.com/) |
 
 ### Developer
 

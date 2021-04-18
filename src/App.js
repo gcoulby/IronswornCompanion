@@ -50,7 +50,7 @@ import Moves from "./components/moves";
 //TODO burn mom on delve - revert progress
 
 class App extends Component {
-  version = "0.65.0";
+  version = "0.66.0";
   state = {
     save: false,
     updateCore: false,
@@ -229,7 +229,6 @@ class App extends Component {
       this.state.moves &&
       this.state.moves.length > 0
     ) {
-      console.log("REFRESH");
       this.saveGameState();
       window.location.reload("/");
     }
@@ -308,6 +307,7 @@ class App extends Component {
       .then((data) => {
         const foes = [];
         data.Categories.map((c) => {
+          console.log(c);
           c.Foes.map((f) => {
             f.id = `core-foe-${c.Name.toLowerCase()}-${f.Name.toLowerCase().replace(" ", "-")}`;
             f.Type = c.Name;
@@ -433,7 +433,6 @@ class App extends Component {
             moves.push(m);
           });
         });
-        console.log(moves);
         this.state.moves = moves;
         this.saveGameState();
         this.checkState();

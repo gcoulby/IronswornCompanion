@@ -60,7 +60,6 @@ class EnterTheFray extends Component {
   handleOnRollNewFoe = () => {
     const newFoe = this.props.newFoe;
     newFoe.newFoeCategoryId = this.getRandomFoeCategory();
-    console.log(newFoe.newFoeCategoryId);
     newFoe.newFoeTypeId = this.getRandomFoeType(newFoe.newFoeCategoryId);
     this.setState({ newFoe });
   };
@@ -145,11 +144,9 @@ class EnterTheFray extends Component {
   // };
 
   handleOnProgressionChanged = (id, rank, increment) => {
-    console.log(rank);
     const activeFoes = this.props.activeFoes;
     activeFoes.map((f) => {
       if (f.id === id) {
-        console.log(f);
         let val = 0;
         switch (rank) {
           case "Troublesome":
@@ -198,7 +195,6 @@ class EnterTheFray extends Component {
           f.complete = true;
           // this.logProgressionComplete();
         }
-        console.log(f.progressRoll);
       }
       return f;
     });
