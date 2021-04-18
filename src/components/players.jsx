@@ -37,7 +37,7 @@ class Characters extends Component {
     player.inventory = [];
     player.stats = this.props.newPlayer.Stats.map((s) => {
       if (s.value === "" || s.value < 0) s.value = 0;
-      else if (s.value > 4) s.value = 4;
+      else if (s.value > 4 && s.type != "status") s.value = 4;
       return s;
     });
     if (this.props.newPlayer.Name != "" && !players.find((p) => p.name == this.props.newPlayer.Name)) {
@@ -45,6 +45,7 @@ class Characters extends Component {
       this.setState({ players: players });
       this.resetNewPlayer();
     }
+    this.props.addLog("event", `${player.name} began their journey in the Ironlands`);
   };
 
   resetNewPlayer(props = null) {

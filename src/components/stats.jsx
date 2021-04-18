@@ -47,6 +47,7 @@ class Stats extends Component {
         const debilities = p.debilities.map((d) => {
           if (d.name == name) {
             d.active = checked;
+            this.props.addLog("event", `${p.name} is ${checked ? "" : "no longer"} ${d.name}`);
           }
           return d;
         });
@@ -93,11 +94,13 @@ class Stats extends Component {
         switch (type) {
           case "INC":
             p.totalExperience = p.totalExperience + 1 >= 30 ? 30 : p.totalExperience + 1;
+            this.props.addLog("event", `${p.name}'s experience grows`);
             break;
           case "DEC":
             p.totalExperience = p.totalExperience - 1 <= 0 ? 0 : p.totalExperience - 1;
 
             p.spentExperience = p.totalExperience < p.spentExperience ? p.totalExperience : p.spentExperience;
+            this.props.addLog("event", `${p.name}'s experience deminishes`);
             break;
           case "REG":
             p.spentExperience = p.spentExperience - 1 <= 0 ? 0 : p.spentExperience - 1;
@@ -118,6 +121,7 @@ class Stats extends Component {
   handleOnPlayerProgressionChanged = (playerName, field, increment) => {
     let val = 0;
     val = increment ? 1 : -1;
+
     // switch (field) {
     //   case "bonds":
     //     break;

@@ -100,6 +100,7 @@ class EnterTheFray extends Component {
     foe.progress = 0;
     foe.id = this.props.newFoe.nextFoeId;
     activeFoes.push(foe);
+    this.props.addLog("event", `${this.props.selectedPlayer.name} discoved a new foe: ${foe.Name}`);
     const newFoe = this.props.newFoe;
     newFoe.nextFoeId = this.props.newFoe.nextFoeId + 1;
     newFoe.newFoeCategoryId = -1;
@@ -165,6 +166,9 @@ class EnterTheFray extends Component {
             val = increment ? 1 : -1;
             break;
         }
+        if (increment)
+          this.props.addLog("event", `${this.props.selectedPlayer.name} made progress towards their foe: ${f.Name}`);
+        else this.props.addLog("event", `${this.props.selectedPlayer.name} loses ground against their foe: ${f.Name}`);
         f.progress += val;
         f.progress = f.progress > 40 ? 40 : f.progress;
         f.progress = f.progress < 0 ? 0 : f.progress;
@@ -193,6 +197,7 @@ class EnterTheFray extends Component {
         f.progressRoll = this.diceRoller.progressionRoll(Math.floor(f.progress / 4));
         if (f.progressRoll.HitType.includes("Hit")) {
           f.complete = true;
+          this.props.addLog("event", `${this.props.selectedPlayer.name} defeated the foe: ${f.Name}`);
           // this.logProgressionComplete();
         }
       }
@@ -209,6 +214,8 @@ class EnterTheFray extends Component {
       let foe = activeFoes[i];
       if (foe.id === id) {
         pos = i;
+        if (!foe.complete)
+          this.props.addLog("event", `${this.props.selectedPlayer.name} lost sight of the foe: ${foe.Name}`);
       }
     }
     if (pos != -1) activeFoes.splice(pos, 1);

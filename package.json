@@ -31,12 +31,14 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
     "remark-gfm": "^1.0.0",
+    "remark-toc": "^7.2.0",
     "seedrandom": "^3.0.5",
     "turndown": "^7.0.0",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
+    "prebuild": "copy .\\README.md .\\src\\README.md",
     "build": "react-scripts build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",

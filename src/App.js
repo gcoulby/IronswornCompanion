@@ -49,7 +49,7 @@ import Moves from "./components/moves";
 //TODO burn mom on delve - revert progress
 
 class App extends Component {
-  version = "0.72.0";
+  version = "0.74.0";
   state = {
     save: false,
     updateCore: false,
@@ -776,6 +776,7 @@ class App extends Component {
                     onPlayerSelect={this.handlePlayerSelect}
                     oracles={this.state.oracles}
                     onComponentUpdate={this.componentDidUpdate}
+                    addLog={this.handleAddLog}
                   />
                 </Route>
                 <Route path="/log">
@@ -831,6 +832,7 @@ class App extends Component {
                     onProgressRollClicked={this.handleOnProgressRollClicked}
                     showGenerator={true}
                     selectedPlayer={this.getSelectedPlayer()}
+                    addLog={this.handleAddLog}
                   />
                 </Route>
                 <Route exact path="/delve">
@@ -876,6 +878,7 @@ class App extends Component {
                     selectedPlayer={this.getSelectedPlayer()}
                     updatePlayerSelect={this.handlePlayerSelect}
                     onComponentUpdate={this.componentDidUpdate}
+                    addLog={this.handleAddLog}
                   />
                 </Route>
                 <Route exact path="/vows">
@@ -924,6 +927,7 @@ class App extends Component {
                     selectedPlayer={this.getSelectedPlayer()}
                     newItem={this.state.newItem}
                     onComponentUpdate={this.componentDidUpdate}
+                    addLog={this.handleAddLog}
                   />
                 </Route>
 
@@ -969,6 +973,7 @@ class App extends Component {
                     players={this.state.players}
                     selectedPlayer={this.getSelectedPlayer()}
                     onComponentUpdate={this.componentDidUpdate}
+                    addLog={this.handleAddLog}
                   />
                 </Route>
 

@@ -122,6 +122,28 @@ class Progression extends Component {
     );
   };
 
+  logProgressionFailed = () => {
+    let logText = "";
+    switch (this.state.type) {
+      case "vow":
+        logText = "forsaken a vow";
+        break;
+      case "quest":
+        logText = "abandoned a quest";
+        break;
+      case "journey":
+        logText = "abandoned their journey";
+        break;
+      case "foe":
+        logText = "lost sight of the foe";
+        break;
+    }
+    this.props.addLog(
+      "event",
+      `${this.props.selectedPlayer.name} ${logText}: ${this.getProgressionByType(this.state.type).title}`
+    );
+  };
+
   handleOnProgressionChanged = (id, rank, increment) => {
     const players = this.props.players.map((p) => {
       if (p.selected) {
@@ -147,6 +169,10 @@ class Progression extends Component {
                   val = increment ? 1 : -1;
                   break;
               }
+              console.log(p2);
+              if (increment)
+                this.props.addLog("event", `${p.name} made progress towards their ${p2.type}: ${p2.title}`);
+              else this.props.addLog("event", `${p.name} loses ground towards their ${p2.type}: ${p2.title}`);
               p2.progress += val;
               p2.progress = p2.progress > 40 ? 40 : p2.progress;
               p2.progress = p2.progress < 0 ? 0 : p2.progress;
@@ -183,6 +209,7 @@ class Progression extends Component {
           let prog = p.progressions[i];
           if (prog.id === id && prog.type === this.state.type) {
             pos = i;
+            if (!prog.complete) this.logProgressionFailed();
           }
         }
         if (pos != -1) p.progressions.splice(pos, 1);

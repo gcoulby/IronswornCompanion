@@ -12,6 +12,7 @@ class Inventory extends Component {
           Name: newItem.Name,
           Description: newItem.Description,
         });
+        this.props.addLog("event", `${p.name} acquired a new item: ${newItem.Name}`);
         newItem.Name = "";
         newItem.Description = "";
         newItem.NextId = newItem.NextId + 1;
@@ -35,6 +36,7 @@ class Inventory extends Component {
           let item = p.inventory[i];
           if (item.id === id) {
             pos = i;
+            this.props.addLog("event", `${p.name} no longer has the item: ${item.Name}`);
           }
         }
         if (pos != -1) p.inventory.splice(pos, 1);

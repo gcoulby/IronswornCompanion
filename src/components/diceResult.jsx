@@ -74,7 +74,7 @@ class DiceResult extends Component {
                 React.Fragment
               ) : (
                 <React.Fragment>
-                  ({this.props.diceResult.ActionValue} vs {this.props.diceResult.Challenge1Value} &amp;{" "}
+                  ({this.props.diceResult.ActionScore} vs {this.props.diceResult.Challenge1Value} &amp;{" "}
                   {this.props.diceResult.Challenge2Value})
                 </React.Fragment>
               )}

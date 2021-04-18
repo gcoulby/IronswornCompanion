@@ -125,7 +125,7 @@ class Delve extends Component {
     newDelve.theme = "";
     newDelve.domain = "";
     delves.push(delve);
-    this.props.addLog("event", `${this.props.selectedPlayer.name} discovered ${delve.siteName}`);
+    this.props.addLog("event", `${this.props.selectedPlayer.name} discovered a new site to delve: ${delve.siteName}`);
     this.setState({ delves });
     this.setState({ newDelve });
     this.props.onDelveSelectChange(id);
@@ -179,6 +179,13 @@ class Delve extends Component {
             val = increment ? 1 : -1;
             break;
         }
+        if (increment)
+          this.props.addLog(
+            "event",
+            `${this.props.selectedPlayer.name} made progress in the delve site: ${d.siteName}`
+          );
+        else
+          this.props.addLog("event", `${this.props.selectedPlayer.name} loses ground in the delve site: ${d.siteName}`);
         d.progress += val;
         d.progress = d.progress > 40 ? 40 : d.progress;
         d.progress = d.progress < 0 ? 0 : d.progress;
@@ -243,6 +250,12 @@ class Delve extends Component {
     let features = [...theme.Features, ...domain.Features];
     let feature = features.filter((f) => f.Chance <= rn).slice(-1)[0]?.Description ?? features[0].Description;
     delves[this.props.selectedDelveId].feature = feature;
+    this.props.addLog(
+      "event",
+      `${this.props.selectedPlayer.name} explores the surroundings of the ${
+        delves[this.props.selectedDelveId].siteName
+      } and notes a new feature: ${feature}`
+    );
     delves[this.props.selectedDelveId].approachLevel = -1;
 
     this.changeDelveStep(1);
@@ -252,6 +265,12 @@ class Delve extends Component {
   handleOnApproachLevelChange = (level) => {
     const delves = this.props.delves;
     delves[this.props.selectedDelveId].approachLevel = level;
+    this.props.addLog(
+      "event",
+      `${this.props.selectedPlayer.name} Progresses through the ${
+        delves[this.props.selectedDelveId].siteName
+      } using their ${level}`
+    );
     this.changeDelveStep(2);
     this.setState({ delves });
   };
@@ -274,11 +293,14 @@ class Delve extends Component {
         delves[this.props.selectedDelveId].denizen = null;
         break;
       case 3:
+        delves[this.props.selectedDelveId].danger = null;
+        this.handleOnRevealDanger();
         this.revealDenizen();
         break;
       case 4:
         break;
       case 5:
+        delves[this.props.selectedDelveId].opportunity = null;
         this.revealDenizen();
         this.findAnOpportunity();
         break;
@@ -390,6 +412,12 @@ class Delve extends Component {
       danger = danger1;
       danger += danger1 === danger2 ? " (Enhanced Danger)" : ` =AND= ${danger2}`;
     }
+    this.props.addLog(
+      "event",
+      `${this.props.selectedPlayer.name} revealed a danger in the delve site: ${
+        delves[this.props.selectedDelveId].siteName
+      }: ${danger}`
+    );
 
     delves[this.props.selectedDelveId].danger = danger;
 
@@ -402,20 +430,26 @@ class Delve extends Component {
     // let selectedDelve = this.getSelectedDelve();
     let op = opportunity ? opportunity : this.oracles.DelveOpportunity;
     delves[this.props.selectedDelveId].opportunity = op;
+    this.props.addLog(
+      "event",
+      `${this.props.selectedPlayer.name} found an opportunity in the delve site: ${
+        delves[this.props.selectedDelveId].siteName
+      }: ${op}`
+    );
     this.setState({ delves });
   };
 
   handleOpportunity = (evt) => {
     if (evt.target.value == -1) return;
-    // this.findAnOpportunity(evt.target.value);
-    // if (evt.target.value.includes("denizen")) {
-    //   // const delves = this.props.delves;
-    //   // delves[this.props.selectedDelveId].denizen = this.getDenizen();
-    //   // this.setState({ delves });
-    // }
 
     const delves = this.props.delves;
     delves[this.props.selectedDelveId].opportunity = evt.target.value;
+    this.props.addLog(
+      "event",
+      `${this.props.selectedPlayer.name} found an opportunity in the delve site: ${
+        delves[this.props.selectedDelveId].siteName
+      }: ${evt.target.value}`
+    );
     this.setState({ delves });
   };
 
@@ -510,6 +544,19 @@ class Delve extends Component {
       d.denizen = filteredDenizens[rn];
       denizenFilters.push({ Rank: rank, Name: filteredDenizens[rn]?.Name });
     });
+    console.log(tempDenizens);
+    let t = [];
+    for (let i = 0; i < tempDenizens.length; i++) {
+      const td = tempDenizens[i];
+      console.log(td);
+      let tt = t.find((t2) => t2.Name == td.Name);
+      console.log(tt);
+      if (tt == undefined) {
+        t.push({ Name: td.Name, Count: 1 });
+        console.log(t);
+      } else tt.Count++;
+    }
+    console.log(t);
     return denizens;
   };
 
@@ -527,8 +574,15 @@ class Delve extends Component {
     let denizen = { ...selectedDelve.denizen };
     denizen.id = selectedDelve.nextFoeId;
     const delves = this.props.delves;
+
     delves[this.props.selectedDelveId].nextFoeId = delves[this.props.selectedDelveId].nextFoeId + 1;
     delves[this.props.selectedDelveId].activeFoes.push(denizen);
+    this.props.addLog(
+      "event",
+      `${this.props.selectedPlayer.name} discovered a new foe (${denizen.Name}) in the delve site: ${
+        delves[this.props.selectedDelveId].siteName
+      }`
+    );
     this.setState({ delves });
   };
 
@@ -554,6 +608,20 @@ class Delve extends Component {
             val = increment ? 1 : -1;
             break;
         }
+        if (increment)
+          this.props.addLog(
+            "event",
+            `${this.props.selectedPlayer.name} made progress against a foe (${f.Name}) in the delve site: ${
+              delves[this.props.selectedDelveId].siteName
+            }`
+          );
+        else
+          this.props.addLog(
+            "event",
+            `${this.props.selectedPlayer.name} loses ground against a foe (${f.Name}) in the delve site: ${
+              delves[this.props.selectedDelveId].siteName
+            }`
+          );
         f.progress += val;
         f.progress = f.progress > 40 ? 40 : f.progress;
         f.progress = f.progress < 0 ? 0 : f.progress;
@@ -582,6 +650,12 @@ class Delve extends Component {
         f.progressRoll = this.diceRoller.progressionRoll(Math.floor(f.progress / 4));
         if (f.progressRoll.HitType.includes("Hit")) {
           f.complete = true;
+          this.props.addLog(
+            "event",
+            `${this.props.selectedPlayer.name} defeated a foe (${f.Name}) in the delve site: ${
+              delves[this.props.selectedDelveId].siteName
+            }`
+          );
           // this.logProgressionComplete();
         }
       }
@@ -599,6 +673,13 @@ class Delve extends Component {
       let foe = delves[this.props.selectedDelveId].activeFoes[i];
       if (foe.id === id) {
         pos = i;
+        if (!foe.complete)
+          this.props.addLog(
+            "event",
+            `${this.props.selectedPlayer.name} lost sight of a foe (${foe.Name}) in the delve site: ${
+              delves[this.props.selectedDelveId].siteName
+            }`
+          );
       }
     }
     if (pos != -1) delves[this.props.selectedDelveId].activeFoes.splice(pos, 1);

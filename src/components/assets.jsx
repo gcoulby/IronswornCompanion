@@ -28,6 +28,7 @@ class Assets extends Component {
       if (!p.selected) return;
       if (p.assets.find((a) => a.id == asset.id) === undefined) {
         p.assets.push(asset);
+        this.props.addLog("event", `${p.name} acquired a new asset: ${asset.Name}`);
       }
       return p;
     });
@@ -44,6 +45,7 @@ class Assets extends Component {
         let a = p.assets[i];
         if (a.id === this.state.selectedRemovalAssetId) {
           pos = i;
+          this.props.addLog("event", `${p.name} no longer has the asset: ${a.Name}`);
         }
       }
       if (pos != -1) p.assets.splice(pos, 1);
