@@ -19092,6 +19092,9 @@ input.autocomplete-input {
   .die_qty {
     margin-top: 0;
   }
+  #site-subtitle {
+    font-size: 250% !important;
+  }
 }
 
 @media screen and (max-width: 1250px) {

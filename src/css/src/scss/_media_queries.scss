@@ -78,6 +78,10 @@ $small: 1250px;
   .die_qty {
     margin-top: 0;
   }
+
+  #site-subtitle {
+    font-size: 250% !important;
+  }
 }
 
 @media screen and (max-width: $small) {
