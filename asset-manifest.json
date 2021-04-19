@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/IronswornCompanion/static/css/main.7eeca263.chunk.css",
-    "main.js": "/IronswornCompanion/static/js/main.700062f2.chunk.js",
-    "main.js.map": "/IronswornCompanion/static/js/main.700062f2.chunk.js.map",
+    "main.js": "/IronswornCompanion/static/js/main.690fa397.chunk.js",
+    "main.js.map": "/IronswornCompanion/static/js/main.690fa397.chunk.js.map",
     "runtime-main.js": "/IronswornCompanion/static/js/runtime-main.0c44a0e2.js",
     "runtime-main.js.map": "/IronswornCompanion/static/js/runtime-main.0c44a0e2.js.map",
     "static/css/2.d424be97.chunk.css": "/IronswornCompanion/static/css/2.d424be97.chunk.css",
-    "static/js/2.6f5b4c79.chunk.js": "/IronswornCompanion/static/js/2.6f5b4c79.chunk.js",
-    "static/js/2.6f5b4c79.chunk.js.map": "/IronswornCompanion/static/js/2.6f5b4c79.chunk.js.map",
+    "static/js/2.66a83114.chunk.js": "/IronswornCompanion/static/js/2.66a83114.chunk.js",
+    "static/js/2.66a83114.chunk.js.map": "/IronswornCompanion/static/js/2.66a83114.chunk.js.map",
     "static/js/3.c8bcb69f.chunk.js": "/IronswornCompanion/static/js/3.c8bcb69f.chunk.js",
     "static/js/3.c8bcb69f.chunk.js.map": "/IronswornCompanion/static/js/3.c8bcb69f.chunk.js.map",
     "index.html": "/IronswornCompanion/index.html",
     "static/css/2.d424be97.chunk.css.map": "/IronswornCompanion/static/css/2.d424be97.chunk.css.map",
     "static/css/main.7eeca263.chunk.css.map": "/IronswornCompanion/static/css/main.7eeca263.chunk.css.map",
-    "static/js/2.6f5b4c79.chunk.js.LICENSE.txt": "/IronswornCompanion/static/js/2.6f5b4c79.chunk.js.LICENSE.txt",
+    "static/js/2.66a83114.chunk.js.LICENSE.txt": "/IronswornCompanion/static/js/2.66a83114.chunk.js.LICENSE.txt",
     "static/media/main.css": "/IronswornCompanion/static/media/viking-with-axes-hands-rocky-mountains.5f039fef.jpg",
     "static/media/DeepWilds.3da7ab46.svg": "/IronswornCompanion/static/media/DeepWilds.3da7ab46.svg",
     "static/media/README.072e3f76.md": "/IronswornCompanion/static/media/README.072e3f76.md",
@@ -31,8 +31,8 @@
   "entrypoints": [
     "static/js/runtime-main.0c44a0e2.js",
     "static/css/2.d424be97.chunk.css",
-    "static/js/2.6f5b4c79.chunk.js",
+    "static/js/2.66a83114.chunk.js",
     "static/css/main.7eeca263.chunk.css",
-    "static/js/main.700062f2.chunk.js"
+    "static/js/main.690fa397.chunk.js"
   ]
 }
