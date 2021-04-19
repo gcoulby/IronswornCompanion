@@ -7,8 +7,9 @@ class Navbar extends Component {
     showColapsedMenu: false,
   };
 
-  handleMenuToggleButton = () => {
-    this.setState({ showColapsedMenu: !this.state.showColapsedMenu });
+  handleMenuToggleButton = (close) => {
+    const showColapsedMenu = close ? false : !this.state.showColapsedMenu;
+    this.setState({ showColapsedMenu });
 
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
@@ -84,6 +85,13 @@ class Navbar extends Component {
         <nav class="navbar navbar-dark bg-dark mobile-menu">
           <div className="row">
             <div className="col-auto">
+              <HashRouter basename="/">
+                <Link className="btn btn-outline-light" to="/" onClick={() => this.handleMenuToggleButton(true)}>
+                  <i class="fa fa-home" aria-hidden="true"></i>
+                </Link>
+              </HashRouter>
+            </div>
+            <div className="col-auto">
               <div className="input-group">
                 <select
                   className="form-control bg-dark text-light"
@@ -107,7 +115,7 @@ class Navbar extends Component {
             </div>
             <div className="col-auto">
               <button
-                class="navbar-toggler"
+                class="btn btn-outline-light"
                 type="button"
                 data-toggle="collapse"
                 data-target="#navbarsExample01"
