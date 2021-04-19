@@ -49,7 +49,7 @@ import Moves from "./components/moves";
 //TODO burn mom on delve - revert progress
 
 class App extends Component {
-  version = "0.74.0";
+  version = "0.75.0";
   state = {
     save: false,
     updateCore: false,
@@ -57,6 +57,7 @@ class App extends Component {
     newPlayer: {},
     world: {},
     locations: [],
+    customMap: { Url: "", Width: 594, Height: 792, DefaultZoom: 2 },
     foes: [],
     delveThemes: [],
     delveDomains: [],
@@ -229,7 +230,7 @@ class App extends Component {
       this.state.moves.length > 0
     ) {
       this.saveGameState();
-      // window.location.reload("/");
+      window.location.reload("/");
     }
   };
 
@@ -813,6 +814,7 @@ class App extends Component {
                 <Route path="/locations">
                   <Locations
                     locations={this.state.locations}
+                    customMap={this.state.customMap}
                     oracles={this.state.oracles}
                     nextLocationId={this.state.nextLocationId}
                     npcs={this.state.npcs}

@@ -17,6 +17,7 @@ class Locations extends Component {
     descriptor: "",
     features: "",
     trouble: "",
+    mapUrl: "",
     x: 0,
     y: 0,
     additionalInfo: "",
@@ -52,9 +53,17 @@ class Locations extends Component {
   }
 
   componentDidMount() {
-    const L = Leaflet;
+    // const L = Leaflet;
+    // let map = this.createMap();
+    // this.state.map = map;
+    // this.createMarkers();
+    // this.addMarkers();
+    this.setMap();
+  }
+
+  setMap() {
     let map = this.createMap();
-    this.state.map = map;
+    this.setState({ map });
     this.createMarkers();
     this.addMarkers();
   }
@@ -72,11 +81,19 @@ class Locations extends Component {
     });
     var bounds = [
       [0, 0],
-      [792, 594],
+      [
+        this.props.customMap.Url == "" ? 792 : this.props.customMap.Height,
+        this.props.customMap.Url == "" ? 594 : this.props.customMap.Width,
+      ],
     ];
-    L.imageOverlay(mapImg, bounds, {
-      attribution:
-        '&copy; <a href="https://www.ironswornrpg.com/">Shawn Tomkin</a>, Art by <a href="https://www.blackhawkcartography.com/">Josiah Van Egmond</a>',
+
+    let mapUrl = this.props.customMap.Url != "" ? this.props.customMap.Url : mapImg;
+    let attr =
+      this.props.customMap.Url != ""
+        ? ""
+        : '&copy; <a href="https://www.ironswornrpg.com/">Shawn Tomkin</a>, Art by <a href="https://www.blackhawkcartography.com/">Josiah Van Egmond</a>';
+    L.imageOverlay(mapUrl, bounds, {
+      attribution: attr,
     }).addTo(map);
     map.fitBounds(bounds);
 
@@ -241,6 +258,27 @@ class Locations extends Component {
     this.setState({ name: rn });
   };
 
+  handleOnMapUrlChanged = (evt) => {
+    const customMap = this.props.customMap;
+    customMap.Url = evt.target.value;
+    this.setState({ customMap });
+    this.setMap();
+  };
+
+  handleOnMapWidthChanged = (evt) => {
+    const customMap = this.props.customMap;
+    customMap.Width = evt.target.value;
+    this.setState({ customMap });
+    this.setMap();
+  };
+
+  handleOnMapHeightChanged = (evt) => {
+    const customMap = this.props.customMap;
+    customMap.Height = evt.target.value;
+    this.setState({ customMap });
+    this.setMap();
+  };
+
   handleOnNameChanged = (evt) => {
     this.setState({ name: evt.target.value });
   };
@@ -293,6 +331,63 @@ class Locations extends Component {
         <div className="row">
           <div className="col-5">
             <div id="mapid"></div>
+            <div className="input-group my-3">
+              <div className="input-group-prepend">
+                <button className="btn btn-dark btn-tag" title="Custom Map URL">
+                  Custom Map URL
+                </button>
+              </div>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Custom map URL"
+                aria-label="Name"
+                aria-describedby="basic-addon2"
+                value={this.props.customMap.Url}
+                onChange={(e) => this.handleOnMapUrlChanged(e)}
+              />
+              <div className="input-group-prepend">
+                <button className="btn btn-dark" title="Refresh" onClick={() => window.location.reload("/")}>
+                  <i class="fa fa-refresh" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+
+            <div className="input-group my-3">
+              <div className="input-group-prepend">
+                <button className="btn btn-dark btn-tag" title="Custom Map URL">
+                  Map Width
+                </button>
+              </div>
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Custom map URL"
+                aria-label="Width"
+                aria-describedby="basic-addon2"
+                disabled={this.props.customMap.Url == ""}
+                value={this.props.customMap.Url == "" ? 594 : this.props.customMap.Width}
+                onChange={(e) => this.handleOnMapWidthChanged(e)}
+              />
+            </div>
+
+            <div className="input-group my-3">
+              <div className="input-group-prepend">
+                <button className="btn btn-dark btn-tag" title="Custom Map URL">
+                  Map Height
+                </button>
+              </div>
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Custom map URL"
+                aria-label="Height"
+                aria-describedby="basic-addon2"
+                disabled={this.props.customMap.Url == ""}
+                value={this.props.customMap.Url == "" ? 792 : this.props.customMap.Height}
+                onChange={(e) => this.handleOnMapHeightChanged(e)}
+              />
+            </div>
           </div>
           <div className="col-7">
             <div className="row">
