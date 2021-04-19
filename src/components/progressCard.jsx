@@ -11,7 +11,7 @@ class ProgressCard extends Component {
     return (
       <React.Fragment>
         {/* <div className="row"> */}
-        <div className="col-6">
+        <div className="col-12 col-lg-6">
           <div className="card vow-card mb-4">
             <div className="card-header bg-dark text-light modesto">
               <div className="row ">

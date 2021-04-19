@@ -218,6 +218,7 @@ label::before {
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;
+  border: none;
   cursor: pointer;
   height: 68px;
 }
@@ -226,6 +227,7 @@ label::before {
   -webkit-appearance: none;
   appearance: none;
   background: url("/src/img/Clip.svg");
+  border: none;
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;
@@ -323,12 +325,11 @@ $end: 20;
     border-left: 1.4em solid $secondary;
     clear: both;
   }
-
-  .btn-group-justified {
-    display: flex;
-    .btn {
-      flex-grow: 1;
-      margin-top: 0;
-    }
+}
+.btn-group-justified {
+  display: flex !important;
+  .btn {
+    flex-grow: 1 !important;
+    margin-top: 0 !important;
   }
 }

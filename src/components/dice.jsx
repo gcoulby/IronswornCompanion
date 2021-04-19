@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Die from "./die";
 import DiceResults from "./dice_results";
 import DiceRoller from "./dice_roller";
+import Roller from "./roller";
 
 class Dice extends Component {
   state = {
@@ -48,14 +49,25 @@ class Dice extends Component {
       <React.Fragment>
         <div className="container">
           <div className="row">
-            <div className="col-8">
+            <div className="col mb-4">
+              <Roller
+                light={true}
+                selectedPlayer={this.props.selectedPlayer}
+                footerDice={this.props.footerDice}
+                burnMomentum={this.props.burnMomentum}
+              />
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-lg-8 col-sm-12">
               <div className="row">
                 {this.state.dice.map((die) => (
                   <Die key={die.id} die={die} onChange={this.handleChange} />
                 ))}
               </div>
             </div>
-            <div className="col-4">
+            <div className="col-lg-4 col-sm-12">
               <DiceResults results={this.state.results} onRollClick={this.handleRollClick} />
             </div>
           </div>

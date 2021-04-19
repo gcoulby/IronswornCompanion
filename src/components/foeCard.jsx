@@ -73,7 +73,7 @@ class FoeCard extends Component {
               }
             />
             {/* <span className="modesto mt-3">DESCRIPTION</span> */}
-            {this.content("Description", this.getDescription())}
+            <div className="d-none d-lg-block">{this.content("Description", this.getDescription())}</div>
             {this.content("Quest", this.props.foe.Quest)}
 
             {/* <p>{this.getDescription()}</p> */}
@@ -156,7 +156,7 @@ class FoeCard extends Component {
 
             <div className="text-center controls print-hide">
               <div className="row">
-                <div className={`col${!this.props.static ? "-8" : ""}`}>
+                <div className={`col-12 col-lg${!this.props.static ? "-8" : ""}`}>
                   <RollButton
                     buttonText="Defeat"
                     disabled={this.props.static || this.props.foe.complete}
@@ -175,7 +175,7 @@ class FoeCard extends Component {
                 </div>
                 {!this.props.static ? (
                   <React.Fragment>
-                    <div className="col-4">
+                    <div className="col-12 col-lg-4">
                       <DangerButton
                         buttonText="Cancel"
                         additionalButtonClasses="pt-2 pb-2 btn-block"

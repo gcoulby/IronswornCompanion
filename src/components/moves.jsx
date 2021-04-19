@@ -49,7 +49,7 @@ class Moves extends Component {
             {/* //{" "} */}
             {/* <Tab eventKey={`move_type_${m}`} title={m}> */}
             <div className="row">
-              <div className="col-4 moves-list">
+              <div className="col-12 col-lg-4 moves-list">
                 <table className="table table-striped table-hover">
                   {[...new Set(this.props.moves.map((m) => m.Type))].map((m) => (
                     <React.Fragment>
@@ -69,7 +69,7 @@ class Moves extends Component {
                   ))}
                 </table>
               </div>
-              <div className="col-8">
+              <div className="col-12 col-lg-8">
                 <div id="move-preview" className="move-display py-3 px-2">
                   {this.state.selectedMove ? (
                     <React.Fragment>

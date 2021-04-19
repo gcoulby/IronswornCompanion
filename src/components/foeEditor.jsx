@@ -492,7 +492,7 @@ class FoeEditor extends Component {
           </div>
         </div>
 
-        <div id="assetCards" className="print-hide mb-5">
+        <div id="assetCards" className="print-hide mb-5 d-none d-lg-block">
           <TitleBlock title="Foe Deck" />
           <div className="alert alert-secondary">
             Use this section to print cards. You MUST click <strong>Show Cards</strong> before clicking{" "}

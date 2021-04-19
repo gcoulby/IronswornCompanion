@@ -141,8 +141,8 @@ class Assets extends Component {
       <React.Fragment>
         <h1>Assets</h1>
         <div className="row">
-          <div className="col-6">
-            <div className="input-group mb-3">
+          <div className="col-12 col-lg-6">
+            <div className="input-group my-3">
               <div className="input-group-prepend">
                 <label className="btn btn-dark btn-tag">Select Asset to Add</label>
               </div>
@@ -175,8 +175,8 @@ class Assets extends Component {
             </button>
           </div>
 
-          <div className="col-6">
-            <div className="input-group mb-3">
+          <div className="col-12 col-lg-6">
+            <div className="input-group my-3">
               <div className="input-group-prepend">
                 <label className="btn btn-dark btn-tag">Select Asset to Remove</label>
               </div>
@@ -218,23 +218,25 @@ class Assets extends Component {
           (Optional) Track augmentations on assets by clicking the icon on the asset card. Augmented assets will have a
           gold icon.
         </div>
-        {this.props.selectedPlayer.assets.map((a) => (
-          <React.Fragment>
-            <AssetCard
-              asset={a}
-              stat={{
-                stat: a.id,
-                hideLabel: true,
-                value: a.TrackValue,
-                trackLabels: a.TrackLabels ? a.TrackLabels : [],
-              }}
-              augment={this.augment}
-              onTrackProgressChange={this.handleStatTrackChange}
-              onInputFieldChange={this.handleInputFieldChange}
-              onAbilityCheckChange={this.handleOnAbilityCheckChange}
-            />
-          </React.Fragment>
-        ))}
+        <div className="row">
+          {this.props.selectedPlayer.assets.map((a) => (
+            <React.Fragment>
+              <AssetCard
+                asset={a}
+                stat={{
+                  stat: a.id,
+                  hideLabel: true,
+                  value: a.TrackValue,
+                  trackLabels: a.TrackLabels ? a.TrackLabels : [],
+                }}
+                augment={this.augment}
+                onTrackProgressChange={this.handleStatTrackChange}
+                onInputFieldChange={this.handleInputFieldChange}
+                onAbilityCheckChange={this.handleOnAbilityCheckChange}
+              />
+            </React.Fragment>
+          ))}
+        </div>
       </React.Fragment>
     );
   }

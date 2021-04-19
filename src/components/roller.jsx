@@ -41,11 +41,11 @@ class Roller extends Component {
           {/* </p> */}
         </div>
 
-        <div className="col-auto">
-          <label htmlFor="stat-select">Add Stat</label>
+        <div className="col-auto modesto">
+          <label htmlFor="stat-select ">Add Stat</label>
           <select
             id="stat-select"
-            className="form-control bg-dark text-light"
+            className={`form-control ${!this.props.light ? "bg-dark text-light" : ""}`}
             onChange={(e) => this.handleOnStatChange(e)}
             value={this.state.Stat}
           >
@@ -59,13 +59,13 @@ class Roller extends Component {
               : React.Fragment}
           </select>
         </div>
-        <div className="col-auto">
+        <div className="col-auto modesto">
           <label htmlFor="additional-add">Add</label>
           <input
             type="number"
             value={this.state.AddVal}
             onChange={(e) => this.handleOnAddValueChange(e)}
-            className="form-control bg-dark text-light"
+            className={`form-control ${!this.props.light ? "bg-dark text-light" : ""}`}
           />
         </div>
         <div className="col-auto">
@@ -74,11 +74,11 @@ class Roller extends Component {
           <RollButton
             selectedPlayer={this.props.selectedPlayer}
             buttonText="Roll"
-            additionalClass="btn-outline-light"
+            additionalClass={this.props.light ? "btn-dark" : "btn-outline-light"}
             burnMomentum={this.props.burnMomentum}
             postRollAction={() => {}}
             roll={this.state.actionRoll}
-            resultColor="btn-outline-light"
+            resultColor={this.props.light ? "btn-secondary" : "btn-outline-light"}
             onRoll={() => this.handleOnActionRollClicked()}
           />
         </div>

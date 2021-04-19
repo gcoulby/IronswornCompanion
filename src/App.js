@@ -49,7 +49,7 @@ import Moves from "./components/moves";
 //TODO burn mom on delve - revert progress
 
 class App extends Component {
-  version = "0.75.0";
+  version = "0.76.0";
   state = {
     save: false,
     updateCore: false,
@@ -175,6 +175,10 @@ class App extends Component {
 
   componentDidMount() {
     this.scrollBottom();
+
+    // let el = document.getElementsByClassName("navbar-toggler")[0];
+    // console.log(el);
+    // el.classList.remove("show");
     // if (this.state.updateCore) {
     //   this.updateCoreAssets();
     //   this.state.updateCore = false;
@@ -790,6 +794,7 @@ class App extends Component {
                     onAddLog={this.handleAddLog}
                     onLogItemDeleted={this.handleLogItemDeleted}
                     scrollBottom={this.scrollBottom}
+                    onComponentUpdate={this.componentDidUpdate}
                   />
                 </Route>
                 <Route path="/world">
@@ -872,6 +877,7 @@ class App extends Component {
                     onAddLog={this.handleAddBackground}
                     onLogItemDeleted={this.handleBackgroundItemDeleted}
                     scrollBottom={this.scrollBottom}
+                    onComponentUpdate={this.componentDidUpdate}
                   />
                 </Route>
                 <Route exact path="/stats">
@@ -993,7 +999,11 @@ class App extends Component {
                 </Route>
 
                 <Route exact path="/roll">
-                  <Dice />
+                  <Dice
+                    selectedPlayer={this.getSelectedPlayer()}
+                    footerDice={this.state.footerDice}
+                    burnMomentum={this.burnMomentum}
+                  />
                 </Route>
                 <Route exact path="/acknowledgements">
                   <Acknowledgements />
@@ -1067,12 +1077,12 @@ class App extends Component {
         </div>
         <Footer
           selectedPlayer={this.getSelectedPlayer()}
+          footerDice={this.state.footerDice}
+          burnMomentum={this.burnMomentum}
           npcs={this.state.npcs}
           foes={this.state.activeFoes.loneFoes}
-          footerDice={this.state.footerDice}
           oracles={this.state.oracles}
           moves={this.state.moves}
-          burnMomentum={this.burnMomentum}
           onComponentUpdate={this.componentDidUpdate}
         />
 

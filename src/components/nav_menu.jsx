@@ -241,7 +241,10 @@ class NavMenu extends Component {
                     {section.pages.map((page) => (
                       <li key={UniqueKeyGenerator.generate("page")} className={`${page.active ? "active" : ""}`}>
                         {page.title}
-                        <Link to={page.url}>
+                        <Link
+                          to={page.url}
+                          onClick={() => (this.props.onMenuItemClick ? this.props.onMenuItemClick() : () => {})}
+                        >
                           <i className={`menu-icon ${page.icon}`} aria-hidden="true"></i>
                           &nbsp;{page.pageName}
                         </Link>
@@ -286,7 +289,6 @@ class NavMenu extends Component {
               <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg" />
             </a>
           </li>
-          ;
         </ul>
       </React.Fragment>
     );

@@ -148,8 +148,31 @@ class Stats extends Component {
         p.stats.map((s) => {
           if (s.stat !== stat) return s;
           s.value = parseInt(s.value) + val;
-          s.value = s.value > 4 ? 4 : s.value;
-          s.value = s.value < 0 ? 0 : s.value;
+          if (s.type == "core") {
+            s.value = s.value > 4 ? 4 : s.value;
+            s.value = s.value < 0 ? 0 : s.value;
+          } else if (s.stat == "Momentum") {
+            s.value = s.value > 10 ? 10 : s.value;
+            s.value = s.value < -6 ? -6 : s.value;
+          } else {
+            s.value = s.value > 5 ? 5 : s.value;
+            s.value = s.value < 0 ? 0 : s.value;
+          }
+          return s;
+        });
+      }
+      return p;
+    });
+    this.setState({ players });
+    this.props.updatePlayerSelect(this.props.selectedPlayer.name);
+  };
+
+  handleMomentumReset = () => {
+    const players = this.props.players.map((p) => {
+      if (p.selected === true) {
+        p.stats.map((s) => {
+          if (s.stat !== "Momentum") return s;
+          s.value = this.props.selectedPlayer.resetMomentum;
           return s;
         });
       }
@@ -192,7 +215,7 @@ class Stats extends Component {
             {this.props.selectedPlayer.stats
               .filter((s) => s.type == "core")
               .map((s) => (
-                <div className="col stat-col">
+                <div className="col-12 col-lg stat-col">
                   <div key={s.stat} className="card stat-card">
                     <div className="container">
                       <div className="row">
@@ -245,46 +268,82 @@ class Stats extends Component {
             // hideButtons={true}
           />
           <div className="row">
-            <div className="col-4"></div>
-            <div className="col-4">
+            <div className="col-4 .d-sm-none .d-lg-block"></div>
+            <div className="col-lg-4 col-sm-12">
               <RollButton
                 buttonText="Learn from your Failures"
                 roll={this.props.selectedPlayer.failureRoll}
                 onRoll={() => this.handleOnProgressRollClicked()}
               />
             </div>
-            <div className="col-4"></div>
+            <div className="col-4 .d-sm-none .d-lg-block"></div>
           </div>
           <TitleBlock title="TRACKS" />
-          <StatTrack
-            min={0}
-            max={5}
-            onChange={this.handleStatTrackChange}
-            stat={this.props.selectedPlayer.stats.find((s) => s.stat == "Health")}
-            value={this.props.selectedPlayer.stats.find((s) => s.stat == "Health").value}
-          />
-          <StatTrack
-            min={0}
-            max={5}
-            value={this.props.selectedPlayer.stats.find((s) => s.stat == "Spirit").value}
-            onChange={this.handleStatTrackChange}
-            stat={this.props.selectedPlayer.stats.find((s) => s.stat == "Spirit")}
-          />
-          <StatTrack
-            min={0}
-            max={5}
-            value={this.props.selectedPlayer.stats.find((s) => s.stat == "Supply").value}
-            onChange={this.handleStatTrackChange}
-            stat={this.props.selectedPlayer.stats.find((s) => s.stat == "Supply")}
-          />
-          <StatTrack
-            min={-6}
-            max={10}
-            // onChange={this.handleMomentumTrackChange}
-            onChange={this.handleStatTrackChange}
-            value={this.props.selectedPlayer.stats.find((s) => s.stat == "Momentum").value}
-            stat={this.props.selectedPlayer.stats.find((s) => s.stat == "Momentum")}
-          />
+          <div className="d-none d-md-block">
+            <StatTrack
+              min={0}
+              max={5}
+              onChange={this.handleStatTrackChange}
+              stat={this.props.selectedPlayer.stats.find((s) => s.stat == "Health")}
+              value={this.props.selectedPlayer.stats.find((s) => s.stat == "Health").value}
+            />
+            <StatTrack
+              min={0}
+              max={5}
+              value={this.props.selectedPlayer.stats.find((s) => s.stat == "Spirit").value}
+              onChange={this.handleStatTrackChange}
+              stat={this.props.selectedPlayer.stats.find((s) => s.stat == "Spirit")}
+            />
+            <StatTrack
+              min={0}
+              max={5}
+              value={this.props.selectedPlayer.stats.find((s) => s.stat == "Supply").value}
+              onChange={this.handleStatTrackChange}
+              stat={this.props.selectedPlayer.stats.find((s) => s.stat == "Supply")}
+            />
+            <StatTrack
+              min={-6}
+              max={10}
+              // onChange={this.handleMomentumTrackChange}
+              onChange={this.handleStatTrackChange}
+              value={this.props.selectedPlayer.stats.find((s) => s.stat == "Momentum").value}
+              stat={this.props.selectedPlayer.stats.find((s) => s.stat == "Momentum")}
+            />
+          </div>
+          <div className="d-block d-md-none text-center">
+            {this.props.selectedPlayer.stats
+              .filter((s) => s.type == "status")
+              .map((s) => (
+                <div className="col-12 col-lg stat-col">
+                  <div key={s.stat} className="card stat-card">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-4">
+                          <button
+                            className="btn btn-outline-dark progressTrackBtn"
+                            onClick={() => this.handleOnPlayerStatChanged(s.stat, false)}
+                          >
+                            <i className="fa fa-minus" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                        <div className="col-4">
+                          <h2>{s.value}</h2>
+                        </div>
+                        <div className="col-4">
+                          <button
+                            className="btn btn-outline-dark progressTrackBtn"
+                            onClick={() => this.handleOnPlayerStatChanged(s.stat, true)}
+                          >
+                            <i className="fa fa-plus" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <p className="modesto">{s.stat}</p>
+                  </div>
+                </div>
+              ))}
+          </div>
         </div>
         <div className="row text-center">
           <div className="col mt-4">
@@ -292,17 +351,17 @@ class Stats extends Component {
               <h5>{this.props.selectedPlayer.maxMomentum}</h5>
               <h6>MAX</h6>
             </div>
-            <div className="btn btn-outline-dark momentum-stat">
+            <button className="btn btn-outline-dark momentum-stat" onClick={() => this.handleMomentumReset()}>
               <h5>{this.props.selectedPlayer.resetMomentum}</h5>
               <h6>RESET</h6>
-            </div>
+            </button>
           </div>
         </div>
 
         <div className="debilities text-center">
           <TitleBlock title="DEBILITIES" />
-          <div className="row mt-5 modesto">
-            <div className="col-4">
+          <div className="row modesto">
+            <div className="col-12 col-lg-4 mt-4">
               <h4 className="mb-4">CONDITIONS</h4>
               {this.props.selectedPlayer.debilities
                 .filter((d) => d.type == "conditions")
@@ -319,7 +378,7 @@ class Stats extends Component {
                   </div>
                 ))}
             </div>
-            <div className="col-4">
+            <div className="col-12 col-lg-4 mt-4">
               <h4 className="mb-4">BANES</h4>
               {this.props.selectedPlayer.debilities
                 .filter((d) => d.type == "banes")
@@ -336,7 +395,7 @@ class Stats extends Component {
                   </div>
                 ))}
             </div>
-            <div className="col-4">
+            <div className="col-12 col-lg-4 mt-4">
               <h4 className="mb-4">BURDENS</h4>
               {this.props.selectedPlayer.debilities
                 .filter((d) => d.type == "burdens")

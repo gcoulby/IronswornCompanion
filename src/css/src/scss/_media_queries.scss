@@ -1,11 +1,9 @@
-@media screen and (max-width: 1300px) {
-  .footer-pre,
-  .stat-button {
-    display: none;
-  }
-}
+$small: 1250px;
 
-@media screen and (max-width: 800px) {
+/*============================================================*/
+/*          Header
+/*============================================================*/
+@media screen and (max-width: $small) {
   .mobile-menu {
     display: block !important;
   }
@@ -17,6 +15,8 @@
   }
   #page-container {
     margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
   }
   .navbar.fixed-bottom {
     display: none !important;
@@ -26,11 +26,175 @@
   }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: $small) {
   .mobile-menu {
     display: none !important;
   }
   .desktop-menu {
     display: flex !important;
+  }
+}
+
+/*============================================================*/
+/*          Footer
+/*============================================================*/
+@media screen and (max-width: 1300px) {
+  .footer-pre,
+  .stat-button {
+    display: none;
+  }
+}
+
+/*============================================================*/
+/*          All Pages
+/*============================================================*/
+@media screen and (max-width: $small) {
+  .stat-title {
+    border-bottom: 2px solid black;
+    span {
+      background: none;
+      padding: 0;
+      top: 0;
+    }
+  }
+
+  #mapid {
+    height: 400px !important;
+  }
+
+  .navbar {
+    position: inherit !important;
+  }
+
+  .card {
+    box-shadow: none;
+    margin: 0.5em;
+  }
+
+  .dice-card.card {
+    margin: 1em 0 !important;
+  }
+
+  .die_qty {
+    margin-top: 0;
+  }
+}
+
+@media screen and (max-width: $small) {
+  .keys {
+    font-size: 7px;
+  }
+}
+/*============================================================*/
+/*          Worlds
+/*============================================================*/
+@media screen and (max-width: $small) {
+  .nav-tabs .nav-link {
+    width: 50%;
+    text-align: center;
+  }
+  .world-tabs {
+    .card {
+      text-align: center;
+    }
+  }
+}
+
+/*============================================================*/
+/*          Progress
+/*============================================================*/
+@media screen and (max-width: $small) {
+  .progressTrackBox {
+    border: 1px solid #6c757d;
+  }
+
+  .progressTrackBox {
+    min-height: 1.2em;
+    min-width: 1.2em;
+  }
+
+  .progressTrack {
+    text-align: center;
+  }
+  // .progressBtn {
+  //   background: red;
+  //   display: table-cell !important;
+  // }
+}
+
+@media screen and (max-width: 1000px) {
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    .overlay {
+      background: black;
+      width: 100vw;
+      height: 100vh;
+      display: block;
+      position: absolute;
+      opacity: 0.5;
+    }
+    .card {
+      position: fixed;
+      margin-left: 0;
+      max-height: 95vh;
+      overflow: scroll;
+      // max-width: 80vw;
+      // position: fixed;
+      // top: calc(50% - 300px);
+      // left: calc(50% - 400px);
+      // width: $small;
+      // height: 600px;
+      display: block;
+    }
+  }
+
+  @for $i from $start through $end {
+    $value: $i * 100;
+    $valHalf: $value / 2;
+    $valHalfPx: $valHalf + 0px;
+
+    [data-width="#{$value}"] .card {
+      left: 5%;
+      width: 80%;
+    }
+
+    [data-height="#{$value}"] .card {
+      top: calc(50% - #{$valHalfPx});
+      height: auto;
+    }
+  }
+}
+
+/*============================================================*/
+/*          FOES
+/*============================================================*/
+@media screen and (max-width: $small) {
+  .foe-card table {
+    position: inherit;
+    width: 100%;
+  }
+}
+
+/*============================================================*/
+/*          Rollers
+/*============================================================*/
+@media screen and (max-width: $small) {
+  .oracle-results {
+    margin-top: 2em;
+  }
+
+  .oracle-tables,
+  .moves-list {
+    height: 30vh !important;
+  }
+}
+
+@media screen and (max-width: $small) {
+  .slider-tick::before,
+  .slider-tick::after {
+    display: none;
   }
 }

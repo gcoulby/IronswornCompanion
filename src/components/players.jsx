@@ -158,7 +158,7 @@ class Characters extends Component {
         <div className="row">
           <div className="col">
             <div className="row">
-              <div className="col-md-6 col-sm-12">
+              <div className="col-lg-6 col-sm-12">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <button
@@ -203,7 +203,7 @@ class Characters extends Component {
                   />
                 </div>
               </div>
-              <div className="col-md-6 col-sm-12">
+              <div className="col-lg-6 col-sm-12">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <button
@@ -258,7 +258,7 @@ class Characters extends Component {
                     <div className="row">
                       <div className="col-12">
                         <div className="btn-group btn-group-justified">
-                          <button className="btn btn-block btn-secondary btn-tag">CHALLENGING</button>
+                          <button className="btn btn-block btn-secondary btn-tag">CHALLENGE</button>
                           <button className="btn btn-block btn-dark btn-tag">4,3,3,2,2</button>
                         </div>
                       </div>
@@ -266,7 +266,7 @@ class Characters extends Component {
                     <div className="row">
                       <div className="col-12">
                         <div className="btn-group btn-group-justified">
-                          <button className="btn btn-block btn-secondary btn-tag">PERILOUS (DEFAULT)</button>
+                          <button className="btn btn-block btn-secondary btn-tag">PERILOUS</button>
                           <button className="btn btn-block btn-dark btn-tag">3,2,2,1,1</button>
                         </div>
                       </div>
@@ -284,10 +284,10 @@ class Characters extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="col-md-2 col-sm-12">
+              <div className="col-lg-2 col-sm-12">
                 <h6>&nbsp;</h6>
                 <button
-                  className="btn btn-dark btn-block"
+                  className="btn btn-dark btn-block mt-4"
                   type="button"
                   onClick={() => this.handleOnRollPlayerPrimaryStat()}
                 >
@@ -295,8 +295,8 @@ class Characters extends Component {
                 </button>
               </div>
               {this.props.newPlayer.Stats.filter((s) => s.type == "core").map((s) => (
-                <div className="col-md-2 col-sm-12">
-                  <h6>{s.stat.toUpperCase()}</h6>
+                <div className="col-lg-2 col-sm-12">
+                  <h6 className="mt-3">{s.stat.toUpperCase()}</h6>
                   <input
                     data-name={s.stat}
                     className="form-control"
@@ -324,8 +324,8 @@ class Characters extends Component {
 
         <div className="row mt-4">
           {this.props.players.map((player) => (
-            <div key={player.name} className="col-md-6 col-lg-4 col-sm-12">
-              <div className="card">
+            <div key={player.name} className="col-lg-6 col-sm-12">
+              <div className="card mb-4">
                 <div className="card-body">
                   <h4 className="mb-2">{player.name}</h4>
                   <p>

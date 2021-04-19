@@ -64,7 +64,7 @@ class OracleRoller extends Component {
               <div className="col">
                 <span className="modesto mt-3">Ask the Oracle:</span>
                 <br />
-                <div class="btn-group" role="group" aria-label="Basic example">
+                <div class="" role="group" aria-label="Basic example">
                   <button onClick={() => this.handleAskOracleRoll(91)} type="button" class="btn btn-outline-dark">
                     <RollIcon />
                     Small Chance
@@ -156,7 +156,7 @@ class OracleRoller extends Component {
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-4 oracle-tables">
+                      <div className="col-12 col-lg-4 oracle-tables">
                         {this.props.oracles.getOracleTableThemes(src).map((thm) => (
                           // <div className="col-6">
                           <table className="table table-striped table-hover my-0">
@@ -193,7 +193,7 @@ class OracleRoller extends Component {
                           // </ul>
                         ))}
                       </div>
-                      <div className="col-8 oracle-results">
+                      <div className="col-12 col-lg-8 oracle-results">
                         <table className="table table-striped ">
                           <tbody>
                             {this.state.selectedOracleTable.map((t) => (

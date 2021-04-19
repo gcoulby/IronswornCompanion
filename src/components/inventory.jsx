@@ -5,6 +5,8 @@ class Inventory extends Component {
   state = {};
   handleAddNewItem = () => {
     const newItem = this.props.newItem;
+
+    if (newItem.Name === "") return;
     const players = this.props.players.map((p) => {
       if (p.selected) {
         p.inventory.push({
@@ -83,7 +85,7 @@ class Inventory extends Component {
           </p>
         </div>
         <div className="row">
-          <div className="col-6">
+          <div className="col-12 col-lg-6">
             <div className="input-group mb-2">
               <div className="input-group-prepend">
                 <label className="btn btn-dark btn-tag">Name</label>
@@ -121,7 +123,7 @@ class Inventory extends Component {
         <div className="row">
           {this.props.selectedPlayer.inventory
             ? this.props.selectedPlayer.inventory.map((item) => (
-                <div className="col-4">
+                <div className="col-12 col-lg-4">
                   <div className="card my-3">
                     <div className="card-header text-light bg-dark">
                       <div className="row">

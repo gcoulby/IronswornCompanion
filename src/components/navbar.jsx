@@ -3,7 +3,17 @@ import { HashRouter, Link } from "react-router-dom";
 import NavMenu from "./nav_menu";
 import UniqueKeyGenerator from "./uniqueKeyGenerator";
 class Navbar extends Component {
-  state = {};
+  state = {
+    showColapsedMenu: false,
+  };
+
+  handleMenuToggleButton = () => {
+    this.setState({ showColapsedMenu: !this.state.showColapsedMenu });
+
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -19,7 +29,7 @@ class Navbar extends Component {
           </div>
           <div className="col-auto">
             <div className="collapse navbar-collapse" id="navbarsExample04">
-              <ul className="navbar-nav mr-auto">
+              <ul className="navbar-nav mr-auto header-nav">
                 <li className="nav-item active">
                   <div className="input-group">
                     <div className="input-group-prepend">
@@ -75,11 +85,6 @@ class Navbar extends Component {
           <div className="row">
             <div className="col-auto">
               <div className="input-group">
-                <div className="input-group-prepend">
-                  <div className="input-group-prepend">
-                    <label className="btn btn-outline-light btn-tag">Player</label>
-                  </div>
-                </div>
                 <select
                   className="form-control bg-dark text-light"
                   value={this.props.selectedPlayer ? this.props.selectedPlayer.name : -1}
@@ -109,14 +114,15 @@ class Navbar extends Component {
                 aria-controls="navbarsExample01"
                 aria-expanded="false"
                 aria-label="Toggle navigation"
+                onClick={() => this.handleMenuToggleButton()}
               >
                 <span class="navbar-toggler-icon"></span>
               </button>
             </div>
           </div>
 
-          <div class="collapse navbar-collapse" id="navbarsExample01">
-            <NavMenu />
+          <div class={`collapse navbar-collapse ${this.state.showColapsedMenu ? "show" : ""}`} id="navbarsExample01">
+            <NavMenu onMenuItemClick={this.handleMenuToggleButton} />
           </div>
         </nav>
         <div className="nav-post print-hide"></div>

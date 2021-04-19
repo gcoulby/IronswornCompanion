@@ -329,72 +329,15 @@ class Locations extends Component {
         <h1>Locations and Settlements</h1>
         <div className="form-group"></div>
         <div className="row">
-          <div className="col-5">
-            <div id="mapid"></div>
-            <div className="input-group my-3">
-              <div className="input-group-prepend">
-                <button className="btn btn-dark btn-tag" title="Custom Map URL">
-                  Custom Map URL
-                </button>
-              </div>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Custom map URL"
-                aria-label="Name"
-                aria-describedby="basic-addon2"
-                value={this.props.customMap.Url}
-                onChange={(e) => this.handleOnMapUrlChanged(e)}
-              />
-              <div className="input-group-prepend">
-                <button className="btn btn-dark" title="Refresh" onClick={() => window.location.reload("/")}>
-                  <i class="fa fa-refresh" aria-hidden="true"></i>
-                </button>
-              </div>
-            </div>
-
-            <div className="input-group my-3">
-              <div className="input-group-prepend">
-                <button className="btn btn-dark btn-tag" title="Custom Map URL">
-                  Map Width
-                </button>
-              </div>
-              <input
-                type="number"
-                className="form-control"
-                placeholder="Custom map URL"
-                aria-label="Width"
-                aria-describedby="basic-addon2"
-                disabled={this.props.customMap.Url == ""}
-                value={this.props.customMap.Url == "" ? 594 : this.props.customMap.Width}
-                onChange={(e) => this.handleOnMapWidthChanged(e)}
-              />
-            </div>
-
-            <div className="input-group my-3">
-              <div className="input-group-prepend">
-                <button className="btn btn-dark btn-tag" title="Custom Map URL">
-                  Map Height
-                </button>
-              </div>
-              <input
-                type="number"
-                className="form-control"
-                placeholder="Custom map URL"
-                aria-label="Height"
-                aria-describedby="basic-addon2"
-                disabled={this.props.customMap.Url == ""}
-                value={this.props.customMap.Url == "" ? 792 : this.props.customMap.Height}
-                onChange={(e) => this.handleOnMapHeightChanged(e)}
-              />
-            </div>
+          <div className="col-12 col-lg-5">
+            <div id="mapid" className="mb-4"></div>
           </div>
-          <div className="col-7">
+          <div className="col-12 col-lg-7">
             <div className="row">
-              <div className="col-9">
-                <h3>Location/Settlement Details</h3>
+              <div className="col-12 col-lg-9">
+                <h3>Location Details</h3>
               </div>
-              <div id="locationAddBtn" className={`col-3 text-right ${this.state.addButtonClass}`}>
+              <div id="locationAddBtn" className={`col-12 col-lg-3 text-right ${this.state.addButtonClass}`}>
                 <button className="btn btn-dark" onClick={() => this.handleOnSaveLocation()}>
                   <i className="fas fa-save"></i> Save Location
                 </button>
@@ -623,6 +566,67 @@ class Locations extends Component {
               {/* <button className="btn btn-danger">
                 <i className="fas fa-times"></i> Delete Location
               </button> */}
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-12 col-lg-5">
+            <div className="input-group my-3">
+              <div className="input-group-prepend">
+                <button className="btn btn-dark btn-tag" title="Custom Map URL">
+                  Custom Map URL
+                </button>
+              </div>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Custom map URL"
+                aria-label="Name"
+                aria-describedby="basic-addon2"
+                value={this.props.customMap.Url}
+                onChange={(e) => this.handleOnMapUrlChanged(e)}
+              />
+              <div className="input-group-prepend">
+                <button className="btn btn-dark" title="Refresh" onClick={() => window.location.reload("/")}>
+                  <i class="fa fa-refresh" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+
+            <div className="input-group my-3">
+              <div className="input-group-prepend">
+                <button className="btn btn-dark btn-tag" title="Custom Map URL">
+                  Map Width
+                </button>
+              </div>
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Custom map URL"
+                aria-label="Width"
+                aria-describedby="basic-addon2"
+                disabled={this.props.customMap.Url == ""}
+                value={this.props.customMap.Url == "" ? 594 : this.props.customMap.Width}
+                onChange={(e) => this.handleOnMapWidthChanged(e)}
+              />
+            </div>
+
+            <div className="input-group my-3">
+              <div className="input-group-prepend">
+                <button className="btn btn-dark btn-tag" title="Custom Map URL">
+                  Map Height
+                </button>
+              </div>
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Custom map URL"
+                aria-label="Height"
+                aria-describedby="basic-addon2"
+                disabled={this.props.customMap.Url == ""}
+                value={this.props.customMap.Url == "" ? 792 : this.props.customMap.Height}
+                onChange={(e) => this.handleOnMapHeightChanged(e)}
+              />
             </div>
           </div>
         </div>

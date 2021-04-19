@@ -16224,7 +16224,7 @@ nav ul {
   vertical-align: text-bottom;
   font-family: "modesto";
   margin-top: 2em;
-  font-size: 12px;
+  font-size: 8px;
   text-align: left;
 }
 
@@ -16241,12 +16241,23 @@ nav ul {
   padding-left: 0;
 }
 
-.world-tabs .nav-item {
+.nav-item {
   font-family: "Modesto";
+  background: #343a40;
+  color: white;
 }
 
-.world-tabs nav a:hover {
-  color: #6c757d;
+.nav-link.active,
+nav a:hover {
+  border: none;
+  background: #6c757d !important;
+  color: white !important;
+}
+
+.nav-tabs .nav-link {
+  width: auto;
+  text-align: center;
+  border: 2px solid white !important;
 }
 
 .truth-card {
@@ -16624,6 +16635,10 @@ input[type="file"] {
   z-index: 900 !important;
 }
 
+.header-nav .nav-item {
+  background: none;
+}
+
 .stat-card {
   padding-top: 1em;
   border-radius: 0% !important;
@@ -16830,6 +16845,7 @@ label::before {
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;
+  border: none;
   cursor: pointer;
   height: 68px;
 }
@@ -16839,6 +16855,7 @@ label::before {
   -moz-appearance: none;
        appearance: none;
   background: url("/src/img/Clip.svg");
+  border: none;
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;
@@ -17163,17 +17180,17 @@ label::before {
   clear: both;
 }
 
-.difficulty-tags .btn-group-justified {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+.btn-group-justified {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
 }
 
-.difficulty-tags .btn-group-justified .btn {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-  margin-top: 0;
+.btn-group-justified .btn {
+  -webkit-box-flex: 1 !important;
+      -ms-flex-positive: 1 !important;
+          flex-grow: 1 !important;
+  margin-top: 0 !important;
 }
 
 .progressTrack {
@@ -17196,6 +17213,12 @@ label::before {
 
 .progressTrackBox {
   border: 3px solid #6c757d;
+}
+
+.progressBtns {
+  width: 20%;
+  text-align: center;
+  display: inline-block;
 }
 
 .progressTick-1 {
@@ -18993,14 +19016,10 @@ input.autocomplete-input {
   overflow-y: auto;
 }
 
-@media screen and (max-width: 1300px) {
-  .footer-pre,
-  .stat-button {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 800px) {
+/*============================================================*/
+/*          Header
+/*============================================================*/
+@media screen and (max-width: 1250px) {
   .mobile-menu {
     display: block !important;
   }
@@ -19012,6 +19031,8 @@ input.autocomplete-input {
   }
   #page-container {
     margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
   }
   .navbar.fixed-bottom {
     display: none !important;
@@ -19021,7 +19042,7 @@ input.autocomplete-input {
   }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 1250px) {
   .mobile-menu {
     display: none !important;
   }
@@ -19029,6 +19050,296 @@ input.autocomplete-input {
     display: -webkit-box !important;
     display: -ms-flexbox !important;
     display: flex !important;
+  }
+}
+
+/*============================================================*/
+/*          Footer
+/*============================================================*/
+@media screen and (max-width: 1300px) {
+  .footer-pre,
+  .stat-button {
+    display: none;
+  }
+}
+
+/*============================================================*/
+/*          All Pages
+/*============================================================*/
+@media screen and (max-width: 1250px) {
+  .stat-title {
+    border-bottom: 2px solid black;
+  }
+  .stat-title span {
+    background: none;
+    padding: 0;
+    top: 0;
+  }
+  #mapid {
+    height: 400px !important;
+  }
+  .navbar {
+    position: inherit !important;
+  }
+  .card {
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    margin: 0.5em;
+  }
+  .dice-card.card {
+    margin: 1em 0 !important;
+  }
+  .die_qty {
+    margin-top: 0;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .keys {
+    font-size: 7px;
+  }
+}
+
+/*============================================================*/
+/*          Worlds
+/*============================================================*/
+@media screen and (max-width: 1250px) {
+  .nav-tabs .nav-link {
+    width: 50%;
+    text-align: center;
+  }
+  .world-tabs .card {
+    text-align: center;
+  }
+}
+
+/*============================================================*/
+/*          Progress
+/*============================================================*/
+@media screen and (max-width: 1250px) {
+  .progressTrackBox {
+    border: 1px solid #6c757d;
+  }
+  .progressTrackBox {
+    min-height: 1.2em;
+    min-width: 1.2em;
+  }
+  .progressTrack {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+  }
+  .popup .overlay {
+    background: black;
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    position: absolute;
+    opacity: 0.5;
+  }
+  .popup .card {
+    position: fixed;
+    margin-left: 0;
+    max-height: 95vh;
+    overflow: scroll;
+    display: block;
+  }
+  [data-width="100"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="100"] .card {
+    top: calc(50% - 50px);
+    height: auto;
+  }
+  [data-width="200"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="200"] .card {
+    top: calc(50% - 100px);
+    height: auto;
+  }
+  [data-width="300"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="300"] .card {
+    top: calc(50% - 150px);
+    height: auto;
+  }
+  [data-width="400"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="400"] .card {
+    top: calc(50% - 200px);
+    height: auto;
+  }
+  [data-width="500"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="500"] .card {
+    top: calc(50% - 250px);
+    height: auto;
+  }
+  [data-width="600"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="600"] .card {
+    top: calc(50% - 300px);
+    height: auto;
+  }
+  [data-width="700"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="700"] .card {
+    top: calc(50% - 350px);
+    height: auto;
+  }
+  [data-width="800"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="800"] .card {
+    top: calc(50% - 400px);
+    height: auto;
+  }
+  [data-width="900"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="900"] .card {
+    top: calc(50% - 450px);
+    height: auto;
+  }
+  [data-width="1000"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1000"] .card {
+    top: calc(50% - 500px);
+    height: auto;
+  }
+  [data-width="1100"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1100"] .card {
+    top: calc(50% - 550px);
+    height: auto;
+  }
+  [data-width="1200"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1200"] .card {
+    top: calc(50% - 600px);
+    height: auto;
+  }
+  [data-width="1300"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1300"] .card {
+    top: calc(50% - 650px);
+    height: auto;
+  }
+  [data-width="1400"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1400"] .card {
+    top: calc(50% - 700px);
+    height: auto;
+  }
+  [data-width="1500"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1500"] .card {
+    top: calc(50% - 750px);
+    height: auto;
+  }
+  [data-width="1600"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1600"] .card {
+    top: calc(50% - 800px);
+    height: auto;
+  }
+  [data-width="1700"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1700"] .card {
+    top: calc(50% - 850px);
+    height: auto;
+  }
+  [data-width="1800"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1800"] .card {
+    top: calc(50% - 900px);
+    height: auto;
+  }
+  [data-width="1900"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1900"] .card {
+    top: calc(50% - 950px);
+    height: auto;
+  }
+  [data-width="2000"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="2000"] .card {
+    top: calc(50% - 1000px);
+    height: auto;
+  }
+}
+
+/*============================================================*/
+/*          FOES
+/*============================================================*/
+@media screen and (max-width: 1250px) {
+  .foe-card table {
+    position: inherit;
+    width: 100%;
+  }
+}
+
+/*============================================================*/
+/*          Rollers
+/*============================================================*/
+@media screen and (max-width: 1250px) {
+  .oracle-results {
+    margin-top: 2em;
+  }
+  .oracle-tables,
+  .moves-list {
+    height: 30vh !important;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .slider-tick::before,
+  .slider-tick::after {
+    display: none;
   }
 }
 
@@ -19125,13 +19436,11 @@ input.autocomplete-input {
 .denizen-matrix .denizen-matrix-rank {
   color: #6c757d;
   font-style: italic;
-  text-align: left;
 }
 
 .denizen-matrix .denizen-matrix-chance {
   color: #6c757d;
   font-style: italic;
-  text-align: right;
 }
 
 .denizen-matrix .denizen-matrix-name {

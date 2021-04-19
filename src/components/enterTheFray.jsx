@@ -259,7 +259,7 @@ class EnterTheFray extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="col-6">
+              <div className="col-12 col-lg-6">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <label className="btn btn-dark btn-tag">Foe Category</label>
@@ -280,7 +280,7 @@ class EnterTheFray extends Component {
                 </div>
               </div>
 
-              <div className="col-6">
+              <div className="col-12 col-lg-6">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <button
@@ -326,16 +326,18 @@ class EnterTheFray extends Component {
               <div className="col">
                 {this.props.newFoe.newFoeTypeId != -1 && this.props.newFoe.newFoeTypeId != "Select Foe Type" ? (
                   <React.Fragment>
-                    <FoeOverviewTable
-                      Category={selectedFoe.Type}
-                      Type={selectedFoe.Name}
-                      Rank={selectedFoe.Rank}
-                      Source={selectedFoe.Source.Name}
-                      Page={selectedFoe.Source.Page}
-                      Drives={selectedFoe.Drives}
-                      Features={selectedFoe.Features}
-                      Tactics={selectedFoe.Tactics}
-                    />
+                    <div className="d-none d-md-block">
+                      <FoeOverviewTable
+                        Category={selectedFoe.Type}
+                        Type={selectedFoe.Name}
+                        Rank={selectedFoe.Rank}
+                        Source={selectedFoe.Source.Name}
+                        Page={selectedFoe.Source.Page}
+                        Drives={selectedFoe.Drives}
+                        Features={selectedFoe.Features}
+                        Tactics={selectedFoe.Tactics}
+                      />
+                    </div>
                     <div className="row mt-3">
                       <div className="col">
                         <button className="btn btn-dark" type="button" onClick={() => this.handleOnAddFoe()}>
@@ -369,41 +371,37 @@ class EnterTheFray extends Component {
         </div> */}
         <TitleBlock title="Active Foes" />
         <div className="row">
-          <div className="col-6">
-            {this.props.activeFoes
-              .filter((f) => !f.complete)
-              .map((f) => (
-                <React.Fragment>
-                  <FoeCard
-                    foe={f}
-                    ranks={this.props.ranks}
-                    onProgressionChange={this.handleOnProgressionChanged}
-                    onRankChange={this.handleOnRankChanged}
-                    onProgressRollClicked={this.handleOnProgressRollClicked}
-                    onFoeDelete={this.handleProgressionDelete}
-                  />
-                </React.Fragment>
-              ))}
-          </div>
+          {this.props.activeFoes
+            .filter((f) => !f.complete)
+            .map((f) => (
+              <React.Fragment>
+                <FoeCard
+                  foe={f}
+                  ranks={this.props.ranks}
+                  onProgressionChange={this.handleOnProgressionChanged}
+                  onRankChange={this.handleOnRankChanged}
+                  onProgressRollClicked={this.handleOnProgressRollClicked}
+                  onFoeDelete={this.handleProgressionDelete}
+                />
+              </React.Fragment>
+            ))}
         </div>
         <TitleBlock title="Defeated Foes" />
         <div className="row">
-          <div className="col-6">
-            {this.props.activeFoes
-              .filter((f) => f.complete)
-              .map((f) => (
-                <React.Fragment>
-                  <FoeCard
-                    foe={f}
-                    ranks={this.props.ranks}
-                    onProgressionChange={this.handleOnProgressionChanged}
-                    onRankChange={this.handleOnRankChanged}
-                    onProgressRollClicked={this.handleOnProgressRollClicked}
-                    onFoeDelete={this.handleProgressionDelete}
-                  />
-                </React.Fragment>
-              ))}
-          </div>
+          {this.props.activeFoes
+            .filter((f) => f.complete)
+            .map((f) => (
+              <React.Fragment>
+                <FoeCard
+                  foe={f}
+                  ranks={this.props.ranks}
+                  onProgressionChange={this.handleOnProgressionChanged}
+                  onRankChange={this.handleOnRankChanged}
+                  onProgressRollClicked={this.handleOnProgressRollClicked}
+                  onFoeDelete={this.handleProgressionDelete}
+                />
+              </React.Fragment>
+            ))}
         </div>
         {/* <div className="row">
           {this.props.activeFoes.loneFoes.length > 0 ? (

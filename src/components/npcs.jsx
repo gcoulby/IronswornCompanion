@@ -505,7 +505,7 @@ class NPCs extends Component {
               // }
             })
             .map((npc) => (
-              <div key={`${npc.id}_${npc.id}`} className="col-md-6 col-lg-6 col-sm-12">
+              <div key={`${npc.id}_${npc.id}`} className="col-lg-6 col-sm-12">
                 <div className="card my-3">
                   <div className="card-body">
                     <h4 className="mb-2">{npc.name}</h4>

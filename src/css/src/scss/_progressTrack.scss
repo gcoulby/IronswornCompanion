@@ -23,6 +23,12 @@ $trackBoxWidth: 2em;
   border: 3px solid $secondary;
 }
 
+.progressBtns {
+  width: 20%;
+  text-align: center;
+  display: inline-block;
+}
+
 .progressTick-1 {
   background: url("/src/img/Check1.svg");
   background-repeat: no-repeat;

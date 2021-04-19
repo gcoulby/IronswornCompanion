@@ -265,7 +265,7 @@ class Progression extends Component {
         )}
 
         <div className="row">
-          <div className="col-6">
+          <div className="col-12 col-lg-6">
             <div className="input-group mb-2">
               <div className="input-group-prepend">
                 <label className="btn btn-dark btn-tag">Name</label>
