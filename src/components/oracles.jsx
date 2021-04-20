@@ -3635,7 +3635,7 @@ class Oracles {
     this.editOracleList = state.editOracleList;
     this.newOracleTableName = state.newOracleTableName;
     this.tables = state.tables;
-    this.rollHistory = state.rollHistory;
+    this.rollHistory = state.rollHistory ?? [];
     this.selectedOracleSource = state.selectedOracleSource;
     this.selectedOracleTheme = state.selectedOracleTheme;
     this.selectedOracleTable = state.selectedOracleTable;
