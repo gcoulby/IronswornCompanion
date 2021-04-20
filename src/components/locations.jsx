@@ -588,7 +588,7 @@ class Locations extends Component {
               />
               <div className="input-group-prepend">
                 <button className="btn btn-dark" title="Refresh" onClick={() => window.location.reload("/")}>
-                  <i class="fa fa-refresh" aria-hidden="true"></i>
+                  <i className="fa fa-refresh" aria-hidden="true"></i>
                 </button>
               </div>
             </div>

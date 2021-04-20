@@ -82,12 +82,12 @@ class Navbar extends Component {
           </div>
         </nav>
 
-        <nav class="navbar navbar-dark bg-dark mobile-menu">
+        <nav className="navbar navbar-dark bg-dark mobile-menu">
           <div className="row">
             <div className="col-auto">
               <HashRouter basename="/">
                 <Link className="btn btn-outline-light" to="/" onClick={() => this.handleMenuToggleButton(true)}>
-                  <i class="fa fa-home" aria-hidden="true"></i>
+                  <i className="fa fa-home" aria-hidden="true"></i>
                 </Link>
               </HashRouter>
             </div>
@@ -115,7 +115,7 @@ class Navbar extends Component {
             </div>
             <div className="col-auto">
               <button
-                class="btn btn-outline-light"
+                className="btn btn-outline-light"
                 type="button"
                 data-toggle="collapse"
                 data-target="#navbarsExample01"
@@ -124,12 +124,15 @@ class Navbar extends Component {
                 aria-label="Toggle navigation"
                 onClick={() => this.handleMenuToggleButton()}
               >
-                <span class="navbar-toggler-icon"></span>
+                <span className="navbar-toggler-icon"></span>
               </button>
             </div>
           </div>
 
-          <div class={`collapse navbar-collapse ${this.state.showColapsedMenu ? "show" : ""}`} id="navbarsExample01">
+          <div
+            className={`collapse navbar-collapse ${this.state.showColapsedMenu ? "show" : ""}`}
+            id="navbarsExample01"
+          >
             <NavMenu onMenuItemClick={this.handleMenuToggleButton} />
           </div>
         </nav>

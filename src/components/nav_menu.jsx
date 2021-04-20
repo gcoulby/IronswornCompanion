@@ -237,7 +237,7 @@ class NavMenu extends Component {
               return (
                 <li key={UniqueKeyGenerator.generate("section")} className="sidebarGroup">
                   <h6 className="menu-title">{section.title}</h6>
-                  <ul class="navbar-nav mr-auto">
+                  <ul className="navbar-nav mr-auto">
                     {section.pages.map((page) => (
                       <li key={UniqueKeyGenerator.generate("page")} className={`${page.active ? "active" : ""}`}>
                         {page.title}

@@ -64,24 +64,24 @@ class OracleRoller extends Component {
               <div className="col">
                 <span className="modesto mt-3">Ask the Oracle:</span>
                 <br />
-                <div class="" role="group" aria-label="Basic example">
-                  <button onClick={() => this.handleAskOracleRoll(91)} type="button" class="btn btn-outline-dark">
+                <div className="" role="group" aria-label="Basic example">
+                  <button onClick={() => this.handleAskOracleRoll(91)} type="button" className="btn btn-outline-dark">
                     <RollIcon />
                     Small Chance
                   </button>
-                  <button onClick={() => this.handleAskOracleRoll(76)} type="button" class="btn btn-outline-dark">
+                  <button onClick={() => this.handleAskOracleRoll(76)} type="button" className="btn btn-outline-dark">
                     <RollIcon />
                     Unlikely
                   </button>
-                  <button onClick={() => this.handleAskOracleRoll(51)} type="button" class="btn btn-outline-dark">
+                  <button onClick={() => this.handleAskOracleRoll(51)} type="button" className="btn btn-outline-dark">
                     <RollIcon />
                     50/50
                   </button>
-                  <button onClick={() => this.handleAskOracleRoll(26)} type="button" class="btn btn-outline-dark">
+                  <button onClick={() => this.handleAskOracleRoll(26)} type="button" className="btn btn-outline-dark">
                     <RollIcon />
                     Likely
                   </button>
-                  <button onClick={() => this.handleAskOracleRoll(11)} type="button" class="btn btn-outline-dark">
+                  <button onClick={() => this.handleAskOracleRoll(11)} type="button" className="btn btn-outline-dark">
                     <RollIcon />
                     Almost Certain
                   </button>
@@ -110,7 +110,7 @@ class OracleRoller extends Component {
                                 to add each result to the box. You can then click the result box to copy.
                               </div>
                               <button className="btn btn-dark" onClick={() => this.clearOutputValue()}>
-                                <i class="fa fa-times" aria-hidden="true"></i>&nbsp; Clear
+                                <i className="fa fa-times" aria-hidden="true"></i>&nbsp; Clear
                               </button>
                               <textarea
                                 type="text"

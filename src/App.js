@@ -312,7 +312,6 @@ class App extends Component {
         const foes = [];
         data.Categories.map((c) => {
           c.Foes.map((f) => {
-            console.log(f);
             f.id = `core-foe-${c.Name.toLowerCase()}-${f.Name.toLowerCase().replace(" ", "-")}`;
             f.Type = c.Name;
             f.core = true;
@@ -345,16 +344,11 @@ class App extends Component {
           .then((r2) => r2.json())
           .then((d2) => {
             d2.map((f2) => {
-              // if (f2.Type == "Ironlander") f2.Type = "Ironlanders";
               f2.id = `core-foe-${f2.Type.toLowerCase()}-${f2.Name.toLowerCase().replace(" ", "-")}`;
               foeIcons.push(f2);
               return f2;
             });
-            // let foesWithTags = _.merge(foes, Tags.Foes);
-            // let foesWithTagsAndIcons = _.merge(foes, foeIcons);
-            // this.state.foes = _.merge(foes, Tags.Foes);
             let foesWithTagsAndIcons = _.merge(_.keyBy(foes, "id"), _.keyBy(foeIcons, "id"));
-            console.log(foesWithTagsAndIcons);
             this.state.foes = _.values(foesWithTagsAndIcons);
             this.state.foeCardEditorSelectedFoe = new DefaultFoe();
             this.saveGameState();
@@ -432,21 +426,12 @@ class App extends Component {
           let type = c.Name.replace(" Moves", "").replace("Optional ", "");
           c.Moves.map((m) => {
             m.Type = type;
-            // if (m.Name === "Ask the Oracle") {
-            //   m.Text =
-            //     "When **you seek to resolve questions, discover details in the world, determine how other characters respond, or trigger encounters or events**, you may…\n\n  * Draw a conclusion: Decide the answer based on the most interesting and obvious result.\n  * Ask a yes/no question: Decide the odds of a ‘yes’, and roll on the table below to check the answer.\n  * Pick two: Envision two options. Rate one as ‘likely’, and roll on the table below to see if it is true. If not, it is the other.\n  * Spark an idea: Brainstorm or use a random prompt.\n\n```Odds          \tThe answer is ‘yes’ if you roll... \n\n|Odds|Result|\n|Almost Certain|11 or greater|\n|Likely|26 or greater|\n|50/50|51 or greater|\n|Unlikely|76 or greater|\n|Small chance|91 or greater|\n||*On a match, an extreme result or twist has occurred*|";
-            // }
             moves.push(m);
           });
         });
         this.state.moves = moves;
         this.saveGameState();
         this.checkState();
-        // fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_move_oracles.json")
-        //   .then((r2) => r2.json())
-        //   .then((d2) => {
-
-        //   });
       });
   }
 
@@ -738,9 +723,9 @@ class App extends Component {
                   <h1 id="site-subtitle">COMPANION</h1>
                   <h6 className="text-light">Version {this.version}</h6>
                   <h6 className="text-light">You've used {this.getQuotaUsage()} of the 5MB storage quota</h6>
-                  <div class="row">
-                    <div class="col-4">
-                      <div class="progress">
+                  <div className="row">
+                    <div className="col-4">
+                      <div className="progress">
                         <div
                           className="progress-bar bg-dark"
                           role="progressbar"
@@ -764,7 +749,7 @@ class App extends Component {
                       rel="noreferrer noopener"
                       target="_blank"
                     >
-                      <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp; Report an Issue
+                      <i className="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp; Report an Issue
                     </a>
                   </div>
                   <div id="bg-image"></div>
