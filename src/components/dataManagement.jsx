@@ -6,6 +6,7 @@ class DataManager extends Component {
     data: {},
     saveSelectors: {
       allDataSelected: true,
+      activeFoesDataSelected: true,
       assetsDataSelected: true,
       delveCardsDataSelected: true,
       delvesDataSelected: true,
@@ -18,6 +19,7 @@ class DataManager extends Component {
     },
     loadSelectors: {
       allDataSelected: true,
+      activeFoesDataSelected: true,
       assetsDataSelected: true,
       delveCardsDataSelected: true,
       delvesDataSelected: true,
@@ -32,6 +34,7 @@ class DataManager extends Component {
   constructor(props) {
     super();
     // this.state.data.all = props.gamestate;
+    this.state.data.activeFoes = props.gamestate.activeFoes;
     this.state.data.assets = props.gamestate.assets;
     this.state.data.delveCards = props.gamestate.delveCards;
     this.state.data.delves = props.gamestate.delves;
@@ -89,6 +92,12 @@ class DataManager extends Component {
         }
       }
     });
+    save.nextLogId = this.props.gamestate.nextLogId;
+    save.nextBackgroundId = this.props.gamestate.nextBackgroundId;
+    save.nextNPCId = this.props.gamestate.nextNPCId;
+    save.newNPC = this.props.gamestate.newNPC;
+    save.newItem = this.props.gamestate.newItem;
+    save.newProgressions = this.props.gamestate.newProgressions;
     this.props.onDownloadObjectClick(save);
   };
 
@@ -99,6 +108,12 @@ class DataManager extends Component {
         keys.push(key.replace("DataSelected", ""));
       }
     }
+    keys.push("nextLogId");
+    keys.push("nextBackgroundId");
+    keys.push("nextNPCId");
+    keys.push("newNPC");
+    keys.push("newItem");
+    keys.push("newProgressions");
     this.props.onLoadClick(evt, keys);
   };
 
