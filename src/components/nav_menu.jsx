@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UniqueKeyGenerator from "./uniqueKeyGenerator";
 import { HashRouter, Link } from "react-router-dom";
+import KoFi from "../scripts/KoFi";
 class NavMenu extends Component {
   state = {
     baseUrl: "/Ironsworn",
@@ -268,6 +269,9 @@ class NavMenu extends Component {
             })}
           </HashRouter>
           <li className="credit">
+            <div className="text-left mb-3">
+              <KoFi color="#000" id="X8X64ELNE" label="Support Me on Ko-fi" />
+            </div>
             This companion is an unofficial product building to support the table top game Ironsworn, developed by Shawn
             Tomkin
             <a
