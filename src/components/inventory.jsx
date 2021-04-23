@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import DangerButton from "./dangerButton";
 import TitleBlock from "./titleBlock";
+import UnselectedPlayer from "./unselected_player";
 class Inventory extends Component {
   state = {};
   handleAddNewItem = () => {
@@ -68,6 +69,7 @@ class Inventory extends Component {
   }
 
   render() {
+    if (this.props.selectedPlayer == null) return <UnselectedPlayer />;
     return (
       <React.Fragment>
         <h1>Inventory</h1>
