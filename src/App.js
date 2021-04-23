@@ -735,22 +735,22 @@ class App extends Component {
                           aria-valuemax="100"
                         ></div>
                       </div>
+                      <div className="alert alert-secondary mt-4">
+                        <p>
+                          This app has been made publically available in an alpha state for testing purposes. As such,
+                          there are expected to be bugs in the application.
+                        </p>
+                        <p>Should you find a bug please report it here:</p>
+                        <a
+                          className="btn btn-dark"
+                          href="https://docs.google.com/spreadsheets/d/1GXvsk8f_Kx_lVNN78J1027Np0T7-pF1pLZsqnJA6-fE/edit#gid=1386834576"
+                          rel="noreferrer noopener"
+                          target="_blank"
+                        >
+                          <i className="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp; Report an Issue
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                  <div className="alert alert-secondary mt-4">
-                    <p>
-                      This app has been made publically available in an alpha state for testing purposes. As such, there
-                      are expected to be bugs in the application.
-                    </p>
-                    <p>Should you find a bug please report it here:</p>
-                    <a
-                      className="btn btn-dark"
-                      href="https://docs.google.com/spreadsheets/d/1GXvsk8f_Kx_lVNN78J1027Np0T7-pF1pLZsqnJA6-fE/edit#gid=1386834576"
-                      rel="noreferrer noopener"
-                      target="_blank"
-                    >
-                      <i className="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp; Report an Issue
-                    </a>
                   </div>
                   <div id="bg-image"></div>
                   {/* <div id="welcome-page-notice" className="alert alert-secondary my-4">
