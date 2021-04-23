@@ -48,7 +48,7 @@ class Dice extends Component {
     return (
       <React.Fragment>
         <div className="container">
-          <div className="row">
+          <div className="row mb-5">
             <div className="col mb-4">
               <Roller
                 light={true}
@@ -59,15 +59,16 @@ class Dice extends Component {
             </div>
           </div>
 
-          <div className="row">
+          <div className="row mt-5">
             <div className="col-lg-8 col-sm-12">
+              <h6>Multi Dice Roller</h6>
               <div className="row">
                 {this.state.dice.map((die) => (
                   <Die key={die.id} die={die} onChange={this.handleChange} />
                 ))}
               </div>
             </div>
-            <div className="col-lg-4 col-sm-12">
+            <div className="col-lg-4 col-sm-12 pt-4">
               <DiceResults results={this.state.results} onRollClick={this.handleRollClick} />
             </div>
           </div>
