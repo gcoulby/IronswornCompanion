@@ -49,7 +49,7 @@ import Moves from "./components/moves";
 //TODO burn mom on delve - revert progress
 
 class App extends Component {
-  version = "0.78.0";
+  version = "0.78.1";
   state = {
     save: false,
     updateCore: false,
@@ -724,7 +724,7 @@ class App extends Component {
                   <h6 className="text-light">Version {this.version}</h6>
                   <h6 className="text-light">You've used {this.getQuotaUsage()} of the 5MB storage quota</h6>
                   <div className="row">
-                    <div className="col-4">
+                    <div className="col-12 col-lg-4">
                       <div className="progress">
                         <div
                           className="progress-bar bg-dark"
