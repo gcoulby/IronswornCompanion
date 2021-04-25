@@ -43,13 +43,15 @@ import Inventory from "./components/inventory";
 import OracleModal from "./components/oracleModal";
 import OracleRoller from "./components/oracleRoller";
 import Moves from "./components/moves";
+import Journal from "./components/journal";
+// import "react-sortable-tree/style.css";
 
 //TODO Region roll
 //TODO delve threats
 //TODO burn mom on delve - revert progress
 
 class App extends Component {
-  version = "0.78.1";
+  version = "0.79.0";
   state = {
     save: false,
     updateCore: false,
@@ -66,6 +68,18 @@ class App extends Component {
     newFoe: {},
     activeFoes: [],
     assets: [],
+    journalData: {
+      nextId: 1,
+      files: [
+        {
+          id: 0,
+          title: "Default",
+          selected: true,
+          content: "",
+          children: [],
+        },
+      ],
+    },
     ranks: ["Troublesome", "Dangerous", "Formidable", "Extreme", "Epic"],
     assetBuilderSelectedAsset: new DefaultAsset(),
     delveCardEditorSelectedCard: new DefaultDelveCard("Theme"),
@@ -562,6 +576,47 @@ class App extends Component {
   };
 
   /*=================================*/
+  /*    Journal
+  /*=================================*/
+
+  handleFileContentsChange = (getValue, id, delay = 1000) => {
+    // this.setState({ lastJournalEditValue: getValue });
+    // this.setState({ lastJournalEditId: id });
+    this.setState({ lastJournalEditSaveComplete: false });
+    this.state.lastJournalEditValue = getValue;
+    this.state.lastJournalEditId = id;
+
+    this.state.lastJournalEditSaveComplete = false;
+    clearTimeout(this.state.lastJournalEditInterval);
+    // this.setState({ lastJournalEditInterval: setTimeout(this.saveChangesToEditor, 400) });
+    this.state.lastJournalEditInterval = setTimeout(this.saveChangesToEditor, 1000);
+  };
+
+  saveChangesToEditor = () => {
+    console.log("Save");
+    if (!this.state.lastJournalEditValue) return;
+    const journalData = this.state.journalData;
+    journalData.files = this.changeVariableInNestedFileList(
+      journalData.files,
+      this.state.lastJournalEditId,
+      "content",
+      this.state.lastJournalEditValue()
+    );
+    this.state.lastJournalEditSaveComplete = true;
+    this.setState({ journalData });
+  };
+
+  changeVariableInNestedFileList = (array, id, key, value) => {
+    return array.map((a) => {
+      if (a.id === id) {
+        a[key] = value;
+      }
+      a.children = this.changeVariableInNestedFileList(a.children, id, key, value);
+      return a;
+    });
+  };
+
+  /*=================================*/
   /*    Log
   /*=================================*/
 
@@ -767,6 +822,15 @@ class App extends Component {
                     oracles={this.state.oracles}
                     onComponentUpdate={this.componentDidUpdate}
                     addLog={this.handleAddLog}
+                  />
+                </Route>
+                <Route path="/journal">
+                  <Journal
+                    journalData={this.state.journalData}
+                    onComponentUpdate={this.componentDidUpdate}
+                    handleFileContentsChange={this.handleFileContentsChange}
+                    saveChangesToEditor={this.saveChangesToEditor}
+                    lastJournalEditSaveComplete={this.state.lastJournalEditSaveComplete}
                   />
                 </Route>
                 <Route path="/log">

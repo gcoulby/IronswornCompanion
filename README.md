@@ -1,7 +1,5 @@
 # Ironsworn Companion
 
-
-
 ## What is Ironsworn?
 
 Ironsworn is a tabletop RPG created by Shawn Tomkin. What makes Ironsworn unique is that unlike traditional tabletop RPGs, Ironsworn enables solo/ small-group play, as its unique game mechanics remove the need for a traditional game master.
@@ -54,33 +52,27 @@ The `Footer` contains a quick dice roller. This can be used to roll on stats wit
 
 ![https://i.imgur.com/BxQJXwM.png](https://i.imgur.com/BxQJXwM.png)
 
-
-
 ## Roll Button
 
 The Roll button is a context aware button that provides different functionality depending where it is placed.
 
-On the footer the roll button can be used in conjunction with the the `Add Stat` drop down and the `Add` box, to create modifiers for the `Action Score`. When Roll is pressed the `Hit Type` ,`Action Score` `Challenge Dice 1` & `Challenge Dice 2` are shown right next to the button in the `Result Preview`. Hovering over the `Result Preview` will show the `Result Details` popup. This will provide detailed information about the Roll. 
+On the footer the roll button can be used in conjunction with the the `Add Stat` drop down and the `Add` box, to create modifiers for the `Action Score`. When Roll is pressed the `Hit Type` ,`Action Score` `Challenge Dice 1` & `Challenge Dice 2` are shown right next to the button in the `Result Preview`. Hovering over the `Result Preview` will show the `Result Details` popup. This will provide detailed information about the Roll.
 
 ### Action Roll
 
 Action Rolls will show the details of how the Action Score is created in the `Result Details` popup. Progress rolls just show the `Action Score`.
 
-
-
 ### Burning Momentum
 
-If your character has enough momentum to burn a roll, the option will be displayed on the result preview: 
+If your character has enough momentum to burn a roll, the option will be displayed on the result preview:
 
 ![https://i.imgur.com/0jLp1Gv.png](https://i.imgur.com/0jLp1Gv.png)
 
-clicking the burn button will reset the selected character's momentum. 
+clicking the burn button will reset the selected character's momentum.
 
-> Note to make it mechanically possible to burn dice both dice will reset to **0**. This is confusing on the `Result Details` as 0 also represents 10 on a D10. Moreover. since both dice are reset to 0, it will show as a strong hit match. **This should be ignored.** 
+> Note to make it mechanically possible to burn dice both dice will reset to **0**. This is confusing on the `Result Details` as 0 also represents 10 on a D10. Moreover. since both dice are reset to 0, it will show as a strong hit match. **This should be ignored.**
 
 ![https://i.imgur.com/bge5CpV.png](https://i.imgur.com/bge5CpV.png)
-
-
 
 ---
 
@@ -96,7 +88,7 @@ This icon denotes that you can consult the oracle. Each implementation of the or
 
 #### Oracle Roller
 
-To supplement the oracle implementations on each page, there is also a page dedicated to rolling oracle tables. The Oracles page provides the ability to roll on any oracle table and get a random result. Since there are no dice involved here, the oracle tables can be any size you like. 
+To supplement the oracle implementations on each page, there is also a page dedicated to rolling oracle tables. The Oracles page provides the ability to roll on any oracle table and get a random result. Since there are no dice involved here, the oracle tables can be any size you like.
 
 ![https://i.imgur.com/Rz9Pgso.png](https://i.imgur.com/Rz9Pgso.png)
 
@@ -106,21 +98,21 @@ There are five buttons at the top of the oracles page:
 
 ![https://i.imgur.com/gIvJTk8.png](https://i.imgur.com/gIvJTk8.png)
 
-These buttons can be used to ask the oracle a question where you roll depending on the probability of the event happening i.e. finding the key item for your overarching vow in the bottom of your bag, like some miss placed keys is highly unlikely, so you would roll with `small chance` and if you score **91** **or greater** then the answer will be yes ***(don't do this)***. 
+These buttons can be used to ask the oracle a question where you roll depending on the probability of the event happening i.e. finding the key item for your overarching vow in the bottom of your bag, like some miss placed keys is highly unlikely, so you would roll with `small chance` and if you score **91** **or greater** then the answer will be yes **_(don't do this)_**.
 
 > For information on how to use the Ask the Oracle move consult the Ironsworn rulebook, Page 107
 
-> *Ask the oracle is technically a move, but its related to the oracle so it is placed here*
+> _Ask the oracle is technically a move, but its related to the oracle so it is placed here_
 
 ##### Using the roller
 
 To use the oracle roller, located the table you want to roll on and click the roll icon. You can click on the table and it will show you the oracle table on the right of the page. When you roll on a table the value is placed in a textbox at the top of the page.
 
-> *Clicking that textbox will copy the value to the clipboard.*
+> _Clicking that textbox will copy the value to the clipboard._
 
 ##### Roll History
 
-The roll history button provides you with a modal interface to view previous rolls. One of the features of this box is that if you click on a past result it will be added to the text box at the top. However, the difference here is that every time you click a result it is added to the box so you can add multiple words. The reason for this is if you want to copy e.g.,**Action + Theme** 
+The roll history button provides you with a modal interface to view previous rolls. One of the features of this box is that if you click on a past result it will be added to the text box at the top. However, the difference here is that every time you click a result it is added to the box so you can add multiple words. The reason for this is if you want to copy e.g.,**Action + Theme**
 
 > The clear button allows you to empty the box so you can build a fresh copy
 
@@ -137,8 +129,6 @@ New Oracle tables can be created using the form at the top of the Oracle Editor 
 Once you have added an oracle table you can edit the tables using the left hand column. Add rows by clicking the `Add Row` button and then it will add a row to the table. This is edited simply by clicking on the row and typing in the value you wish to be in the row. You can add multiple rows and delete rows you no longer require.
 
 ---
-
-
 
 ## Characters
 
@@ -172,6 +162,8 @@ After selecting a character you are automatically taken to the `Stats` page, whi
 
 There are two logs in the companion `Campaign Log` and `Background`. These logs are used to add fiction or metagame information to your campaign. The `Campaign Log` is for adding information about events, plot, story or anything related to the campaign that is not character specific. The `Background` page is for adding information specific to the **`Selected Character`**
 
+> Logs are not intended for prose or journaling. To take more comprehensive notes see [#journals](#journals)
+
 ### Adding Logs
 
 To add a log enter text into the text box at the bottom of a log page and press `SHIFT + ENTER` to enter fiction _(this information should be in character/roleplay)_. Alternatively press `CTRL + ENTER` to enter metagame information _(This information can be out of character/roleplay)_.
@@ -180,42 +172,42 @@ To add a log enter text into the text box at the bottom of a log page and press 
 
 Events are logs that are automatically created by the app. These can help keep log of what is happening, whilst keeping the pace of the story flowing. The following narrative events are captured to the Campaign log:
 
-| Event                                   | Text                                                         |
-| --------------------------------------- | ------------------------------------------------------------ |
-| Character Created                       | Solana began their journey in the Ironlands                  |
-| Add NPC                                 | Solana met Arsula the Elf                                    |
-| NPC Bond increased                      | The bond between Solana and Arsula the Elf increases         |
-| NPC Bond decreased                      | The bond between Solana and Arsula the Elf diminishes        |
-| NPC Location Changed                    | Arsula the Elf was last seen at the Snowsteinn settlement    |
-| New Location Created                    | Solana discovered the Boulderland settlement                 |
-| Experience Increase                     | Solana's experience grows                                    |
-| Experience Decreased                    | Solana's experience diminishes                               |
-| Debility Added                          | Solana is Wounded                                            |
-| Debility Removed                        | Solana is no longer Wounded                                  |
-| Create Vow/Quest/Journey                | Solana swore a vow: To find the Iron Urn of Taeen            |
-| Make progress towards Vow/Quest/Journey | Solana made progress towards their vow: To find the Iron Urn of Taeen |
-| Lose progress towards Vow/Quest/Journey | Solana loses ground towards their vow: To find the Iron Urn of Taeen |
-| Complete Vow/Quest/Journey              | Solana fulfilled a vow: To find the Iron Urn of Taeen        |
-| Vow/Quest/Journey cancelled             | Solana forsaken a vow: To find the Iron Urn of Taeen         |
-| Add new Item to inventory               | Solana acquired a new item: The shard of Dismashk            |
-| Delete Item from inventory              | Solana no longer has the item: The shard of Dismashk         |
-| Acquire new asset                       | Solana acquired a new asset: Cave Lion                       |
-| Removed asset                           | Solana no longer has the asset: Cave Lion                    |
-| Discovered Foe                          | Solana discovered a new foe: A Clutter of Spider Wolves      |
-| Gain progress against Foe               | Solana made progress towards defeating their foe: A Clutter of Spider Wolves |
-| Lose progress against Foe               | Solana loses ground towards their foe: A Clutter of Spider Wolves |
-| Cancel Foe                              | Solana lost sight of the foe: A Clutter of Spider Wolves     |
-| Defeat Foe                              | Solana defeated the foe: A Clutter of Spider Wolves          |
-| Delve site Discovered                   | Solana discovered a new site to delve: Ingegerd's Hollow     |
+| Event                                   | Text                                                                                                            |
+| --------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Character Created                       | Solana began their journey in the Ironlands                                                                     |
+| Add NPC                                 | Solana met Arsula the Elf                                                                                       |
+| NPC Bond increased                      | The bond between Solana and Arsula the Elf increases                                                            |
+| NPC Bond decreased                      | The bond between Solana and Arsula the Elf diminishes                                                           |
+| NPC Location Changed                    | Arsula the Elf was last seen at the Snowsteinn settlement                                                       |
+| New Location Created                    | Solana discovered the Boulderland settlement                                                                    |
+| Experience Increase                     | Solana's experience grows                                                                                       |
+| Experience Decreased                    | Solana's experience diminishes                                                                                  |
+| Debility Added                          | Solana is Wounded                                                                                               |
+| Debility Removed                        | Solana is no longer Wounded                                                                                     |
+| Create Vow/Quest/Journey                | Solana swore a vow: To find the Iron Urn of Taeen                                                               |
+| Make progress towards Vow/Quest/Journey | Solana made progress towards their vow: To find the Iron Urn of Taeen                                           |
+| Lose progress towards Vow/Quest/Journey | Solana loses ground towards their vow: To find the Iron Urn of Taeen                                            |
+| Complete Vow/Quest/Journey              | Solana fulfilled a vow: To find the Iron Urn of Taeen                                                           |
+| Vow/Quest/Journey cancelled             | Solana forsaken a vow: To find the Iron Urn of Taeen                                                            |
+| Add new Item to inventory               | Solana acquired a new item: The shard of Dismashk                                                               |
+| Delete Item from inventory              | Solana no longer has the item: The shard of Dismashk                                                            |
+| Acquire new asset                       | Solana acquired a new asset: Cave Lion                                                                          |
+| Removed asset                           | Solana no longer has the asset: Cave Lion                                                                       |
+| Discovered Foe                          | Solana discovered a new foe: A Clutter of Spider Wolves                                                         |
+| Gain progress against Foe               | Solana made progress towards defeating their foe: A Clutter of Spider Wolves                                    |
+| Lose progress against Foe               | Solana loses ground towards their foe: A Clutter of Spider Wolves                                               |
+| Cancel Foe                              | Solana lost sight of the foe: A Clutter of Spider Wolves                                                        |
+| Defeat Foe                              | Solana defeated the foe: A Clutter of Spider Wolves                                                             |
+| Delve site Discovered                   | Solana discovered a new site to delve: Ingegerd's Hollow                                                        |
 | Envision surroundings of a Delve        | Solana explores the surroundings of the Ingegerd's Hollow and notes a new feature: Dwellings or gathering place |
-| Consider your approach                  | Solana Progresses through the delve site: Ingegerd's Hollow using their Edge |
-| Reveal a danger                         | Solana revealed a danger in the delve site: Ingegerd's Hollow: Unexpected disciples are revealed |
-| Find an opportunity                     | Solana found an opportunity in the delve site: Ingegerd's Hollow: You encounter a denizen in need of help. |
-| Fight a delve Foe                       | Solana discovered a new foe (Mystic) in the delve site: Ingegerd's Hollow |
-| Progress gained against delve foe       | Solana made progress against a foe (Mystic) in the delve site: Ingegerd's Hollow |
-| Progress lost against a delve foe       | Solana loses ground against a foe (Mystic) in the delve site: Ingegerd's Hollow |
-| delve foe defeated                      | Solana defeated a foe (Mystic) in the delve site: Ingegerd's Hollow |
-| delve foe deleted                       | Solana lost sight of a foe (Mystic) in the delve site: Ingegerd's Hollow |
+| Consider your approach                  | Solana Progresses through the delve site: Ingegerd's Hollow using their Edge                                    |
+| Reveal a danger                         | Solana revealed a danger in the delve site: Ingegerd's Hollow: Unexpected disciples are revealed                |
+| Find an opportunity                     | Solana found an opportunity in the delve site: Ingegerd's Hollow: You encounter a denizen in need of help.      |
+| Fight a delve Foe                       | Solana discovered a new foe (Mystic) in the delve site: Ingegerd's Hollow                                       |
+| Progress gained against delve foe       | Solana made progress against a foe (Mystic) in the delve site: Ingegerd's Hollow                                |
+| Progress lost against a delve foe       | Solana loses ground against a foe (Mystic) in the delve site: Ingegerd's Hollow                                 |
+| delve foe defeated                      | Solana defeated a foe (Mystic) in the delve site: Ingegerd's Hollow                                             |
+| delve foe deleted                       | Solana lost sight of a foe (Mystic) in the delve site: Ingegerd's Hollow                                        |
 
 ### Viewing, Filtering and Deleting Logs
 
@@ -223,7 +215,55 @@ Once logs are added they will appear in the box above the input box. They will a
 
 ---
 
+## Journals
 
+The journal screen allows you to take more comprehensive notes than the log allows. This uses a markdown text editor to create rich text notes:
+
+![https://i.imgur.com/5xnOOWo.png](https://i.imgur.com/5xnOOWo.png)
+
+
+
+The editor supports Grammarly, and also supports a wide range of style options that can be entered in various ways. 
+
+#### Adding lines using + or slash commands
+
+The editor supports inline additions of popular style items. New lines show a plus icon. Clicking this plus icon or typing a forward slash `/` will bring up a context menu:
+
+![https://i.imgur.com/iLwaoNo.png](https://i.imgur.com/iLwaoNo.png)
+
+![https://i.imgur.com/6I4rHLa.png](https://i.imgur.com/6I4rHLa.png)
+
+This can be used to add styled items. 
+
+You can also use markdown syntax here are some examples of the key commands available:
+
+| Action    | Command                                                      |
+| --------- | ------------------------------------------------------------ |
+| Heading 1 | # Heading                                                    |
+| Heading 2 | ## Heading 2                                                 |
+| Heading 3 | ### Heading 3                                                |
+| Heading 4 | #### Heading 4                                               |
+| Bold      | This is **\*\*bold\*\***                                     |
+| Italic    | This is *\*Italic\**                                         |
+| Bullets   | * bullet<br />* bullet2<br /><br />- bullet<br />- bullet2   |
+| Quote     | > This is a quote                                            |
+| Images    | \!\[http://image.url/\](http://image.url/)                   |
+| Code      | ``Use single `backticks` to block code like this ``          |
+| Line      | ---                                                          |
+| Urls      | can be pasted in. Double click a link to bring up a popup that will allow you to navigate to the link |
+|           |                                                              |
+
+> For a thorough breakdown of what commands are available see [https://www.markdownguide.org/basic-syntax/](https://www.markdownguide.org/basic-syntax/). 
+>
+> **NOTE:** This editor does not a complete support for all markdown commands, but there are many available. Its worth experimenting to see which commands are available. 
+
+
+
+##### Saving Journal Entries
+
+See [Data Management](#data-management) 
+
+---
 
 ## World Truths
 
@@ -299,7 +339,7 @@ Enter the fray describes the action of combat.
 
 ![https://i.imgur.com/0e3AJpa.png](https://i.imgur.com/0e3AJpa.png)
 
-To enter combat, create `Active Foes` by either selecting from the `Category` and `Type` drop boxes or click `Roll Random Foe`.  A preview of the foe is shown above the `+ Add Foe` button. Multiple `Active Foes` can be added and each Foe will have an individual `combat track`.
+To enter combat, create `Active Foes` by either selecting from the `Category` and `Type` drop boxes or click `Roll Random Foe`. A preview of the foe is shown above the `+ Add Foe` button. Multiple `Active Foes` can be added and each Foe will have an individual `combat track`.
 
 ### Foe Card
 
@@ -328,8 +368,6 @@ The Ironsworn rules allows you to form packs of NPCs that have a single track. T
 You can add descriptive text to this foe type just to provide context, if needed.
 
 ---
-
-
 
 ## Stats
 
@@ -367,8 +405,6 @@ Once an asset is added you can input text into the Input Fields, modify tracks, 
 
 ---
 
-
-
 ## Delve
 
 Most sections of the companion are just a mechanism to log data. Other than Event logs and Momentum burning, most play is not guided in any way. Delve is the only guided play section of the companion. This is because delves have a very rule based approach to how you play so it made sense for this section.
@@ -385,8 +421,6 @@ One the site has been discovered. It will be selected in the drop down below. Se
 
 ![https://i.imgur.com/RnAuAqy.png](https://i.imgur.com/RnAuAqy.png)
 
-
-
 ### Renaming a site
 
 You can click on the delve site name and rename it at any point.
@@ -395,7 +429,7 @@ You can click on the delve site name and rename it at any point.
 
 ### Exit Site
 
-You can leave the page and come back to a delve site, Leave site is intended for when your character actually leaves, there are penalties for doing this and 
+You can leave the page and come back to a delve site, Leave site is intended for when your character actually leaves, there are penalties for doing this and
 
 ### Show Reference Information
 
@@ -407,26 +441,22 @@ Click show Denizen Matrix (this is configured using the [Denizen Config](#denize
 
 ![https://i.imgur.com/D8bpsS0.png](https://i.imgur.com/D8bpsS0.png)
 
-
-
 ### Enter the Delve site
 
 Once you're in the delve site. There are a plethora of controls and features.
 
 ![https://i.imgur.com/ZqUBenX.png](https://i.imgur.com/ZqUBenX.png)
 
-
-
 ### Delve the depths
 
-The delve the depths section has a series of boxes that correspond to the levels in delve. The level you are currently on is highlighted with a dark title bar. 
+The delve the depths section has a series of boxes that correspond to the levels in delve. The level you are currently on is highlighted with a dark title bar.
 
-1. Start with `Envision your surroundings` and press `Reveal` This will revel a `Feature` and move your to the `Consider your approach` level. 
+1. Start with `Envision your surroundings` and press `Reveal` This will revel a `Feature` and move your to the `Consider your approach` level.
 
-2. Choose `Haste` (Edge), `Stealth` (Shadow) or `Observation` (Wits). This will activate the stat for the following action roll and move you to the `Action` section. 
-3. Press `Roll` on the `Action` box. This will decide how your character progresses through. 
+2. Choose `Haste` (Edge), `Stealth` (Shadow) or `Observation` (Wits). This will activate the stat for the following action roll and move you to the `Action` section.
+3. Press `Roll` on the `Action` box. This will decide how your character progresses through.
 
-> The flow of play is outlined on Page 45 of the Delve rulesbook. 
+> The flow of play is outlined on Page 45 of the Delve rulesbook.
 
 4. Reveal Danger has a reveal button that will reveal dangers from the Theme/Domain. If the danger contains the word 'Denizen' it will be replaced with the Denizen's name and a Fight button will be displayed. A `delve deeper` button will also be shown. Clicking `Delve Deeper` will take you back to level 1
 
@@ -440,9 +470,7 @@ The delve the depths section has a series of boxes that correspond to the levels
 
    ![https://i.imgur.com/x3apIs2.png](https://i.imgur.com/x3apIs2.png)
 
-   Throughout this guided play progress is automatically logged. When it is at a high enough level, the `Locate your Objective` progress roll button is available. 
-
-   
+   Throughout this guided play progress is automatically logged. When it is at a high enough level, the `Locate your Objective` progress roll button is available.
 
    If you choose to fight a Denizen a Foe card is added to the bottom of the page and they become an active encounter. Should you wish to envision this as a pack you could either just do that and use a single card, or use the quick combat window to manage the delve combat.
 
@@ -452,15 +480,15 @@ The delve the depths section has a series of boxes that correspond to the levels
 
 The denizen config probably needs the most documentation as this page directly drives the denizen matrix.
 
-This page is essentially a sea of checkboxes. Each checkbox represents a matrix between a Foe/Theme/Domain against a Tag. 
+This page is essentially a sea of checkboxes. Each checkbox represents a matrix between a Foe/Theme/Domain against a Tag.
 
-This is largely driven by RSEK's matrix generator. Though not exactly implemented with parity.  
+This is largely driven by RSEK's matrix generator. Though not exactly implemented with parity.
 
 ![https://i.imgur.com/phBbxid.png](https://i.imgur.com/phBbxid.png)
 
-### Example: 
+### Example:
 
-The Delve is a Wild Frozen Cavern. 
+The Delve is a Wild Frozen Cavern.
 
 The Wild Theme is Tagged with `Wild` and `Squatter`
 
@@ -478,15 +506,13 @@ With default tags, and a Wild Frozen Cavern a total of **200** denizens are adde
 
 ![https://i.imgur.com/nbAWYNJ.png](https://i.imgur.com/nbAWYNJ.png)
 
-This list is then rolled on when populating the matrix. The tag system provides weighting and from this list it is mathematically more probable for `Nightspawn` to be picked than `Wyvern`. 
+This list is then rolled on when populating the matrix. The tag system provides weighting and from this list it is mathematically more probable for `Nightspawn` to be picked than `Wyvern`.
 
 #### Rules
 
 Epic and Extreme foes can only appear as `Rare` or `Unforeseen`
 
-Foes can not repeat within the same level of commonality, but cannot then appear in a lower commonality. i.e a Common Wolf cannot also be an uncommon wolf as this doesn't make sense. 
-
-
+Foes can not repeat within the same level of commonality, but cannot then appear in a lower commonality. i.e a Common Wolf cannot also be an uncommon wolf as this doesn't make sense.
 
 ## Asset/Delve Card/Foe Editors
 
@@ -506,12 +532,12 @@ The buttons on this page are dynamic. A button will only appear if an action is 
 
 There are four buttons in total:
 
-| Button         | Action                                    | Rules                                                        |
-| -------------- | ----------------------------------------- | ------------------------------------------------------------ |
-| Add            | Adds a new Card                           | Is not shown if existing card is selected<br />Name cannot be blank |
-| Save Changes   | Saves changes to an existing card         | Cannot add if Name is blank, <br />Can only save changes if the selected cards is not a core cards, <br />The card Name cannot be different to the previous version. <br />At least one other field must be different to the previous version. |
+| Button         | Action                                    | Rules                                                                                                                                                                                                                                                                                                                                          |
+| -------------- | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Add            | Adds a new Card                           | Is not shown if existing card is selected<br />Name cannot be blank                                                                                                                                                                                                                                                                            |
+| Save Changes   | Saves changes to an existing card         | Cannot add if Name is blank, <br />Can only save changes if the selected cards is not a core cards, <br />The card Name cannot be different to the previous version. <br />At least one other field must be different to the previous version.                                                                                                 |
 | Save as a Copy | Creates a new Card based on previous card | Cannot add if Name is blank, <br />Cannot add asset if selected card is core card. <br />Cannot add if an card exists with same name<br />cannot add if the card is same as default card (ie no changes)<br />cannot add if card with same id already exists<br />add button is not shown when modifying an existing card (copy shown instead) |
-| Delete         | Card                                      | Existing asset cannot be a core card<br />Cannot be an card that is not yet created |
+| Delete         | Card                                      | Existing asset cannot be a core card<br />Cannot be an card that is not yet created                                                                                                                                                                                                                                                            |
 
 #### Card Deck
 
@@ -520,8 +546,6 @@ At the bottom of the Card Editors, all the existing cards can be viewed on the p
 > **KNOWN ISSUE:** The way the page is generate the last page always generates an almost blank page. This should be removed in the printer settings.
 
 ---
-
-
 
 ## Moves
 
@@ -535,13 +559,11 @@ The `Roll` button in the `Sidebar` takes you to a simple Dice Roller. This uses 
 
 ---
 
-
-
 ## Data Management
 
 This companion has a persistent state meaning that you can move between pages and your textboxes wont clear when you return. This is done through your browser's `local storage`. The `Data Management` page allows you to `Reset`, `Load` or `Save` your gamestate at any point.
 
-![https://i.imgur.com/nkpthzh.png](https://i.imgur.com/nkpthzh.png)
+![https://i.imgur.com/38qkMed.png](https://i.imgur.com/38qkMed.png)
 
 ### Saving and Loading the Game State
 
@@ -551,13 +573,23 @@ Use the checkboxes to select which elements you would like to Save or Load and p
 
 The `Reset` button wipes the gamestate back to defaults. This cannot be reversed so ensure you save your game before doing this.
 
+
+
+### Saving Journals 
+
+This app allows you to save journals as save data in the same way as described above. However, the journal entries can also be exported in a zip file, with each file be saved as a markdown `.md` file. To do this simply click Save Journals. The archive will respect the hierarchy set out in the Journal page and folders will be created for parent documents.
+
+![https://i.imgur.com/FFaBXpd.png](https://i.imgur.com/FFaBXpd.png)
+
+![https://i.imgur.com/zWlV9Eh.png](https://i.imgur.com/zWlV9Eh.png)
+
+ 
+
 ### Updating Datasworn
 
 This platform makes use of RSEK's datasworn. If your data falls behind RSEKs datasworn data, you can use the update button to bring them up to date.
 
 ---
-
-
 
 ## Acknowledgements
 

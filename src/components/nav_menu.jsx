@@ -23,6 +23,12 @@ class NavMenu extends Component {
             active: false,
           },
           {
+            url: "/journal",
+            pageName: "Journal",
+            icon: "fas fa-pen-fancy",
+            active: false,
+          },
+          {
             url: "/log",
             pageName: "Campaign Log",
             icon: "fas fa-pen-nib",
@@ -270,7 +276,7 @@ class NavMenu extends Component {
           </HashRouter>
           <li className="credit">
             <div className="text-left mb-3">
-              <KoFi color="#000" id="X8X64ELNE" label="Support Me on Ko-fi" />
+              <KoFi color="#000" id="X8X64ELNE" label="Coffee fuels code" />
             </div>
             This companion is an unofficial product building to support the table top game Ironsworn, developed by Shawn
             Tomkin
