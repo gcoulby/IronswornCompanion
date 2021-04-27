@@ -80,7 +80,7 @@ class OracleEditor extends Component {
     const oracles = this.props.oracles;
     oracles.tables.map((t) => {
       if (t.title === oracles.selectedOracleTable) {
-        t.prompts[idx] = evt.target.value;
+        t.prompts[idx] = evt.target.value.replace(/<br>/g, "").replace(/&nbsp;/g, " ");
       }
       return t;
     });

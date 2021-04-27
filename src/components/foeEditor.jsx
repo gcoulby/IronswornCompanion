@@ -56,7 +56,7 @@ class FoeEditor extends Component {
 
   handleRowChange = (evt, listType, idx) => {
     const selectedFoe = this.props.selectedFoe;
-    selectedFoe[listType][idx] = evt.target.value;
+    selectedFoe[listType][idx] = evt.target.value.replace(/<br>/g, "").replace(/&nbsp;/g, " ");
     this.setState({ selectedFoe });
   };
 

@@ -159,7 +159,7 @@ class AssetBuilder extends Component {
 
   handleTrackLabelRowInput = (evt, idx) => {
     const selectedAsset = this.props.selectedAsset;
-    selectedAsset.TrackLabels[idx] = evt.target.value;
+    selectedAsset.TrackLabels[idx] = evt.target.value.replace(/<br>/g, "").replace(/&nbsp;/g, " ");
     this.setState({ selectedAsset });
   };
 

@@ -158,6 +158,15 @@ class Delve extends Component {
     this.setState({ newDelve });
   };
 
+  handleOnDelveRankChanged = (evt) => {
+    const delves = this.props.delves.map((d) => {
+      if (d.id == this.props.selectedDelveId) {
+        d.rank = evt.target.value;
+      }
+    });
+    this.setState({ delves });
+  };
+
   handleOnProgressionChanged = (increment) => {
     const delves = this.props.delves.map((d) => {
       if (d.id == this.props.selectedDelveId) {
@@ -694,7 +703,7 @@ class Delve extends Component {
   handleNameChange = (evt) => {
     const delves = this.props.delves.map((d) => {
       if (d.id == this.props.selectedDelveId) {
-        d.siteName = evt.target.value;
+        d.siteName = evt.target.value.replace(/<br>/g, "").replace(/&nbsp;/g, " ");
       }
       return d;
     });
@@ -953,6 +962,27 @@ class Delve extends Component {
                   title="Denizen Matrix"
                 />
                 {/* <DenizenMatrix /> */}
+              </div>
+            </div>
+            <div className="row mt-5">
+              <div className="col-4 d-sm-none d-lg-block"></div>
+              <div className="col-12 col-lg-4  text-center">
+                <div className="input-group mb-3">
+                  <div className="input-group-prepend">
+                    <label className="btn btn-dark btn-tag">Difficulty</label>
+                  </div>
+                  <select
+                    className="form-control"
+                    onChange={(e) => this.handleOnDelveRankChanged(e)}
+                    value={this.getSelectedDelve().rank}
+                  >
+                    {this.props.ranks.map((r, i) => (
+                      <option key={r} value={i}>
+                        {r}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
             <div className="row">

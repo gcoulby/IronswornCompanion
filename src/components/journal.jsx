@@ -127,7 +127,8 @@ class Journal extends Component {
   changeVariableInNestedFileList = (array, id, key, value) => {
     return array.map((a) => {
       if (a.id === id) {
-        a[key] = value;
+        let val = value.replace(/<br>/g, "").replace(/&nbsp;/g, " ");
+        a[key] = val;
       }
       a.children = this.changeVariableInNestedFileList(a.children, id, key, value);
       return a;

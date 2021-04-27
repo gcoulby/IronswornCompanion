@@ -25,7 +25,7 @@ class Log extends Component {
     console.log(id);
     const logs = this.props.logs.map((l) => {
       if (l.id == id) {
-        l.text = evt.target.value;
+        l.text = evt.target.value.replace(/<br>/g, "").replace(/&nbsp;/g, " ");
       }
       return l;
     });

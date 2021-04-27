@@ -268,7 +268,7 @@ class Stats extends Component {
             // hideButtons={true}
           />
           <div className="row">
-            <div className="col-4 .d-sm-none .d-lg-block"></div>
+            <div className="col-4 d-sm-none d-lg-block"></div>
             <div className="col-lg-4 col-sm-12">
               <RollButton
                 buttonText="Learn from your Failures"
@@ -276,7 +276,7 @@ class Stats extends Component {
                 onRoll={() => this.handleOnProgressRollClicked()}
               />
             </div>
-            <div className="col-4 .d-sm-none .d-lg-block"></div>
+            <div className="col-4 d-sm-none d-lg-block"></div>
           </div>
           <TitleBlock title="TRACKS" />
           <div className="d-none d-md-block">
