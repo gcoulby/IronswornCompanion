@@ -3656,6 +3656,8 @@ class Oracles {
   }
 
   getRandomPromptFromOracleTable(table) {
+    console.log(table);
+
     let oracle = this.tables.find((o) => o.title === table);
     let rn = this.diceRoller.roll([oracle.prompts.length]);
     let result = oracle.prompts[rn[0].value];

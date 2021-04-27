@@ -51,7 +51,7 @@ import Journal from "./components/journal";
 //TODO burn mom on delve - revert progress
 
 class App extends Component {
-  version = "0.80.0";
+  version = "0.81.0";
   state = {
     save: false,
     updateCore: false,

@@ -240,18 +240,29 @@ class Delve extends Component {
     const delves = this.props.delves;
     let selectedDelve = this.getSelectedDelve();
     let rn = this.diceRoller.roll([100], true, false)[0].value;
+    // if (!changeThemeOrDomain) rn = 100;
     let themeText = selectedDelve.theme;
     let domainText = selectedDelve.domain;
     switch (rn) {
       case 99:
-        themeText = this.oracles.DelveTheme;
-        delves[this.props.selectedDelveId].theme = themeText;
+        let themes = this.props.delveCards.filter((d) => d.Type === "Theme");
+        let rnt = this.diceRoller.roll([themes.length], false, false)[0].value;
+        delves[this.props.selectedDelveId].theme = themes[rnt].Name;
+        delves[this.props.selectedDelveId].denizens = this.getDenizens(
+          this.props.newDelve.theme,
+          this.props.newDelve.domain
+        );
         this.setState({ delves });
         this.handleOnEnvisionSurroundings(true);
         return;
       case 100:
-        domainText = this.oracles.DelveDomain;
-        delves[this.props.selectedDelveId].domain = domainText;
+        let domains = this.props.delveCards.filter((d) => d.Type === "Domain");
+        let rnd = this.diceRoller.roll([domains.length], false, false)[0].value;
+        delves[this.props.selectedDelveId].domain = domains[rnd].Name;
+        delves[this.props.selectedDelveId].denizens = this.getDenizens(
+          delves[this.props.selectedDelveId].theme,
+          delves[this.props.selectedDelveId].domain
+        );
         this.setState({ delves });
         this.handleOnEnvisionSurroundings(true);
         return;
@@ -557,19 +568,14 @@ class Delve extends Component {
       d.denizen = filteredDenizens[rn];
       denizenFilters.push({ Rank: rank, Name: filteredDenizens[rn]?.Name });
     });
-    console.log(tempDenizens);
     let t = [];
     for (let i = 0; i < tempDenizens.length; i++) {
       const td = tempDenizens[i];
-      console.log(td);
       let tt = t.find((t2) => t2.Name == td.Name);
-      console.log(tt);
       if (tt == undefined) {
         t.push({ Name: td.Name, Count: 1 });
-        console.log(t);
       } else tt.Count++;
     }
-    console.log(t);
     return denizens;
   };
 
