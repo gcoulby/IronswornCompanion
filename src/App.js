@@ -51,7 +51,7 @@ import Journal from "./components/journal";
 //TODO burn mom on delve - revert progress
 
 class App extends Component {
-  version = "0.82.0";
+  version = "0.83.0";
   state = {
     save: false,
     updateCore: false,
@@ -180,7 +180,8 @@ class App extends Component {
     if (state != undefined) {
       this.state = _.merge(this.state, state);
       this.state.lastSaveVersion = this.version;
-      this.state.oracles = new Oracles(state.oracles);
+      if (this.state.oracles.tables.find((o) => o.title === "Aspect") == undefined) this.state.oracles = new Oracles();
+      else this.state.oracles = new Oracles(state.oracles);
     } else {
       this.updateDataSworn();
       this.state.baseVersion = this.version;

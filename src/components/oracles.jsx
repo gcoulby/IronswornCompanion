@@ -4237,9 +4237,7 @@ class Oracles {
     if (!state) return;
     this.editOracleList = state.editOracleList;
     this.newOracleTableName = state.newOracleTableName;
-    // console.log(state.tables, this.tables);
-    // console.log("DIFF", _.difference(state.tables, this.tables));
-    this.tables = state.tables; // _.merge(this.tables, state.tables);
+    this.tables = state.tables;
     this.rollHistory = state.rollHistory ?? [];
     this.selectedOracleSource = state.selectedOracleSource;
     this.selectedOracleTheme = state.selectedOracleTheme;
