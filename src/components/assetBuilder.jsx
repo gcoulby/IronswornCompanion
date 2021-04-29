@@ -231,7 +231,7 @@ class AssetBuilder extends Component {
     this.editorUpdate();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     // // if (prevState.selectedAsset?.icon !== this.state.selectedAsset?.icon) {
     // //TODO: FIX THE ICON BOX!
     // let cb = document.getElementById("combo-box-demo");
@@ -245,7 +245,7 @@ class AssetBuilder extends Component {
     // // }
     // let el = document.getElementById("tableEditor");
     // el.setSelectionRange(this.state.trackLabelCursorPosition, this.state.trackLabelCursorPosition);
-    this.props.onComponentUpdate();
+    this.props.onComponentUpdate(prevProps, prevState);
   }
 
   showCards = (show) => {

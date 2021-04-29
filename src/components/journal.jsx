@@ -60,7 +60,6 @@ class Journal extends Component {
   // };
 
   // saveChanges = () => {
-  //   console.log("Save");
 
   //   const journalData = this.props.journalData;
   //   journalData.files = this.changeVariableInNestedFileList(
@@ -139,8 +138,8 @@ class Journal extends Component {
   /* DELETE NESTED FILE
   /*==============================*/
 
-  componentDidUpdate() {
-    this.props.onComponentUpdate();
+  componentDidUpdate(prevProps, prevState) {
+    this.props.onComponentUpdate(prevProps, prevState);
   }
 
   render() {

@@ -22,7 +22,6 @@ class Log extends Component {
   // };
 
   handleLogEntryChanged = (evt, id) => {
-    console.log(id);
     const logs = this.props.logs.map((l) => {
       if (l.id == id) {
         l.text = evt.target.value.replace(/<br>/g, "").replace(/&nbsp;/g, " ");
@@ -60,8 +59,8 @@ class Log extends Component {
     this.props.scrollBottom();
   }
 
-  componentDidUpdate() {
-    this.props.onComponentUpdate();
+  componentDidUpdate(prevProps, prevState) {
+    this.props.onComponentUpdate(prevProps, prevState);
   }
 
   render() {

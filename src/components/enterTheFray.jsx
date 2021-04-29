@@ -229,8 +229,8 @@ class EnterTheFray extends Component {
     );
   }
 
-  componentDidUpdate() {
-    this.props.onComponentUpdate();
+  componentDidUpdate(prevProps, prevState) {
+    this.props.onComponentUpdate(prevProps, prevState);
   }
 
   render() {

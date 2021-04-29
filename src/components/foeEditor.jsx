@@ -137,8 +137,8 @@ class FoeEditor extends Component {
     window.print();
   }
 
-  componentDidUpdate() {
-    this.props.onComponentUpdate();
+  componentDidUpdate(prevProps, prevState) {
+    this.props.onComponentUpdate(prevProps, prevState);
   }
 
   editorUpdate = () => {

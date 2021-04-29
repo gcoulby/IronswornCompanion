@@ -193,8 +193,8 @@ class Stats extends Component {
     this.props.updatePlayerSelect(this.props.selectedPlayer.name);
   };
 
-  componentDidUpdate() {
-    this.props.onComponentUpdate();
+  componentDidUpdate(prevProps, prevState) {
+    this.props.onComponentUpdate(prevProps, prevState);
   }
 
   render() {

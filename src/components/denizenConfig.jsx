@@ -35,8 +35,8 @@ class DenizenConfig extends Component {
     this.setState({ delveCards });
   };
 
-  componentDidUpdate() {
-    this.props.onComponentUpdate();
+  componentDidUpdate(prevProps, prevState) {
+    this.props.onComponentUpdate(prevProps, prevState);
   }
 
   render() {

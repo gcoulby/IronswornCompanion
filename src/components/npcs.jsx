@@ -5,8 +5,8 @@ import RollIcon from "./rollIcon";
 import TitleBlock from "./titleBlock";
 class NPCs extends Component {
   state = {};
-  componentDidUpdate() {
-    this.props.onComponentUpdate();
+  componentDidUpdate(prevProps, prevState) {
+    this.props.onComponentUpdate(prevProps, prevState);
   }
   /*=================================*/
   /*    NPCs

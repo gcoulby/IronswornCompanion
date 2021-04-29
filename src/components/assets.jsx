@@ -131,8 +131,8 @@ class Assets extends Component {
     this.setState({ players });
   };
 
-  componentDidUpdate() {
-    this.props.onComponentUpdate();
+  componentDidUpdate(prevProps, prevState) {
+    this.props.onComponentUpdate(prevProps, prevState);
   }
 
   render() {

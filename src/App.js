@@ -51,7 +51,7 @@ import Journal from "./components/journal";
 //TODO burn mom on delve - revert progress
 
 class App extends Component {
-  version = "0.81.0";
+  version = "0.82.0";
   state = {
     save: false,
     updateCore: false,
@@ -215,13 +215,51 @@ class App extends Component {
   };
 
   saveGameState(reload = false) {
+    // console.log("SAVE");
+    // let gs = localStorage.getItem("game_state");
+    // this.prevState = JSON.parse(gs);
+    // console.log(this.compare(this.state, this.prevState));
     const data = JSON.stringify(this.state);
     const dataSize = data.length;
     if (dataSize != this.state.dataSize) {
       this.setState({ dataSize });
     }
-
+    // this.queueStateTransfer();
     localStorage.setItem("game_state", data);
+  }
+
+  queueStateTransfer = (delay = 1000) => {
+    // this.setState({ lastGameStatePushComplete: false });
+
+    clearTimeout(this.lastGameStateChangeInterval);
+
+    this.lastGameStateChangeInterval = setTimeout(this.pushState, delay);
+  };
+
+  pushState = () => {
+    console.log("PUSH", this.state);
+    console.log(this.prevState);
+
+    // if (!this.state.lastJournalEditValue) return;
+    // const journalData = this.state.journalData;
+    // journalData.files = this.changeVariableInNestedFileList(
+    //   journalData.files,
+    //   this.state.lastJournalEditId,
+    //   "content",
+    //   this.state.lastJournalEditValue()
+    // );
+    // this.state.lastJournalEditSaveComplete = true;
+    // this.setState({ journalData });
+  };
+
+  compare(a, b) {
+    _.reduce(
+      a,
+      function (result, value, key) {
+        return _.isEqual(value, b[key]) ? result : result.concat(key);
+      },
+      []
+    );
   }
 
   getQuotaUsage = () => {
@@ -536,7 +574,7 @@ class App extends Component {
     window.location.reload("/");
   };
 
-  componentDidUpdate = () => {
+  componentDidUpdate = (prevProps, prevState) => {
     this.saveGameState();
     this.scrollBottom();
     if (this.state.save) {
@@ -593,7 +631,6 @@ class App extends Component {
   };
 
   saveChangesToEditor = () => {
-    console.log("Save");
     if (!this.state.lastJournalEditValue) return;
     const journalData = this.state.journalData;
     journalData.files = this.changeVariableInNestedFileList(

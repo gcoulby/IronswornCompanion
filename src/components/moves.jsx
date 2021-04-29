@@ -25,8 +25,8 @@ class Moves extends Component {
     this.setState({ showMoves });
   };
 
-  componentDidUpdate() {
-    this.props.onComponentUpdate();
+  componentDidUpdate(prevProps, prevState) {
+    this.props.onComponentUpdate(prevProps, prevState);
     let el = document.getElementById("move-preview");
     let tables = el.getElementsByTagName("table");
     if (tables.length > 0) {

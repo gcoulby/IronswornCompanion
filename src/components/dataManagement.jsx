@@ -96,13 +96,10 @@ class DataManager extends Component {
 
   addFilesToZip(zip, files, parentTitle) {
     let file = undefined;
-    console.log(files);
     for (let i = 0; i < files.length; i++) {
       const f = files[i];
       zip.file(`${parentTitle ? `${parentTitle}/` : `${f.title}/`}${f.id}_${f.title}.md`, f.content);
-      console.log(zip);
       zip = this.addFilesToZip(zip, f.children, f.title);
-      console.log(zip);
     }
     return zip;
   }

@@ -142,10 +142,10 @@ class OracleEditor extends Component {
   //   oracles.editOracleCursorPosition = evt.target.selectionStart;
   // };
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     // let el = document.getElementById("tableEditor");
     // el.setSelectionRange(this.props.oracles.editOracleCursorPosition, this.props.oracles.editOracleCursorPosition);
-    this.props.onComponentUpdate();
+    this.props.onComponentUpdate(prevProps, prevState);
   }
   render() {
     let table = this.props.oracles.getOracleTableAsArray(this.props.oracles.selectedOracleTable);

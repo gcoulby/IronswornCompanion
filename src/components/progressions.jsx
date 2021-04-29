@@ -169,7 +169,6 @@ class Progression extends Component {
                   val = increment ? 1 : -1;
                   break;
               }
-              console.log(p2);
               if (increment)
                 this.props.addLog("event", `${p.name} made progress towards their ${p2.type}: ${p2.title}`);
               else this.props.addLog("event", `${p.name} loses ground towards their ${p2.type}: ${p2.title}`);
@@ -245,8 +244,8 @@ class Progression extends Component {
     return this.props.newProgressions.find((np) => np.type == type);
   }
 
-  componentDidUpdate() {
-    this.props.onComponentUpdate();
+  componentDidUpdate(prevProps, prevState) {
+    this.props.onComponentUpdate(prevProps, prevState);
   }
 
   render() {

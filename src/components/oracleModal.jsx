@@ -24,8 +24,8 @@ class OracleModal extends Component {
     this.setState({ showOracles });
   };
 
-  componentDidUpdate() {
-    this.props.onComponentUpdate();
+  componentDidUpdate(prevProps, prevState) {
+    this.props.onComponentUpdate(prevProps, prevState);
   }
 
   render() {

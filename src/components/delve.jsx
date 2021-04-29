@@ -68,6 +68,7 @@ class Delve extends Component {
       feature: "",
       rank: 0,
       approachLevel: -1,
+      rollAddValue: 0,
       progress: 0,
       denizens: [],
       danger: "",
@@ -332,11 +333,20 @@ class Delve extends Component {
     this.setState({ delves });
   }
 
+  handleOnRollAddValueChanged = (evt) => {
+    const delves = this.props.delves;
+    delves[this.props.selectedDelveId].rollAddValue = evt.target.value;
+    this.setState({ delves });
+  };
+
   handleOnActionRollClicked = () => {
     const delves = this.props.delves;
-
+    if (!delves[this.props.selectedDelveId].rollAddValue) {
+      delves[this.props.selectedDelveId].rollAddValue = 0;
+    }
     delves[this.props.selectedDelveId].actionRoll = this.diceRoller.actionRoll(
-      this.props.selectedPlayer.stats.find((s) => s.stat === this.getSelectedDelve().approachLevel).value
+      this.props.selectedPlayer.stats.find((s) => s.stat === this.getSelectedDelve().approachLevel).value,
+      this.getSelectedDelve().rollAddValue ?? 0
     );
 
     this.setState({ delves });
@@ -361,8 +371,13 @@ class Delve extends Component {
     // this.postRollAction();
   };
 
-  postRollAction = () => {
+  postRollAction = (debug = false) => {
     const delves = this.props.delves;
+
+    if (debug) {
+      this.changeDelveStep(4);
+      return;
+    }
 
     // delves[this.props.selectedDelveId].actionRoll = this.diceRoller.actionRoll(
     //   this.props.selectedPlayer.stats.find((s) => s.stat === this.getSelectedDelve().approachLevel).value
@@ -717,8 +732,8 @@ class Delve extends Component {
     this.setState({ delves });
   };
 
-  componentDidUpdate() {
-    this.props.onComponentUpdate();
+  componentDidUpdate(prevProps, prevState) {
+    this.props.onComponentUpdate(prevProps, prevState);
   }
 
   render() {
@@ -1147,6 +1162,24 @@ class Delve extends Component {
                     <i className="game-icon game-icon-swords-emblem"></i>&nbsp;Action
                   </div>
                   <div className="card-body py-5">
+                    <div className="input-group mb-3">
+                      <div className="input-group-prepend">
+                        <label className="btn btn-dark" title="Additional">
+                          ADD
+                        </label>
+                      </div>
+                      <input
+                        type="number"
+                        min="0"
+                        max="10"
+                        className="form-control"
+                        placeholder="Additional"
+                        aria-label="Additional"
+                        aria-describedby="basic-addon2"
+                        value={this.getSelectedDelve().rollAddValue}
+                        onChange={(e) => this.handleOnRollAddValueChanged(e)}
+                      />
+                    </div>
                     <RollButton
                       buttonText="Roll"
                       burnMomentum={this.props.burnMomentum}

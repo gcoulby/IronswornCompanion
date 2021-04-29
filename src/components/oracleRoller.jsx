@@ -49,8 +49,8 @@ class OracleRoller extends Component {
     this.setState({ selectedOracleTable });
   };
 
-  componentDidUpdate() {
-    this.props.onComponentUpdate();
+  componentDidUpdate(prevProps, prevState) {
+    this.props.onComponentUpdate(prevProps, prevState);
   }
 
   render() {

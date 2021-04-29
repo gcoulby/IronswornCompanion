@@ -136,7 +136,7 @@ class Locations extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.state.markers.length !== prevState.markers.length) this.createMarkers();
     this.addMarkers();
-    this.props.onComponentUpdate();
+    this.props.onComponentUpdate(prevProps, prevState);
   }
 
   /*=================================*/
@@ -184,7 +184,6 @@ class Locations extends Component {
   };
 
   selectorChanged = (id) => {
-    console.log(id);
     if (id != -1) this.onMarkerClick(id);
     else {
       this.clearState();
