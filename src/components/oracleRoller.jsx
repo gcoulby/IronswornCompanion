@@ -33,7 +33,7 @@ class OracleRoller extends Component {
 
   handleAskOracleRoll(min) {
     let rn = this.diceRoller.roll([100], true, false)[0].value;
-    let ans = rn >= min ? "Yes" : "No";
+    let ans = rn >= min ? `[${rn}] Yes` : `[${rn}] No`;
 
     this.setState({ outputValue: ans });
   }
