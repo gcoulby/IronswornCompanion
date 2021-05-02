@@ -73,7 +73,7 @@ class FoeCard extends Component {
               }
             />
             {/* <span className="modesto mt-3">DESCRIPTION</span> */}
-            <div className="d-none d-lg-block">{this.content("Description", this.getDescription())}</div>
+            <div className="d-none d-lg-block d-print-block">{this.content("Description", this.getDescription())}</div>
             {this.content("Quest", this.props.foe.Quest)}
 
             {/* <p>{this.getDescription()}</p> */}
