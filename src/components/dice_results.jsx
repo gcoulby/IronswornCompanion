@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import RollIcon from "./rollIcon";
 class DiceResults extends Component {
   state = {};
   render() {
@@ -6,11 +7,8 @@ class DiceResults extends Component {
       <React.Fragment>
         <div key="rollButtonRow" className="row">
           <div className="col">
-            <button
-              key="roll-btn"
-              className="btn btn-block btn-dark"
-              onClick={() => this.props.onRollClick()}
-            >
+            <button key="roll-btn" className="btn btn-block btn-dark" onClick={() => this.props.onRollClick()}>
+              <RollIcon />
               Roll
             </button>
           </div>

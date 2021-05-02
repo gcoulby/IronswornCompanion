@@ -41,11 +41,11 @@ class Die extends Component {
 
   render() {
     return (
-      <div className="col-3">
-        <div className="card dice-card">
+      <div className="col-6 col-lg-3">
+        <div className="card dice-card ">
           <div className="dice text-center">
             <h6>D{this.props.die.id}</h6>
-            <img src={this.state.dieImg} />
+            <img className="d-none d-lg-block" src={this.state.dieImg} />
           </div>
           <input
             id={`d${this.props.die.id}_qty`}

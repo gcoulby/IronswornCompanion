@@ -24,3 +24,62 @@
   height: 50vh;
   overflow: auto;
 }
+
+.challenge-dice {
+  width: 60px;
+  position: relative;
+  float: left;
+  margin: 0.5em;
+
+  .dice-value {
+    position: absolute;
+    color: $dark;
+    // left: 24px;
+    width: 100%;
+    top: 14px;
+  }
+}
+
+.graphic-dice {
+  display: inline-flex;
+  .action-score {
+    width: 40px;
+    height: 40px;
+    display: block;
+    border-radius: 50%;
+    background: 414042;
+    margin-top: 1.5em;
+    border: 2px solid #cacaca;
+    color: $dark;
+    span {
+      position: relative;
+      top: 2px;
+      left: 2px;
+      width: 32px;
+      height: 32px;
+      display: block;
+      border-radius: 50%;
+      background: white;
+      line-height: 2.5em;
+    }
+  }
+
+  .graphicDicePlus {
+    display: block;
+
+    width: 1.5em;
+    line-height: 4em;
+    margin-left: 0.5em;
+    font-size: 15pt;
+  }
+}
+
+.dice-value-d100 {
+  font-size: 12px;
+  // left: 20px !important;
+  top: 16px !important;
+}
+
+.d100-roller {
+  padding: 0 !important;
+}

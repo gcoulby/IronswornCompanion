@@ -3,14 +3,24 @@
     list-style-type: none;
     padding-left: 0;
   }
+}
+.nav-item {
+  font-family: "Modesto";
+  background: $dark;
+  color: white;
+}
 
-  .nav-item {
-    font-family: "Modesto";
-  }
+.nav-link.active,
+nav a:hover {
+  border: none;
+  background: $secondary !important;
+  color: white !important;
+}
 
-  nav a:hover {
-    color: $secondary;
-  }
+.nav-tabs .nav-link {
+  width: auto;
+  text-align: center;
+  border: 2px solid white !important;
 }
 
 .truth-card {

@@ -16224,7 +16224,7 @@ nav ul {
   vertical-align: text-bottom;
   font-family: "modesto";
   margin-top: 2em;
-  font-size: 12px;
+  font-size: 8px;
   text-align: left;
 }
 
@@ -16241,12 +16241,23 @@ nav ul {
   padding-left: 0;
 }
 
-.world-tabs .nav-item {
+.nav-item {
   font-family: "Modesto";
+  background: #343a40;
+  color: white;
 }
 
-.world-tabs nav a:hover {
-  color: #6c757d;
+.nav-link.active,
+nav a:hover {
+  border: none;
+  background: #6c757d !important;
+  color: white !important;
+}
+
+.nav-tabs .nav-link {
+  width: auto;
+  text-align: center;
+  border: 2px solid white !important;
 }
 
 .truth-card {
@@ -16624,6 +16635,10 @@ input[type="file"] {
   z-index: 900 !important;
 }
 
+.header-nav .nav-item {
+  background: none;
+}
+
 .stat-card {
   padding-top: 1em;
   border-radius: 0% !important;
@@ -16830,6 +16845,7 @@ label::before {
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;
+  border: none;
   cursor: pointer;
   height: 68px;
 }
@@ -16839,6 +16855,7 @@ label::before {
   -moz-appearance: none;
        appearance: none;
   background: url("/src/img/Clip.svg");
+  border: none;
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;
@@ -17129,6 +17146,53 @@ label::before {
   line-height: 1.2em !important;
 }
 
+.difficulty-tags .row {
+  margin-top: 1em;
+}
+
+.difficulty-tags .btn {
+  border-radius: 0;
+}
+
+.difficulty-tags .btn-secondary {
+  z-index: 100;
+}
+
+.difficulty-tags .btn-dark:hover {
+  background: #343a40;
+}
+
+.difficulty-tags .btn-secondary:hover {
+  background: #6c757d;
+}
+
+.difficulty-tags .btn-secondary:after {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 0;
+  width: 0;
+  height: 0;
+  border: 0 solid transparent;
+  border-bottom-width: 1.4em;
+  border-top-width: 1.4em;
+  border-left: 1.4em solid #6c757d;
+  clear: both;
+}
+
+.btn-group-justified {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+}
+
+.btn-group-justified .btn {
+  -webkit-box-flex: 1 !important;
+      -ms-flex-positive: 1 !important;
+          flex-grow: 1 !important;
+  margin-top: 0 !important;
+}
+
 .progressTrack {
   list-style: none;
   padding-left: 0;
@@ -17149,6 +17213,12 @@ label::before {
 
 .progressTrackBox {
   border: 3px solid #6c757d;
+}
+
+.progressBtns {
+  width: 20%;
+  text-align: center;
+  display: inline-block;
 }
 
 .progressTick-1 {
@@ -17984,7 +18054,7 @@ input.disabled:focus {
 }
 
 .delve-step-card {
-  min-height: 21em;
+  min-height: 24em;
 }
 
 .diamond {
@@ -18946,14 +19016,10 @@ input.autocomplete-input {
   overflow-y: auto;
 }
 
-@media screen and (max-width: 1300px) {
-  .footer-pre,
-  .stat-button {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 800px) {
+/*============================================================*/
+/*          Header
+/*============================================================*/
+@media screen and (max-width: 1250px) {
   .mobile-menu {
     display: block !important;
   }
@@ -18964,7 +19030,11 @@ input.autocomplete-input {
     display: none !important;
   }
   #page-container {
+    overflow-x: hidden;
+    padding: 3em 0em;
     margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
   }
   .navbar.fixed-bottom {
     display: none !important;
@@ -18974,7 +19044,7 @@ input.autocomplete-input {
   }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 1250px) {
   .mobile-menu {
     display: none !important;
   }
@@ -18982,6 +19052,299 @@ input.autocomplete-input {
     display: -webkit-box !important;
     display: -ms-flexbox !important;
     display: flex !important;
+  }
+}
+
+/*============================================================*/
+/*          Footer
+/*============================================================*/
+@media screen and (max-width: 1300px) {
+  .footer-pre,
+  .stat-button {
+    display: none;
+  }
+}
+
+/*============================================================*/
+/*          All Pages
+/*============================================================*/
+@media screen and (max-width: 1250px) {
+  .stat-title {
+    border-bottom: 2px solid black;
+  }
+  .stat-title span {
+    background: none;
+    padding: 0;
+    top: 0;
+  }
+  #mapid {
+    height: 400px !important;
+  }
+  .navbar {
+    position: inherit !important;
+  }
+  .card {
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    margin: 0.5em;
+  }
+  .dice-card.card {
+    margin: 1em 0 !important;
+  }
+  .die_qty {
+    margin-top: 0;
+  }
+  #site-subtitle {
+    font-size: 250% !important;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .keys {
+    font-size: 7px;
+  }
+}
+
+/*============================================================*/
+/*          Worlds
+/*============================================================*/
+@media screen and (max-width: 1250px) {
+  .nav-tabs .nav-link {
+    width: 50%;
+    text-align: center;
+  }
+  .world-tabs .card {
+    text-align: center;
+  }
+}
+
+/*============================================================*/
+/*          Progress
+/*============================================================*/
+@media screen and (max-width: 1250px) {
+  .progressTrackBox {
+    border: 1px solid #6c757d;
+  }
+  .progressTrackBox {
+    min-height: 1.2em;
+    min-width: 1.2em;
+  }
+  .progressTrack {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+  }
+  .popup .overlay {
+    background: black;
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    position: absolute;
+    opacity: 0.5;
+  }
+  .popup .card {
+    position: fixed;
+    margin-left: 0;
+    max-height: 95vh;
+    overflow: scroll;
+    display: block;
+  }
+  [data-width="100"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="100"] .card {
+    top: calc(50% - 50px);
+    height: auto;
+  }
+  [data-width="200"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="200"] .card {
+    top: calc(50% - 100px);
+    height: auto;
+  }
+  [data-width="300"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="300"] .card {
+    top: calc(50% - 150px);
+    height: auto;
+  }
+  [data-width="400"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="400"] .card {
+    top: calc(50% - 200px);
+    height: auto;
+  }
+  [data-width="500"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="500"] .card {
+    top: calc(50% - 250px);
+    height: auto;
+  }
+  [data-width="600"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="600"] .card {
+    top: calc(50% - 300px);
+    height: auto;
+  }
+  [data-width="700"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="700"] .card {
+    top: calc(50% - 350px);
+    height: auto;
+  }
+  [data-width="800"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="800"] .card {
+    top: calc(50% - 400px);
+    height: auto;
+  }
+  [data-width="900"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="900"] .card {
+    top: calc(50% - 450px);
+    height: auto;
+  }
+  [data-width="1000"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1000"] .card {
+    top: calc(50% - 500px);
+    height: auto;
+  }
+  [data-width="1100"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1100"] .card {
+    top: calc(50% - 550px);
+    height: auto;
+  }
+  [data-width="1200"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1200"] .card {
+    top: calc(50% - 600px);
+    height: auto;
+  }
+  [data-width="1300"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1300"] .card {
+    top: calc(50% - 650px);
+    height: auto;
+  }
+  [data-width="1400"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1400"] .card {
+    top: calc(50% - 700px);
+    height: auto;
+  }
+  [data-width="1500"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1500"] .card {
+    top: calc(50% - 750px);
+    height: auto;
+  }
+  [data-width="1600"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1600"] .card {
+    top: calc(50% - 800px);
+    height: auto;
+  }
+  [data-width="1700"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1700"] .card {
+    top: calc(50% - 850px);
+    height: auto;
+  }
+  [data-width="1800"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1800"] .card {
+    top: calc(50% - 900px);
+    height: auto;
+  }
+  [data-width="1900"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="1900"] .card {
+    top: calc(50% - 950px);
+    height: auto;
+  }
+  [data-width="2000"] .card {
+    left: 5%;
+    width: 80%;
+  }
+  [data-height="2000"] .card {
+    top: calc(50% - 1000px);
+    height: auto;
+  }
+}
+
+/*============================================================*/
+/*          FOES
+/*============================================================*/
+@media screen and (max-width: 1250px) {
+  .foe-card table {
+    position: inherit;
+    width: 100%;
+  }
+}
+
+/*============================================================*/
+/*          Rollers
+/*============================================================*/
+@media screen and (max-width: 1250px) {
+  .oracle-results {
+    margin-top: 2em;
+  }
+  .oracle-tables,
+  .moves-list {
+    height: 30vh !important;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .slider-tick::before,
+  .slider-tick::after {
+    display: none;
   }
 }
 
@@ -19010,6 +19373,66 @@ input.autocomplete-input {
   overflow: auto;
 }
 
+.challenge-dice {
+  width: 60px;
+  position: relative;
+  float: left;
+  margin: 0.5em;
+}
+
+.challenge-dice .dice-value {
+  position: absolute;
+  color: #343a40;
+  width: 100%;
+  top: 14px;
+}
+
+.graphic-dice {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.graphic-dice .action-score {
+  width: 40px;
+  height: 40px;
+  display: block;
+  border-radius: 50%;
+  background: 414042;
+  margin-top: 1.5em;
+  border: 2px solid #cacaca;
+  color: #343a40;
+}
+
+.graphic-dice .action-score span {
+  position: relative;
+  top: 2px;
+  left: 2px;
+  width: 32px;
+  height: 32px;
+  display: block;
+  border-radius: 50%;
+  background: white;
+  line-height: 2.5em;
+}
+
+.graphic-dice .graphicDicePlus {
+  display: block;
+  width: 1.5em;
+  line-height: 4em;
+  margin-left: 0.5em;
+  font-size: 15pt;
+}
+
+.dice-value-d100 {
+  font-size: 12px;
+  top: 16px !important;
+}
+
+.d100-roller {
+  padding: 0 !important;
+}
+
 .denizen-matrix {
   padding: 0 1em;
 }
@@ -19027,13 +19450,11 @@ input.autocomplete-input {
 .denizen-matrix .denizen-matrix-rank {
   color: #6c757d;
   font-style: italic;
-  text-align: left;
 }
 
 .denizen-matrix .denizen-matrix-chance {
   color: #6c757d;
   font-style: italic;
-  text-align: right;
 }
 
 .denizen-matrix .denizen-matrix-name {
@@ -19046,5 +19467,512 @@ input.autocomplete-input {
   margin-top: 1.1em;
   font-style: italic;
   text-align: center;
+}
+
+.documentation {
+  /*
+Copyright (c) 2017 Chris Patuzzo
+https://twitter.com/chrispatuzzo
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+}
+
+.documentation body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px;
+  color: #333;
+}
+
+.documentation body > *:first-child {
+  margin-top: 0 !important;
+}
+
+.documentation body > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+.documentation a {
+  color: #4183c4;
+  text-decoration: none;
+}
+
+.documentation a.absent {
+  color: #cc0000;
+}
+
+.documentation a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.documentation h1,
+.documentation h2,
+.documentation h3,
+.documentation h4,
+.documentation h5,
+.documentation h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative;
+}
+
+.documentation h2:first-child,
+.documentation h1:first-child,
+.documentation h1:first-child + h2,
+.documentation h3:first-child,
+.documentation h4:first-child,
+.documentation h5:first-child,
+.documentation h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.documentation h1:hover a.anchor,
+.documentation h2:hover a.anchor,
+.documentation h3:hover a.anchor,
+.documentation h4:hover a.anchor,
+.documentation h5:hover a.anchor,
+.documentation h6:hover a.anchor {
+  text-decoration: none;
+}
+
+.documentation h1 tt,
+.documentation h1 code {
+  font-size: inherit;
+}
+
+.documentation h2 tt,
+.documentation h2 code {
+  font-size: inherit;
+}
+
+.documentation h3 tt,
+.documentation h3 code {
+  font-size: inherit;
+}
+
+.documentation h4 tt,
+.documentation h4 code {
+  font-size: inherit;
+}
+
+.documentation h5 tt,
+.documentation h5 code {
+  font-size: inherit;
+}
+
+.documentation h6 tt,
+.documentation h6 code {
+  font-size: inherit;
+}
+
+.documentation h1 {
+  font-size: 28px;
+  color: black;
+}
+
+.documentation h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black;
+}
+
+.documentation h3 {
+  font-size: 18px;
+}
+
+.documentation h4 {
+  font-size: 16px;
+}
+
+.documentation h5 {
+  font-size: 14px;
+}
+
+.documentation h6 {
+  color: #777777;
+  font-size: 14px;
+}
+
+.documentation p,
+.documentation blockquote,
+.documentation ul,
+.documentation ol,
+.documentation dl,
+.documentation li,
+.documentation table,
+.documentation pre {
+  margin: 15px 0;
+}
+
+.documentation hr {
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+.documentation body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.documentation body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.documentation body > h1:first-child + h2 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.documentation body > h3:first-child,
+.documentation body > h4:first-child,
+.documentation body > h5:first-child,
+.documentation body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.documentation a:first-child h1,
+.documentation a:first-child h2,
+.documentation a:first-child h3,
+.documentation a:first-child h4,
+.documentation a:first-child h5,
+.documentation a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.documentation h1 p,
+.documentation h2 p,
+.documentation h3 p,
+.documentation h4 p,
+.documentation h5 p,
+.documentation h6 p {
+  margin-top: 0;
+}
+
+.documentation li p.first {
+  display: inline-block;
+}
+
+.documentation ul,
+.documentation ol {
+  padding-left: 30px;
+}
+
+.documentation ul :first-child,
+.documentation ol :first-child {
+  margin-top: 0;
+}
+
+.documentation ul :last-child,
+.documentation ol :last-child {
+  margin-bottom: 0;
+}
+
+.documentation dl {
+  padding: 0;
+}
+
+.documentation dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+.documentation dl dt:first-child {
+  padding: 0;
+}
+
+.documentation dl dt > :first-child {
+  margin-top: 0;
+}
+
+.documentation dl dt > :last-child {
+  margin-bottom: 0;
+}
+
+.documentation dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+.documentation dl dd > :first-child {
+  margin-top: 0;
+}
+
+.documentation dl dd > :last-child {
+  margin-bottom: 0;
+}
+
+.documentation blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777;
+}
+
+.documentation blockquote > :first-child {
+  margin-top: 0;
+}
+
+.documentation blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.documentation table {
+  padding: 0;
+}
+
+.documentation table tr {
+  border-top: 1px solid #cccccc;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.documentation table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.documentation table tr th {
+  font-weight: bold;
+  border: 1px solid #cccccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+.documentation table tr td {
+  border: 1px solid #cccccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+.documentation table tr th :first-child,
+.documentation table tr td :first-child {
+  margin-top: 0;
+}
+
+.documentation table tr th :last-child,
+.documentation table tr td :last-child {
+  margin-bottom: 0;
+}
+
+.documentation img {
+  max-width: 100%;
+}
+
+.documentation span.frame {
+  display: block;
+  overflow: hidden;
+}
+
+.documentation span.frame > span {
+  border: 1px solid #dddddd;
+  display: block;
+  float: left;
+  overflow: hidden;
+  margin: 13px 0 0;
+  padding: 7px;
+  width: auto;
+}
+
+.documentation span.frame span img {
+  display: block;
+  float: left;
+}
+
+.documentation span.frame span span {
+  clear: both;
+  color: #333333;
+  display: block;
+  padding: 5px 0 0;
+}
+
+.documentation span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+.documentation span.align-center > span {
+  display: block;
+  overflow: hidden;
+  margin: 13px auto 0;
+  text-align: center;
+}
+
+.documentation span.align-center span img {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.documentation span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+.documentation span.align-right > span {
+  display: block;
+  overflow: hidden;
+  margin: 13px 0 0;
+  text-align: right;
+}
+
+.documentation span.align-right span img {
+  margin: 0;
+  text-align: right;
+}
+
+.documentation span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left;
+}
+
+.documentation span.float-left span {
+  margin: 13px 0 0;
+}
+
+.documentation span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right;
+}
+
+.documentation span.float-right > span {
+  display: block;
+  overflow: hidden;
+  margin: 13px auto 0;
+  text-align: right;
+}
+
+.documentation code,
+.documentation tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+.documentation pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+.documentation .highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+.documentation pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+.documentation pre code,
+.documentation pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+.rst__moveHandle,
+.rst__loadingHandle {
+  background: #343a40 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiI+PGcgc3Ryb2tlPSIjRkZGIiBzdHJva2Utd2lkdGg9IjIuOSIgPjxwYXRoIGQ9Ik0xNCAxNS43aDE0LjQiLz48cGF0aCBkPSJNMTQgMjEuNGgxNC40Ii8+PHBhdGggZD0iTTE0IDI3LjFoMTQuNCIvPjwvZz4KPC9zdmc+") no-repeat center !important;
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  width: 27px;
+}
+
+.rst__rowContents {
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.journalTitle {
+  border-bottom: 2px solid black;
+}
+
+.treeElement .rst__rowContents {
+  cursor: pointer;
+}
+
+.treeElement .rst__rowContents:hover {
+  background: lightgray;
+}
+
+.treeElement.selected .rst__rowContents {
+  background: lightgray;
+}
+
+.journal-card {
+  margin: 0;
+}
+
+.journal-foot {
+  margin-top: 1em;
+  padding-top: 1em;
+  border-top: 1px solid #6c757d;
+}
+
+#block-menu-container {
+  z-index: 1999;
 }
 /*# sourceMappingURL=main.css.map */

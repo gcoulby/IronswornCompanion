@@ -1,0 +1,462 @@
+.documentation {
+  /*
+Copyright (c) 2017 Chris Patuzzo
+https://twitter.com/chrispatuzzo
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+}
+
+.documentation body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px;
+  color: #333;
+}
+
+.documentation body > *:first-child {
+  margin-top: 0 !important;
+}
+
+.documentation body > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+.documentation a {
+  color: #4183c4;
+  text-decoration: none;
+}
+
+.documentation a.absent {
+  color: #cc0000;
+}
+
+.documentation a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.documentation h1,
+.documentation h2,
+.documentation h3,
+.documentation h4,
+.documentation h5,
+.documentation h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative;
+}
+
+.documentation h2:first-child,
+.documentation h1:first-child,
+.documentation h1:first-child + h2,
+.documentation h3:first-child,
+.documentation h4:first-child,
+.documentation h5:first-child,
+.documentation h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.documentation h1:hover a.anchor,
+.documentation h2:hover a.anchor,
+.documentation h3:hover a.anchor,
+.documentation h4:hover a.anchor,
+.documentation h5:hover a.anchor,
+.documentation h6:hover a.anchor {
+  text-decoration: none;
+}
+
+.documentation h1 tt,
+.documentation h1 code {
+  font-size: inherit;
+}
+
+.documentation h2 tt,
+.documentation h2 code {
+  font-size: inherit;
+}
+
+.documentation h3 tt,
+.documentation h3 code {
+  font-size: inherit;
+}
+
+.documentation h4 tt,
+.documentation h4 code {
+  font-size: inherit;
+}
+
+.documentation h5 tt,
+.documentation h5 code {
+  font-size: inherit;
+}
+
+.documentation h6 tt,
+.documentation h6 code {
+  font-size: inherit;
+}
+
+.documentation h1 {
+  font-size: 28px;
+  color: black;
+}
+
+.documentation h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black;
+}
+
+.documentation h3 {
+  font-size: 18px;
+}
+
+.documentation h4 {
+  font-size: 16px;
+}
+
+.documentation h5 {
+  font-size: 14px;
+}
+
+.documentation h6 {
+  color: #777777;
+  font-size: 14px;
+}
+
+.documentation p,
+.documentation blockquote,
+.documentation ul,
+.documentation ol,
+.documentation dl,
+.documentation li,
+.documentation table,
+.documentation pre {
+  margin: 15px 0;
+}
+
+.documentation hr {
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+.documentation body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.documentation body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.documentation body > h1:first-child + h2 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.documentation body > h3:first-child,
+.documentation body > h4:first-child,
+.documentation body > h5:first-child,
+.documentation body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.documentation a:first-child h1,
+.documentation a:first-child h2,
+.documentation a:first-child h3,
+.documentation a:first-child h4,
+.documentation a:first-child h5,
+.documentation a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.documentation h1 p,
+.documentation h2 p,
+.documentation h3 p,
+.documentation h4 p,
+.documentation h5 p,
+.documentation h6 p {
+  margin-top: 0;
+}
+
+.documentation li p.first {
+  display: inline-block;
+}
+
+.documentation ul,
+.documentation ol {
+  padding-left: 30px;
+}
+
+.documentation ul :first-child,
+.documentation ol :first-child {
+  margin-top: 0;
+}
+
+.documentation ul :last-child,
+.documentation ol :last-child {
+  margin-bottom: 0;
+}
+
+.documentation dl {
+  padding: 0;
+}
+
+.documentation dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+.documentation dl dt:first-child {
+  padding: 0;
+}
+
+.documentation dl dt > :first-child {
+  margin-top: 0;
+}
+
+.documentation dl dt > :last-child {
+  margin-bottom: 0;
+}
+
+.documentation dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+.documentation dl dd > :first-child {
+  margin-top: 0;
+}
+
+.documentation dl dd > :last-child {
+  margin-bottom: 0;
+}
+
+.documentation blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777;
+}
+
+.documentation blockquote > :first-child {
+  margin-top: 0;
+}
+
+.documentation blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.documentation table {
+  padding: 0;
+}
+
+.documentation table tr {
+  border-top: 1px solid #cccccc;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.documentation table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.documentation table tr th {
+  font-weight: bold;
+  border: 1px solid #cccccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+.documentation table tr td {
+  border: 1px solid #cccccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+.documentation table tr th :first-child,
+.documentation table tr td :first-child {
+  margin-top: 0;
+}
+
+.documentation table tr th :last-child,
+.documentation table tr td :last-child {
+  margin-bottom: 0;
+}
+
+.documentation img {
+  max-width: 100%;
+}
+
+.documentation span.frame {
+  display: block;
+  overflow: hidden;
+}
+
+.documentation span.frame > span {
+  border: 1px solid #dddddd;
+  display: block;
+  float: left;
+  overflow: hidden;
+  margin: 13px 0 0;
+  padding: 7px;
+  width: auto;
+}
+
+.documentation span.frame span img {
+  display: block;
+  float: left;
+}
+
+.documentation span.frame span span {
+  clear: both;
+  color: #333333;
+  display: block;
+  padding: 5px 0 0;
+}
+
+.documentation span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+.documentation span.align-center > span {
+  display: block;
+  overflow: hidden;
+  margin: 13px auto 0;
+  text-align: center;
+}
+
+.documentation span.align-center span img {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.documentation span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+.documentation span.align-right > span {
+  display: block;
+  overflow: hidden;
+  margin: 13px 0 0;
+  text-align: right;
+}
+
+.documentation span.align-right span img {
+  margin: 0;
+  text-align: right;
+}
+
+.documentation span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left;
+}
+
+.documentation span.float-left span {
+  margin: 13px 0 0;
+}
+
+.documentation span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right;
+}
+
+.documentation span.float-right > span {
+  display: block;
+  overflow: hidden;
+  margin: 13px auto 0;
+  text-align: right;
+}
+
+.documentation code,
+.documentation tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+.documentation pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+.documentation .highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+.documentation pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+.documentation pre code,
+.documentation pre tt {
+  background-color: transparent;
+  border: none;
+}
+/*# sourceMappingURL=markdown.css.map */

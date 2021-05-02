@@ -218,6 +218,7 @@ label::before {
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;
+  border: none;
   cursor: pointer;
   height: 68px;
 }
@@ -226,6 +227,7 @@ label::before {
   -webkit-appearance: none;
   appearance: none;
   background: url("/src/img/Clip.svg");
+  border: none;
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;
@@ -288,4 +290,46 @@ $end: 20;
 .slider-tick-label {
   font-size: 16px !important;
   line-height: 1.2em !important;
+}
+
+.difficulty-tags {
+  .row {
+    margin-top: 1em;
+  }
+  .btn {
+    border-radius: 0;
+    // min-width: 20rem;
+  }
+
+  .btn-secondary {
+    z-index: 100;
+  }
+
+  .btn-dark:hover {
+    background: $dark;
+  }
+
+  .btn-secondary:hover {
+    background: $secondary;
+  }
+  .btn-secondary:after {
+    content: "";
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 0;
+    height: 0;
+    border: 0 solid transparent;
+    border-bottom-width: 1.4em;
+    border-top-width: 1.4em;
+    border-left: 1.4em solid $secondary;
+    clear: both;
+  }
+}
+.btn-group-justified {
+  display: flex !important;
+  .btn {
+    flex-grow: 1 !important;
+    margin-top: 0 !important;
+  }
 }

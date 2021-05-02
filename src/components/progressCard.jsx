@@ -11,7 +11,7 @@ class ProgressCard extends Component {
     return (
       <React.Fragment>
         {/* <div className="row"> */}
-        <div className="col-6">
+        <div className="col-12 col-lg-6">
           <div className="card vow-card mb-4">
             <div className="card-header bg-dark text-light modesto">
               <div className="row ">
@@ -84,7 +84,7 @@ class ProgressCard extends Component {
               />
               <div className="text-center pt-3 pb-2">
                 <div className="row">
-                  <div className="col-9">
+                  <div className="col-lg-9 col-12">
                     <RollButton
                       buttonText={this.props.rollText}
                       disabled={this.props.progression.complete}
@@ -103,7 +103,7 @@ class ProgressCard extends Component {
                       <RollIcon /> {this.props.rollText}
                     </button> */}
                   </div>
-                  <div className="col-3">
+                  <div className="col-lg-3 col-12">
                     <DangerButton
                       buttonText="Cancel"
                       additionalButtonClasses="pt-2 pb-2 btn-block"

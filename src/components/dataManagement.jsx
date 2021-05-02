@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import DangerButton from "./dangerButton";
 import TitleBlock from "./titleBlock";
+import JSZip from "jszip/dist/jszip.js";
 class DataManager extends Component {
   state = {
     data: {},
     saveSelectors: {
       allDataSelected: true,
+      journalDataDataSelected: true,
+      activeFoesDataSelected: true,
       assetsDataSelected: true,
       delveCardsDataSelected: true,
       delvesDataSelected: true,
@@ -18,6 +21,8 @@ class DataManager extends Component {
     },
     loadSelectors: {
       allDataSelected: true,
+      journalDataDataSelected: true,
+      activeFoesDataSelected: true,
       assetsDataSelected: true,
       delveCardsDataSelected: true,
       delvesDataSelected: true,
@@ -32,6 +37,8 @@ class DataManager extends Component {
   constructor(props) {
     super();
     // this.state.data.all = props.gamestate;
+    this.state.data.activeFoes = props.gamestate.activeFoes;
+    this.state.data.journalData = props.gamestate.journalData;
     this.state.data.assets = props.gamestate.assets;
     this.state.data.delveCards = props.gamestate.delveCards;
     this.state.data.delves = props.gamestate.delves;
@@ -59,6 +66,53 @@ class DataManager extends Component {
     }
     // if (!selectors[`${name}DataSelected`] )
     this.setState({ saveSelectors });
+  };
+
+  saveJournals = (obj) => {
+    var a = document.createElement("a");
+    document.body.appendChild(a);
+    a.setAttribute("style", "display:none");
+
+    var json = JSON.stringify(JSON.stringify(obj)),
+      blob = new Blob([json], { type: "octet/stream" }),
+      url = window.URL.createObjectURL(blob);
+    a.href = url;
+    let d = new Date();
+    a.download = `isc_${d.toLocaleDateString()}_${d.toLocaleTimeString()}.isgs`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
+  createZipFile = () => {
+    let zip = new JSZip();
+    let date = new Date();
+
+    zip = this.addFilesToZip(zip, this.props.gamestate.journalData.files, null);
+
+    zip.generateAsync({ type: "blob" }).then((content) => {
+      this.saveData(content, `journals.zip`);
+    });
+  };
+
+  addFilesToZip(zip, files, parentTitle) {
+    let file = undefined;
+    for (let i = 0; i < files.length; i++) {
+      const f = files[i];
+      zip.file(`${parentTitle ? `${parentTitle}/` : `${f.title}/`}${f.id}_${f.title}.md`, f.content);
+      zip = this.addFilesToZip(zip, f.children, f.title);
+    }
+    return zip;
+  }
+
+  saveData = (blob, filename) => {
+    var a = document.createElement("a");
+    document.body.appendChild(a);
+    a.setAttribute("style", "display:none");
+    let url = window.URL.createObjectURL(blob);
+    a.href = url;
+    a.download = filename;
+    a.click();
+    window.URL.revokeObjectURL(url);
   };
 
   loadCheckChange = (name) => {
@@ -89,7 +143,12 @@ class DataManager extends Component {
         }
       }
     });
-    console.log(save);
+    save.nextLogId = this.props.gamestate.nextLogId;
+    save.nextBackgroundId = this.props.gamestate.nextBackgroundId;
+    save.nextNPCId = this.props.gamestate.nextNPCId;
+    save.newNPC = this.props.gamestate.newNPC;
+    save.newItem = this.props.gamestate.newItem;
+    save.newProgressions = this.props.gamestate.newProgressions;
     this.props.onDownloadObjectClick(save);
   };
 
@@ -100,6 +159,12 @@ class DataManager extends Component {
         keys.push(key.replace("DataSelected", ""));
       }
     }
+    keys.push("nextLogId");
+    keys.push("nextBackgroundId");
+    keys.push("nextNPCId");
+    keys.push("newNPC");
+    keys.push("newItem");
+    keys.push("newProgressions");
     this.props.onLoadClick(evt, keys);
   };
 
@@ -117,7 +182,7 @@ class DataManager extends Component {
           onDangerClick={this.props.onResetClick}
           deleteMessage="Are you sure you want to reset the gamestate?"
         />
-        <TitleBlock title="Load" />
+        <TitleBlock title="Load Data" />
         <div className="alert alert-secondary">
           Load a game state from a JSON file stored on your computer. Choose the items you want to import from the save
           file into your game <strong>Will only import a key if it is found in the save data.</strong>
@@ -150,7 +215,7 @@ class DataManager extends Component {
         {/* <button className="btn btn-dark">
           <i className="fas fa-upload"></i>&nbsp;Load
         </button> */}
-        <TitleBlock title="Save" />
+        <TitleBlock title="Save Data" />
         <div className="alert alert-secondary">
           Save a game state to a JSON file and download to your computer. Choose the data categories you want to save
           and then press the Save button.
@@ -179,6 +244,18 @@ class DataManager extends Component {
           <div className="col">
             <button className="btn btn-dark" onClick={() => this.buildSaveObject()}>
               <i className="fas fa-download"></i>&nbsp;Save
+            </button>
+          </div>
+        </div>
+        <TitleBlock title="Save Journals" />
+        <div className="row">
+          <div className="col-12">
+            <div className="alert alert-secondary">
+              Save your journal entries as Rich Text (Markdown format). Press save journals to save a zipped archive
+              with a file for each journal page.
+            </div>
+            <button className="btn btn-dark" onClick={() => this.createZipFile()}>
+              <i className="fas fa-download"></i>&nbsp;Save Journals
             </button>
           </div>
         </div>

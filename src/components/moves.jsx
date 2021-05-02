@@ -25,15 +25,13 @@ class Moves extends Component {
     this.setState({ showMoves });
   };
 
-  componentDidUpdate() {
-    this.props.onComponentUpdate();
+  componentDidUpdate(prevProps, prevState) {
+    this.props.onComponentUpdate(prevProps, prevState);
     let el = document.getElementById("move-preview");
     let tables = el.getElementsByTagName("table");
     if (tables.length > 0) {
-      console.log(tables[0]);
       for (let i = 0; i < tables.length; i++) {
         const table = tables[i];
-        // console.log(table);
         table.classList.add("table");
         table.classList.add("table-striped");
         table.classList.add("move-table");
@@ -51,7 +49,7 @@ class Moves extends Component {
             {/* //{" "} */}
             {/* <Tab eventKey={`move_type_${m}`} title={m}> */}
             <div className="row">
-              <div className="col-4 moves-list">
+              <div className="col-12 col-lg-4 moves-list">
                 <table className="table table-striped table-hover">
                   {[...new Set(this.props.moves.map((m) => m.Type))].map((m) => (
                     <React.Fragment>
@@ -71,18 +69,34 @@ class Moves extends Component {
                   ))}
                 </table>
               </div>
-              <div className="col-8">
-                <div id="move-preview" className="move-display py-3 px-2">
-                  {this.state.selectedMove ? (
-                    <React.Fragment>
-                      <h6>{this.state.selectedMove.Name}</h6>
-                      <ReactMarkdown id="" plugins={[gfm]}>
-                        {this.state.selectedMove.Text}
-                      </ReactMarkdown>
-                    </React.Fragment>
-                  ) : (
-                    React.Fragment
-                  )}
+              <div className="col-12 col-lg-8">
+                <hr className="d-xs-block d-lg-none" />
+                <div className="row">
+                  <div className="col">
+                    <div id="move-preview" className="move-display py-3 px-2">
+                      {this.state.selectedMove ? (
+                        <React.Fragment>
+                          <h6>{this.state.selectedMove.Name}</h6>
+                          <ReactMarkdown id="" plugins={[gfm]}>
+                            {this.state.selectedMove.Text}
+                          </ReactMarkdown>
+                        </React.Fragment>
+                      ) : (
+                        React.Fragment
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <hr className="d-xs-block d-lg-none" />
+                <div className="row mb-5 d-xs-block d-lg-none">
+                  <div className="col mb-4">
+                    <Roller
+                      light={true}
+                      selectedPlayer={this.props.selectedPlayer}
+                      footerDice={this.props.footerDice}
+                      burnMomentum={this.props.burnMomentum}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

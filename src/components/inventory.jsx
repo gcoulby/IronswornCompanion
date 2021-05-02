@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import DangerButton from "./dangerButton";
 import TitleBlock from "./titleBlock";
+import UnselectedPlayer from "./unselected_player";
 class Inventory extends Component {
   state = {};
   handleAddNewItem = () => {
     const newItem = this.props.newItem;
+
+    if (newItem.Name === "") return;
     const players = this.props.players.map((p) => {
       if (p.selected) {
         p.inventory.push({
@@ -12,13 +15,13 @@ class Inventory extends Component {
           Name: newItem.Name,
           Description: newItem.Description,
         });
+        this.props.addLog("event", `${p.name} acquired a new item: ${newItem.Name}`);
         newItem.Name = "";
         newItem.Description = "";
         newItem.NextId = newItem.NextId + 1;
       }
       return p;
     });
-    console.log(players);
     this.setState({ players });
   };
 
@@ -36,6 +39,7 @@ class Inventory extends Component {
           let item = p.inventory[i];
           if (item.id === id) {
             pos = i;
+            this.props.addLog("event", `${p.name} no longer has the item: ${item.Name}`);
           }
         }
         if (pos != -1) p.inventory.splice(pos, 1);
@@ -60,11 +64,12 @@ class Inventory extends Component {
     this.setState({ players });
   };
 
-  componentDidUpdate() {
-    this.props.onComponentUpdate();
+  componentDidUpdate(prevProps, prevState) {
+    this.props.onComponentUpdate(prevProps, prevState);
   }
 
   render() {
+    if (this.props.selectedPlayer == null) return <UnselectedPlayer />;
     return (
       <React.Fragment>
         <h1>Inventory</h1>
@@ -82,7 +87,7 @@ class Inventory extends Component {
           </p>
         </div>
         <div className="row">
-          <div className="col-6">
+          <div className="col-12 col-lg-6">
             <div className="input-group mb-2">
               <div className="input-group-prepend">
                 <label className="btn btn-dark btn-tag">Name</label>
@@ -120,7 +125,7 @@ class Inventory extends Component {
         <div className="row">
           {this.props.selectedPlayer.inventory
             ? this.props.selectedPlayer.inventory.map((item) => (
-                <div className="col-4">
+                <div className="col-12 col-lg-4">
                   <div className="card my-3">
                     <div className="card-header text-light bg-dark">
                       <div className="row">

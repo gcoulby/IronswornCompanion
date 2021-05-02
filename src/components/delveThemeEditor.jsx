@@ -173,8 +173,8 @@ class DelveThemeDomainEditor extends Component {
     window.print();
   }
 
-  componentDidUpdate() {
-    this.props.onComponentUpdate();
+  componentDidUpdate(prevProps, prevState) {
+    this.props.onComponentUpdate(prevProps, prevState);
   }
 
   editorUpdate = () => {
@@ -421,17 +421,13 @@ class DelveThemeDomainEditor extends Component {
                             <td width="80">
                               {f.Chance == 99 ? "99" : f.Chance == 100 ? "00" : `${f.Min} - ${f.Chance}`}
                             </td>
-                            {this.props.selectedDelveCard.Type === "Domain" && f.Chance >= 98 ? (
-                              <td>{f.Description}</td>
-                            ) : (
-                              <ContentEditable
-                                innerRef={this.contentEditable}
-                                html={f.Description}
-                                disabled={false}
-                                onChange={(e) => this.handleRowChange(e, "Features", i)}
-                                tagName="td"
-                              />
-                            )}
+                            <ContentEditable
+                              innerRef={this.contentEditable}
+                              html={f.Description}
+                              disabled={false}
+                              onChange={(e) => this.handleRowChange(e, "Features", i)}
+                              tagName="td"
+                            />
                           </tr>
                         </React.Fragment>
                       );
@@ -491,7 +487,7 @@ class DelveThemeDomainEditor extends Component {
           </div>
         </div>
 
-        <div id="assetCards" className="print-hide mb-5">
+        <div id="assetCards" className="print-hide mb-5 d-none d-lg-block">
           <TitleBlock title="Delve Card Deck" />
           <div className="alert alert-secondary">
             Use this section to print cards. You MUST click <strong>Show Cards</strong> before clicking{" "}

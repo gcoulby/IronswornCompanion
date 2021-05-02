@@ -35,12 +35,17 @@ class Characters extends Component {
     player.failure = 0;
     player.failureRoll = null;
     player.inventory = [];
-    player.stats = this.props.newPlayer.Stats;
+    player.stats = this.props.newPlayer.Stats.map((s) => {
+      if (s.value === "" || s.value < 0) s.value = 0;
+      else if (s.value > 4 && s.type != "status") s.value = 4;
+      return s;
+    });
     if (this.props.newPlayer.Name != "" && !players.find((p) => p.name == this.props.newPlayer.Name)) {
       players.push(player);
       this.setState({ players: players });
       this.resetNewPlayer();
     }
+    this.props.addLog("event", `${player.name} began their journey in the Ironlands`);
   };
 
   resetNewPlayer(props = null) {
@@ -123,7 +128,7 @@ class Characters extends Component {
   handleOnRollPlayerPrimaryStat = () => {
     let rn = this.props.oracles.PrimaryStat;
     const newPlayerStats = this.props.newPlayer.Stats.map((s) => {
-      if (s.type == "core") s.value = s.id == rn ? 3 : "";
+      if (s.type == "core") s.value = s.id == rn ? 3 : 0;
       return s;
     });
     this.setState({ newPlayerStats });
@@ -153,7 +158,7 @@ class Characters extends Component {
         <div className="row">
           <div className="col">
             <div className="row">
-              <div className="col-md-6 col-sm-12">
+              <div className="col-lg-6 col-sm-12">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <button
@@ -198,7 +203,7 @@ class Characters extends Component {
                   />
                 </div>
               </div>
-              <div className="col-md-6 col-sm-12">
+              <div className="col-lg-6 col-sm-12">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <button
@@ -246,17 +251,43 @@ class Characters extends Component {
             <div className="row">
               <div className="col">
                 <div className="alert alert-secondary">
-                  There are five stats in total. Each is given a value from 1 to 3. To start, arrange these bonuses
-                  across your five stats in any order: <b>3, 2, 2, 1, 1.</b> You can also roll on the oracle to leave
-                  your primary stat choice down to fate.
+                  There are five stats in total. Each is given a value from 1 to 4 (Level depending). To start, choose a
+                  difficulty and place the bonuses for that difficulty across your five stats in any order. You can also
+                  roll on the oracle to leave your primary stat choice down to fate.
+                  <div className="difficulty-tags">
+                    <div className="row">
+                      <div className="col-12">
+                        <div className="btn-group btn-group-justified">
+                          <button className="btn btn-block btn-secondary btn-tag">CHALLENGE</button>
+                          <button className="btn btn-block btn-dark btn-tag">4,3,3,2,2</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-12">
+                        <div className="btn-group btn-group-justified">
+                          <button className="btn btn-block btn-secondary btn-tag">PERILOUS</button>
+                          <button className="btn btn-block btn-dark btn-tag">3,2,2,1,1</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-12">
+                        <div className="btn-group btn-group-justified">
+                          <button className="btn btn-block btn-secondary btn-tag">GRIM</button>
+                          <button className="btn btn-block btn-dark btn-tag">3,2,1,1,0</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
             <div className="row">
-              <div className="col-md-2 col-sm-12">
+              <div className="col-lg-2 col-sm-12">
                 <h6>&nbsp;</h6>
                 <button
-                  className="btn btn-dark btn-block"
+                  className="btn btn-dark btn-block mt-4"
                   type="button"
                   onClick={() => this.handleOnRollPlayerPrimaryStat()}
                 >
@@ -264,14 +295,14 @@ class Characters extends Component {
                 </button>
               </div>
               {this.props.newPlayer.Stats.filter((s) => s.type == "core").map((s) => (
-                <div className="col-md-2 col-sm-12">
-                  <h6>{s.stat.toUpperCase()}</h6>
+                <div className="col-lg-2 col-sm-12">
+                  <h6 className="mt-3">{s.stat.toUpperCase()}</h6>
                   <input
                     data-name={s.stat}
                     className="form-control"
                     type="number"
                     min="1"
-                    max="3"
+                    max="4"
                     value={s.value == 0 ? "" : s.value}
                     placeholder={s.stat}
                     onChange={(e) => this.handleNewPlayerStatChanged(e)}
@@ -293,8 +324,8 @@ class Characters extends Component {
 
         <div className="row mt-4">
           {this.props.players.map((player) => (
-            <div key={player.name} className="col-md-6 col-lg-4 col-sm-12">
-              <div className="card">
+            <div key={player.name} className="col-lg-6 col-sm-12">
+              <div className="card mb-4">
                 <div className="card-body">
                   <h4 className="mb-2">{player.name}</h4>
                   <p>

@@ -24,7 +24,7 @@ class Log extends Component {
   handleLogEntryChanged = (evt, id) => {
     const logs = this.props.logs.map((l) => {
       if (l.id == id) {
-        l.text = evt.target.value;
+        l.text = evt.target.value.replace(/<br>/g, "").replace(/&nbsp;/g, " ");
       }
       return l;
     });
@@ -59,6 +59,10 @@ class Log extends Component {
     this.props.scrollBottom();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    this.props.onComponentUpdate(prevProps, prevState);
+  }
+
   render() {
     if (this.props.logs == null) return <UnselectedPlayer />;
 
@@ -71,7 +75,7 @@ class Log extends Component {
         </p>
 
         <div className="row">
-          <div className="col-4">
+          <div className="col-lg-4 col-sm-12">
             <div className="input-group mb-3">
               <div className="input-group-prepend">
                 <label className="btn btn-dark btn-tag">Filter</label>
@@ -115,7 +119,7 @@ class Log extends Component {
                       </div>
                       <div className="col-2 text-right">
                         <DangerButton
-                          buttonText="Delete"
+                          buttonText=""
                           additionalButtonClasses="btn-sm"
                           iconClass="fas fa-times"
                           onDangerClick={this.props.onLogItemDeleted}
@@ -138,31 +142,36 @@ class Log extends Component {
               ))}
           </ul>
         </div>
-        <div className="input-group">
-          <textarea
-            className="form-control"
-            onChange={(e) => this.props.onLogInputChanged(e, this)}
-            value={this.props.logInput}
-            rows="4"
-            onKeyDown={(e) => this.handleKeyDown(e)}
-          ></textarea>
-          <div className="input-group-append">
-            <button className="btn btn-dark" onClick={() => this.props.onAddLog("fiction")}>
-              <i className="fas fa-pen-nib"></i>
-              &nbsp;Add Fiction
-              <div className="keys">
-                <span className="key">Shift</span> + <span className="key">Enter</span>
-              </div>
-            </button>
+        <div className="row">
+          <div className="col">
+            <textarea
+              className="form-control"
+              onChange={(e) => this.props.onLogInputChanged(e, this)}
+              value={this.props.logInput}
+              rows="3"
+              onKeyDown={(e) => this.handleKeyDown(e)}
+            ></textarea>
           </div>
-          <div className="input-group-append">
-            <button className="btn btn-secondary" onClick={() => this.props.onAddLog("meta")}>
-              <i className="fas fa-terminal"></i>
-              &nbsp;Add Meta
-              <div className="keys">
-                <span className="key">Ctrl</span> + <span className="key">Enter</span>
-              </div>
-            </button>
+        </div>
+        <div className="row">
+          <div className="col-12">
+            <div className="btn-group btn-group-justified">
+              <button className="btn  btn-block btn-dark" onClick={() => this.props.onAddLog("fiction")}>
+                <i className="fas fa-pen-nib"></i>
+                &nbsp;Add Fiction
+                <div className="keys text-center">
+                  <span className="key">Shift</span> + <span className="key">Enter</span>
+                </div>
+              </button>
+
+              <button className="btn btn-block btn-secondary" onClick={() => this.props.onAddLog("meta")}>
+                <i className="fas fa-terminal"></i>
+                &nbsp;Add Meta
+                <div className="keys text-center">
+                  <span className="key">Ctrl</span> + <span className="key">Enter</span>
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       </React.Fragment>

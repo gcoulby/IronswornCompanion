@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import ChallengeDie from "./challengeDie";
+import D100Roller from "./d100Roller";
 import DiceRoller from "./dice_roller";
 import RollButton from "./rollButton";
 class Roller extends Component {
@@ -7,6 +9,7 @@ class Roller extends Component {
     AddVal: 0,
     actionRoll: null,
     stats: ["Edge", "Heart", "Iron", "Shadow", "Wits", "Health", "Spirit", "Supply"],
+    d100: 75,
   };
 
   constructor() {
@@ -36,16 +39,17 @@ class Roller extends Component {
         {/* <div className="col-12">
           <div className="row modesto"> */}
         <div className="col-auto">
+          <D100Roller />
           {/* <p> */}
-          <i className="mt-5 game-icon game-icon-d10 fa-4x"></i>
+          {/* <i className="mt-5 game-icon game-icon-d10 fa-4x"></i> */}
           {/* </p> */}
         </div>
 
-        <div className="col-auto">
-          <label htmlFor="stat-select">Add Stat</label>
+        <div className="col-auto modesto">
+          <label htmlFor="stat-select ">Add Stat</label>
           <select
             id="stat-select"
-            className="form-control bg-dark text-light"
+            className={`form-control ${!this.props.light ? "bg-dark text-light" : ""}`}
             onChange={(e) => this.handleOnStatChange(e)}
             value={this.state.Stat}
           >
@@ -59,13 +63,13 @@ class Roller extends Component {
               : React.Fragment}
           </select>
         </div>
-        <div className="col-auto">
+        <div className="col-auto modesto">
           <label htmlFor="additional-add">Add</label>
           <input
             type="number"
             value={this.state.AddVal}
             onChange={(e) => this.handleOnAddValueChange(e)}
-            className="form-control bg-dark text-light"
+            className={`form-control ${!this.props.light ? "bg-dark text-light" : ""}`}
           />
         </div>
         <div className="col-auto">
@@ -74,11 +78,11 @@ class Roller extends Component {
           <RollButton
             selectedPlayer={this.props.selectedPlayer}
             buttonText="Roll"
-            additionalClass="btn-outline-light"
+            additionalClass={this.props.light ? "btn-dark" : "btn-outline-light"}
             burnMomentum={this.props.burnMomentum}
             postRollAction={() => {}}
             roll={this.state.actionRoll}
-            resultColor="btn-outline-light"
+            resultColor={this.props.light ? "btn-secondary" : "btn-outline-light"}
             onRoll={() => this.handleOnActionRollClicked()}
           />
         </div>

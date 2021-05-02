@@ -43,14 +43,15 @@ import Inventory from "./components/inventory";
 import OracleModal from "./components/oracleModal";
 import OracleRoller from "./components/oracleRoller";
 import Moves from "./components/moves";
+import Journal from "./components/journal";
+// import "react-sortable-tree/style.css";
 
-//TODO moves
 //TODO Region roll
 //TODO delve threats
 //TODO burn mom on delve - revert progress
 
 class App extends Component {
-  version = "0.65.0";
+  version = "0.89.0";
   state = {
     save: false,
     updateCore: false,
@@ -58,6 +59,7 @@ class App extends Component {
     newPlayer: {},
     world: {},
     locations: [],
+    customMap: { Url: "", Width: 594, Height: 792, DefaultZoom: 2 },
     foes: [],
     delveThemes: [],
     delveDomains: [],
@@ -66,6 +68,18 @@ class App extends Component {
     newFoe: {},
     activeFoes: [],
     assets: [],
+    journalData: {
+      nextId: 1,
+      files: [
+        {
+          id: 0,
+          title: "Default",
+          selected: true,
+          content: "",
+          children: [],
+        },
+      ],
+    },
     ranks: ["Troublesome", "Dangerous", "Formidable", "Extreme", "Epic"],
     assetBuilderSelectedAsset: new DefaultAsset(),
     delveCardEditorSelectedCard: new DefaultDelveCard("Theme"),
@@ -166,7 +180,8 @@ class App extends Component {
     if (state != undefined) {
       this.state = _.merge(this.state, state);
       this.state.lastSaveVersion = this.version;
-      this.state.oracles = new Oracles(state.oracles);
+      if (this.state.oracles.tables.find((o) => o.title === "Aspect") == undefined) this.state.oracles = new Oracles();
+      else this.state.oracles = new Oracles(state.oracles);
     } else {
       this.updateDataSworn();
       this.state.baseVersion = this.version;
@@ -175,6 +190,10 @@ class App extends Component {
 
   componentDidMount() {
     this.scrollBottom();
+
+    // let el = document.getElementsByClassName("navbar-toggler")[0];
+    // console.log(el);
+    // el.classList.remove("show");
     // if (this.state.updateCore) {
     //   this.updateCoreAssets();
     //   this.state.updateCore = false;
@@ -197,13 +216,51 @@ class App extends Component {
   };
 
   saveGameState(reload = false) {
+    // console.log("SAVE");
+    // let gs = localStorage.getItem("game_state");
+    // this.prevState = JSON.parse(gs);
+    // console.log(this.compare(this.state, this.prevState));
     const data = JSON.stringify(this.state);
     const dataSize = data.length;
     if (dataSize != this.state.dataSize) {
       this.setState({ dataSize });
     }
-
+    // this.queueStateTransfer();
     localStorage.setItem("game_state", data);
+  }
+
+  queueStateTransfer = (delay = 1000) => {
+    // this.setState({ lastGameStatePushComplete: false });
+
+    clearTimeout(this.lastGameStateChangeInterval);
+
+    this.lastGameStateChangeInterval = setTimeout(this.pushState, delay);
+  };
+
+  pushState = () => {
+    console.log("PUSH", this.state);
+    console.log(this.prevState);
+
+    // if (!this.state.lastJournalEditValue) return;
+    // const journalData = this.state.journalData;
+    // journalData.files = this.changeVariableInNestedFileList(
+    //   journalData.files,
+    //   this.state.lastJournalEditId,
+    //   "content",
+    //   this.state.lastJournalEditValue()
+    // );
+    // this.state.lastJournalEditSaveComplete = true;
+    // this.setState({ journalData });
+  };
+
+  compare(a, b) {
+    _.reduce(
+      a,
+      function (result, value, key) {
+        return _.isEqual(value, b[key]) ? result : result.concat(key);
+      },
+      []
+    );
   }
 
   getQuotaUsage = () => {
@@ -229,7 +286,6 @@ class App extends Component {
       this.state.moves &&
       this.state.moves.length > 0
     ) {
-      console.log("REFRESH");
       this.saveGameState();
       window.location.reload("/");
     }
@@ -313,7 +369,7 @@ class App extends Component {
             f.Type = c.Name;
             f.core = true;
             f.front = true;
-            f.Tags = [];
+            f.Tags = Tags.Foes.find((t) => t.id === f.id)?.Tags ?? [];
             f.complete = false;
             f.progress = 0;
             f.progressRoll = null;
@@ -341,15 +397,12 @@ class App extends Component {
           .then((r2) => r2.json())
           .then((d2) => {
             d2.map((f2) => {
-              if (f2.Type == "Ironlander") f2.Type = "Ironlanders";
+              f2.id = `core-foe-${f2.Type.toLowerCase()}-${f2.Name.toLowerCase().replace(" ", "-")}`;
               foeIcons.push(f2);
               return f2;
             });
-
-            let foesWithTags = _.merge(foes, Tags.Foes);
-            let foesWithTagsAndIcons = _.merge(foesWithTags, foeIcons);
-            // this.state.foes = _.merge(foes, Tags.Foes);
-            this.state.foes = foesWithTagsAndIcons;
+            let foesWithTagsAndIcons = _.merge(_.keyBy(foes, "id"), _.keyBy(foeIcons, "id"));
+            this.state.foes = _.values(foesWithTagsAndIcons);
             this.state.foeCardEditorSelectedFoe = new DefaultFoe();
             this.saveGameState();
             this.checkState();
@@ -426,22 +479,12 @@ class App extends Component {
           let type = c.Name.replace(" Moves", "").replace("Optional ", "");
           c.Moves.map((m) => {
             m.Type = type;
-            // if (m.Name === "Ask the Oracle") {
-            //   m.Text =
-            //     "When **you seek to resolve questions, discover details in the world, determine how other characters respond, or trigger encounters or events**, you may…\n\n  * Draw a conclusion: Decide the answer based on the most interesting and obvious result.\n  * Ask a yes/no question: Decide the odds of a ‘yes’, and roll on the table below to check the answer.\n  * Pick two: Envision two options. Rate one as ‘likely’, and roll on the table below to see if it is true. If not, it is the other.\n  * Spark an idea: Brainstorm or use a random prompt.\n\n```Odds          \tThe answer is ‘yes’ if you roll... \n\n|Odds|Result|\n|Almost Certain|11 or greater|\n|Likely|26 or greater|\n|50/50|51 or greater|\n|Unlikely|76 or greater|\n|Small chance|91 or greater|\n||*On a match, an extreme result or twist has occurred*|";
-            // }
             moves.push(m);
           });
         });
-        console.log(moves);
         this.state.moves = moves;
         this.saveGameState();
         this.checkState();
-        // fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_move_oracles.json")
-        //   .then((r2) => r2.json())
-        //   .then((d2) => {
-
-        //   });
       });
   }
 
@@ -532,7 +575,7 @@ class App extends Component {
     window.location.reload("/");
   };
 
-  componentDidUpdate = () => {
+  componentDidUpdate = (prevProps, prevState) => {
     this.saveGameState();
     this.scrollBottom();
     if (this.state.save) {
@@ -569,6 +612,46 @@ class App extends Component {
       return p;
     });
     this.setState({ players });
+  };
+
+  /*=================================*/
+  /*    Journal
+  /*=================================*/
+
+  handleFileContentsChange = (getValue, id, delay = 1000) => {
+    // this.setState({ lastJournalEditValue: getValue });
+    // this.setState({ lastJournalEditId: id });
+    this.setState({ lastJournalEditSaveComplete: false });
+    this.state.lastJournalEditValue = getValue;
+    this.state.lastJournalEditId = id;
+
+    this.state.lastJournalEditSaveComplete = false;
+    clearTimeout(this.state.lastJournalEditInterval);
+    // this.setState({ lastJournalEditInterval: setTimeout(this.saveChangesToEditor, 400) });
+    this.state.lastJournalEditInterval = setTimeout(this.saveChangesToEditor, 1000);
+  };
+
+  saveChangesToEditor = () => {
+    if (!this.state.lastJournalEditValue) return;
+    const journalData = this.state.journalData;
+    journalData.files = this.changeVariableInNestedFileList(
+      journalData.files,
+      this.state.lastJournalEditId,
+      "content",
+      this.state.lastJournalEditValue()
+    );
+    this.state.lastJournalEditSaveComplete = true;
+    this.setState({ journalData });
+  };
+
+  changeVariableInNestedFileList = (array, id, key, value) => {
+    return array.map((a) => {
+      if (a.id === id) {
+        a[key] = value;
+      }
+      a.children = this.changeVariableInNestedFileList(a.children, id, key, value);
+      return a;
+    });
   };
 
   /*=================================*/
@@ -701,18 +784,20 @@ class App extends Component {
   /*=================================*/
 
   scrollBottom() {
-    let items = document.getElementsByClassName("log-li");
-    let last = items[items.length - 1];
-    last?.scrollIntoView(false);
+    let log = document.getElementsByClassName("log-ul")[0];
+    if (log === undefined) return;
+    log.scrollTop = log.scrollHeight;
   }
 
   render() {
     return (
       <React.Fragment>
         <Navbar
-          selectedPlayer={this.getSelectedPlayer()}
           players={this.state.players}
           onPlayerSelect={this.handlePlayerSelect}
+          selectedPlayer={this.getSelectedPlayer()}
+          footerDice={this.state.footerDice}
+          burnMomentum={this.burnMomentum}
         />
         <div id="root-fragment" className="row">
           <div className="sidebar-wrapper print-hide">
@@ -733,9 +818,9 @@ class App extends Component {
                   <h1 id="site-subtitle">COMPANION</h1>
                   <h6 className="text-light">Version {this.version}</h6>
                   <h6 className="text-light">You've used {this.getQuotaUsage()} of the 5MB storage quota</h6>
-                  <div class="row">
-                    <div class="col-4">
-                      <div class="progress">
+                  <div className="row">
+                    <div className="col-12 col-lg-4">
+                      <div className="progress">
                         <div
                           className="progress-bar bg-dark"
                           role="progressbar"
@@ -744,6 +829,21 @@ class App extends Component {
                           aria-valuemin="0"
                           aria-valuemax="100"
                         ></div>
+                      </div>
+                      <div className="alert alert-secondary mt-4">
+                        <p>
+                          This app has been made publically available in an alpha state for testing purposes. As such,
+                          there are expected to be bugs in the application.
+                        </p>
+                        <p>Should you find a bug please report it here:</p>
+                        <a
+                          className="btn btn-dark"
+                          href="https://docs.google.com/spreadsheets/d/1GXvsk8f_Kx_lVNN78J1027Np0T7-pF1pLZsqnJA6-fE/edit#gid=1386834576"
+                          rel="noreferrer noopener"
+                          target="_blank"
+                        >
+                          <i className="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp; Report an Issue
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -761,6 +861,16 @@ class App extends Component {
                     onPlayerSelect={this.handlePlayerSelect}
                     oracles={this.state.oracles}
                     onComponentUpdate={this.componentDidUpdate}
+                    addLog={this.handleAddLog}
+                  />
+                </Route>
+                <Route path="/journal">
+                  <Journal
+                    journalData={this.state.journalData}
+                    onComponentUpdate={this.componentDidUpdate}
+                    handleFileContentsChange={this.handleFileContentsChange}
+                    saveChangesToEditor={this.saveChangesToEditor}
+                    lastJournalEditSaveComplete={this.state.lastJournalEditSaveComplete}
                   />
                 </Route>
                 <Route path="/log">
@@ -773,6 +883,7 @@ class App extends Component {
                     onAddLog={this.handleAddLog}
                     onLogItemDeleted={this.handleLogItemDeleted}
                     scrollBottom={this.scrollBottom}
+                    onComponentUpdate={this.componentDidUpdate}
                   />
                 </Route>
                 <Route path="/world">
@@ -797,6 +908,7 @@ class App extends Component {
                 <Route path="/locations">
                   <Locations
                     locations={this.state.locations}
+                    customMap={this.state.customMap}
                     oracles={this.state.oracles}
                     nextLocationId={this.state.nextLocationId}
                     npcs={this.state.npcs}
@@ -816,6 +928,7 @@ class App extends Component {
                     onProgressRollClicked={this.handleOnProgressRollClicked}
                     showGenerator={true}
                     selectedPlayer={this.getSelectedPlayer()}
+                    addLog={this.handleAddLog}
                   />
                 </Route>
                 <Route exact path="/delve">
@@ -853,6 +966,7 @@ class App extends Component {
                     onAddLog={this.handleAddBackground}
                     onLogItemDeleted={this.handleBackgroundItemDeleted}
                     scrollBottom={this.scrollBottom}
+                    onComponentUpdate={this.componentDidUpdate}
                   />
                 </Route>
                 <Route exact path="/stats">
@@ -861,6 +975,7 @@ class App extends Component {
                     selectedPlayer={this.getSelectedPlayer()}
                     updatePlayerSelect={this.handlePlayerSelect}
                     onComponentUpdate={this.componentDidUpdate}
+                    addLog={this.handleAddLog}
                   />
                 </Route>
                 <Route exact path="/vows">
@@ -909,6 +1024,7 @@ class App extends Component {
                     selectedPlayer={this.getSelectedPlayer()}
                     newItem={this.state.newItem}
                     onComponentUpdate={this.componentDidUpdate}
+                    addLog={this.handleAddLog}
                   />
                 </Route>
 
@@ -954,6 +1070,7 @@ class App extends Component {
                     players={this.state.players}
                     selectedPlayer={this.getSelectedPlayer()}
                     onComponentUpdate={this.componentDidUpdate}
+                    addLog={this.handleAddLog}
                   />
                 </Route>
 
@@ -966,12 +1083,18 @@ class App extends Component {
                     moves={this.state.moves}
                     onComponentUpdate={this.componentDidUpdate}
                     selectedPlayer={this.getSelectedPlayer}
+                    footerDice={this.state.footerDice}
+                    burnMomentum={this.burnMomentum}
                     // footerDice={this.props.footerDice}
                   />
                 </Route>
 
                 <Route exact path="/roll">
-                  <Dice />
+                  <Dice
+                    selectedPlayer={this.getSelectedPlayer()}
+                    footerDice={this.state.footerDice}
+                    burnMomentum={this.burnMomentum}
+                  />
                 </Route>
                 <Route exact path="/acknowledgements">
                   <Acknowledgements />
@@ -1045,12 +1168,12 @@ class App extends Component {
         </div>
         <Footer
           selectedPlayer={this.getSelectedPlayer()}
+          footerDice={this.state.footerDice}
+          burnMomentum={this.burnMomentum}
           npcs={this.state.npcs}
           foes={this.state.activeFoes.loneFoes}
-          footerDice={this.state.footerDice}
           oracles={this.state.oracles}
           moves={this.state.moves}
-          burnMomentum={this.burnMomentum}
           onComponentUpdate={this.componentDidUpdate}
         />
 

@@ -1,9 +1,23 @@
 import React, { Component } from "react";
 import ReactMarkdown from "react-markdown";
 import gclogo from "../img/gc_logoai.png";
+import gfm from "remark-gfm";
+import toc from "remark-toc";
+import source from "../README.md";
+
 class Documentation extends Component {
+  state = {
+    post: null,
+  };
   constructor() {
     super();
+  }
+
+  componentDidMount() {
+    fetch(source)
+      .then((res) => res.text())
+      .then((post) => this.setState((state) => ({ ...state, post })))
+      .catch((err) => console.error(err));
   }
 
   render() {
@@ -11,9 +25,13 @@ class Documentation extends Component {
   }
 
   getDocumentationContent() {
+    const { post } = this.state;
     return (
       <React.Fragment>
-        <h1 id="ironsworn-companion">Ironsworn Companion</h1>
+        <div className="documentation">
+          <ReactMarkdown source={post} plugins={[gfm, toc]} />
+        </div>
+        {/* <h1 id="ironsworn-companion">Ironsworn Companion</h1>
         <br />
         <br />
         <h2 id="what-is-ironsworn-">What is Ironsworn?</h2>
@@ -712,7 +730,7 @@ class Documentation extends Component {
           <a href="https://grahamcoulby.co.uk/">
             <img src="https://i.imgur.com/SIbTgYU.png" alt="img" />
           </a>
-        </p>
+        </p> */}
       </React.Fragment>
     );
   }

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UniqueKeyGenerator from "./uniqueKeyGenerator";
 import { HashRouter, Link } from "react-router-dom";
+import KoFi from "../scripts/KoFi";
+import Roller from "./roller";
 class NavMenu extends Component {
   state = {
     baseUrl: "/Ironsworn",
@@ -19,6 +21,12 @@ class NavMenu extends Component {
             url: "/characters",
             pageName: "Characters",
             icon: "fas fa-users",
+            active: false,
+          },
+          {
+            url: "/journal",
+            pageName: "Journal",
+            icon: "fas fa-pen-fancy",
             active: false,
           },
           {
@@ -231,17 +239,30 @@ class NavMenu extends Component {
   render() {
     return (
       <React.Fragment>
+        <div className="row d-xs-block d-lg-none">
+          <div className="col">
+            <Roller
+              light={true}
+              selectedPlayer={this.props.selectedPlayer}
+              footerDice={this.props.footerDice}
+              burnMomentum={this.props.burnMomentum}
+            />
+          </div>
+        </div>
         <ul>
           <HashRouter basename="/">
             {this.state.sections.map((section) => {
               return (
                 <li key={UniqueKeyGenerator.generate("section")} className="sidebarGroup">
                   <h6 className="menu-title">{section.title}</h6>
-                  <ul class="navbar-nav mr-auto">
+                  <ul className="navbar-nav mr-auto">
                     {section.pages.map((page) => (
                       <li key={UniqueKeyGenerator.generate("page")} className={`${page.active ? "active" : ""}`}>
                         {page.title}
-                        <Link to={page.url}>
+                        <Link
+                          to={page.url}
+                          onClick={() => (this.props.onMenuItemClick ? this.props.onMenuItemClick() : () => {})}
+                        >
                           <i className={`menu-icon ${page.icon}`} aria-hidden="true"></i>
                           &nbsp;{page.pageName}
                         </Link>
@@ -265,6 +286,9 @@ class NavMenu extends Component {
             })}
           </HashRouter>
           <li className="credit">
+            <div className="text-left mb-3">
+              <KoFi color="#000" id="X8X64ELNE" label="Coffee fuels code" />
+            </div>
             This companion is an unofficial product building to support the table top game Ironsworn, developed by Shawn
             Tomkin
             <a
@@ -286,7 +310,6 @@ class NavMenu extends Component {
               <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg" />
             </a>
           </li>
-          ;
         </ul>
       </React.Fragment>
     );

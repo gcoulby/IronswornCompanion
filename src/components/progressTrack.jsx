@@ -30,7 +30,7 @@ class ProgressTrack extends Component {
             <React.Fragment></React.Fragment>
           ) : (
             <React.Fragment>
-              <li>
+              <li className="progressBtn">
                 <button
                   className="btn btn-secondary progressTrackBtn"
                   onClick={() => this.props.onProgressionChange(false)}
@@ -38,7 +38,7 @@ class ProgressTrack extends Component {
                   <i className="fa fa-minus" aria-hidden="true"></i>
                 </button>
               </li>
-              <li>
+              <li className="progressBtn">
                 <button className="btn btn-dark progressTrackBtn" onClick={() => this.props.onProgressionChange(true)}>
                   <i className="fa fa-plus" aria-hidden="true"></i>
                 </button>
