@@ -8,6 +8,6 @@ call git commit -m %message%
 
 call git push
 
-call npm run start
+call npm run deploy
 
 @echo on

@@ -133,7 +133,12 @@ class Navbar extends Component {
             className={`collapse navbar-collapse ${this.state.showColapsedMenu ? "show" : ""}`}
             id="navbarsExample01"
           >
-            <NavMenu onMenuItemClick={this.handleMenuToggleButton} />
+            <NavMenu
+              onMenuItemClick={this.handleMenuToggleButton}
+              selectedPlayer={this.props.selectedPlayer}
+              footerDice={this.props.footerDice}
+              burnMomentum={this.props.burnMomentum}
+            />
           </div>
         </nav>
         <div className="nav-post print-hide"></div>

@@ -51,7 +51,7 @@ import Journal from "./components/journal";
 //TODO burn mom on delve - revert progress
 
 class App extends Component {
-  version = "0.87.0";
+  version = "0.88.0";
   state = {
     save: false,
     updateCore: false,
@@ -793,9 +793,9 @@ class App extends Component {
     return (
       <React.Fragment>
         <Navbar
-          selectedPlayer={this.getSelectedPlayer()}
           players={this.state.players}
           onPlayerSelect={this.handlePlayerSelect}
+          selectedPlayer={this.getSelectedPlayer()}
           footerDice={this.state.footerDice}
           burnMomentum={this.burnMomentum}
         />
