@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import ChallengeDie from "./challengeDie";
+import D100Roller from "./d100Roller";
 import DiceRoller from "./dice_roller";
 import RollButton from "./rollButton";
 class Roller extends Component {
@@ -7,6 +9,7 @@ class Roller extends Component {
     AddVal: 0,
     actionRoll: null,
     stats: ["Edge", "Heart", "Iron", "Shadow", "Wits", "Health", "Spirit", "Supply"],
+    d100: 75,
   };
 
   constructor() {
@@ -36,8 +39,9 @@ class Roller extends Component {
         {/* <div className="col-12">
           <div className="row modesto"> */}
         <div className="col-auto">
+          <D100Roller />
           {/* <p> */}
-          <i className="mt-5 game-icon game-icon-d10 fa-4x"></i>
+          {/* <i className="mt-5 game-icon game-icon-d10 fa-4x"></i> */}
           {/* </p> */}
         </div>
 

@@ -33,9 +33,10 @@
 
   .dice-value {
     position: absolute;
-    color: black;
-    left: 25px;
-    top: 12px;
+    color: $dark;
+    // left: 24px;
+    width: 100%;
+    top: 14px;
   }
 }
 
@@ -71,4 +72,10 @@
     margin-left: 0.5em;
     font-size: 15pt;
   }
+}
+
+.dice-value-d100 {
+  font-size: 12px;
+  // left: 20px !important;
+  top: 16px !important;
 }

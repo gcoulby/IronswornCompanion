@@ -70,17 +70,33 @@ class Moves extends Component {
                 </table>
               </div>
               <div className="col-12 col-lg-8">
-                <div id="move-preview" className="move-display py-3 px-2">
-                  {this.state.selectedMove ? (
-                    <React.Fragment>
-                      <h6>{this.state.selectedMove.Name}</h6>
-                      <ReactMarkdown id="" plugins={[gfm]}>
-                        {this.state.selectedMove.Text}
-                      </ReactMarkdown>
-                    </React.Fragment>
-                  ) : (
-                    React.Fragment
-                  )}
+                <hr className="d-xs-block d-lg-none" />
+                <div className="row">
+                  <div className="col">
+                    <div id="move-preview" className="move-display py-3 px-2">
+                      {this.state.selectedMove ? (
+                        <React.Fragment>
+                          <h6>{this.state.selectedMove.Name}</h6>
+                          <ReactMarkdown id="" plugins={[gfm]}>
+                            {this.state.selectedMove.Text}
+                          </ReactMarkdown>
+                        </React.Fragment>
+                      ) : (
+                        React.Fragment
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <hr className="d-xs-block d-lg-none" />
+                <div className="row mb-5 d-xs-block d-lg-none">
+                  <div className="col mb-4">
+                    <Roller
+                      light={true}
+                      selectedPlayer={this.props.selectedPlayer}
+                      footerDice={this.props.footerDice}
+                      burnMomentum={this.props.burnMomentum}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

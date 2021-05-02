@@ -51,7 +51,7 @@ import Journal from "./components/journal";
 //TODO burn mom on delve - revert progress
 
 class App extends Component {
-  version = "0.86.0";
+  version = "0.87.0";
   state = {
     save: false,
     updateCore: false,
@@ -1081,6 +1081,8 @@ class App extends Component {
                     moves={this.state.moves}
                     onComponentUpdate={this.componentDidUpdate}
                     selectedPlayer={this.getSelectedPlayer}
+                    footerDice={this.state.footerDice}
+                    burnMomentum={this.burnMomentum}
                     // footerDice={this.props.footerDice}
                   />
                 </Route>

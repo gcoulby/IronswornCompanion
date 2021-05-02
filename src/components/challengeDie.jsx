@@ -6,7 +6,7 @@ class ChallengeDie extends Component {
     return (
       <React.Fragment>
         <div className="challenge-dice">
-          <span className="dice-value">{this.props.value}</span>
+          <span className={`dice-value ${this.props.d100 ? "dice-value-d100" : ""}`}>{this.props.value}</span>
           <img width="60" src={challengeDie} />
         </div>
       </React.Fragment>
