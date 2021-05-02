@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UniqueKeyGenerator from "./uniqueKeyGenerator";
 import { HashRouter, Link } from "react-router-dom";
 import KoFi from "../scripts/KoFi";
+import Roller from "./roller";
 class NavMenu extends Component {
   state = {
     baseUrl: "/Ironsworn",
@@ -238,6 +239,16 @@ class NavMenu extends Component {
   render() {
     return (
       <React.Fragment>
+        <div className="row d-xs-block d-lg-none">
+          <div className="col">
+            <Roller
+              light={true}
+              selectedPlayer={this.props.selectedPlayer}
+              footerDice={this.props.footerDice}
+              burnMomentum={this.props.burnMomentum}
+            />
+          </div>
+        </div>
         <ul>
           <HashRouter basename="/">
             {this.state.sections.map((section) => {

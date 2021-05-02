@@ -796,6 +796,8 @@ class App extends Component {
           selectedPlayer={this.getSelectedPlayer()}
           players={this.state.players}
           onPlayerSelect={this.handlePlayerSelect}
+          footerDice={this.state.footerDice}
+          burnMomentum={this.burnMomentum}
         />
         <div id="root-fragment" className="row">
           <div className="sidebar-wrapper print-hide">
