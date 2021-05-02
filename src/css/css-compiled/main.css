@@ -19429,6 +19429,10 @@ input.autocomplete-input {
   top: 16px !important;
 }
 
+.d100-roller {
+  padding: 0 !important;
+}
+
 .denizen-matrix {
   padding: 0 1em;
 }
