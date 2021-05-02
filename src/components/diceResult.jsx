@@ -16,7 +16,7 @@ class DiceResult extends Component {
       if (this.props.selectedPlayer) {
         let momentum = this.props.selectedPlayer.stats.find((p) => p.stat == "Momentum").value;
         if (
-          momentum > this.props.selectedPlayer.resetMomentum &&
+          momentum >= this.props.selectedPlayer.resetMomentum &&
           (momentum > this.props.diceResult.Challenge1Value || momentum > this.props.diceResult.Challenge2Value)
         )
           return true;
