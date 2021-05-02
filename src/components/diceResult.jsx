@@ -35,7 +35,6 @@ class DiceResult extends Component {
   };
 
   burnClick = (touch = false) => {
-    console.log("BURN");
     if (!this.canBurn() || touch) return;
     let momentum = this.props.selectedPlayer.stats.find((p) => p.stat == "Momentum").value;
     const diceResult = this.props.diceResult;

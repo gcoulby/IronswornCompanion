@@ -421,17 +421,13 @@ class DelveThemeDomainEditor extends Component {
                             <td width="80">
                               {f.Chance == 99 ? "99" : f.Chance == 100 ? "00" : `${f.Min} - ${f.Chance}`}
                             </td>
-                            {this.props.selectedDelveCard.Type === "Domain" && f.Chance >= 98 ? (
-                              <td>{f.Description}</td>
-                            ) : (
-                              <ContentEditable
-                                innerRef={this.contentEditable}
-                                html={f.Description}
-                                disabled={false}
-                                onChange={(e) => this.handleRowChange(e, "Features", i)}
-                                tagName="td"
-                              />
-                            )}
+                            <ContentEditable
+                              innerRef={this.contentEditable}
+                              html={f.Description}
+                              disabled={false}
+                              onChange={(e) => this.handleRowChange(e, "Features", i)}
+                              tagName="td"
+                            />
                           </tr>
                         </React.Fragment>
                       );
