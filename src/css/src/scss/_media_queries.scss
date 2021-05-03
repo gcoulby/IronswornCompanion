@@ -1,10 +1,11 @@
-$small: 1250px;
+$small: 1320px;
 
 /*============================================================*/
 /*          Header
 /*============================================================*/
 @media screen and (max-width: $small) {
-  .mobile-menu {
+  .mobile-menu,
+  .menu-roller {
     display: block !important;
   }
   .desktop-menu {
@@ -40,9 +41,14 @@ $small: 1250px;
 /*============================================================*/
 /*          Footer
 /*============================================================*/
-@media screen and (max-width: 1300px) {
-  .footer-pre,
+@media screen and (max-width: $small) {
   .stat-button {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .footer-pre {
     display: none;
   }
 }

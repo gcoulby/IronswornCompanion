@@ -239,8 +239,8 @@ class NavMenu extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="row d-xs-block d-lg-none">
-          <div className="col">
+        <div className="row  menu-roller">
+          <div className="col-12 col-lg-4">
             <Roller
               light={true}
               selectedPlayer={this.props.selectedPlayer}

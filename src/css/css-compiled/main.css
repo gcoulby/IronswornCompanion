@@ -16194,9 +16194,14 @@ nav ul {
   margin: 0 0 -1.5em 0;
 }
 
+.menu-roller {
+  display: none !important;
+}
+
 @media only screen and (max-width: 1400px) {
   #playerName,
-  .nav-post {
+  .nav-post,
+  .footer-pre {
     display: none;
   }
 }
@@ -16433,7 +16438,7 @@ nav a:hover {
   display: block;
   background-size: contain;
   position: fixed;
-  bottom: 6.4em;
+  bottom: 6.2em;
   width: 100vw;
   z-index: 1000;
 }
@@ -19019,8 +19024,9 @@ input.autocomplete-input {
 /*============================================================*/
 /*          Header
 /*============================================================*/
-@media screen and (max-width: 1250px) {
-  .mobile-menu {
+@media screen and (max-width: 1320px) {
+  .mobile-menu,
+  .menu-roller {
     display: block !important;
   }
   .desktop-menu {
@@ -19044,7 +19050,7 @@ input.autocomplete-input {
   }
 }
 
-@media screen and (min-width: 1250px) {
+@media screen and (min-width: 1320px) {
   .mobile-menu {
     display: none !important;
   }
@@ -19058,9 +19064,14 @@ input.autocomplete-input {
 /*============================================================*/
 /*          Footer
 /*============================================================*/
-@media screen and (max-width: 1300px) {
-  .footer-pre,
+@media screen and (max-width: 1320px) {
   .stat-button {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .footer-pre {
     display: none;
   }
 }
@@ -19068,7 +19079,7 @@ input.autocomplete-input {
 /*============================================================*/
 /*          All Pages
 /*============================================================*/
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1320px) {
   .stat-title {
     border-bottom: 2px solid black;
   }
@@ -19099,7 +19110,7 @@ input.autocomplete-input {
   }
 }
 
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1320px) {
   .keys {
     font-size: 7px;
   }
@@ -19108,7 +19119,7 @@ input.autocomplete-input {
 /*============================================================*/
 /*          Worlds
 /*============================================================*/
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1320px) {
   .nav-tabs .nav-link {
     width: 50%;
     text-align: center;
@@ -19121,7 +19132,7 @@ input.autocomplete-input {
 /*============================================================*/
 /*          Progress
 /*============================================================*/
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1320px) {
   .progressTrackBox {
     border: 1px solid #6c757d;
   }
@@ -19321,7 +19332,7 @@ input.autocomplete-input {
 /*============================================================*/
 /*          FOES
 /*============================================================*/
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1320px) {
   .foe-card table {
     position: inherit;
     width: 100%;
@@ -19331,7 +19342,7 @@ input.autocomplete-input {
 /*============================================================*/
 /*          Rollers
 /*============================================================*/
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1320px) {
   .oracle-results {
     margin-top: 2em;
   }
@@ -19341,7 +19352,7 @@ input.autocomplete-input {
   }
 }
 
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1320px) {
   .slider-tick::before,
   .slider-tick::after {
     display: none;
