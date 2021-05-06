@@ -1,10 +1,8 @@
 @font-face {
   font-family: "Modesto";
   src: url("/src/fonts/modesto.eot");
-  src: url("/src/fonts/modesto_ie.eot") format("embedded-opentype"),
-    url("/src/fonts/modesto.woff2") format("woff2"),
-    url("/src/fonts/modesto.woff") format("woff"),
-    url("/src/fonts/modesto.ttf") format("truetype"),
+  src: url("/src/fonts/modesto_ie.eot") format("embedded-opentype"), url("/src/fonts/modesto.woff2") format("woff2"),
+    url("/src/fonts/modesto.woff") format("woff"), url("/src/fonts/modesto.ttf") format("truetype"),
     url("/src/fonts/modesto.svg") format("svg");
 }
 
@@ -28,3 +26,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Carrois+Gothic&family=Forum&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Sue+Ellen+Francisco&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");

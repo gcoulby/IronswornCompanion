@@ -158,7 +158,7 @@ class FoeCard extends Component {
               <div className="row">
                 <div className={`col-12 col-lg${!this.props.static ? "-8" : ""}`}>
                   <RollButton
-                    buttonText="Defeat"
+                    buttonText="End the Fight"
                     disabled={this.props.static || this.props.foe.complete}
                     roll={this.props.foe.progressRoll}
                     onRoll={() => this.props.onProgressRollClicked(this.props.foe.id)}

@@ -68,6 +68,7 @@ class Progression extends Component {
       const newProgressions = this.props.newProgressions.map((np) => {
         if (np.type == this.state.type) {
           np.title = "";
+          np.details = "";
           np.rank = 0;
           np.nextId++;
         }

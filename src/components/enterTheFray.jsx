@@ -369,7 +369,7 @@ class EnterTheFray extends Component {
             </button>
           </div>
         </div> */}
-        <TitleBlock title="Active Foes" />
+        <TitleBlock title="Battle" />
         <div className="row">
           {this.props.activeFoes
             .filter((f) => !f.complete)

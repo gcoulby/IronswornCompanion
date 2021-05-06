@@ -3,6 +3,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Carrois+Gothic&family=Forum&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Sue+Ellen+Francisco&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
 @font-face {
   font-family: "Modesto";
   src: url("/src/fonts/modesto.eot");
@@ -16483,6 +16484,13 @@ h6 {
   width: 100%;
 }
 
+#page-container-logged-out {
+  padding: 3em 2em;
+  margin-top: 4em;
+  margin-bottom: 8em;
+  width: 100%;
+}
+
 #root-fragment {
   margin: 0;
 }
@@ -16617,6 +16625,18 @@ input[type="file"] {
 .btn-sm {
   line-height: 0.5 !important;
   padding: 0.6em 0.6em !important;
+}
+
+.btn-google {
+  background: white !important;
+  font-family: "Roboto", sans-serif;
+  border: 1px solid #6c757d !important;
+  -webkit-box-shadow: 1px 1px 1px gray;
+          box-shadow: 1px 1px 1px gray;
+}
+
+.btn-google:hover {
+  background: #fcfcfc !important;
 }
 
 .roll-icon {
