@@ -1,22 +1,23 @@
 {
   "files": {
-    "main.css": "/IronswornCompanion/static/css/main.a2ac7036.chunk.css",
-    "main.js": "/IronswornCompanion/static/js/main.83ece73b.chunk.js",
-    "main.js.map": "/IronswornCompanion/static/js/main.83ece73b.chunk.js.map",
-    "runtime-main.js": "/IronswornCompanion/static/js/runtime-main.46ab18ac.js",
-    "runtime-main.js.map": "/IronswornCompanion/static/js/runtime-main.46ab18ac.js.map",
+    "main.css": "/IronswornCompanion/static/css/main.ac6facd9.chunk.css",
+    "main.js": "/IronswornCompanion/static/js/main.947403c5.chunk.js",
+    "main.js.map": "/IronswornCompanion/static/js/main.947403c5.chunk.js.map",
+    "runtime-main.js": "/IronswornCompanion/static/js/runtime-main.1ab20149.js",
+    "runtime-main.js.map": "/IronswornCompanion/static/js/runtime-main.1ab20149.js.map",
     "static/css/2.d424be97.chunk.css": "/IronswornCompanion/static/css/2.d424be97.chunk.css",
-    "static/js/2.6a212a0c.chunk.js": "/IronswornCompanion/static/js/2.6a212a0c.chunk.js",
-    "static/js/2.6a212a0c.chunk.js.map": "/IronswornCompanion/static/js/2.6a212a0c.chunk.js.map",
-    "static/js/3.faf29e00.chunk.js": "/IronswornCompanion/static/js/3.faf29e00.chunk.js",
-    "static/js/3.faf29e00.chunk.js.map": "/IronswornCompanion/static/js/3.faf29e00.chunk.js.map",
+    "static/js/2.af40377a.chunk.js": "/IronswornCompanion/static/js/2.af40377a.chunk.js",
+    "static/js/2.af40377a.chunk.js.map": "/IronswornCompanion/static/js/2.af40377a.chunk.js.map",
+    "static/js/3.703eb47d.chunk.js": "/IronswornCompanion/static/js/3.703eb47d.chunk.js",
+    "static/js/3.703eb47d.chunk.js.map": "/IronswornCompanion/static/js/3.703eb47d.chunk.js.map",
     "index.html": "/IronswornCompanion/index.html",
     "static/css/2.d424be97.chunk.css.map": "/IronswornCompanion/static/css/2.d424be97.chunk.css.map",
-    "static/css/main.a2ac7036.chunk.css.map": "/IronswornCompanion/static/css/main.a2ac7036.chunk.css.map",
-    "static/js/2.6a212a0c.chunk.js.LICENSE.txt": "/IronswornCompanion/static/js/2.6a212a0c.chunk.js.LICENSE.txt",
+    "static/css/main.ac6facd9.chunk.css.map": "/IronswornCompanion/static/css/main.ac6facd9.chunk.css.map",
+    "static/js/2.af40377a.chunk.js.LICENSE.txt": "/IronswornCompanion/static/js/2.af40377a.chunk.js.LICENSE.txt",
     "static/media/main.css": "/IronswornCompanion/static/media/viking-with-axes-hands-rocky-mountains.5f039fef.jpg",
     "static/media/DeepWilds.3da7ab46.svg": "/IronswornCompanion/static/media/DeepWilds.3da7ab46.svg",
     "static/media/README.34913063.md": "/IronswornCompanion/static/media/README.34913063.md",
+    "static/media/btn_google_light_normal_ios.022b0104.svg": "/IronswornCompanion/static/media/btn_google_light_normal_ios.022b0104.svg",
     "static/media/challenge_die.61eadeb1.svg": "/IronswornCompanion/static/media/challenge_die.61eadeb1.svg",
     "static/media/d10.01d91c70.svg": "/IronswornCompanion/static/media/d10.01d91c70.svg",
     "static/media/d12.6f2618a7.svg": "/IronswornCompanion/static/media/d12.6f2618a7.svg",
@@ -29,10 +30,10 @@
     "static/media/map.b478c343.jpg": "/IronswornCompanion/static/media/map.b478c343.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.46ab18ac.js",
+    "static/js/runtime-main.1ab20149.js",
     "static/css/2.d424be97.chunk.css",
-    "static/js/2.6a212a0c.chunk.js",
-    "static/css/main.a2ac7036.chunk.css",
-    "static/js/main.83ece73b.chunk.js"
+    "static/js/2.af40377a.chunk.js",
+    "static/css/main.ac6facd9.chunk.css",
+    "static/js/main.947403c5.chunk.js"
   ]
 }
