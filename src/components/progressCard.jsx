@@ -73,12 +73,68 @@ class ProgressCard extends Component {
                   ></textarea>
                 </div>
               </div>
+              {this.props.showThreats ? (
+                <React.Fragment>
+                  <div className="row mt-4">
+                    <div className="col">
+                      <span className="modesto mt-2">Threat:</span>
+                      <div className="input-group mb-2">
+                        <div className="input-group-prepend">
+                          <button
+                            disabled={this.props.progression.complete}
+                            className="btn btn-secondary"
+                            onClick={
+                              this.props.onThreatChange
+                                ? () => this.props.onThreatChange(this.props.id, false)
+                                : () => {}
+                            }
+                          >
+                            <i class="fa fa-minus" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                        <input
+                          disabled={this.props.progression.complete}
+                          type="text"
+                          className="form-control"
+                          placeholder="Threat"
+                          aria-label="Name"
+                          aria-describedby="basic-addon2"
+                          value={this.props.progression.threatText ? this.props.progression.threatText : ""}
+                          onChange={(e) => this.props.onProgressionPropertyChange(e, this.props.id, "threatText")}
+                        />
+                        <div className="input-group-append">
+                          <button
+                            disabled={this.props.progression.complete}
+                            className="btn btn-dark"
+                            onClick={
+                              this.props.onThreatChange
+                                ? () => this.props.onThreatChange(this.props.id, true)
+                                : () => {}
+                            }
+                          >
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </React.Fragment>
+              ) : (
+                React.Fragment
+              )}
               <ProgressTrack
                 key={this.props.id}
                 complete={this.props.progression.complete}
                 progress={this.props.progress}
                 onProgressionChange={(increment) =>
                   this.props.onProgressionChange(this.props.id, this.props.rank, increment)
+                }
+                onThreatChange={this.props.onThreatChange ? () => this.props.onThreatChange(this.props.id) : null}
+                showThreats={this.props.showThreats}
+                threatVal={
+                  this.props.showThreats && this.props.progression.threatVal !== undefined
+                    ? this.props.progression.threatVal
+                    : null
                 }
                 // onProgressionRegress={this.props.onProgressionRegress}
               />

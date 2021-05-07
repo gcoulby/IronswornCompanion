@@ -59,6 +59,8 @@ class Progression extends Component {
             rank: this.getProgressionByType(this.state.type).rank,
             complete: false,
             progressRoll: null,
+            // threatText: "",
+            // threatVal: 0,
           });
           this.logProgressionStart();
         }
@@ -143,6 +145,29 @@ class Progression extends Component {
       "event",
       `${this.props.selectedPlayer.name} ${logText}: ${this.getProgressionByType(this.state.type).title}`
     );
+  };
+
+  handleOnThreatChanged = (id, inc) => {
+    console.log("THREAT", id, inc);
+    let add = inc ? 1 : -1;
+
+    const players = this.props.players.map((p) => {
+      if (p.selected) {
+        p.progressions
+          .filter((p1) => p1.type === this.state.type)
+          .map((p2) => {
+            if (p2.id == id) {
+              console.log(p2);
+
+              p2.threatVal = p2.threatVal == undefined ? 1 : p2.threatVal + add;
+              p2.threatVal = p2.threatVal > 10 ? 10 : p2.threatVal;
+              p2.threatVal = p2.threatVal < 0 ? 0 : p2.threatVal;
+            }
+          });
+      }
+      return p;
+    });
+    this.setState({ players });
   };
 
   handleOnProgressionChanged = (id, rank, increment) => {
@@ -336,6 +361,8 @@ class Progression extends Component {
                 onProgressionPropertyChange={this.handleOnProgressionPropertyChanged}
                 onProgressRollClicked={this.handleOnProgressRollClicked}
                 onProgressCancel={this.handleProgressionDelete}
+                onThreatChange={this.state.type === "vow" ? this.handleOnThreatChanged : null}
+                showThreats={this.state.type === "vow"}
               />
             ))}
         </div>
@@ -359,6 +386,8 @@ class Progression extends Component {
                 onProgressionPropertyChange={this.handleOnProgressionPropertyChanged}
                 onProgressRollClicked={this.handleOnProgressRollClicked}
                 onProgressCancel={this.handleProgressionDelete}
+                onThreatChange={this.state.type === "vow" ? this.handleOnThreatChanged : null}
+                showThreats={this.state.type === "vow"}
               />
             ))}
         </div>

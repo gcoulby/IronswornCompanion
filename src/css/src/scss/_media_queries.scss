@@ -1,3 +1,4 @@
+$xs: 500px;
 $small: 1320px;
 
 /*============================================================*/
@@ -115,18 +116,42 @@ $small: 1320px;
 /*============================================================*/
 /*          Progress
 /*============================================================*/
-@media screen and (max-width: $small) {
+@media screen and (max-width: $xs) {
   .progressTrackBox {
     border: 1px solid #6c757d;
   }
 
   .progressTrackBox {
-    min-height: 1.2em;
-    min-width: 1.2em;
+    min-height: 1.4em;
+    min-width: 1.4em;
+  }
+
+  .btn.progressTrackBtn {
+    line-height: 1.2em;
+  }
+
+  .progressTrackBtn {
+    margin-top: -0.2em;
+    height: 1.5em;
+    width: 1.5em;
+    i {
+      font-size: 9pt !important;
+    }
+  }
+
+  ul.progressTrack {
+    margin-bottom: 0.5rem;
   }
 
   .progressTrack {
     text-align: center;
+  }
+
+  .threat-box {
+    width: 0.4em !important;
+    height: 0.4em !important;
+    right: 0em;
+    top: 0em;
   }
   // .progressBtn {
   //   background: red;
