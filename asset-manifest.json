@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/IronswornCompanion/static/css/main.b7895917.chunk.css",
-    "main.js": "/IronswornCompanion/static/js/main.f6e2bc75.chunk.js",
-    "main.js.map": "/IronswornCompanion/static/js/main.f6e2bc75.chunk.js.map",
+    "main.js": "/IronswornCompanion/static/js/main.f28383a4.chunk.js",
+    "main.js.map": "/IronswornCompanion/static/js/main.f28383a4.chunk.js.map",
     "runtime-main.js": "/IronswornCompanion/static/js/runtime-main.1ab20149.js",
     "runtime-main.js.map": "/IronswornCompanion/static/js/runtime-main.1ab20149.js.map",
     "static/css/2.d424be97.chunk.css": "/IronswornCompanion/static/css/2.d424be97.chunk.css",
-    "static/js/2.5bc04158.chunk.js": "/IronswornCompanion/static/js/2.5bc04158.chunk.js",
-    "static/js/2.5bc04158.chunk.js.map": "/IronswornCompanion/static/js/2.5bc04158.chunk.js.map",
+    "static/js/2.18f407f4.chunk.js": "/IronswornCompanion/static/js/2.18f407f4.chunk.js",
+    "static/js/2.18f407f4.chunk.js.map": "/IronswornCompanion/static/js/2.18f407f4.chunk.js.map",
     "static/js/3.703eb47d.chunk.js": "/IronswornCompanion/static/js/3.703eb47d.chunk.js",
     "static/js/3.703eb47d.chunk.js.map": "/IronswornCompanion/static/js/3.703eb47d.chunk.js.map",
     "index.html": "/IronswornCompanion/index.html",
     "static/css/2.d424be97.chunk.css.map": "/IronswornCompanion/static/css/2.d424be97.chunk.css.map",
     "static/css/main.b7895917.chunk.css.map": "/IronswornCompanion/static/css/main.b7895917.chunk.css.map",
-    "static/js/2.5bc04158.chunk.js.LICENSE.txt": "/IronswornCompanion/static/js/2.5bc04158.chunk.js.LICENSE.txt",
+    "static/js/2.18f407f4.chunk.js.LICENSE.txt": "/IronswornCompanion/static/js/2.18f407f4.chunk.js.LICENSE.txt",
     "static/media/main.css": "/IronswornCompanion/static/media/viking-with-axes-hands-rocky-mountains.5f039fef.jpg",
     "static/media/DeepWilds.3da7ab46.svg": "/IronswornCompanion/static/media/DeepWilds.3da7ab46.svg",
     "static/media/README.34913063.md": "/IronswornCompanion/static/media/README.34913063.md",
@@ -27,13 +27,14 @@
     "static/media/d6.67daa769.svg": "/IronswornCompanion/static/media/d6.67daa769.svg",
     "static/media/d8.496c6879.svg": "/IronswornCompanion/static/media/d8.496c6879.svg",
     "static/media/font-awesome.min.css": "/IronswornCompanion/static/media/fontawesome-webfont.f691f37e.woff",
+    "static/media/gc_logoai.dc4b9f0b.svg": "/IronswornCompanion/static/media/gc_logoai.dc4b9f0b.svg",
     "static/media/map.b478c343.jpg": "/IronswornCompanion/static/media/map.b478c343.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.1ab20149.js",
     "static/css/2.d424be97.chunk.css",
-    "static/js/2.5bc04158.chunk.js",
+    "static/js/2.18f407f4.chunk.js",
     "static/css/main.b7895917.chunk.css",
-    "static/js/main.f6e2bc75.chunk.js"
+    "static/js/main.f28383a4.chunk.js"
   ]
 }
