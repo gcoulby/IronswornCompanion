@@ -8,7 +8,7 @@ export default function KoFi(props) {
     <div class="btn-container">
       <a
         title={label}
-        class="kofi-button btn btn-outline-light"
+        class={`kofi-button btn btn-${props.buttonColor ? props.buttonColor : "outline-light"}`}
         // style={{ backgroundColor: color }}
         href={"https://ko-fi.com/" + id}
         target="_blank"

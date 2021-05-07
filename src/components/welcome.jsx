@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import gclogo from "../img/gc_logoai.svg";
+import KoFi from "../scripts/KoFi";
 class Welcome extends Component {
   state = {};
 
@@ -40,6 +42,23 @@ class Welcome extends Component {
                 >
                   <i className="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp; Report an Issue
                 </a>
+              </div>
+              <div className="alert alert-secondary">
+                <p>This app was created by Graham Coulby</p>
+                <div className="row">
+                  <div className="col">
+                    <a href="https://grahamcoulby.co.uk/" target="_blank" rel="noreferrer noopener">
+                      <img src={gclogo} alt="img" width="100px" />
+                    </a>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col">
+                    <div className="text-left my-3">
+                      <KoFi buttonColor="dark" color="#000" id="X8X64ELNE" label="Help support this app" />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
