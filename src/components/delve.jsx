@@ -255,7 +255,7 @@ class Delve extends Component {
     const delves = this.props.delves;
     let selectedDelve = this.getSelectedDelve();
     let rn = this.diceRoller.roll([100], true, false)[0].value;
-    if (!changeThemeOrDomain) rn = 100;
+    // if (!changeThemeOrDomain) rn = 100;
     let themeText = selectedDelve.theme;
     let domainText = selectedDelve.domain;
     switch (rn) {
