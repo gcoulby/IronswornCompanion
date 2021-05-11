@@ -221,9 +221,7 @@ The journal screen allows you to take more comprehensive notes than the log allo
 
 ![https://i.imgur.com/5xnOOWo.png](https://i.imgur.com/5xnOOWo.png)
 
-
-
-The editor supports Grammarly, and also supports a wide range of style options that can be entered in various ways. 
+The editor supports Grammarly, and also supports a wide range of style options that can be entered in various ways.
 
 #### Adding lines using + or slash commands
 
@@ -233,35 +231,33 @@ The editor supports inline additions of popular style items. New lines show a pl
 
 ![https://i.imgur.com/6I4rHLa.png](https://i.imgur.com/6I4rHLa.png)
 
-This can be used to add styled items. 
+This can be used to add styled items.
 
 You can also use markdown syntax here are some examples of the key commands available:
 
-| Action    | Command                                                      |
-| --------- | ------------------------------------------------------------ |
-| Heading 1 | # Heading                                                    |
-| Heading 2 | ## Heading 2                                                 |
-| Heading 3 | ### Heading 3                                                |
-| Heading 4 | #### Heading 4                                               |
-| Bold      | This is **\*\*bold\*\***                                     |
-| Italic    | This is *\*Italic\**                                         |
-| Bullets   | * bullet<br />* bullet2<br /><br />- bullet<br />- bullet2   |
-| Quote     | > This is a quote                                            |
-| Images    | \!\[http://image.url/\](http://image.url/)                   |
-| Code      | ``Use single `backticks` to block code like this ``          |
-| Line      | ---                                                          |
+| Action    | Command                                                                                               |
+| --------- | ----------------------------------------------------------------------------------------------------- |
+| Heading 1 | # Heading                                                                                             |
+| Heading 2 | ## Heading 2                                                                                          |
+| Heading 3 | ### Heading 3                                                                                         |
+| Heading 4 | #### Heading 4                                                                                        |
+| Bold      | This is **\*\*bold\*\***                                                                              |
+| Italic    | This is \*\*Italic\*\*                                                                                |
+| Bullets   | _ bullet<br />_ bullet2<br /><br />- bullet<br />- bullet2                                            |
+| Quote     | > This is a quote                                                                                     |
+| Images    | \!\[http://image.url/\](http://image.url/)                                                            |
+| Code      | `` Use single `backticks` to block code like this  ``                                                 |
+| Line      | ---                                                                                                   |
 | Urls      | can be pasted in. Double click a link to bring up a popup that will allow you to navigate to the link |
-|           |                                                              |
+|           |                                                                                                       |
 
-> For a thorough breakdown of what commands are available see [https://www.markdownguide.org/basic-syntax/](https://www.markdownguide.org/basic-syntax/). 
+> For a thorough breakdown of what commands are available see [https://www.markdownguide.org/basic-syntax/](https://www.markdownguide.org/basic-syntax/).
 >
-> **NOTE:** This editor does not a complete support for all markdown commands, but there are many available. Its worth experimenting to see which commands are available. 
-
-
+> **NOTE:** This editor does not a complete support for all markdown commands, but there are many available. Its worth experimenting to see which commands are available.
 
 ##### Saving Journal Entries
 
-See [Data Management](#data-management) 
+See [Data Management](#data-management)
 
 ---
 
@@ -573,17 +569,13 @@ Use the checkboxes to select which elements you would like to Save or Load and p
 
 The `Reset` button wipes the gamestate back to defaults. This cannot be reversed so ensure you save your game before doing this.
 
-
-
-### Saving Journals 
+### Saving Journals
 
 This app allows you to save journals as save data in the same way as described above. However, the journal entries can also be exported in a zip file, with each file be saved as a markdown `.md` file. To do this simply click Save Journals. The archive will respect the hierarchy set out in the Journal page and folders will be created for parent documents.
 
 ![https://i.imgur.com/FFaBXpd.png](https://i.imgur.com/FFaBXpd.png)
 
 ![https://i.imgur.com/zWlV9Eh.png](https://i.imgur.com/zWlV9Eh.png)
-
- 
 
 ### Updating Datasworn
 
@@ -594,30 +586,6 @@ This platform makes use of RSEK's datasworn. If your data falls behind RSEKs dat
 ## Acknowledgements
 
 The acknowledgement page provides the following information, but it is also here to make the documentation more complete.
-
-### License
-
-To honour the labour of love created by Shawn, this companion is distributed (for free) under the same International Attribution-NonCommercial-ShareAlike 4.0 license as the official Ironsworn game. This companion could not exist without Shawn's work and since his game is distributed for free it seemed only right to do the same with the companion. The images, icons and maps used in this companion are provided from different authors (See Contributors below). Consequently, they are **NOT** covered by the same ShareAlike 4.0 license
-
-[![img](https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg)](https://creativecommons.org/licenses/by/4.0/)
-
-> As part of the Attribution-NonCommercial-ShareAlike 4.0 license: any forks of this application must only build upon this page. No attributions may be taken away from this page without expressed written permission. This page must be included in any derivative works and may not be 'hidden' from view.
-
-### Contributors
-
-There were several content developers from the Ironsworn community that deserve an honourable mention here. During the creation of this companion the following people provided direct or indirect support to this app.
-
-| Contributor       | Contribution                                                                                                                                                                                                                                                       | URL                                                             |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
-| SHAWN TOMKIN      | Without Shawn's work none of this could be possible. When reading the game, you realise the care, effort and devotion that has gone in to creating this game and yet, the game is released as open-source under the creative commons 4.0. True Legend!             | https://www.ironswornrpg.com/                                   |
-| JOSIAH VAN EGMOND | The coloured version of the map was created by Josiah Van Egmond from Black Hawk Cartography (who make some amazing maps I might add). Additional thanks to Shawn Tomkin for providing me with explicit permission to use this image outside of the CC4.0 license. | https://www.blackhawkcartography.com/                           |
-| RSEK              | RSEK provided continued support and feedback throughout development and their Datasworn repository was used to build the core assets in this companion.                                                                                                            | https://github.com/rsek                                         |
-| ERIC BRIGHT       | To provide more variety and options when rolling on oracle tables, Eric's expanded oracles were used to populate the core oracle tables                                                                                                                            | https://www.drivethrurpg.com/browse/pub/8584/Eric-Bright        |
-| DELAPOUITE & LORC | The icons used at Game-Icons.net are fundamental for achieving the Ironsworn look-and-feel. Therefore the icon selector for asset creation is driven by Game-Icons.net fonts.                                                                                      | https://game-icons.net/                                         |
-| KYLE KEMP         | To integrate the Game-Icons.net icons into the application, Kyle's game-icons.net web-font was used, which was evidently inspired by FontAwesome.                                                                                                                  | https://seiyria.com/gameicons-font/                             |
-| GHOST225          | Ghost provided continued support, feedback, feature suggestions and testing throughout the development                                                                                                                                                             | https://github.com/ghost225                                     |
-| NOMADSOUL1        | Credit goes to NOMADSOUL1 from freepik for the homepage image. The colour image was filtered to get the same look and feel as the Ironsworn book.                                                                                                                  | https://www.freepik.com/nomadsoul1                              |
-| ONLINE WEB FONTS  | Modesto font made from Online Web Fonts licensed by CC BY 3.0                                                                                                                                                                                                      | [http://www.onlinewebfonts.com](http://www.onlinewebfonts.com/) |
 
 ### Developer
 

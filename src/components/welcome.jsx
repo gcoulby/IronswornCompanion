@@ -33,10 +33,11 @@ class Welcome extends Component {
                   This app has been made publically available in an alpha state for testing purposes. As such, there are
                   expected to be bugs in the application.
                 </p>
-                <p>Should you find a bug please report it here:</p>
+                <p>Should you find a bug or you have a feature request please post on my FeatureUpvote page:</p>
                 <a
                   className="btn btn-dark"
-                  href="https://docs.google.com/spreadsheets/d/1GXvsk8f_Kx_lVNN78J1027Np0T7-pF1pLZsqnJA6-fE/edit#gid=1386834576"
+                  // href="https://docs.google.com/spreadsheets/d/1GXvsk8f_Kx_lVNN78J1027Np0T7-pF1pLZsqnJA6-fE/edit#gid=1386834576"
+                  href="https://ironsworncompanion-feedback-douzcvfz.featureupvote.com/"
                   rel="noreferrer noopener"
                   target="_blank"
                 >

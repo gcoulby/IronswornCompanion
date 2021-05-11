@@ -45,8 +45,8 @@
   },
   "scripts": {
     "postinstall": "patch-package",
-    "start": "react-scripts start",
-    "prebuild": "copy .\\README.md .\\src\\README.md",
+    "start": "SET PORT=3010 && react-scripts start",
+    "prebuild": "copy .\\README.md .\\src\\README.md && copy .\\LICENSE .\\src\\LICENSE",
     "build": "react-scripts build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
