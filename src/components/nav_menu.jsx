@@ -239,8 +239,8 @@ class NavMenu extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="row d-xs-block d-lg-none">
-          <div className="col">
+        <div className="row  menu-roller">
+          <div className="col-12 col-lg-4">
             <Roller
               light={true}
               selectedPlayer={this.props.selectedPlayer}
@@ -287,7 +287,7 @@ class NavMenu extends Component {
           </HashRouter>
           <li className="credit">
             <div className="text-left mb-3">
-              <KoFi color="#000" id="X8X64ELNE" label="Coffee fuels code" />
+              <KoFi color="#000" id="X8X64ELNE" label="Help support this app" />
             </div>
             This companion is an unofficial product building to support the table top game Ironsworn, developed by Shawn
             Tomkin

@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import TitleBlock from "./titleBlock";
 import gclogo from "../img/gc_logoai.png";
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
+import toc from "remark-toc";
+import source from "../LICENSE";
 class Acknowledgements extends Component {
   state = {
     contributors: [
@@ -25,7 +29,7 @@ class Acknowledgements extends Component {
       {
         contributor: "Eric Bright",
         contribution:
-          "To provide more variety and options when rolling on oracle tables, Eric's expanded oracles were used to populate the core oracle tables",
+          "To provide more variety and options when rolling on oracle tables, Eric's expanded oracles were used to populate the core oracle tables. They are used under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 license",
         url: "https://www.drivethrurpg.com/browse/pub/8584/Eric-Bright",
       },
       {
@@ -60,27 +64,20 @@ class Acknowledgements extends Component {
     ],
   };
 
+  componentDidMount() {
+    fetch(source)
+      .then((res) => res.text())
+      .then((post) => this.setState((state) => ({ ...state, post })))
+      .catch((err) => console.error(err));
+  }
+
   render() {
+    const { post } = this.state;
     return (
       <React.Fragment>
         <h1>Acknowledgements</h1>
         <TitleBlock title="License" />
-        To honour the labour of love created by Shawn, this companion is distributed (for free) under the same
-        International Attribution-NonCommercial-ShareAlike 4.0 license as the official{" "}
-        <span className="modesto">Ironsworn</span> game. This companion could not exist without Shawn's work and since
-        his game is distributed for free it seemed only right to do the same with the companion. The images, icons and
-        maps used in this companion are provided from different authors (See Contributors below). Consequently, they are{" "}
-        <strong>NOT</strong> covered by the same ShareAlike 4.0 license
-        <br />
-        <br />
-        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer noopener">
-          <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg" />
-        </a>
-        <div className="alert alert-secondary mt-4">
-          As part of the Attribution-NonCommercial-ShareAlike 4.0 license: any forks of this application must only build
-          upon this page. No attributions may be taken away from this page without expressed written permission. This
-          page must be included in any derivative works and may not be 'hidden' from view.
-        </div>
+        <ReactMarkdown source={post} plugins={[gfm, toc]} />
         <TitleBlock title="Contributors" />
         There were several content developers from the <span className="modesto">Ironsworn</span> community that deserve
         an honourable mention here. During the creation of this companion the following people provided direct or

@@ -44,14 +44,12 @@ import OracleModal from "./components/oracleModal";
 import OracleRoller from "./components/oracleRoller";
 import Moves from "./components/moves";
 import Journal from "./components/journal";
+import Welcome from "./components/welcome";
 // import "react-sortable-tree/style.css";
 
-//TODO Region roll
-//TODO delve threats
-//TODO burn mom on delve - revert progress
-
+var app = {};
 class App extends Component {
-  version = "0.89.0";
+  version = process.env.REACT_APP_VERSION;
   state = {
     save: false,
     updateCore: false,
@@ -174,7 +172,7 @@ class App extends Component {
   constructor() {
     super();
     this.diceRoller = new DiceRoller();
-
+    app = this;
     let gs = localStorage.getItem("game_state");
     let state = JSON.parse(gs);
     if (state != undefined) {
@@ -190,9 +188,7 @@ class App extends Component {
 
   componentDidMount() {
     this.scrollBottom();
-
     // let el = document.getElementsByClassName("navbar-toggler")[0];
-    // console.log(el);
     // el.classList.remove("show");
     // if (this.state.updateCore) {
     //   this.updateCoreAssets();
@@ -217,40 +213,67 @@ class App extends Component {
 
   saveGameState(reload = false) {
     // console.log("SAVE");
-    // let gs = localStorage.getItem("game_state");
-    // this.prevState = JSON.parse(gs);
-    // console.log(this.compare(this.state, this.prevState));
-    const data = JSON.stringify(this.state);
+    // let gs = JSON.parse(localStorage.getItem("game_state"));
+    // let diff;
+    // if (this.state) diff = this.difference(this.state, gs);
+    let state = { ...this.state };
+    delete state.googleAuth;
+    // console.log("STATE", state);
+    const data = JSON.stringify(state);
     const dataSize = data.length;
     if (dataSize != this.state.dataSize) {
       this.setState({ dataSize });
     }
-    // this.queueStateTransfer();
+    // if (diff.TreeMap.length > 0) this.queueStateTransfer(diff);
     localStorage.setItem("game_state", data);
   }
 
-  queueStateTransfer = (delay = 1000) => {
+  queueStateTransfer = (diff, delay = 1000) => {
     // this.setState({ lastGameStatePushComplete: false });
+    // const diffs = this.state.diffs ?? [];
+    // if (diffs.find((d) => d.TreeMap == diff.TreeMap) == null) diffs.push(diff);
+    // if (diffs != this.state.diffs) this.setState({ diffs });
 
     clearTimeout(this.lastGameStateChangeInterval);
 
-    this.lastGameStateChangeInterval = setTimeout(this.pushState, delay);
+    this.lastGameStateChangeInterval = setTimeout(() => this.pushState(diff), delay);
   };
 
-  pushState = () => {
-    console.log("PUSH", this.state);
-    console.log(this.prevState);
+  difference(object, base) {
+    let ignoreList = [
+      "assetBuilderSelectedAsset",
+      "delveCardEditorSelectedCard",
+      "foeCardEditorSelectedFoe",
+      "oracles",
+      "diceRoller",
+    ];
+    let treeMap = [];
+    let outVal;
 
-    // if (!this.state.lastJournalEditValue) return;
-    // const journalData = this.state.journalData;
-    // journalData.files = this.changeVariableInNestedFileList(
-    //   journalData.files,
-    //   this.state.lastJournalEditId,
-    //   "content",
-    //   this.state.lastJournalEditValue()
-    // );
-    // this.state.lastJournalEditSaveComplete = true;
-    // this.setState({ journalData });
+    function changes(object, base) {
+      console.log(object, base);
+      return _.transform(object, function (result, value, key) {
+        if (!_.isEqual(value, base[key]) && !ignoreList.includes(key)) {
+          treeMap.push(key);
+          result[key] = _.isObject(value) && _.isObject(base[key]) ? changes(value, base[key]) : value;
+          if (result[key] === value) outVal = value;
+        }
+      });
+    }
+    return { Changes: changes(object, base), TreeMap: treeMap, Value: outVal };
+  }
+
+  pushState = (diff) => {
+    console.log("PUSH");
+    console.log(diff);
+
+    console.log(diff.TreeMap.length);
+    let obj = this.state;
+    for (let i = 0; i < diff.TreeMap.length; i++) {
+      const tm = diff.TreeMap[i];
+      obj = obj[tm];
+      console.log(obj);
+    }
   };
 
   compare(a, b) {
@@ -263,9 +286,9 @@ class App extends Component {
     );
   }
 
-  getQuotaUsage = () => {
-    return `${(this.state.dataSize / 5000000).toFixed(2)}%`;
-  };
+  // getQuotaUsage = () => {
+  //   return `${(this.state.dataSize / 5000000).toFixed(2)}%`;
+  // };
 
   updateDataSworn = () => {
     this.updateCoreAssets();
@@ -495,15 +518,22 @@ class App extends Component {
 
   saveData = () => {
     var a = document.createElement("a");
-    document.body.appendChild(a);
+    a.classList.add("btn");
+    a.setAttribute("onclick", "");
     a.setAttribute("style", "display:none");
+    a.setAttribute("style", "cursor:pointer");
     var json = JSON.stringify(localStorage.getItem("game_state")),
       blob = new Blob([json], { type: "octet/stream" }),
       url = window.URL.createObjectURL(blob);
     a.href = url;
+
     let d = new Date();
+    a.target = "_blank";
     a.download = `isc_game_state_${d.toLocaleDateString()}_${d.toLocaleTimeString()}.isc_gamedata`;
+
+    document.body.appendChild(a);
     a.click();
+
     window.URL.revokeObjectURL(url);
   };
 
@@ -550,28 +580,13 @@ class App extends Component {
     window.URL.revokeObjectURL(url);
   };
 
-  loadData = (evt, keys) => {
-    let file = evt.target.files[0];
-    const reader = new FileReader();
-    reader.readAsText(file);
-    reader.onload = () => {
-      let json = JSON.parse(reader.result);
-      let obj = JSON.parse(json);
+  loadData = (data) => {
+    console.log(data);
+    let gs = { ...this.state };
+    let state = _.merge(gs, data);
+    let js = JSON.stringify(state);
+    localStorage.setItem("game_state", js);
 
-      Object.keys(obj).map((k) => {
-        if (!keys.includes(k)) {
-          delete obj[k];
-        }
-      });
-      let gs = { ...this.state };
-      let state = _.merge(gs, obj);
-      let js = JSON.stringify(state);
-      localStorage.setItem("game_state", js);
-    };
-
-    reader.onerror = function () {
-      console.log(reader.error);
-    };
     window.location.reload("/");
   };
 
@@ -814,45 +829,7 @@ class App extends Component {
               <HashRouter basename="/">
                 {/* <Switch> */}
                 <Route exact path="/">
-                  <h3 id="site-title">IRONSWORN</h3>
-                  <h1 id="site-subtitle">COMPANION</h1>
-                  <h6 className="text-light">Version {this.version}</h6>
-                  <h6 className="text-light">You've used {this.getQuotaUsage()} of the 5MB storage quota</h6>
-                  <div className="row">
-                    <div className="col-12 col-lg-4">
-                      <div className="progress">
-                        <div
-                          className="progress-bar bg-dark"
-                          role="progressbar"
-                          style={{ width: this.getQuotaUsage() }}
-                          aria-valuenow="25"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <div className="alert alert-secondary mt-4">
-                        <p>
-                          This app has been made publically available in an alpha state for testing purposes. As such,
-                          there are expected to be bugs in the application.
-                        </p>
-                        <p>Should you find a bug please report it here:</p>
-                        <a
-                          className="btn btn-dark"
-                          href="https://docs.google.com/spreadsheets/d/1GXvsk8f_Kx_lVNN78J1027Np0T7-pF1pLZsqnJA6-fE/edit#gid=1386834576"
-                          rel="noreferrer noopener"
-                          target="_blank"
-                        >
-                          <i className="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp; Report an Issue
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div id="bg-image"></div>
-                  {/* <div id="welcome-page-notice" className="alert alert-secondary my-4">
-                    This application is still heavilly under development and is live only to demonstrate functionality
-                    and receive feedback. As a result, it cannot be guaranteed that save files created in this version
-                    of the application will work in all future versions.
-                  </div> */}
+                  <Welcome version={this.version} dataSize={this.state.dataSize} />
                 </Route>
                 <Route path="/characters">
                   <Characters
@@ -1159,6 +1136,21 @@ class App extends Component {
                     players={this.state.players}
                     selectedPlayer={this.getSelectedPlayer()}
                     gamestate={this.state}
+                    onComponentUpdate={this.componentDidUpdate}
+                  />
+                </Route>
+                <Route path="/data-management-test">
+                  <DataManager
+                    onResetClick={this.resetData}
+                    onDownloadClick={this.saveData}
+                    onDownloadObjectClick={this.saveObject}
+                    onLoadClick={this.loadData}
+                    onUpdateDataswornClick={this.updateDataSworn}
+                    players={this.state.players}
+                    selectedPlayer={this.getSelectedPlayer()}
+                    gamestate={this.state}
+                    onComponentUpdate={this.componentDidUpdate}
+                    loadGoogle={true}
                   />
                 </Route>
                 {/* </Switch> */}

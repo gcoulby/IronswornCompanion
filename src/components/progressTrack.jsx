@@ -19,13 +19,8 @@ class ProgressTrack extends Component {
   render() {
     return (
       <React.Fragment>
-        <ul className="progressTrack mt-3 text-center">
+        <ul className="progressTrack mt-2 text-center">
           {this.props.title ? <span className="modesto mt-3">{this.props.title}</span> : React.Fragment}
-          {this.getChecks().map((c, i) => (
-            <li key={`progress_track_checks_${i}`}>
-              <IronswornCheck count={c} />
-            </li>
-          ))}
           {this.props.hideButtons || this.props.complete ? (
             <React.Fragment></React.Fragment>
           ) : (
@@ -38,6 +33,24 @@ class ProgressTrack extends Component {
                   <i className="fa fa-minus" aria-hidden="true"></i>
                 </button>
               </li>
+            </React.Fragment>
+          )}
+          {this.getChecks().map((c, i) => (
+            <li key={`progress_track_checks_${i}`} className="progress-check-li">
+              <IronswornCheck count={c} />
+              {this.props.showThreats ? (
+                <React.Fragment>
+                  <div className={`threat-box${i + 1 <= this.props.threatVal ? " threat-box-filled" : ""}`}></div>
+                </React.Fragment>
+              ) : (
+                React.Fragment
+              )}
+            </li>
+          ))}
+          {this.props.hideButtons || this.props.complete ? (
+            <React.Fragment></React.Fragment>
+          ) : (
+            <React.Fragment>
               <li className="progressBtn">
                 <button className="btn btn-dark progressTrackBtn" onClick={() => this.props.onProgressionChange(true)}>
                   <i className="fa fa-plus" aria-hidden="true"></i>

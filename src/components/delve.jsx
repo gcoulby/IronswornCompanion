@@ -213,6 +213,20 @@ class Delve extends Component {
     return this.props.delves[this.props.selectedDelveId];
   };
 
+  handleonDenizenChange = (foeId, idx) => {
+    const delves = this.props.delves.map((del) => {
+      if (del.id == this.props.selectedDelveId) {
+        del.denizens.map((d, i) => {
+          if (i === idx) {
+            let foe = this.props.foes.find((f) => f.id === foeId);
+            d.denizen = foe;
+          }
+        });
+      }
+    });
+    this.setState({ delves });
+  };
+
   getPreposition = (str) => {
     let chr = str.charAt(0);
     switch (chr) {
@@ -248,22 +262,19 @@ class Delve extends Component {
       case 99:
         let themes = this.props.delveCards.filter((d) => d.Type === "Theme");
         let rnt = this.diceRoller.roll([themes.length], false, false)[0].value;
-        delves[this.props.selectedDelveId].theme = themes[rnt].Name;
-        delves[this.props.selectedDelveId].denizens = this.getDenizens(
-          this.props.newDelve.theme,
-          this.props.newDelve.domain
-        );
+        let theme = themes[rnt];
+        themeText = theme.Name;
+
+        this.changeTheme(delves, themeText);
         this.setState({ delves });
         this.handleOnEnvisionSurroundings(true);
         return;
       case 100:
         let domains = this.props.delveCards.filter((d) => d.Type === "Domain");
         let rnd = this.diceRoller.roll([domains.length], false, false)[0].value;
-        delves[this.props.selectedDelveId].domain = domains[rnd].Name;
-        delves[this.props.selectedDelveId].denizens = this.getDenizens(
-          delves[this.props.selectedDelveId].theme,
-          delves[this.props.selectedDelveId].domain
-        );
+        let domain = domains[rnd];
+        domainText = domain.Name;
+        this.changeDomain(delves, domainText);
         this.setState({ delves });
         this.handleOnEnvisionSurroundings(true);
         return;
@@ -299,6 +310,30 @@ class Delve extends Component {
     this.changeDelveStep(2);
     this.setState({ delves });
   };
+
+  handleOnChangeTheme = (evt) => {
+    let theme = this.props.delveCards.find((d) => d.Type === "Theme" && d.Name === evt.target.value);
+    const delves = this.props.delves;
+    this.changeTheme(delves, theme.Name);
+    this.setState({ delves });
+  };
+
+  handleOnChangeDomain = (evt) => {
+    let domain = this.props.delveCards.find((d) => d.Type === "Domain" && d.Name === evt.target.value);
+    const delves = this.props.delves;
+    this.changeDomain(delves, domain.Name);
+    this.setState({ delves });
+  };
+
+  changeTheme(delves, theme) {
+    delves[this.props.selectedDelveId].theme = theme;
+    delves[this.props.selectedDelveId].denizens = this.getDenizens(theme, delves[this.props.selectedDelveId].domain);
+  }
+
+  changeDomain(delves, domain) {
+    delves[this.props.selectedDelveId].domain = domain;
+    delves[this.props.selectedDelveId].denizens = this.getDenizens(delves[this.props.selectedDelveId].theme, domain);
+  }
 
   changeDelveStep(step) {
     const delves = this.props.delves;
@@ -530,8 +565,12 @@ class Delve extends Component {
       { Min: 100, Max: 100, Rank: "Unforeseen", denizen: {} },
     ];
     //Push denizens into a temp table if they share tags with themes and/or domains
+    console.log("THEME", theme);
+    console.log("DOMAIN", domain);
     let themeCard = this.props.delveCards.find((t) => t.Name == theme);
     let domainCard = this.props.delveCards.find((d) => d.Name == domain);
+    // console.log("THEMECARD", themeCard);
+    // console.log("DOMAINCARD", domainCard);
     this.props.foes.map((f) => {
       f.Tags.map((t) => {
         if (themeCard.Tags.includes(t)) {
@@ -938,10 +977,70 @@ class Delve extends Component {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <h3 className="font-italic  text-secondary">
+            {/* <h3 className="font-italic  text-secondary">
               "{this.getPreposition(this.getSelectedDelve().theme)}&nbsp;
               {this.getSelectedDelve().theme} {this.getSelectedDelve().domain}"
-            </h3>
+            </h3> */}
+
+            <div className="row">
+              <div className="col-12 col-lg-3">
+                <div className="input-group mb-3">
+                  <div className="input-group-prepend">
+                    <button
+                      className="btn btn-dark"
+                      type="button"
+                      title="Roll on the oracle"
+                      onClick={() => this.handleOnRollNewTheme()}
+                    >
+                      <RollIcon /> Theme
+                    </button>
+                  </div>
+                  <select
+                    className="form-control"
+                    value={this.getSelectedDelve().theme}
+                    onChange={(e) => this.handleOnChangeTheme(e)}
+                  >
+                    <option value="-1">Select Theme</option>
+                    {this.props.delveCards
+                      .filter((f) => f.Type === "Theme")
+                      .map((d) => (
+                        <option key={`delve_theme_select_${d.Name}`} value={d.Name}>
+                          {d.Name}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+              </div>
+              <div className="col-12 col-lg-3">
+                <div className="input-group mb-3">
+                  <div className="input-group-prepend">
+                    <button
+                      className="btn btn-dark"
+                      type="button"
+                      title="Roll on the oracle"
+                      onClick={() => this.handleOnRollNewDomain()}
+                    >
+                      <RollIcon /> Domain
+                    </button>
+                  </div>
+                  <select
+                    className="form-control"
+                    value={this.getSelectedDelve().domain}
+                    onChange={(e) => this.handleOnChangeDomain(e)}
+                  >
+                    <option value="-1">Select Domain</option>
+                    {this.props.delveCards
+                      .filter((f) => f.Type === "Domain")
+                      .map((d) => (
+                        <option key={`delve_theme_select_${d.Name}`} value={d.Name}>
+                          {d.Name}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+
             <div className="row text-center">
               <div className="col-12 col-lg-4">
                 <Modal
@@ -978,7 +1077,13 @@ class Delve extends Component {
                   modalWidth={1000}
                   modalHeight={600}
                   buttonText="Show Denizen Matrix"
-                  modalComponent={<DenizenMatrix denizens={this.getSelectedDelve().denizens} />}
+                  modalComponent={
+                    <DenizenMatrix
+                      denizens={this.getSelectedDelve().denizens}
+                      foes={this.props.foes}
+                      onDenizenChange={this.handleonDenizenChange}
+                    />
+                  }
                   icon="game-icon game-icon-meeple-army icon-md"
                   title="Denizen Matrix"
                 />

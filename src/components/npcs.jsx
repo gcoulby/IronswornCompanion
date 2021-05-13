@@ -33,6 +33,7 @@ class NPCs extends Component {
     npc.knowledge = this.props.newNPC.Knowledge;
     npc.bond = 0;
     npc.locationId = this.props.newNPC.Location;
+    npc.additionalInfo = "";
     if (this.props.newNPC.Name != "" && !npcs.find((n) => n.id == this.props.newNPC.id)) {
       npcs.push(npc);
       newNPC.Race = "";
@@ -192,9 +193,9 @@ class NPCs extends Component {
     const npcs = this.props.npcs.map((n) => {
       if (n.id == id) {
         let val = increment ? 1 : -1;
-        n.bond += val;
-        n.bond = n.bond > 40 ? 40 : n.bond;
-        n.bond = n.bond < 0 ? 0 : n.bond;
+        n.bond = increment ? 2 : 0;
+        // n.bond = n.bond > 40 ? 40 : n.bond;
+        // n.bond = n.bond < 0 ? 0 : n.bond;
 
         const players = this.props.players.map((p) => {
           // if (p.name == this.getSelectedPlayer().name) {
@@ -211,6 +212,16 @@ class NPCs extends Component {
             increment ? "increases" : "diminishes"
           }`
         );
+      }
+      return n;
+    });
+    this.setState({ npcs });
+  };
+
+  handleOnNPCAdditionalDetailsChanged = (evt, id) => {
+    const npcs = this.props.npcs.map((n) => {
+      if (n.id == id) {
+        n.additionalInfo = evt.target.value;
       }
       return n;
     });
@@ -515,8 +526,8 @@ class NPCs extends Component {
                         <span>{npc.race}</span>
                       </div>
                       <div className="col-md-6 col-sm-12">
-                        <span className="modesto">Role: </span>
-                        <span>{npc.role}</span>
+                        <span className="modesto">Descriptor: </span>
+                        <span>{npc.descriptor}</span>
                       </div>
                     </div>
                     <div className="row">
@@ -524,9 +535,10 @@ class NPCs extends Component {
                         <span className="modesto">Goal: </span>
                         <span>{npc.goal}</span>
                       </div>
+
                       <div className="col-md-6 col-sm-12">
-                        <span className="modesto">Descriptor: </span>
-                        <span>{npc.descriptor}</span>
+                        <span className="modesto">Role: </span>
+                        <span>{npc.role}</span>
                       </div>
                     </div>
                     <div className="row">
@@ -545,6 +557,21 @@ class NPCs extends Component {
                       <div className="col">
                         <span className="modesto">Knowledge: </span>
                         <span>{npc.knowledge}</span>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col">
+                        <span className="modesto mt-2">Additional Details:</span>
+                        <textarea
+                          type="text"
+                          className="form-control"
+                          placeholder="AdditionalDetails"
+                          aria-label="Name"
+                          aria-describedby="basic-addon2"
+                          rows="4"
+                          value={npc.additionalInfo ? npc.additionalInfo : ""}
+                          onChange={(e) => this.handleOnNPCAdditionalDetailsChanged(e, npc.id)}
+                        ></textarea>
                       </div>
                     </div>
                     <div className="row mt-4">
@@ -585,6 +612,7 @@ class NPCs extends Component {
                         <ProgressTrack
                           key={npc.id}
                           progress={npc.bond}
+                          trackLength={1}
                           onProgressionChange={(increment) => this.handleOnNPCProgressionChanged(npc.id, increment)}
                         />
                       </React.Fragment>

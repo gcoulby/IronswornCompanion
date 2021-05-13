@@ -3,6 +3,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Carrois+Gothic&family=Forum&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Sue+Ellen+Francisco&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
 @font-face {
   font-family: "Modesto";
   src: url("/src/fonts/modesto.eot");
@@ -16194,9 +16195,14 @@ nav ul {
   margin: 0 0 -1.5em 0;
 }
 
+.menu-roller {
+  display: none !important;
+}
+
 @media only screen and (max-width: 1400px) {
   #playerName,
-  .nav-post {
+  .nav-post,
+  .footer-pre {
     display: none;
   }
 }
@@ -16433,7 +16439,7 @@ nav a:hover {
   display: block;
   background-size: contain;
   position: fixed;
-  bottom: 6.4em;
+  bottom: 6.2em;
   width: 100vw;
   z-index: 1000;
 }
@@ -16473,6 +16479,13 @@ h6 {
 #page-container {
   padding: 3em 2em;
   margin-left: 20em;
+  margin-top: 4em;
+  margin-bottom: 8em;
+  width: 100%;
+}
+
+#page-container-logged-out {
+  padding: 3em 2em;
   margin-top: 4em;
   margin-bottom: 8em;
   width: 100%;
@@ -16612,6 +16625,18 @@ input[type="file"] {
 .btn-sm {
   line-height: 0.5 !important;
   padding: 0.6em 0.6em !important;
+}
+
+.btn-google {
+  background: white !important;
+  font-family: "Roboto", sans-serif;
+  border: 1px solid #6c757d !important;
+  -webkit-box-shadow: 1px 1px 1px gray;
+          box-shadow: 1px 1px 1px gray;
+}
+
+.btn-google:hover {
+  background: #fcfcfc !important;
 }
 
 .roll-icon {
@@ -17200,7 +17225,7 @@ label::before {
 
 .progressTrack li {
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: text-bottom;
   margin-right: 0.2em;
 }
 
@@ -17252,25 +17277,46 @@ label::before {
 }
 
 .progressTrackBtn {
-  width: 2em;
-  height: 2em;
+  width: 2.1em;
+  height: 2.1em;
   margin: 0 !important;
   padding: 0em !important;
   border: none;
+  border-radius: 0 !important;
 }
 
 .progressTick {
   position: absolute;
-  height: 100%;
-  width: 100%;
+  height: 90%;
+  width: 90%;
   background-size: cover;
   display: block;
+  bottom: 0;
+  left: 0;
 }
 
 .progressTrackBoxRound {
   border: 2px solid #6c757d;
   border-radius: 50%;
   overflow: hidden;
+}
+
+.progress-check-li {
+  position: relative;
+}
+
+.threat-box {
+  border: 1px solid #6c757d;
+  position: absolute;
+  width: 0.6em;
+  height: 0.6em;
+  right: 0.14em;
+  top: 0.14em;
+  background: white;
+}
+
+.threat-box-filled {
+  background: black;
 }
 
 .asset-card {
@@ -19019,8 +19065,9 @@ input.autocomplete-input {
 /*============================================================*/
 /*          Header
 /*============================================================*/
-@media screen and (max-width: 1250px) {
-  .mobile-menu {
+@media screen and (max-width: 1320px) {
+  .mobile-menu,
+  .menu-roller {
     display: block !important;
   }
   .desktop-menu {
@@ -19044,7 +19091,7 @@ input.autocomplete-input {
   }
 }
 
-@media screen and (min-width: 1250px) {
+@media screen and (min-width: 1320px) {
   .mobile-menu {
     display: none !important;
   }
@@ -19058,9 +19105,14 @@ input.autocomplete-input {
 /*============================================================*/
 /*          Footer
 /*============================================================*/
-@media screen and (max-width: 1300px) {
-  .footer-pre,
+@media screen and (max-width: 1320px) {
   .stat-button {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .footer-pre {
     display: none;
   }
 }
@@ -19068,7 +19120,7 @@ input.autocomplete-input {
 /*============================================================*/
 /*          All Pages
 /*============================================================*/
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1320px) {
   .stat-title {
     border-bottom: 2px solid black;
   }
@@ -19099,7 +19151,7 @@ input.autocomplete-input {
   }
 }
 
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1320px) {
   .keys {
     font-size: 7px;
   }
@@ -19108,7 +19160,7 @@ input.autocomplete-input {
 /*============================================================*/
 /*          Worlds
 /*============================================================*/
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1320px) {
   .nav-tabs .nav-link {
     width: 50%;
     text-align: center;
@@ -19121,16 +19173,36 @@ input.autocomplete-input {
 /*============================================================*/
 /*          Progress
 /*============================================================*/
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 500px) {
   .progressTrackBox {
     border: 1px solid #6c757d;
   }
   .progressTrackBox {
-    min-height: 1.2em;
-    min-width: 1.2em;
+    min-height: 1.4em;
+    min-width: 1.4em;
+  }
+  .btn.progressTrackBtn {
+    line-height: 1.2em;
+  }
+  .progressTrackBtn {
+    margin-top: -0.2em;
+    height: 1.5em;
+    width: 1.5em;
+  }
+  .progressTrackBtn i {
+    font-size: 9pt !important;
+  }
+  ul.progressTrack {
+    margin-bottom: 0.5rem;
   }
   .progressTrack {
     text-align: center;
+  }
+  .threat-box {
+    width: 0.4em !important;
+    height: 0.4em !important;
+    right: 0em;
+    top: 0em;
   }
 }
 
@@ -19321,7 +19393,7 @@ input.autocomplete-input {
 /*============================================================*/
 /*          FOES
 /*============================================================*/
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1320px) {
   .foe-card table {
     position: inherit;
     width: 100%;
@@ -19331,7 +19403,7 @@ input.autocomplete-input {
 /*============================================================*/
 /*          Rollers
 /*============================================================*/
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1320px) {
   .oracle-results {
     margin-top: 2em;
   }
@@ -19341,7 +19413,7 @@ input.autocomplete-input {
   }
 }
 
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1320px) {
   .slider-tick::before,
   .slider-tick::after {
     display: none;
