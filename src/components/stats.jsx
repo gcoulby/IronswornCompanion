@@ -414,6 +414,40 @@ class Stats extends Component {
             </div>
           </div>
         </div>
+
+        <div className="row">
+          <div className="col">
+            <TitleBlock title="BONDS" />
+            <table className="table table-striped modesto">
+              <thead>
+                <th>Type</th>
+                <th>Name</th>
+              </thead>
+              <tbody>
+                {this.props.locations.map((l) => {
+                  if (l.bond > 0) {
+                    return (
+                      <tr>
+                        <td>Location</td>
+                        <td>{l.name}</td>
+                      </tr>
+                    );
+                  }
+                })}
+                {this.props.npcs.map((n) => {
+                  if (n.bond > 0) {
+                    return (
+                      <tr>
+                        <td>NPC</td>
+                        <td>{n.name}</td>
+                      </tr>
+                    );
+                  }
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </React.Fragment>
     );
   }

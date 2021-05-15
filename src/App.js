@@ -884,10 +884,10 @@ class App extends Component {
                 </Route>
                 <Route path="/locations">
                   <Locations
-                    locations={this.state.locations}
                     customMap={this.state.customMap}
                     oracles={this.state.oracles}
                     nextLocationId={this.state.nextLocationId}
+                    locations={this.state.locations}
                     npcs={this.state.npcs}
                     players={this.state.players}
                     selectedPlayer={this.getSelectedPlayer()}
@@ -952,6 +952,8 @@ class App extends Component {
                     selectedPlayer={this.getSelectedPlayer()}
                     updatePlayerSelect={this.handlePlayerSelect}
                     onComponentUpdate={this.componentDidUpdate}
+                    locations={this.state.locations}
+                    npcs={this.state.npcs}
                     addLog={this.handleAddLog}
                   />
                 </Route>
@@ -1059,7 +1061,7 @@ class App extends Component {
                   <Moves
                     moves={this.state.moves}
                     onComponentUpdate={this.componentDidUpdate}
-                    selectedPlayer={this.getSelectedPlayer}
+                    selectedPlayer={this.getSelectedPlayer()}
                     footerDice={this.state.footerDice}
                     burnMomentum={this.burnMomentum}
                     // footerDice={this.props.footerDice}
