@@ -1127,7 +1127,6 @@ class App extends Component {
                     onComponentUpdate={this.componentDidUpdate}
                   />
                 </Route>
-
                 <Route path="/documentation">
                   <Documentation />
                 </Route>
