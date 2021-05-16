@@ -1269,7 +1269,7 @@ class Delve extends Component {
                   <div className="card-body py-5">
                     <div className="input-group mb-3">
                       <div className="input-group-prepend">
-                        <label className="btn btn-dark" title="Additional">
+                        <label className="btn btn-dark delve-roll" title="Additional">
                           ADD
                         </label>
                       </div>

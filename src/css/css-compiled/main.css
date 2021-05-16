@@ -17749,7 +17749,7 @@ input.disabled:focus {
 .tip .top {
   min-width: 300px;
   top: -20px;
-  left: 50%;
+  left: 0%;
   -webkit-transform: translate(-50%, -100%);
           transform: translate(-50%, -100%);
   padding: 10px 20px;
@@ -18085,6 +18085,17 @@ input.disabled:focus {
   font-family: sans-serif;
 }
 
+.card-body {
+  height: 100%;
+}
+
+.popup-model-container {
+  position: relative;
+  height: 90%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
 .editableTable {
   min-height: 20vh;
   max-height: 50vh;
@@ -18112,6 +18123,10 @@ input.disabled:focus {
   border: 2px solid #343a40;
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
+}
+
+.delve-roll {
+  z-index: 0 !important;
 }
 
 .tagTableContainer {
@@ -19058,7 +19073,7 @@ input.autocomplete-input {
 
 .moves-roller .move-display,
 .moves-roller .moves-list {
-  height: 70vh;
+  height: 65vh !important;
   overflow-y: auto;
 }
 
@@ -19418,6 +19433,21 @@ input.autocomplete-input {
   .slider-tick::after {
     display: none;
   }
+  .move-roller-hr,
+  .move-roller {
+    display: block !important;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .popup .card {
+    width: 88%;
+  }
+  .popup .card:not(.danger-btn-card) {
+    top: 5%;
+    height: 90%;
+    max-height: 90% !important;
+  }
 }
 
 .roll-result {
@@ -19436,7 +19466,7 @@ input.autocomplete-input {
 }
 
 .roller-body .oracle-tables {
-  height: 50vh;
+  height: 50vh !important;
   overflow-y: scroll;
 }
 
@@ -19503,6 +19533,18 @@ input.autocomplete-input {
 
 .d100-roller {
   padding: 0 !important;
+}
+
+.roll-button {
+  margin-bottom: 0 !important;
+}
+
+.move-roller-hr {
+  display: none;
+}
+
+.move-roller {
+  display: none;
 }
 
 .denizen-matrix {

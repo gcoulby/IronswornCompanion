@@ -848,6 +848,8 @@ class App extends Component {
                     handleFileContentsChange={this.handleFileContentsChange}
                     saveChangesToEditor={this.saveChangesToEditor}
                     lastJournalEditSaveComplete={this.state.lastJournalEditSaveComplete}
+                    oracles={this.state.oracles}
+                    moves={this.state.moves}
                   />
                 </Route>
                 <Route path="/log">

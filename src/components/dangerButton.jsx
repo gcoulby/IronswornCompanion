@@ -27,7 +27,7 @@ class DangerButton extends Component {
           <React.Fragment>
             <div id="dangerConfirm" className="popup text-left" data-width="600" data-height="200">
               <div className="overlay" onClick={() => this.changeModalState(false)}></div>
-              <div className="card">
+              <div className="card danger-btn-card">
                 <div className="card-header bg-dark text-light modesto">
                   <div className="row">
                     <div className="col">
