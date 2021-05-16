@@ -45,6 +45,7 @@ import OracleRoller from "./components/oracleRoller";
 import Moves from "./components/moves";
 import Journal from "./components/journal";
 import Welcome from "./components/welcome";
+import Privacy from "./components/privacy";
 // import "react-sortable-tree/style.css";
 
 var app = {};
@@ -1156,6 +1157,9 @@ class App extends Component {
                     onComponentUpdate={this.componentDidUpdate}
                     loadGoogle={true}
                   />
+                </Route>
+                <Route path="/privacy-policy">
+                  <Privacy />
                 </Route>
                 {/* </Switch> */}
               </HashRouter>

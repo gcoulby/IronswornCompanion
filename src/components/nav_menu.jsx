@@ -232,6 +232,13 @@ class NavMenu extends Component {
             icon: "fas fa-save",
             active: false,
           },
+          {
+            url: "/privacy-policy",
+            pageName: "Privacy Policy",
+            icon: "fas fa-user-lock",
+
+            active: false,
+          },
         ],
       },
     ],
