@@ -1142,9 +1142,10 @@ class App extends Component {
                     selectedPlayer={this.getSelectedPlayer()}
                     gamestate={this.state}
                     onComponentUpdate={this.componentDidUpdate}
+                    loadGoogle={true}
                   />
                 </Route>
-                <Route path="/data-management-test">
+                {/* <Route path="/data-management-test">
                   <DataManager
                     onResetClick={this.resetData}
                     onDownloadClick={this.saveData}
@@ -1157,7 +1158,7 @@ class App extends Component {
                     onComponentUpdate={this.componentDidUpdate}
                     loadGoogle={true}
                   />
-                </Route>
+                </Route> */}
                 <Route path="/privacy-policy">
                   <Privacy />
                 </Route>

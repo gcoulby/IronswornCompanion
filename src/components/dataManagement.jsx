@@ -466,8 +466,8 @@ class DataManager extends Component {
         {this.props.loadGoogle ? (
           <React.Fragment>
             <TitleBlock title="Cloud Authorisation" />
-            <h2>You should not be here!</h2>
-            <h6> This is a future feature, using this feature will break your future save.</h6>
+            {/* <h2>You should not be here!</h2>
+            <h6> This is a future feature, using this feature will break your future save.</h6> */}
             {!this.state.googleAuth || !this.state.googleAuth.isSignedIn.le ? (
               <React.Fragment>
                 <div className="row">
