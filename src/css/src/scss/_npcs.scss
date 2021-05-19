@@ -1,0 +1,15 @@
+.editable-block-outer {
+  display: flex;
+  margin: 0.2em 0;
+}
+
+.editable-block-outer span {
+  display: flex;
+  padding: 0.2em;
+}
+
+span.editable-block {
+  width: 100%;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}

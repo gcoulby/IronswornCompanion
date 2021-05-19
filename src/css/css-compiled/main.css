@@ -18129,6 +18129,26 @@ input.disabled:focus {
   z-index: 0 !important;
 }
 
+.editable-block-outer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0.2em 0;
+}
+
+.editable-block-outer span {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0.2em;
+}
+
+span.editable-block {
+  width: 100%;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
 .tagTableContainer {
   max-height: 500px;
   overflow: auto;

@@ -958,6 +958,7 @@ class App extends Component {
                     locations={this.state.locations}
                     npcs={this.state.npcs}
                     addLog={this.handleAddLog}
+                    oracles={this.state.oracles}
                   />
                 </Route>
                 <Route exact path="/vows">
