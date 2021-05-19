@@ -220,7 +220,7 @@ class Locations extends Component {
       } else if (locations.length > 0) {
         id = locations[locations.length - 1].id + 1;
       }
-      locations[locations.length] = {
+      locations[id] = {
         id: id,
         name: this.state.name,
         descriptor: this.state.descriptor,
