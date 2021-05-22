@@ -24,11 +24,13 @@ class DataManager extends Component {
       journalDataDataSelected: true,
       activeFoesDataSelected: true,
       assetsDataSelected: true,
+      customMapDataSelected: true,
       delveCardsDataSelected: true,
       delvesDataSelected: true,
       foesDataSelected: true,
       locationsDataSelected: true,
       logsDataSelected: true,
+      npcsDataSelected: true,
       playersDataSelected: true,
       oraclesDataSelected: true,
       worldDataSelected: true,
@@ -38,11 +40,13 @@ class DataManager extends Component {
       journalDataDataSelected: true,
       activeFoesDataSelected: true,
       assetsDataSelected: true,
+      customMapDataSelected: true,
       delveCardsDataSelected: true,
       delvesDataSelected: true,
       foesDataSelected: true,
       locationsDataSelected: true,
       logsDataSelected: true,
+      npcsDataSelected: true,
       playersDataSelected: true,
       oraclesDataSelected: true,
       worldDataSelected: true,
@@ -57,13 +61,15 @@ class DataManager extends Component {
     dataManager = this;
     // this.state.data.all = props.gamestate;
     this.state.data.activeFoes = props.gamestate.activeFoes;
-    this.state.data.journalData = props.gamestate.journalData;
     this.state.data.assets = props.gamestate.assets;
+    this.state.data.customMap = props.gamestate.customMap;
     this.state.data.delveCards = props.gamestate.delveCards;
     this.state.data.delves = props.gamestate.delves;
     this.state.data.foes = props.gamestate.foes;
+    this.state.data.journalData = props.gamestate.journalData;
     this.state.data.locations = props.gamestate.locations;
     this.state.data.logs = props.gamestate.logs;
+    this.state.data.npcs = props.gamestate.npcs;
     this.state.data.players = props.gamestate.players;
     this.state.data.oracles = props.gamestate.oracles;
     this.state.data.world = props.gamestate.world;
