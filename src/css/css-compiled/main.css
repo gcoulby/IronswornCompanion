@@ -17287,8 +17287,8 @@ label::before {
 
 .progressTick {
   position: absolute;
-  height: 90%;
-  width: 90%;
+  height: 100%;
+  width: 100%;
   background-size: cover;
   display: block;
   bottom: 0;
