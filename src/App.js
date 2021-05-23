@@ -137,6 +137,14 @@ class App extends Component {
         nextId: 0,
         buttonText: "Write Your Epilogue",
       },
+      {
+        type: "challenge",
+        title: "",
+        details: "",
+        rank: 0,
+        nextId: 0,
+        buttonText: "Resolve the Scene",
+      },
     ],
     delves: [],
     newDelve: {
@@ -992,6 +1000,19 @@ class App extends Component {
                   <Progression
                     title="Journeys"
                     type="journey"
+                    ranks={this.state.ranks}
+                    newProgressions={this.state.newProgressions}
+                    players={this.state.players}
+                    selectedPlayer={this.getSelectedPlayer()}
+                    onProgressRollClicked={this.handleOnProgressRollClicked}
+                    onComponentUpdate={this.componentDidUpdate}
+                    addLog={this.handleAddLog}
+                  />
+                </Route>
+                <Route exact path="/scene-challenges">
+                  <Progression
+                    title="Scene Challenges"
+                    type="challenge"
                     ranks={this.state.ranks}
                     newProgressions={this.state.newProgressions}
                     players={this.state.players}

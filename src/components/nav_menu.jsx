@@ -101,6 +101,12 @@ class NavMenu extends Component {
             active: false,
           },
           {
+            url: "/scene-challenges",
+            pageName: "Scene Challenges",
+            icon: "game-icon game-icon-mountain-road",
+            active: false,
+          },
+          {
             url: "/inventory",
             pageName: "Inventory",
             icon: "game-icon game-icon-swap-bag",
