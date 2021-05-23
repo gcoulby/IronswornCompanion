@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ContentEditable from "react-contenteditable";
 import DangerButton from "./dangerButton";
 import ProgressTrack from "./progressTrack";
 import RollIcon from "./rollIcon";
@@ -212,6 +213,16 @@ class NPCs extends Component {
             increment ? "increases" : "diminishes"
           }`
         );
+      }
+      return n;
+    });
+    this.setState({ npcs });
+  };
+
+  handleOnNPCFieldChanged = (evt, id, field) => {
+    const npcs = this.props.npcs.map((n) => {
+      if (n.id == id) {
+        n[field] = evt.target.value;
       }
       return n;
     });
@@ -521,42 +532,92 @@ class NPCs extends Component {
                   <div className="card-body">
                     <h4 className="mb-2">{npc.name}</h4>
                     <div className="row">
-                      <div className="col-md-6 col-sm-12">
+                      <div className="col-md-6 col-sm-12 editable-block-outer">
                         <span className="modesto">Race: </span>
-                        <span>{npc.race}</span>
+                        <ContentEditable
+                          className="editable-block"
+                          innerRef={this.contentEditable}
+                          html={npc.race}
+                          disabled={false}
+                          onChange={(e) => this.handleOnNPCFieldChanged(e, npc.id, "race")}
+                          tagName="span"
+                        />
                       </div>
-                      <div className="col-md-6 col-sm-12">
+                      <div className="col-md-6 col-sm-12 editable-block-outer">
                         <span className="modesto">Descriptor: </span>
-                        <span>{npc.descriptor}</span>
+                        <ContentEditable
+                          className="editable-block"
+                          innerRef={this.contentEditable}
+                          html={npc.descriptor}
+                          disabled={false}
+                          onChange={(e) => this.handleOnNPCFieldChanged(e, npc.id, "descriptor")}
+                          tagName="span"
+                        />
+                        {/* <span>{npc.descriptor}</span> */}
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-md-6 col-sm-12">
+                      <div className="col-md-6 col-sm-12 editable-block-outer">
                         <span className="modesto">Goal: </span>
-                        <span>{npc.goal}</span>
+                        <ContentEditable
+                          className="editable-block"
+                          innerRef={this.contentEditable}
+                          html={npc.goal}
+                          disabled={false}
+                          onChange={(e) => this.handleOnNPCFieldChanged(e, npc.id, "goal")}
+                          tagName="span"
+                        />
                       </div>
 
-                      <div className="col-md-6 col-sm-12">
+                      <div className="col-md-6 col-sm-12 editable-block-outer">
                         <span className="modesto">Role: </span>
-                        <span>{npc.role}</span>
+                        <ContentEditable
+                          className="editable-block"
+                          innerRef={this.contentEditable}
+                          html={npc.role}
+                          disabled={false}
+                          onChange={(e) => this.handleOnNPCFieldChanged(e, npc.id, "role")}
+                          tagName="span"
+                        />
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col">
+                      <div className="col editable-block-outer">
                         <span className="modesto">Disposition: </span>
-                        <span>{npc.disposition}</span>
+                        <ContentEditable
+                          className="editable-block"
+                          innerRef={this.contentEditable}
+                          html={npc.disposition}
+                          disabled={false}
+                          onChange={(e) => this.handleOnNPCFieldChanged(e, npc.id, "disposition")}
+                          tagName="span"
+                        />
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col">
+                      <div className="col editable-block-outer">
                         <span className="modesto">Conversation: </span>
-                        <span>{npc.conversation}</span>
+                        <ContentEditable
+                          className="editable-block"
+                          innerRef={this.contentEditable}
+                          html={npc.conversation}
+                          disabled={false}
+                          onChange={(e) => this.handleOnNPCFieldChanged(e, npc.id, "conversation")}
+                          tagName="span"
+                        />
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col">
+                      <div className="col editable-block-outer">
                         <span className="modesto">Knowledge: </span>
-                        <span>{npc.knowledge}</span>
+                        <ContentEditable
+                          className="editable-block"
+                          innerRef={this.contentEditable}
+                          html={npc.knowledge}
+                          disabled={false}
+                          onChange={(e) => this.handleOnNPCFieldChanged(e, npc.id, "knowledge")}
+                          tagName="span"
+                        />
                       </div>
                     </div>
                     <div className="row">
@@ -570,7 +631,7 @@ class NPCs extends Component {
                           aria-describedby="basic-addon2"
                           rows="4"
                           value={npc.additionalInfo ? npc.additionalInfo : ""}
-                          onChange={(e) => this.handleOnNPCAdditionalDetailsChanged(e, npc.id)}
+                          onChange={(e) => this.handleOnNPCFieldChanged(e, npc.id, "additionalInfo")}
                         ></textarea>
                       </div>
                     </div>

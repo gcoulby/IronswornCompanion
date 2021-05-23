@@ -3,6 +3,7 @@ import DiceRoller from "./dice_roller";
 import ExperienceTrack from "./experienceTrack";
 import ProgressTrack from "./progressTrack";
 import RollButton from "./rollButton";
+import RollIcon from "./rollIcon";
 import StatTrack from "./statTrack";
 import TitleBlock from "./titleBlock";
 import UnselectedPlayer from "./unselected_player";
@@ -13,6 +14,37 @@ class Stats extends Component {
     super();
     this.diceRoller = new DiceRoller();
   }
+
+  handleSelectedPlayerFieldChange = (field, value) => {
+    const players = this.props.players.map((p) => {
+      if (p.selected === true) {
+        p[field] = value;
+      }
+      return p;
+    });
+    this.setState({ players });
+    this.props.updatePlayerSelect(this.props.selectedPlayer.name);
+  };
+
+  handleOnRollPlayerName = () => {
+    let rn = this.props.oracles.IronlanderName;
+    this.handleSelectedPlayerFieldChange("name", rn);
+  };
+
+  handleOnRollPlayerRole = () => {
+    let rn = this.props.oracles.CharacterRole;
+    this.handleSelectedPlayerFieldChange("role", rn);
+  };
+
+  handleOnRollPlayerGoal = () => {
+    let rn = this.props.oracles.CharacterGoal;
+    this.handleSelectedPlayerFieldChange("goal", rn);
+  };
+
+  handleOnRollPlayerDescriptor = () => {
+    let rn = this.props.oracles.CharacterDescriptor;
+    this.handleSelectedPlayerFieldChange("descriptor", rn);
+  };
 
   valueToStat(val, steps) {
     let n = 100 / (steps - 1);
@@ -202,84 +234,29 @@ class Stats extends Component {
     return (
       <React.Fragment>
         <h1 className="">{this.props.selectedPlayer.name}</h1>
-        <TitleBlock title="EXPERIENCE" />
-        <ExperienceTrack
-          selectedPlayer={this.props.selectedPlayer}
-          key={this.props.selectedPlayer}
-          progress={this.props.selectedPlayer.bonds}
-          onExperienceChange={this.handleOnExperienceChange}
-        />
-        <TitleBlock title="STATS" />
-        <div className="container">
-          <div className="row row-cols-5 text-center">
-            {this.props.selectedPlayer.stats
-              .filter((s) => s.type == "core")
-              .map((s) => (
-                <div className="col-12 col-lg stat-col">
-                  <div key={s.stat} className="card stat-card">
-                    <div className="container">
-                      <div className="row">
-                        <div className="col-4">
-                          <button
-                            className="btn btn-outline-dark progressTrackBtn"
-                            onClick={() => this.handleOnPlayerStatChanged(s.stat, false)}
-                          >
-                            <i className="fa fa-minus" aria-hidden="true"></i>
-                          </button>
-                        </div>
-                        <div className="col-4">
-                          <h2>{s.value}</h2>
-                        </div>
-                        <div className="col-4">
-                          <button
-                            className="btn btn-outline-dark progressTrackBtn"
-                            onClick={() => this.handleOnPlayerStatChanged(s.stat, true)}
-                          >
-                            <i className="fa fa-plus" aria-hidden="true"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <p className="modesto">{s.stat}</p>
-                  </div>
-                </div>
-              ))}
+        <TitleBlock title="TRACKS" />
+        <div className="row text-center">
+          <div className="col mt-4">
+            <div className="btn btn-outline-dark momentum-stat mr-1">
+              <h5>{this.props.selectedPlayer.maxMomentum}</h5>
+              <h6>MAX</h6>
+            </div>
+            <button className="btn btn-outline-dark momentum-stat" onClick={() => this.handleMomentumReset()}>
+              <h5>{this.props.selectedPlayer.resetMomentum}</h5>
+              <h6>RESET</h6>
+            </button>
           </div>
         </div>
         <div className="stat-tracks">
-          <TitleBlock title="BONDS" />
-
-          <ProgressTrack
-            key={this.props.selectedPlayer}
-            progress={this.props.selectedPlayer.bonds}
-            onProgressionChange={(increment) =>
-              this.handleOnPlayerProgressionChanged(this.props.selectedPlayer.name, "bonds", increment)
-            }
-            // hideButtons={true}
-          />
-          <TitleBlock title="FAILURE" />
-
-          <ProgressTrack
-            key={this.props.selectedPlayer}
-            progress={this.props.selectedPlayer.failure}
-            onProgressionChange={(increment) =>
-              this.handleOnPlayerProgressionChanged(this.props.selectedPlayer.name, "failure", increment)
-            }
-            // hideButtons={true}
-          />
-          <div className="row">
-            <div className="col-4 d-sm-none d-lg-block"></div>
-            <div className="col-lg-4 col-sm-12">
-              <RollButton
-                buttonText="Learn from your Failures"
-                roll={this.props.selectedPlayer.failureRoll}
-                onRoll={() => this.handleOnProgressRollClicked()}
-              />
-            </div>
-            <div className="col-4 d-sm-none d-lg-block"></div>
-          </div>
-          <TitleBlock title="TRACKS" />
           <div className="d-none d-md-block">
+            <StatTrack
+              min={-6}
+              max={10}
+              // onChange={this.handleMomentumTrackChange}
+              onChange={this.handleStatTrackChange}
+              value={this.props.selectedPlayer.stats.find((s) => s.stat == "Momentum").value}
+              stat={this.props.selectedPlayer.stats.find((s) => s.stat == "Momentum")}
+            />
             <StatTrack
               min={0}
               max={5}
@@ -300,14 +277,6 @@ class Stats extends Component {
               value={this.props.selectedPlayer.stats.find((s) => s.stat == "Supply").value}
               onChange={this.handleStatTrackChange}
               stat={this.props.selectedPlayer.stats.find((s) => s.stat == "Supply")}
-            />
-            <StatTrack
-              min={-6}
-              max={10}
-              // onChange={this.handleMomentumTrackChange}
-              onChange={this.handleStatTrackChange}
-              value={this.props.selectedPlayer.stats.find((s) => s.stat == "Momentum").value}
-              stat={this.props.selectedPlayer.stats.find((s) => s.stat == "Momentum")}
             />
           </div>
           <div className="d-block d-md-none text-center">
@@ -345,16 +314,82 @@ class Stats extends Component {
               ))}
           </div>
         </div>
-        <div className="row text-center">
-          <div className="col mt-4">
-            <div className="btn btn-outline-dark momentum-stat mr-1">
-              <h5>{this.props.selectedPlayer.maxMomentum}</h5>
-              <h6>MAX</h6>
+
+        <TitleBlock title="STATS" />
+        <div className="container">
+          <div className="row row-cols-5 text-center">
+            {this.props.selectedPlayer.stats
+              .filter((s) => s.type == "core")
+              .map((s) => (
+                <div className="col-12 col-lg stat-col">
+                  <div key={s.stat} className="card stat-card">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-4">
+                          <button
+                            className="btn btn-outline-dark progressTrackBtn"
+                            onClick={() => this.handleOnPlayerStatChanged(s.stat, false)}
+                          >
+                            <i className="fa fa-minus" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                        <div className="col-4">
+                          <h2>{s.value}</h2>
+                        </div>
+                        <div className="col-4">
+                          <button
+                            className="btn btn-outline-dark progressTrackBtn"
+                            onClick={() => this.handleOnPlayerStatChanged(s.stat, true)}
+                          >
+                            <i className="fa fa-plus" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <p className="modesto">{s.stat}</p>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+        <TitleBlock title="EXPERIENCE" />
+        <ExperienceTrack
+          selectedPlayer={this.props.selectedPlayer}
+          key={this.props.selectedPlayer}
+          progress={this.props.selectedPlayer.bonds}
+          onExperienceChange={this.handleOnExperienceChange}
+        />
+        <div className="stat-tracks">
+          <TitleBlock title="BONDS" />
+
+          <ProgressTrack
+            key={this.props.selectedPlayer}
+            progress={this.props.selectedPlayer.bonds}
+            onProgressionChange={(increment) =>
+              this.handleOnPlayerProgressionChanged(this.props.selectedPlayer.name, "bonds", increment)
+            }
+            // hideButtons={true}
+          />
+          <TitleBlock title="FAILURE" />
+
+          <ProgressTrack
+            key={this.props.selectedPlayer}
+            progress={this.props.selectedPlayer.failure}
+            onProgressionChange={(increment) =>
+              this.handleOnPlayerProgressionChanged(this.props.selectedPlayer.name, "failure", increment)
+            }
+            // hideButtons={true}
+          />
+          <div className="row">
+            <div className="col-4 d-sm-none d-lg-block"></div>
+            <div className="col-lg-4 col-sm-12">
+              <RollButton
+                buttonText="Learn from your Failures"
+                roll={this.props.selectedPlayer.failureRoll}
+                onRoll={() => this.handleOnProgressRollClicked()}
+              />
             </div>
-            <button className="btn btn-outline-dark momentum-stat" onClick={() => this.handleMomentumReset()}>
-              <h5>{this.props.selectedPlayer.resetMomentum}</h5>
-              <h6>RESET</h6>
-            </button>
+            <div className="col-4 d-sm-none d-lg-block"></div>
           </div>
         </div>
 
@@ -411,6 +446,137 @@ class Stats extends Component {
                     <label htmlFor={`cb_${d.name}`}>{d.name}</label>
                   </div>
                 ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col">
+            <TitleBlock title="BONDS" />
+            <table className="table table-striped modesto">
+              <thead>
+                <th>Type</th>
+                <th>Name</th>
+              </thead>
+              <tbody>
+                {this.props.locations.map((l) => {
+                  if (l.bond > 0) {
+                    return (
+                      <tr>
+                        <td>Location</td>
+                        <td>{l.name}</td>
+                      </tr>
+                    );
+                  }
+                })}
+                {this.props.npcs.map((n) => {
+                  if (n.bond > 0) {
+                    return (
+                      <tr>
+                        <td>NPC</td>
+                        <td>{n.name}</td>
+                      </tr>
+                    );
+                  }
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col">
+            <TitleBlock title="DETAILS" />
+            <div className="row">
+              <div className="col-lg-6 col-sm-12">
+                <div className="input-group mb-3">
+                  <div className="input-group-prepend">
+                    <button
+                      className="btn btn-dark"
+                      type="button"
+                      title="Roll on the oracle"
+                      onClick={() => this.handleOnRollPlayerName()}
+                    >
+                      <RollIcon /> Name
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Character Name"
+                    aria-label="Name"
+                    aria-describedby="basic-addon2"
+                    value={this.props.selectedPlayer.name}
+                    onChange={(e) => this.handleSelectedPlayerFieldChange("name", e.target.value)}
+                  />
+                </div>
+
+                <div className="input-group mb-3">
+                  <div className="input-group-prepend">
+                    <button
+                      className="btn btn-dark"
+                      type="button"
+                      title="Roll on the oracle"
+                      onClick={() => this.handleOnRollPlayerGoal()}
+                    >
+                      <RollIcon /> Goal
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Character Goal"
+                    aria-label="Character Goal"
+                    aria-describedby="basic-addon2"
+                    value={this.props.selectedPlayer.goal}
+                    onChange={(e) => this.handleSelectedPlayerFieldChange("goal", e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="col-lg-6 col-sm-12">
+                <div className="input-group mb-3">
+                  <div className="input-group-prepend">
+                    <button
+                      className="btn btn-dark"
+                      type="button"
+                      title="Roll on the oracle"
+                      onClick={() => this.handleOnRollPlayerRole()}
+                    >
+                      <RollIcon /> Role
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Character Role"
+                    aria-label="Character Role"
+                    aria-describedby="basic-addon2"
+                    value={this.props.selectedPlayer.role}
+                    onChange={(e) => this.handleSelectedPlayerFieldChange("role", e.target.value)}
+                  />
+                </div>
+                <div className="input-group mb-3">
+                  <div className="input-group-prepend">
+                    <button
+                      className="btn btn-dark"
+                      type="button"
+                      title="Roll on the oracle"
+                      onClick={() => this.handleOnRollPlayerDescriptor()}
+                    >
+                      <RollIcon /> Descriptor
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Character Descriptor"
+                    aria-label="Character Descriptor"
+                    aria-describedby="basic-addon2"
+                    value={this.props.selectedPlayer.descriptor}
+                    onChange={(e) => this.handleSelectedPlayerFieldChange("descriptor", e.target.value)}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -232,6 +232,13 @@ class NavMenu extends Component {
             icon: "fas fa-save",
             active: false,
           },
+          {
+            url: "/privacy-policy",
+            pageName: "Privacy Policy",
+            icon: "fas fa-user-lock",
+
+            active: false,
+          },
         ],
       },
     ],
@@ -286,10 +293,7 @@ class NavMenu extends Component {
             })}
           </HashRouter>
           <li className="credit">
-            <div className="text-left mb-3">
-              <KoFi color="#000" id="X8X64ELNE" label="Help support this app" />
-            </div>
-            This companion is an unofficial product building to support the table top game Ironsworn, developed by Shawn
+            This companion is an unofficial product built to support the table top game Ironsworn, developed by Shawn
             Tomkin
             <a
               className="btn btn-outline-light m-2"
@@ -299,16 +303,11 @@ class NavMenu extends Component {
             >
               @ironswornrpg
             </a>
-            <br />
-            It is distributed for free under the Attribution-NonCommercial-ShareAlike 4.0 International license
-            <a
-              className="m-2"
-              href="https://creativecommons.org/licenses/by/4.0/"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg" />
-            </a>
+          </li>
+          <li className="credit">
+            <div className="text-left mb-3">
+              <KoFi color="#000" id="X8X64ELNE" label="Say thanks with KoFi*" />
+            </div>
           </li>
         </ul>
       </React.Fragment>

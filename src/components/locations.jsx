@@ -147,9 +147,11 @@ class Locations extends Component {
     const locations = this.props.locations.map((l) => {
       if (l.id == id) {
         let val = increment ? 1 : -1;
-        l.bond += val;
-        l.bond = l.bond > 40 ? 40 : l.bond;
-        l.bond = l.bond < 0 ? 0 : l.bond;
+        l.bond = increment ? 2 : 0;
+        // let val = increment ? 1 : -1;
+        // l.bond += val;
+        // l.bond = l.bond > 40 ? 40 : l.bond;
+        // l.bond = l.bond < 0 ? 0 : l.bond;
 
         const players = this.props.players.map((p) => {
           // if (p.name == this.getSelectedPlayer().name) {
@@ -218,7 +220,7 @@ class Locations extends Component {
       } else if (locations.length > 0) {
         id = locations[locations.length - 1].id + 1;
       }
-      locations[locations.length] = {
+      locations[id] = {
         id: id,
         name: this.state.name,
         descriptor: this.state.descriptor,
@@ -521,6 +523,7 @@ class Locations extends Component {
 
                   <ProgressTrack
                     key={this.state.id}
+                    trackLength={1}
                     progress={
                       this.props.locations.find((l) => l.id == this.state.id)
                         ? this.props.locations.find((l) => l.id == this.state.id).bond

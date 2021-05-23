@@ -234,4 +234,21 @@ $small: 1320px;
   .slider-tick::after {
     display: none;
   }
+
+  .move-roller-hr,
+  .move-roller {
+    display: block !important;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .popup .card {
+    width: 88%;
+  }
+
+  .popup .card:not(.danger-btn-card) {
+    top: 5%;
+    height: 90%;
+    max-height: 90% !important;
+  }
 }

@@ -58,6 +58,7 @@ class FoeEditor extends Component {
     const selectedFoe = this.props.selectedFoe;
     selectedFoe[listType][idx] = evt.target.value.replace(/<br>/g, "").replace(/&nbsp;/g, " ");
     this.setState({ selectedFoe });
+    this.editorUpdate();
   };
 
   handleOnIconPickerToggle = (show) => {

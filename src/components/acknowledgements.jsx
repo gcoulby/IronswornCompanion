@@ -11,7 +11,7 @@ class Acknowledgements extends Component {
       {
         contributor: "Shawn Tomkin",
         contribution:
-          "Without Shawn's work none of this could be possible.  When reading the game, you realise the care, effort and devotion that has gone in to creating this game and yet, the game is released as open-source under the creative commons 4.0. True Legend!",
+          "This work is based on Ironsworn, created by Shawn Tomkin, and licensed for our use under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license  (creativecommons.org/licenses/by-nc-sa/4.0/). Without Shawn's work none of this could be possible.  When reading the game, you realise the care, effort and devotion that has gone in to creating this game and yet, the game is released as open-source under the creative commons 4.0. True Legend!",
         url: "https://www.ironswornrpg.com/",
       },
       {

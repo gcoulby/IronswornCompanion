@@ -30,8 +30,8 @@ class Welcome extends Component {
               </div>
               <div className="alert alert-secondary mt-4">
                 <p>
-                  This app has been made publically available in an alpha state for testing purposes. As such, there are
-                  expected to be bugs in the application.
+                  This app is available as an Early Access release and is considered "In Development". As such, there
+                  are expected to be bugs in the application.
                 </p>
                 <p>Should you find a bug or you have a feature request please post on my FeatureUpvote page:</p>
                 <a
@@ -56,7 +56,7 @@ class Welcome extends Component {
                 <div className="row">
                   <div className="col">
                     <div className="text-left my-3">
-                      <KoFi buttonColor="dark" color="#000" id="X8X64ELNE" label="Help support this app" />
+                      <KoFi buttonColor="dark" color="#000" id="X8X64ELNE" label="Thank Graham with KoFi*" />
                     </div>
                   </div>
                 </div>

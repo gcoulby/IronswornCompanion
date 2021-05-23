@@ -5,6 +5,9 @@ import ContentEditable from "react-contenteditable";
 import DangerButton from "./dangerButton";
 import _ from "lodash";
 import { file } from "jszip";
+import Modal from "./modal";
+import OracleRoller from "./oracleRoller";
+import Moves from "./moves";
 
 class Journal extends Component {
   state = {
@@ -186,6 +189,43 @@ class Journal extends Component {
                         deleteId={this.getSelectedFile().id}
                         deleteMessage="Are you sure you want to remove this journal entry?"
                       />
+                    </div>
+                    <div className="row">
+                      <div className="col">
+                        <Modal
+                          hideHeader={false}
+                          modalWidth={1000}
+                          modalHeight={700}
+                          buttonText="Moves"
+                          modalComponent={
+                            <Moves
+                              moves={this.props.moves}
+                              onComponentUpdate={this.props.onComponentUpdate}
+                              selectedPlayer={this.props.selectedPlayer}
+                              footerDice={this.state.footerDice}
+                              burnMomentum={this.burnMomentum}
+                              // footerDice={this.props.footerDice}
+                            />
+                          }
+                          icon="game-icon game-icon-move icon-md"
+                          title="Moves"
+                        />
+                        <Modal
+                          className="ml-2"
+                          hideHeader={false}
+                          modalWidth={1000}
+                          modalHeight={700}
+                          buttonText="Oracles"
+                          modalComponent={
+                            <OracleRoller
+                              oracles={this.props.oracles}
+                              onComponentUpdate={this.props.onComponentUpdate}
+                            />
+                          }
+                          icon="game-icon game-icon-crystal-ball icon-md"
+                          title="Oracles"
+                        />
+                      </div>
                     </div>
                   </div>
                 </React.Fragment>

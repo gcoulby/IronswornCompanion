@@ -99,3 +99,18 @@ $end: 20;
     font-family: sans-serif;
   }
 }
+
+.card-body {
+  height: 100%;
+}
+
+.popup-model-container {
+  position: relative;
+  height: 90%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+// .popup .card {
+//   max-height: 85%;
+// }

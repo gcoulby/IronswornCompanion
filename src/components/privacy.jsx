@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import ReactMarkdown from "react-markdown";
-import gclogo from "../img/gc_logoai.png";
 import gfm from "remark-gfm";
 import toc from "remark-toc";
-import source from "../README.md";
-
-class Documentation extends Component {
+import source from "../Privacy_Policy.md";
+class Privacy extends Component {
   state = {
     post: null,
   };
@@ -23,7 +21,6 @@ class Documentation extends Component {
   render() {
     return this.getDocumentationContent();
   }
-
   getDocumentationContent() {
     const { post } = this.state;
     return (
@@ -36,4 +33,4 @@ class Documentation extends Component {
   }
 }
 
-export default Documentation;
+export default Privacy;

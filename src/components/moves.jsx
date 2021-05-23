@@ -87,15 +87,17 @@ class Moves extends Component {
                     </div>
                   </div>
                 </div>
-                <hr className="d-xs-block d-lg-none" />
-                <div className="row mb-5 d-xs-block d-lg-none">
+                <hr className="move-roller-hr" />
+                <div className="row mb-5">
                   <div className="col mb-4">
-                    <Roller
-                      light={true}
-                      selectedPlayer={this.props.selectedPlayer}
-                      footerDice={this.props.footerDice}
-                      burnMomentum={this.props.burnMomentum}
-                    />
+                    <div className="move-roller">
+                      <Roller
+                        light={true}
+                        selectedPlayer={this.props.selectedPlayer}
+                        footerDice={this.props.footerDice}
+                        burnMomentum={this.props.burnMomentum}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

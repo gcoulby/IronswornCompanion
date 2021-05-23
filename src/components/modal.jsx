@@ -9,7 +9,7 @@ class Modal extends Component {
   render() {
     return (
       <React.Fragment>
-        <button className="btn btn-dark" onClick={() => this.changeModalState(true)}>
+        <button className={`btn btn-dark ${this.props.className}`} onClick={() => this.changeModalState(true)}>
           <i className={this.props.icon} aria-hidden="true"></i> {this.props.buttonText}
         </button>
         {this.state.show ? (
@@ -40,7 +40,9 @@ class Modal extends Component {
                 )}
 
                 <div className="card-body">
-                  <div className="row">{this.props.modalComponent}</div>
+                  {/* <div className="row">
+                    </div> */}
+                  <div className="popup-model-container">{this.props.modalComponent}</div>
                 </div>
               </div>
             </div>
