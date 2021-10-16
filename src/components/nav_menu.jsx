@@ -11,12 +11,6 @@ class NavMenu extends Component {
       {
         title: "Campaign",
         pages: [
-          // {
-          //   url: "/",
-          //   pageName: "Campaign Overview",
-          //   icon: "fas fa-book",
-          //   active: false,
-          // },
           {
             url: "/characters",
             pageName: "Characters",
@@ -221,6 +215,12 @@ class NavMenu extends Component {
         title: "Information",
         pages: [
           {
+            url: "/",
+            pageName: "Home",
+            icon: "fas fa-home",
+            active: false,
+          },
+          {
             url: "/acknowledgements",
             pageName: "Acknowledgements",
             icon: "fas fa-thumbs-up",
@@ -312,7 +312,7 @@ class NavMenu extends Component {
           </li>
           <li className="credit">
             <div className="text-left mb-3">
-              <KoFi color="#000" id="X8X64ELNE" label="Say thanks with KoFi*" />
+              {/* <KoFi color="#000" id="X8X64ELNE" label="Say thanks with KoFi*" /> */}
             </div>
           </li>
         </ul>

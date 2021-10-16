@@ -856,6 +856,7 @@ class App extends Component {
                     onComponentUpdate={this.componentDidUpdate}
                     handleFileContentsChange={this.handleFileContentsChange}
                     saveChangesToEditor={this.saveChangesToEditor}
+                    selectedPlayer={this.getSelectedPlayer()}
                     lastJournalEditSaveComplete={this.state.lastJournalEditSaveComplete}
                     oracles={this.state.oracles}
                     moves={this.state.moves}

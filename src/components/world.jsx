@@ -315,14 +315,23 @@ class World extends Component {
     this.setState({ world: world });
   };
 
-  handleCustomWorldDetailsInputChanged = (evt) => {
+  handleCustomWorldDetailsInputChanged = (evt, tab) => {
     const world = this.props.world;
-    world.customWorldDetails = evt.target.value;
+
+    if (tab != null) {
+      world.categories.find((w) => w.id == tab.eventKey).customWorldDetails = evt.target.value;
+    } else {
+      world.customWorldDetails = evt.target.value;
+    }
     this.setState({ world: world });
   };
-  handleCustomWorldQuestStarterInputChanged = (evt) => {
+  handleCustomWorldQuestStarterInputChanged = (evt, tab) => {
     const world = this.props.world;
-    world.customWorldQuestStarter = evt.target.value;
+    if (tab != null) {
+      world.categories.find((w) => w.id == tab.eventKey).customWorldQuestStarter = evt.target.value;
+    } else {
+      world.customWorldQuestStarter = evt.target.value;
+    }
     this.setState({ world: world });
   };
 
@@ -376,6 +385,23 @@ class World extends Component {
                     </li>
                   ))}
                 </ul>
+                <React.Fragment>
+                  <div className="card card-body mt-4 world-card">
+                    <span className="modesto">Custom Truth:</span>
+                    <textarea
+                      className="form-control"
+                      rows="15"
+                      onChange={(e) => this.handleCustomWorldDetailsInputChanged(e, tab, this)}
+                      value={this.props.world.categories.find((w) => w.id == tab.eventKey).customWorldDetails}
+                    ></textarea>
+                    <span className="modesto mt-3">Custom Quest Starter:</span>
+                    <textarea
+                      className="form-control"
+                      onChange={(e) => this.handleCustomWorldQuestStarterInputChanged(e, tab, this)}
+                      value={this.props.world.categories.find((w) => w.id == tab.eventKey).customWorldQuestStarter}
+                    ></textarea>
+                  </div>
+                </React.Fragment>
               </Tab>
             ))}
             <Tab eventKey="custom" title={"Custom"}>
