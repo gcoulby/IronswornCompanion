@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/IronswornCompanion/static/css/main.bed101f0.chunk.css",
-    "main.js": "/IronswornCompanion/static/js/main.7a4b7467.chunk.js",
-    "main.js.map": "/IronswornCompanion/static/js/main.7a4b7467.chunk.js.map",
+    "main.js": "/IronswornCompanion/static/js/main.21afba68.chunk.js",
+    "main.js.map": "/IronswornCompanion/static/js/main.21afba68.chunk.js.map",
     "runtime-main.js": "/IronswornCompanion/static/js/runtime-main.1ab20149.js",
     "runtime-main.js.map": "/IronswornCompanion/static/js/runtime-main.1ab20149.js.map",
     "static/css/2.d424be97.chunk.css": "/IronswornCompanion/static/css/2.d424be97.chunk.css",
@@ -37,6 +37,6 @@
     "static/css/2.d424be97.chunk.css",
     "static/js/2.6865b4cf.chunk.js",
     "static/css/main.bed101f0.chunk.css",
-    "static/js/main.7a4b7467.chunk.js"
+    "static/js/main.21afba68.chunk.js"
   ]
 }
