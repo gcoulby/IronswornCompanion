@@ -761,12 +761,23 @@ class App extends Component {
 
   handleOnSelectedAssetChange = (id) => {
     let foundAsset = this.state.assets.find((a) => a.id == id);
-    let asset = { ...foundAsset };
-    // asset.TrackLabels = asset.TrackLabels ? asset.TrackLabels : [];
+    let asset = _.cloneDeep(foundAsset);
+    asset.InputFields = asset.InputFields ? asset.InputFields : [];
+    asset.Abilities = asset.Abilities ? asset.Abilities : [];
+    asset.TrackLabels = asset.TrackLabels ? asset.TrackLabels : [];
+    asset.Description = asset.Description ?? "";
     if (!foundAsset) {
       asset = new DefaultAsset();
     }
     this.setState({ assetBuilderSelectedAsset: asset });
+  };
+
+  handleOnUpdateSelectedAsset = (asset) => {
+    this.setState({ assetBuilderSelectedAsset: asset });
+  };
+
+  handleOnUpdateAssets = (newAssets) => {
+    this.setState({ assets: newAssets });
   };
 
   handleOnSelectedDelveCardChange = (id) => {
@@ -1115,6 +1126,8 @@ class App extends Component {
                     // trackLabelCursorPosition={this.state.assetBuilderTrackLabelCursorPosition}
                     onSelectedAssetChange={this.handleOnSelectedAssetChange}
                     onComponentUpdate={this.componentDidUpdate}
+                    onUpdateSelectedAsset={this.handleOnUpdateSelectedAsset}
+                    onUpdateAssets={this.handleOnUpdateAssets}
                   />
                 </Route>
 

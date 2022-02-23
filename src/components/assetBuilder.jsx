@@ -87,39 +87,72 @@ class AssetBuilder extends Component {
   };
 
   handleOnIconSelect = (iconClass) => {
-    const selectedAsset = this.props.selectedAsset;
+    const selectedAsset = { ...this.props.selectedAsset };
     selectedAsset.icon = iconClass;
-    this.setState({ selectedAsset });
+    // this.setState({ selectedAsset });
+    this.props.onUpdateSelectedAsset(selectedAsset);
     this.handleOnIconPickerToggle(false);
   };
 
   handleOnTextInputChange = (evt, field) => {
-    const selectedAsset = this.props.selectedAsset;
+    const selectedAsset = { ...this.props.selectedAsset };
     selectedAsset[field] = evt.target.value;
-    this.setState({ selectedAsset });
+    // this.setState({ selectedAsset });
+    this.props.onUpdateSelectedAsset(selectedAsset);
     this.editorUpdate();
   };
 
   handleOnInputFieldNameInputChange = (evt, index) => {
-    const selectedAsset = this.props.selectedAsset;
-    selectedAsset.InputFields[index] = { name: evt.target.value, value: "" };
-    this.setState({ selectedAsset });
+    const selectedAsset = { ...this.props.selectedAsset };
+    selectedAsset.InputFields = selectedAsset.InputFields.map((f, i) => {
+      if (i === index) {
+        console.log(selectedAsset);
+        console.log(this.props.assets.find((a) => a.id == selectedAsset.id));
+        f = { name: evt.target.value, value: "" };
+      }
+      return f;
+    });
+
+    if (selectedAsset.InputFields.length < index + 1) {
+      selectedAsset.InputFields[index] = { name: evt.target.value, value: "" };
+    }
+
+    // selectedAsset.InputFields[index] = { name: evt.target.value, value: "" };
+    // this.setState({ selectedAsset });
+    this.props.onUpdateSelectedAsset(selectedAsset);
     this.editorUpdate();
   };
 
   handleOnAbilityInputChange = (evt, index, field) => {
-    const selectedAsset = this.props.selectedAsset;
-    selectedAsset.Abilities[index] = { ...selectedAsset.Abilities[index] };
-    selectedAsset.Abilities[index][field] = evt.target.value;
-    this.setState({ selectedAsset });
+    const selectedAsset = { ...this.props.selectedAsset };
+    selectedAsset.Abilities = selectedAsset.Abilities.map((a, i) => {
+      if (i === index) {
+        console.log(selectedAsset);
+        console.log(this.props.assets.find((a) => a.id == selectedAsset.id));
+        a[field] = evt.target.value;
+      }
+      return a;
+    });
+    // selectedAsset.Abilities[index] = { ...selectedAsset.Abilities[index] };
+    // selectedAsset.Abilities[index][field] = evt.target.value;
+    // this.setState({ selectedAsset });
+    this.props.onUpdateSelectedAsset(selectedAsset);
     this.editorUpdate();
   };
 
   handleOnAbilityCheckboxChange = (evt, index) => {
-    const selectedAsset = this.props.selectedAsset;
-    selectedAsset.Abilities[index] = { ...selectedAsset.Abilities[index] };
-    selectedAsset.Abilities[index].Enabled = evt.target.checked;
-    this.setState({ selectedAsset });
+    const selectedAsset = { ...this.props.selectedAsset };
+    selectedAsset.Abilities = selectedAsset.Abilities.map((a, i) => {
+      if (i === index) {
+        console.log(selectedAsset);
+        a.Enabled = evt.target.checked;
+      }
+      return a;
+    });
+    // selectedAsset.Abilities[index] = { ...selectedAsset.Abilities[index] };
+    // selectedAsset.Abilities[index].Enabled = evt.target.checked;
+    // this.setState({ selectedAsset });
+    this.props.onUpdateSelectedAsset(selectedAsset);
     this.editorUpdate();
   };
 
@@ -179,7 +212,7 @@ class AssetBuilder extends Component {
 
   handleOnAddAsset = () => {
     const assets = this.props.assets;
-    let asset = { ...this.props.selectedAsset };
+    let asset = _.cloneDeep(this.props.selectedAsset); // { ...this.props.selectedAsset };
     asset.id = this.getUserAssetId(asset.Name);
     asset.core = false;
     asset.augmented = false;
