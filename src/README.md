@@ -1,5 +1,7 @@
 # Ironsworn Companion
 
+To use the Ironsworn Companion visit: [https://gcoulby.github.io/IronswornCompanion/](https://gcoulby.github.io/IronswornCompanion/)
+
 ## What is Ironsworn?
 
 Ironsworn is a tabletop RPG created by Shawn Tomkin. What makes Ironsworn unique is that unlike traditional tabletop RPGs, Ironsworn enables solo/ small-group play, as its unique game mechanics remove the need for a traditional game master.

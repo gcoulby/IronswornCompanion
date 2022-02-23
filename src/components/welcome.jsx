@@ -62,7 +62,9 @@ class Welcome extends Component {
                         am currently working full-time while completing a Ph.D. part-time. Thus, my ability to maintain
                         this app is ever waning. If anyone would like to support this project please consider forking
                         the repository and submitting pull requests. Please private message me via the Ironsworn discord
-                        to discuss this. It is for this reason that all of the Ko-Fi links have been removed as I do
+                        to discuss this. It is for this reason that all of the Ko-Fi links have been removed, as even
+                        though they are not for goods or services as I do not feel comfortable collecting donations when
+                        I am not actively working on this regularly.
                       </p>
                       <a
                         className="btn btn-dark"
