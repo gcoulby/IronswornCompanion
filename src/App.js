@@ -137,6 +137,14 @@ class App extends Component {
         nextId: 0,
         buttonText: "Write Your Epilogue",
       },
+      {
+        type: "challenge",
+        title: "",
+        details: "",
+        rank: 0,
+        nextId: 0,
+        buttonText: "Resolve the Scene",
+      },
     ],
     delves: [],
     newDelve: {
@@ -753,12 +761,23 @@ class App extends Component {
 
   handleOnSelectedAssetChange = (id) => {
     let foundAsset = this.state.assets.find((a) => a.id == id);
-    let asset = { ...foundAsset };
-    // asset.TrackLabels = asset.TrackLabels ? asset.TrackLabels : [];
+    let asset = _.cloneDeep(foundAsset);
+    asset.InputFields = asset.InputFields ? asset.InputFields : [];
+    asset.Abilities = asset.Abilities ? asset.Abilities : [];
+    asset.TrackLabels = asset.TrackLabels ? asset.TrackLabels : [];
+    asset.Description = asset.Description ?? "";
     if (!foundAsset) {
       asset = new DefaultAsset();
     }
     this.setState({ assetBuilderSelectedAsset: asset });
+  };
+
+  handleOnUpdateSelectedAsset = (asset) => {
+    this.setState({ assetBuilderSelectedAsset: asset });
+  };
+
+  handleOnUpdateAssets = (newAssets) => {
+    this.setState({ assets: newAssets });
   };
 
   handleOnSelectedDelveCardChange = (id) => {
@@ -848,6 +867,7 @@ class App extends Component {
                     onComponentUpdate={this.componentDidUpdate}
                     handleFileContentsChange={this.handleFileContentsChange}
                     saveChangesToEditor={this.saveChangesToEditor}
+                    selectedPlayer={this.getSelectedPlayer()}
                     lastJournalEditSaveComplete={this.state.lastJournalEditSaveComplete}
                     oracles={this.state.oracles}
                     moves={this.state.moves}
@@ -1001,6 +1021,19 @@ class App extends Component {
                     addLog={this.handleAddLog}
                   />
                 </Route>
+                <Route exact path="/scene-challenges">
+                  <Progression
+                    title="Scene Challenges"
+                    type="challenge"
+                    ranks={this.state.ranks}
+                    newProgressions={this.state.newProgressions}
+                    players={this.state.players}
+                    selectedPlayer={this.getSelectedPlayer()}
+                    onProgressRollClicked={this.handleOnProgressRollClicked}
+                    onComponentUpdate={this.componentDidUpdate}
+                    addLog={this.handleAddLog}
+                  />
+                </Route>
                 <Route exact path="/inventory">
                   <Inventory
                     players={this.state.players}
@@ -1093,6 +1126,8 @@ class App extends Component {
                     // trackLabelCursorPosition={this.state.assetBuilderTrackLabelCursorPosition}
                     onSelectedAssetChange={this.handleOnSelectedAssetChange}
                     onComponentUpdate={this.componentDidUpdate}
+                    onUpdateSelectedAsset={this.handleOnUpdateSelectedAsset}
+                    onUpdateAssets={this.handleOnUpdateAssets}
                   />
                 </Route>
 

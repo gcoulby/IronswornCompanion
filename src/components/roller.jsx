@@ -27,8 +27,9 @@ class Roller extends Component {
 
   handleOnActionRollClicked = () => {
     let stat = this.props.selectedPlayer?.stats.find((s) => s.stat == this.state.Stat);
-    let statVal = stat?.value ?? 0;
-    const actionRoll = this.diceRoller.actionRoll(statVal, this.state.AddVal);
+    let statVal = stat?.value === "" ? 0 : stat?.value;
+    let addVal = this.state.AddVal === "" ? 0 : this.state.AddVal;
+    const actionRoll = this.diceRoller.actionRoll(statVal, addVal);
     actionRoll.StatName = this.state.Stat;
     this.setState({ actionRoll });
   };

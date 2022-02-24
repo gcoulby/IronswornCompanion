@@ -45,49 +45,86 @@ class Moves extends Component {
 
         <div className="row moves-roller">
           <div className="col">
-            {/* <Tabs defaultActiveKey="move_type_Adventure" id="uncontrolled-tab-example"> */}
-            {/* //{" "} */}
-            {/* <Tab eventKey={`move_type_${m}`} title={m}> */}
-            <div className="row">
-              <div className="col-12 col-lg-4 moves-list">
-                <table className="table table-striped table-hover">
-                  {[...new Set(this.props.moves.map((m) => m.Type))].map((m) => (
-                    <React.Fragment>
-                      <thead className="text-light bg-dark">
-                        <th style={{ fontWeight: 100 }}>{m}</th>
-                      </thead>
-                      <tbody>
-                        {this.props.moves
-                          .filter((f) => f.Type == m)
-                          .map((m2) => (
-                            <tr onClick={() => this.handleMoveSelect(m2)}>
-                              <td className="move-button">{m2.Name}</td>
-                            </tr>
-                          ))}
-                      </tbody>
-                    </React.Fragment>
-                  ))}
-                </table>
-              </div>
-              <div className="col-12 col-lg-8">
-                <hr className="d-xs-block d-lg-none" />
+            <Tabs defaultActiveKey="move_type_Moves" id="uncontrolled-tab-example">
+              <Tab eventKey={`move_type_Moves`} title="Moves">
                 <div className="row">
-                  <div className="col">
-                    <div id="move-preview" className="move-display py-3 px-2">
-                      {this.state.selectedMove ? (
+                  <div className="col-12 col-lg-4 moves-list">
+                    <table className="table table-striped table-hover">
+                      {[...new Set(this.props.moves.map((m) => m.Type))].map((m) => (
                         <React.Fragment>
-                          <h6>{this.state.selectedMove.Name}</h6>
-                          <ReactMarkdown id="" plugins={[gfm]}>
-                            {this.state.selectedMove.Text}
-                          </ReactMarkdown>
+                          <thead className="text-light bg-dark">
+                            <th style={{ fontWeight: 100 }}>{m}</th>
+                          </thead>
+                          <tbody>
+                            {this.props.moves
+                              .filter((f) => f.Type == m)
+                              .map((m2) => (
+                                <tr onClick={() => this.handleMoveSelect(m2)}>
+                                  <td className="move-button">{m2.Name}</td>
+                                </tr>
+                              ))}
+                          </tbody>
                         </React.Fragment>
-                      ) : (
-                        React.Fragment
-                      )}
+                      ))}
+                    </table>
+                  </div>
+                  <div className="col-12 col-lg-8 ">
+                    <hr className="d-xs-block d-lg-none" />
+                    <div className="row">
+                      <div className="col">
+                        <div id="move-preview" className="move-display py-3 px-2">
+                          {this.state.selectedMove ? (
+                            <React.Fragment>
+                              <h6>{this.state.selectedMove.Name}</h6>
+                              <ReactMarkdown id="" plugins={[gfm]}>
+                                {this.state.selectedMove.Text}
+                              </ReactMarkdown>
+                            </React.Fragment>
+                          ) : (
+                            React.Fragment
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    {/* <hr className="move-roller-hr" />
+                    <div className="row mb-5">
+                      <div className="col mb-4">
+                        <div className="move-roller">
+                          <Roller
+                            light={true}
+                            selectedPlayer={this.props.selectedPlayer}
+                            footerDice={this.props.footerDice}
+                            burnMomentum={this.props.burnMomentum}
+                          />
+                        </div>
+                      </div>
+                    </div> */}
+                  </div>
+                </div>
+              </Tab>
+              <Tab eventKey={`move_type_Info`} title="Info">
+                <div className="col-12 col-lg-8">
+                  <hr className="d-xs-block d-lg-none" />
+                  <div className="row">
+                    <div className="col">
+                      <div id="move-preview" className="move-display py-3 px-2">
+                        {this.state.selectedMove ? (
+                          <React.Fragment>
+                            <h6>{this.state.selectedMove.Name}</h6>
+                            <ReactMarkdown id="" plugins={[gfm]}>
+                              {this.state.selectedMove.Text}
+                            </ReactMarkdown>
+                          </React.Fragment>
+                        ) : (
+                          React.Fragment
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-                <hr className="move-roller-hr" />
+              </Tab>
+              <Tab eventKey={`move_type_Roller`} title="Roller">
+                {/* <hr className="move-roller-hr" /> */}
                 <div className="row mb-5">
                   <div className="col mb-4">
                     <div className="move-roller">
@@ -100,10 +137,8 @@ class Moves extends Component {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            {/* </Tab> */}
-            {/* </Tabs> */}
+              </Tab>
+            </Tabs>
           </div>
         </div>
       </React.Fragment>

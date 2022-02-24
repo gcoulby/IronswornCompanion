@@ -122,6 +122,9 @@ class ProgressCard extends Component {
               ) : (
                 React.Fragment
               )}
+              <div className="text-center mt-3">
+                <span className="modesto ">Progress</span>
+              </div>
               <ProgressTrack
                 key={this.props.id}
                 complete={this.props.progression.complete}
@@ -136,8 +139,23 @@ class ProgressCard extends Component {
                     ? this.props.progression.threatVal
                     : null
                 }
-                // onProgressionRegress={this.props.onProgressionRegress}
               />
+              {this.props.countdown !== null ? (
+                <React.Fragment>
+                  <div className="text-center">
+                    <span className="modesto mt-2 ">Countdown</span>
+                  </div>
+                  <ProgressTrack
+                    key={this.props.id}
+                    complete={this.props.progression.complete}
+                    progress={this.props.countdown}
+                    onProgressionChange={(increment) => this.props.onCountDownChange(this.props.id, increment)}
+                    trackLength={4}
+                  />
+                </React.Fragment>
+              ) : (
+                React.Fragment
+              )}
               <div className="text-center pt-3 pb-2">
                 <div className="row">
                   <div className="col-lg-9 col-12">

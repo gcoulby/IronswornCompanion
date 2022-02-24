@@ -3652,6 +3652,26 @@ class Oracles {
     {
       source: "Delve",
       theme: "Place",
+      title: "Delve Place, Default Type",
+      core: true,
+      prompts: [
+        "sanctuary",
+        "caverns",
+        "expanse",
+        "pass",
+        "reach",
+        "cove",
+        "sanctuary",
+        "outpost",
+        "pit",
+        "sanctum",
+        "depths",
+        "abyss",
+      ],
+    },
+    {
+      source: "Delve",
+      theme: "Place",
       title: "Delve Place, Barrow Type",
       core: true,
       prompts: ["sepulcher", "grave", "crypt", "mound", "tomb", "barrow"],
@@ -3743,6 +3763,84 @@ class Oracles {
       title: "Delve Place, Underkeep Type",
       core: true,
       prompts: ["catacomb", "maze", "chambers", "pit", "den", "sanctum", "hall", "underkeep", "labyrinth", "vault"],
+    },
+    {
+      source: "Delve",
+      theme: "Character",
+      title: "Disposition",
+      core: true,
+      prompts: [
+        "Helpful",
+        "Friendly",
+        "Cooperative",
+        "Curious",
+        "Indifferent",
+        "Suspicious",
+        "Wanting",
+        "Desperate",
+        "Demanding",
+        "Unfriendly",
+        "Threatening",
+        "Hostile",
+      ],
+    },
+    {
+      source: "Delve",
+      theme: "Character",
+      title: "Activity",
+      core: true,
+      prompts: [
+        "Guarding",
+        "Preserving",
+        "Constructing",
+        "Mending",
+        "Assisting",
+        "Securing",
+        "Learning",
+        "Sneaking",
+        "Fleeing",
+        "Sacrificing",
+        "Creating",
+        "Luring",
+        "Hunting",
+        "Seizing",
+        "Bargaining",
+        "Mimicking",
+        "Tricking",
+        "Tracking",
+        "Escorting",
+        "Hiding",
+        "Raiding",
+        "Socializing",
+        "Exploring",
+        "Journeying",
+        "Supporting",
+        "Avoiding",
+        "Disabling",
+        "Leading",
+        "Assaulting",
+        "Ensnaring",
+        "Defending",
+        "Recovering",
+        "Patrolling",
+        "Resting",
+        "Distracting",
+        "Leaving",
+        "Fighting",
+        "Ambushing",
+        "Controlling",
+        "Observing",
+        "Gathering",
+        "Suffering",
+        "Threatening",
+        "Searching",
+        "Destroying",
+        "Restoring",
+        "Consuming",
+        "Removing",
+        "Inspecting",
+        "Summoning",
+      ],
     },
     {
       source: "Delve",
@@ -4233,11 +4331,25 @@ class Oracles {
   ];
 
   constructor(state) {
+    let defaultOracleTables = [];
+    if (state) {
+      defaultOracleTables = new Oracles().tables;
+    }
     this.diceRoller = new DiceRoller();
     if (!state) return;
     this.editOracleList = state.editOracleList;
     this.newOracleTableName = state.newOracleTableName;
+    console.log(this.tables);
     this.tables = state.tables;
+    console.log(state.tables);
+    //Deal with patches, where new tables are added
+    defaultOracleTables.map((dt, i) => {
+      if (this.tables.find((t) => t.title === dt.title) === undefined) {
+        // this.tables.push({ ...dt });
+
+        this.tables.splice(i, 0, { ...dt });
+      }
+    });
     this.rollHistory = state.rollHistory ?? [];
     this.selectedOracleSource = state.selectedOracleSource;
     this.selectedOracleTheme = state.selectedOracleTheme;
@@ -4260,6 +4372,8 @@ class Oracles {
 
   getRandomPromptFromOracleTable(table) {
     let oracle = this.tables.find((o) => o.title === table);
+    console.log(table);
+    console.log(oracle);
     let rn = this.diceRoller.roll([oracle.prompts.length]);
     let result = oracle.prompts[rn[0].value];
     this.addRollHistory(oracle.theme, oracle.title, result);
@@ -4292,7 +4406,12 @@ class Oracles {
     let rn = this.diceRoller.roll([7])[0].value;
     let descriptor = this.titleCase(this.getRandomPromptFromOracleTable("Delve Descriptor"));
     let detail = this.titleCase(this.getRandomPromptFromOracleTable("Delve Detail"));
-    let place = this.titleCase(this.getRandomPromptFromOracleTable(`Delve Place, ${domain} Type`));
+    let place = "";
+    try {
+      place = this.titleCase(this.getRandomPromptFromOracleTable(`Delve Place, ${domain} Type`));
+    } catch (error) {
+      place = this.titleCase(this.getRandomPromptFromOracleTable(`Delve Place, Default Type`));
+    }
     let namesake = this.getRandomPromptFromOracleTable("Ironlander Names");
     switch (rn) {
       case 0:

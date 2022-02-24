@@ -50,7 +50,7 @@ class Progression extends Component {
     if (this.getProgressionByType(this.state.type).title != "") {
       const players = this.props.players.map((p) => {
         if (p.selected) {
-          p.progressions.push({
+          let prog = {
             id: this.getProgressionByType(this.state.type).nextId,
             type: this.state.type,
             progress: 0,
@@ -61,7 +61,13 @@ class Progression extends Component {
             progressRoll: null,
             // threatText: "",
             // threatVal: 0,
-          });
+          };
+
+          if (this.state.type === "challenge") {
+            prog.countdown = 0;
+          }
+
+          p.progressions.push(prog);
           this.logProgressionStart();
         }
         return p;
@@ -96,6 +102,9 @@ class Progression extends Component {
       case "foe":
         logText = "discovered a new foe";
         break;
+      case "challenge":
+        logText = "faces a new challenge";
+        break;
     }
     this.props.addLog(
       "event",
@@ -118,6 +127,9 @@ class Progression extends Component {
       case "foe":
         logText = "defeated the foe";
         break;
+      case "challenge":
+        logText = "overcame the challenge";
+        break;
     }
     this.props.addLog(
       "event",
@@ -139,6 +151,9 @@ class Progression extends Component {
         break;
       case "foe":
         logText = "lost sight of the foe";
+        break;
+      case "challenge":
+        logText = "overwhelmed by the challenge";
         break;
     }
     this.props.addLog(
@@ -197,10 +212,34 @@ class Progression extends Component {
               }
               if (increment)
                 this.props.addLog("event", `${p.name} made progress towards their ${p2.type}: ${p2.title}`);
-              else this.props.addLog("event", `${p.name} loses ground towards their ${p2.type}: ${p2.title}`);
+              else this.props.addLog("event", `${p.name} loses ground against their ${p2.type}: ${p2.title}`);
               p2.progress += val;
               p2.progress = p2.progress > 40 ? 40 : p2.progress;
               p2.progress = p2.progress < 0 ? 0 : p2.progress;
+            }
+          });
+      }
+
+      return p;
+    });
+    this.setState({ players });
+  };
+
+  handleOnCountdownChanged = (id, increment) => {
+    const players = this.props.players.map((p) => {
+      if (p.selected) {
+        p.progressions
+          .filter((p1) => p1.type === this.state.type)
+          .map((p2) => {
+            if (p2.id == id) {
+              let val = 0;
+              val = increment ? 4 : -4;
+              if (increment)
+                this.props.addLog("event", `${p.name} made progress towards their ${p2.type}: ${p2.title}`);
+              else this.props.addLog("event", `${p.name} loses ground against their ${p2.type}: ${p2.title}`);
+              p2.countdown += val;
+              p2.countdown = p2.countdown > 16 ? 16 : p2.countdown;
+              p2.countdown = p2.countdown < 0 ? 0 : p2.countdown;
             }
           });
       }
@@ -363,6 +402,8 @@ class Progression extends Component {
                 onProgressCancel={this.handleProgressionDelete}
                 onThreatChange={this.state.type === "vow" ? this.handleOnThreatChanged : null}
                 showThreats={this.state.type === "vow"}
+                countdown={this.state.type === "challenge" && p.countdown !== undefined ? p.countdown : null}
+                onCountDownChange={this.handleOnCountdownChanged}
               />
             ))}
         </div>

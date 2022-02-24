@@ -85,9 +85,9 @@ class Navbar extends Component {
         <nav className="navbar navbar-dark bg-dark mobile-menu">
           <div className="row">
             <div className="col-auto">
-              <HashRouter basename="/">
+              <HashRouter basename="/stats">
                 <Link className="btn btn-outline-light" to="/" onClick={() => this.handleMenuToggleButton(true)}>
-                  <i className="fa fa-home" aria-hidden="true"></i>
+                  <i className="fas fa-heartbeat" aria-hidden="true"></i>
                 </Link>
               </HashRouter>
             </div>

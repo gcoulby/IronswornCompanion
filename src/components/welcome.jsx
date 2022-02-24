@@ -56,7 +56,25 @@ class Welcome extends Component {
                 <div className="row">
                   <div className="col">
                     <div className="text-left my-3">
-                      <KoFi buttonColor="dark" color="#000" id="X8X64ELNE" label="Thank Graham with KoFi*" />
+                      {/* <KoFi buttonColor="dark" color="#000" id="X8X64ELNE" label="Thank Graham with KoFi*" /> */}
+                      <p>
+                        <b>Apologies:</b> While I would love to be in a position to give this app my full attention. I
+                        am currently working full-time while completing a Ph.D. part-time. Thus, my ability to maintain
+                        this app is ever waning. If anyone would like to support this project please consider forking
+                        the repository and submitting pull requests. Please private message me via the Ironsworn discord
+                        to discuss this. It is for this reason that all of the Ko-Fi links have been removed, as even
+                        though they are not for goods or services as I do not feel comfortable collecting donations when
+                        I am not actively working on this regularly.
+                      </p>
+                      <a
+                        className="btn btn-dark"
+                        // href="https://docs.google.com/spreadsheets/d/1GXvsk8f_Kx_lVNN78J1027Np0T7-pF1pLZsqnJA6-fE/edit#gid=1386834576"
+                        href="https://github.com/gcoulby/IronswornCompanion"
+                        rel="noreferrer noopener"
+                        target="_blank"
+                      >
+                        <i className="fab fa-github" aria-hidden="true"></i>&nbsp; Fork on Github
+                      </a>
                     </div>
                   </div>
                 </div>
