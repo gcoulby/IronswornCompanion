@@ -1,0 +1,28 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  build:
+    image: node:18-alpine3.14
+    container_name: IronswornCompanion
+    entrypoint: sh -c 'cd /app && npm run build'
+    volumes:
+      - ./:/app
+  start:
+    image: node:18-alpine3.14
+    container_name: IronswornCompanion
+    entrypoint: sh -c 'cd /app && npm run start'
+    ports:
+      - "3010:3010"
+    volumes:
+      - ./:/app
+  setup:
+    image: node:18-alpine3.14
+    container_name: IronswornCompanion
+    entrypoint: sh -c 'cd /app && npm run setup'
+    volumes:
+      - ./:/app
+  clean:
+    image: node:18-alpine3.14
+    container_name: IronswornCompanion
+    entrypoint: sh -c 'cd /app && npm run clean'
+    volumes:
+      - ./:/app

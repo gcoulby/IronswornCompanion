@@ -45,15 +45,20 @@
   },
   "scripts": {
     "postinstall": "patch-package",
-    "start": "SET PORT=3010 && react-scripts start",
-    "prebuild": "copy .\\README.md .\\src\\README.md && copy .\\LICENSE .\\src\\LICENSE",
-    "build": "react-scripts build",
+    "start": "npm-run-all -p watch-css start-js",
+    "start-js": "NODE_OPTIONS=--openssl-legacy-provider PORT=3010 PUBLIC_URL=http://localhost:3010/ react-scripts start",
+    "prebuild": "cp ./README.md ./src/README.md && cp ./LICENSE ./src/LICENSE && sed -i \"s/](public\\/img/](img/g\" src/README.md",
+    "build-css": "sass src/css/src/scss/main.scss src/css/css-compiled/main.css",
+    "watch-css": "npm run build-css && sass src/css/src/scss/main.scss src/css/css-compiled/main.css --watch",
+    "build": "npm run build-css && NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "webpack-start": "webpack-dev-server --mode development --open --hot",
     "webpack-build": "webpack --mode production",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "clean": "git checkout -- .;git clean -dfx;git status",
+    "setup": "npm i --legacy-peer-deps"
   },
   "eslintConfig": {
     "extends": [
@@ -77,11 +82,9 @@
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
     "babel-core": "^6.26.3",
-    "babel-loader": "^8.1.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "webpack": "^4.29.0",
-    "webpack-cli": "^3.2.1",
-    "webpack-dev-server": "^3.11.0"
+    "npm-run-all": "^4.1.5",
+    "sass": "^1.51.0"
   }
 }
