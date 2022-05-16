@@ -59,7 +59,7 @@ $end: 20;
 
 @for $i from $start through $end {
   $value: $i * 100;
-  $valHalf: $value / 2;
+  $valHalf: $value * 0.5;
   $valHalfPx: $valHalf + 0px;
 
   [data-width="#{$value}"] .card {

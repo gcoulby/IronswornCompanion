@@ -1,0 +1,28 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  build:
+    build: .
+    container_name: IronswornCompanion
+    entrypoint: sh -c 'cd /app && npm run build'
+    volumes:
+      - ./:/app
+  start:
+    build: .
+    container_name: IronswornCompanion
+    entrypoint: sh -c 'cd /app && npm run start'
+    ports:
+      - "3010:3010"
+    volumes:
+      - ./:/app
+  setup:
+    build: .
+    container_name: IronswornCompanion
+    entrypoint: sh -c 'cd /app && npm run setup'
+    volumes:
+      - ./:/app
+  clean:
+    build: .
+    container_name: IronswornCompanion
+    entrypoint: sh -c 'cd /app && npm run clean'
+    volumes:
+      - ./:/app
