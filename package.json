@@ -47,7 +47,7 @@
     "postinstall": "patch-package",
     "start": "npm-run-all -p watch-css start-js",
     "start-js": "NODE_OPTIONS=--openssl-legacy-provider PORT=3010 PUBLIC_URL=http://localhost:3010/ react-scripts start",
-    "prebuild": "cp ./README.md ./src/README.md && cp ./LICENSE ./src/LICENSE && sed -i \"s/](public\\/img/](img/g\" src/README.md",
+    "prebuild": "cp ./README.md ./src/README.md && cp ./LICENSE ./src/LICENSE",
     "build-css": "sass src/css/src/scss/main.scss src/css/css-compiled/main.css",
     "watch-css": "npm run build-css && sass src/css/src/scss/main.scss src/css/css-compiled/main.css --watch",
     "build": "npm run build-css && NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
