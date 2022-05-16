@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .stat-card {
   padding-top: 1em;
   border-radius: 0% !important;
@@ -256,7 +258,7 @@ $end: 20;
   // $stat-width: percentage($i/100);
   $stat-width: 0;
   @if $i > 0 {
-    $stat-width: (100 / ($i + 1))/100;
+    $stat-width: math.div(100, $i + 1)*0.01;
   }
   .stat-track-#{$i} {
     .slider-tick {
