@@ -39,6 +39,17 @@ class Moves extends Component {
     }
   }
   render() {
+    const gfmRenderers = {
+      link: (props) => {
+        const moveName = props.href.replace(/.*\//, '').replace(/_/g, ' ');
+        const move = this.props.moves.find(m => m.$id === props.href);
+        return <span className="pseudolink" onClick={() => {
+          console.log(move);
+          this.setState({ selectedMove: move });
+        }}>{moveName}</span>
+      }
+    }
+
     return (
       <React.Fragment>
         <h1>Moves</h1>
@@ -76,7 +87,7 @@ class Moves extends Component {
                           {this.state.selectedMove ? (
                             <React.Fragment>
                               <h6>{this.state.selectedMove.Name}</h6>
-                              <ReactMarkdown id="" plugins={[gfm]}>
+                              <ReactMarkdown id="" plugins={[gfm]} renderers={gfmRenderers}>
                                 {this.state.selectedMove.Text}
                               </ReactMarkdown>
                             </React.Fragment>
@@ -111,7 +122,7 @@ class Moves extends Component {
                         {this.state.selectedMove ? (
                           <React.Fragment>
                             <h6>{this.state.selectedMove.Name}</h6>
-                            <ReactMarkdown id="" plugins={[gfm]}>
+                            <ReactMarkdown id="" plugins={[gfm]} renderers={gfmRenderers}>
                               {this.state.selectedMove.Text}
                             </ReactMarkdown>
                           </React.Fragment>
