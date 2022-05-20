@@ -47,6 +47,7 @@ import Journal from "./components/journal";
 import Welcome from "./components/welcome";
 import Privacy from "./components/privacy";
 // import "react-sortable-tree/style.css";
+import gameRules from "./utilities/gameRules";
 
 var app = {};
 class App extends Component {
@@ -503,8 +504,9 @@ class App extends Component {
   }
 
   updateMoves() {
-    fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_moves.json")
-      .then((r1) => r1.json())
+    // fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_moves.json")
+    //   .then((r1) => r1.json())
+    gameRules.getMoves()
       .then((d1) => {
         let moves = [];
         d1.Categories.map((c) => {
