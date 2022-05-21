@@ -325,8 +325,9 @@ class App extends Component {
   };
 
   updateCoreAssets = () => {
-    fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_assets.json")
-      .then((response) => response.json())
+    // fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_assets.json")
+    //   .then((response) => response.json())
+    gameRules.getAssets()
       .then((data) => {
         const assets = this.state.assets;
         for (let i = 0; i < data["Assets"].length; i++) {
