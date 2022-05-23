@@ -92,7 +92,7 @@ class OracleRoller extends Component {
         </div>
         <div className="row roller-body">
           <div className="col">
-            <Tabs defaultActiveKey="oracle_source_Ironsworn" id="uncontrolled-tab-example">
+            <Tabs defaultActiveKey={`oracle_source_${this.props.oracles.getOracleTableSources()[0]}`} id="uncontrolled-tab-example">
               {this.props.oracles.getOracleTableSources().map((src) => (
                 <Tab eventKey={`oracle_source_${src}`} title={src}>
                   <React.Fragment>

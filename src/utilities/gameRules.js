@@ -1,8 +1,13 @@
 'use stritc';
 
-// import { ironsworn as gameRules } from "dataforged";
-import { starforged as gameRules } from "dataforged";
+import dataforged from "dataforged";
 import helpers from "./helpers";
+
+let gameRules;
+if (process.env.REACT_APP_GAME_RULES === 'Ironsworn')
+  gameRules = dataforged.ironsworn;
+if (process.env.REACT_APP_GAME_RULES === 'Starforged')
+  gameRules = dataforged.starforged;
 
 function getMoveByName(moveName) {
   return gameRules["Move Categories"].map(mc => mc.Moves).flat().find(m => m.Name === moveName);
@@ -30,7 +35,8 @@ function getAssetsAll() {
 }
 
 async function getMoves() {
-  // return fetch("https:raw.githubusercontent.com/rsek/datasworn/master/ironsworn_moves.json").then((response) => response.json());
+  if (!gameRules)
+    return fetch("https:raw.githubusercontent.com/rsek/datasworn/master/ironsworn_moves.json").then((response) => response.json());
   return new Promise((resolve, reject) => { // Just wrapping this as a promise for backwards compatibiility with existing code...
     const moves = { Categories: gameRules["Move Categories"] };
     resolve(moves);
@@ -38,7 +44,8 @@ async function getMoves() {
 }
 
 async function getAssets() {
-  // return fetch("https:raw.githubusercontent.com/rsek/datasworn/master/ironsworn_assets.json").then((response) => response.json());
+  if (!gameRules)
+    return fetch("https:raw.githubusercontent.com/rsek/datasworn/master/ironsworn_assets.json").then((response) => response.json());
   return new Promise((resolve, reject) => { // Just wrapping this as a promise for backwards compatibiility with existing code...
     const assets = gameRules['Asset Types'].map(at => at.Assets).flat();
     assets.map(a => {
@@ -82,6 +89,36 @@ async function getAssets() {
   });
 }
 
+function getOracles() {
+  if (!gameRules)
+    return null;
+
+  const oracles = [];
+  function extractOracles(objs) {
+    for (const obj of objs) {
+      if (!obj.Oracles) {
+        oracles.push(obj)
+      } else {
+        extractOracles(obj.Oracles);
+      }
+    }
+  }
+  extractOracles(gameRules['Oracle Categories']);
+
+  return oracles.map(o => {
+    const table = {};
+    table.title = o.Name;
+    table.source = o.Source.Title
+    table.core = true;
+    try {
+      table.theme = o.Category.replace(/.*\//, '').replace(/_/g, ' ');
+    } catch (e) {
+      debugger
+    }
+    table.prompts = o.Table.map(t => t.Result)
+    return table;
+  });
+}
 
 export default {
   getMoveByName,
@@ -91,5 +128,6 @@ export default {
   getAssetsAll,
   getAssetById,
   getMoves,
-  getAssets
+  getAssets,
+  getOracles
 }

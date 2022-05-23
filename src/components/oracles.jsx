@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { result } from "lodash-es";
 import DiceRoller from "./dice_roller";
+import gameRules from "../utilities/gameRules";
 
 class Oracles {
   newOracleTableTheme = "";
@@ -4331,6 +4332,10 @@ class Oracles {
   ];
 
   constructor(state) {
+    if (gameRules.getOracles()) {
+      this.tables = gameRules.getOracles();
+    }
+
     let defaultOracleTables = [];
     if (state) {
       defaultOracleTables = new Oracles().tables;
