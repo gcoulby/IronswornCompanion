@@ -2,15 +2,14 @@
 
 import dataforged from "dataforged";
 import helpers from "./helpers";
+import config from "../config/config";
 
-let gameRules, Ironsworn, Starforged;
-if (process.env.REACT_APP_GAME_RULES === 'Ironsworn') {
+let gameRules;
+if (config.GAME_RULES === 'Ironsworn') {
   gameRules = dataforged.ironsworn;
-  Ironsworn = true;
 }
-if (process.env.REACT_APP_GAME_RULES === 'Starforged') {
+if (config.GAME_RULES === 'Starforged') {
   gameRules = dataforged.starforged;
-  Starforged = true;
 }
 
 function getMoveByName(moveName) {
@@ -120,7 +119,7 @@ function getOracles() {
   });
 
   // Combine the two names tables for Ironsworn
-  if (Ironsworn) {
+  if (config.GAME_RULES === 'Ironsworn') {
     const names = structuredClone(reformattedOracles.find(o => o.title === 'A'));
     names.prompts = [...names.prompts, ...reformattedOracles.find(o => o.title === 'B').prompts];
     names.title = "Ironlander Names";

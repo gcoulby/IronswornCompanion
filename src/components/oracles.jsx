@@ -2,6 +2,7 @@ import _ from "lodash";
 import { result } from "lodash-es";
 import DiceRoller from "./dice_roller";
 import gameRules from "../utilities/gameRules";
+import config from "../config/config.js";
 
 class Oracles {
   newOracleTableTheme = "";
@@ -4487,33 +4488,19 @@ class Oracles {
   }
 
   get IronlanderName() {
-    let table = "Ironlander Names";
-    if (process.env.REACT_APP_GAME_RULES === "Starforged")
-      table = "Given Name";
-    return this.getRandomPromptFromOracleTable(table);
+    return this.getRandomPromptFromOracleTable(config.NAME_TABLE);
   }
 
   get CharacterRole() {
-    let table = "Character Role";
-    if (process.env.REACT_APP_GAME_RULES)
-      table = "Role";
-    return this.getRandomPromptFromOracleTable(table);
+    return this.getRandomPromptFromOracleTable(config.ROLE_TABLE);
   }
 
   get CharacterGoal() {
-    let table = "Character Goal";
-    if (process.env.REACT_APP_GAME_RULES)
-      table = "Goal";
-    return this.getRandomPromptFromOracleTable(table);
+    return this.getRandomPromptFromOracleTable(config.GOAL_TABLE);
   }
 
   get CharacterDescriptor() {
-    let table = "Character Descriptor";
-    if (process.env.REACT_APP_GAME_RULES === "Starforged")
-      table = "Revealed Aspect";
-    if (process.env.REACT_APP_GAME_RULES === "Ironsworn")
-      table = "Descriptor";
-    return this.getRandomPromptFromOracleTable(table);
+    return this.getRandomPromptFromOracleTable(config.CHARACTER_DESCRIPTOR_TABLE);
   }
 
   get CharacterDisposition() {
