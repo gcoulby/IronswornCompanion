@@ -4,6 +4,9 @@ import Tabs from "react-bootstrap/Tabs";
 import RollIcon from "./rollIcon";
 import DiceRoller from "./dice_roller";
 import Modal from "./modal";
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
+import { Link } from 'react-router-dom';
 
 class OracleRoller extends Component {
   state = {
@@ -39,9 +42,13 @@ class OracleRoller extends Component {
   }
 
   handleOnClick = (evt) => {
-    evt.target.select();
-    evt.target.setSelectionRange(0, 99999);
+    var range = document.createRange();
+    range.selectNodeContents(evt.target);
+    var selection=window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
     document.execCommand("copy");
+    selection.removeAllRanges();
   };
 
   handleOracleClick = (tbl) => {
@@ -54,6 +61,26 @@ class OracleRoller extends Component {
   }
 
   render() {
+    const gfmRenderers = {
+      link: (props) => {
+        const page = props.href.split('/')[1];
+
+        if (page === 'Oracles') {
+          return <span className="pseudolink" onClick={() => {
+            this.setState({ selectedOracleTable: this.props.oracles.tables.find(t => t.title === 'Action').prompts });
+          }}>{props.node.children[0].value}</span>
+        }
+
+        if (page === 'Moves') {
+          const moveName = props.href.replace(/.*\//, '').replace(/_/g, ' ');
+          const move = JSON.parse(localStorage.getItem('game_state')).moves.find(m => m.Name === moveName);
+          return <Link to={`/moves?moveName=${moveName}`}>{props.node.children[0].value}</Link>
+        }
+
+      },
+      paragraph: "span"
+    }
+
     return (
       <React.Fragment>
         <div className="row">
@@ -112,16 +139,18 @@ class OracleRoller extends Component {
                               <button className="btn btn-dark" onClick={() => this.clearOutputValue()}>
                                 <i className="fa fa-times" aria-hidden="true"></i>&nbsp; Clear
                               </button>
-                              <textarea
+                              <span
                                 type="text"
                                 className="form-control my-4"
-                                placeholder="Result (click to copy)"
+                                style={{height: "auto"}}
                                 aria-label="Character Descriptor"
                                 aria-describedby="basic-addon2"
-                                value={this.state.outputValue}
-                                onFocus={(e) => this.handleOnClick(e)}
-                                title="Click to copy"
-                              />
+                                onClick={(e) => this.handleOnClick(e)}
+                                title="Click to copy" >
+                                <ReactMarkdown id="" plugins={[gfm]} renderers={gfmRenderers} onFocus={(e) => this.handleOnClick(e)}>
+                                  {this.state.outputValue || "Result (click to copy)"}
+                                </ReactMarkdown>
+                              </span>
                               <table className="table table-striped table-hover">
                                 <thead>
                                   <th>Theme</th>
@@ -143,16 +172,18 @@ class OracleRoller extends Component {
                           icon="fas fa-history"
                           title="Roll History"
                         />
-                        <textarea
+                        <span
                           type="text"
                           className="form-control my-4"
-                          placeholder="Result (click to copy)"
+                          style={{height: "auto"}}
                           aria-label="Character Descriptor"
                           aria-describedby="basic-addon2"
-                          value={this.state.outputValue}
-                          onFocus={(e) => this.handleOnClick(e)}
-                          title="Click to copy"
-                        />
+                          onClick={(e) => this.handleOnClick(e)}
+                          title="Click to copy">
+                          <ReactMarkdown id="" plugins={[gfm]} renderers={gfmRenderers} onFocus={(e) => this.handleOnClick(e)}>
+                            {this.state.outputValue || "Result (click to copy)"}
+                          </ReactMarkdown>
+                        </span>
                       </div>
                     </div>
                     <div className="row">
@@ -198,7 +229,9 @@ class OracleRoller extends Component {
                           <tbody>
                             {this.state.selectedOracleTable.map((t) => (
                               <tr>
-                                <td>{t}</td>
+                                <td>
+                                  <ReactMarkdown id="" plugins={[gfm]} renderers={gfmRenderers}>{t}</ReactMarkdown>
+                                </td>
                               </tr>
                             ))}
                           </tbody>

@@ -4,12 +4,8 @@ import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import Roller from "./roller";
 import RollIcon from "./rollIcon";
-class Moves extends Component {
-  state = {
-    showMoves: false,
-    selectedMove: null,
-  };
 
+class Moves extends Component {
   handleMoveSelect = (move) => {
     this.setState({ selectedMove: { ...move } });
   };
@@ -38,13 +34,32 @@ class Moves extends Component {
       }
     }
   }
+
+  constructor() {
+    super();
+
+    const state = {
+      showMoves: false
+    }
+
+    // Allow calling the view with a "pseudoparam" to display the move you want directly
+    // (it's not a "real" param, becasue it's actually part of the anchor # in the URI)
+    // e.g. http://localhost:3010/#/moves?moveName=Face%20Death
+    const params = new URLSearchParams(window.location.hash.replace(/.*\?/, ''));
+    const move = JSON.parse(localStorage.getItem('game_state')).moves.find(m => m.Name === params.get('moveName'));
+    if (move) {
+      state.selectedMove = move;
+    }
+
+    this.state = state;
+  }
+
   render() {
     const gfmRenderers = {
       link: (props) => {
         const moveName = props.href.replace(/.*\//, '').replace(/_/g, ' ');
         const move = this.props.moves.find(m => m.$id === props.href);
         return <span className="pseudolink" onClick={() => {
-          console.log(move);
           this.setState({ selectedMove: move });
         }}>{moveName}</span>
       }
