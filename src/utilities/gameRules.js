@@ -3,11 +3,15 @@
 import dataforged from "dataforged";
 import helpers from "./helpers";
 
-let gameRules;
-if (process.env.REACT_APP_GAME_RULES === 'Ironsworn')
+let gameRules, Ironsworn, Starforged;
+if (process.env.REACT_APP_GAME_RULES === 'Ironsworn') {
   gameRules = dataforged.ironsworn;
-if (process.env.REACT_APP_GAME_RULES === 'Starforged')
+  Ironsworn = true;
+}
+if (process.env.REACT_APP_GAME_RULES === 'Starforged') {
   gameRules = dataforged.starforged;
+  Starforged = true;
+}
 
 function getMoveByName(moveName) {
   return gameRules["Move Categories"].map(mc => mc.Moves).flat().find(m => m.Name === moveName);
@@ -105,19 +109,26 @@ function getOracles() {
   }
   extractOracles(gameRules['Oracle Categories']);
 
-  return oracles.map(o => {
+  let reformattedOracles = oracles.map(o => {
     const table = {};
     table.title = o.Name;
     table.source = o.Source.Title
     table.core = true;
-    try {
-      table.theme = o.Category.replace(/.*\//, '').replace(/_/g, ' ');
-    } catch (e) {
-      debugger
-    }
+    table.theme = o.Category.replace(/.*\//, '').replace(/_/g, ' ');
     table.prompts = o.Table.map(t => t.Result)
     return table;
   });
+
+  // Combine the two names tables for Ironsworn
+  if (Ironsworn) {
+    const names = structuredClone(reformattedOracles.find(o => o.title === 'A'));
+    names.prompts = [...names.prompts, ...reformattedOracles.find(o => o.title === 'B').prompts];
+    names.title = "Ironlander Names";
+    reformattedOracles.push(names);
+    reformattedOracles = reformattedOracles.filter(o => o.title !== 'A' && o.title !== 'B');
+  }
+
+  return reformattedOracles;
 }
 
 export default {

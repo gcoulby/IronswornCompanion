@@ -4487,19 +4487,33 @@ class Oracles {
   }
 
   get IronlanderName() {
-    return this.getRandomPromptFromOracleTable("Ironlander Names");
+    let table = "Ironlander Names";
+    if (process.env.REACT_APP_GAME_RULES === "Starforged")
+      table = "Given Name";
+    return this.getRandomPromptFromOracleTable(table);
   }
 
   get CharacterRole() {
-    return this.getRandomPromptFromOracleTable("Character Role");
+    let table = "Character Role";
+    if (process.env.REACT_APP_GAME_RULES)
+      table = "Role";
+    return this.getRandomPromptFromOracleTable(table);
   }
 
   get CharacterGoal() {
-    return this.getRandomPromptFromOracleTable("Character Goal");
+    let table = "Character Goal";
+    if (process.env.REACT_APP_GAME_RULES)
+      table = "Goal";
+    return this.getRandomPromptFromOracleTable(table);
   }
 
   get CharacterDescriptor() {
-    return this.getRandomPromptFromOracleTable("Character Descriptor");
+    let table = "Character Descriptor";
+    if (process.env.REACT_APP_GAME_RULES === "Starforged")
+      table = "Revealed Aspect";
+    if (process.env.REACT_APP_GAME_RULES === "Ironsworn")
+      table = "Descriptor";
+    return this.getRandomPromptFromOracleTable(table);
   }
 
   get CharacterDisposition() {
