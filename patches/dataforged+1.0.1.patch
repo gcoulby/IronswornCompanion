@@ -1,0 +1,15 @@
+diff --git a/node_modules/dataforged/.DS_Store b/node_modules/dataforged/.DS_Store
+new file mode 100644
+index 0000000..c6b9647
+Binary files /dev/null and b/node_modules/dataforged/.DS_Store differ
+diff --git a/node_modules/dataforged/index.js b/node_modules/dataforged/index.js
+new file mode 100644
+index 0000000..97d029b
+--- /dev/null
++++ b/node_modules/dataforged/index.js
+@@ -0,0 +1,5 @@
++"use strict";
++Object.defineProperty(exports, "__esModule", { value: true });
++const starforged = require("./dist/starforged/dataforged.json");
++const ironsworn = require("./dist/ironsworn/datasworn.json");
++module.exports = { starforged, ironsworn };
