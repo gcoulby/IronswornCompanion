@@ -130,6 +130,34 @@ function getOracles() {
   return reformattedOracles;
 }
 
+function getFoes() {
+  if (!gameRules)
+    return fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_foes.json").then((response) => response.json());
+
+  let foes = [];
+
+  // Stargorged doesn't have these mapped into categories for some reason...
+  if (config.GAME_RULES === "Starforged") {
+    [...new Set(gameRules.Encounters.map(e => e.Nature))].map(c => {
+      foes.push({
+        Name: c + 's',
+        Encounters: gameRules.Encounters.filter(e2 => e2.Nature === c),
+      });
+    })
+  } else foes = gameRules.Encounters;
+
+  return new Promise((resolve, reject) => {
+    foes.forEach(c => {
+      c.Foes = c.Encounters;
+      c.Foes.forEach(e => {
+        e.Source.Name = e.Source.Title;
+        e.Quest = e['Quest Starter'];
+      });
+    });
+    resolve({ Categories: foes });
+  })
+}
+
 export default {
   getMoveByName,
   getMoveCategories,
@@ -139,5 +167,6 @@ export default {
   getAssetById,
   getMoves,
   getAssets,
-  getOracles
+  getOracles,
+  getFoes
 }

@@ -48,6 +48,7 @@ import Welcome from "./components/welcome";
 import Privacy from "./components/privacy";
 // import "react-sortable-tree/style.css";
 import gameRules from "./utilities/gameRules";
+import config from "./config/config";
 
 var app = {};
 class App extends Component {
@@ -393,8 +394,7 @@ class App extends Component {
   };
 
   updateFoes() {
-    fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_foes.json")
-      .then((response) => response.json())
+    gameRules.getFoes()
       .then((data) => {
         const foes = [];
         data.Categories.map((c) => {
@@ -436,6 +436,7 @@ class App extends Component {
               return f2;
             });
             let foesWithTagsAndIcons = _.merge(_.keyBy(foes, "id"), _.keyBy(foeIcons, "id"));
+            if (config.GAME_RULES) foesWithTagsAndIcons = foes; // Basically undo this if we're using dataforged...
             this.state.foes = _.values(foesWithTagsAndIcons);
             this.state.foeCardEditorSelectedFoe = new DefaultFoe();
             this.saveGameState();
