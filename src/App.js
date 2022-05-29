@@ -306,6 +306,7 @@ class App extends Component {
     this.updateFoes();
     this.updateDelveCards();
     this.updateMoves();
+    this.updateWorldTruths();
     this.saveGameState();
   };
 
@@ -522,6 +523,14 @@ class App extends Component {
         this.saveGameState();
         this.checkState();
       });
+  }
+
+  updateWorldTruths() {
+    gameRules.getWorldTruths()
+      .then(data => {
+        this.state.world.truths = data;
+        this.saveGameState();
+      })
   }
 
   resetData() {

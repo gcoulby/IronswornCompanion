@@ -15,7 +15,7 @@ services:
     volumes:
       - ./:/app
     environment:
-      - REACT_APP_GAME_RULES=${GAME_RULES}
+      - REACT_APP_GAME_RULES=${GAME_RULES:-} # default to empty string
   setup:
     build: .
     container_name: IronswornCompanion

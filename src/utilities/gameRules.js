@@ -3,6 +3,7 @@
 import dataforged from "dataforged";
 import helpers from "./helpers";
 import config from "../config/config";
+import truths from "../data/world-truths.json";
 
 let gameRules;
 if (config.GAME_RULES === 'Ironsworn') {
@@ -106,6 +107,7 @@ function getOracles() {
 }
 
 function getFoes() {
+  const x = config;
   if (!gameRules)
     return fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_foes.json").then((response) => response.json());
 
@@ -133,9 +135,35 @@ function getFoes() {
   })
 }
 
+function getWorldTruths() {
+  if (config.GAME_RULES === "Starforged") {
+    truths.Starforged['Setting Truths'].forEach(truth => {
+      truth.Options = truth.Table;
+      truth.Options.forEach(option => {
+        if (option.Subtable) {
+          option.Options = option.Subtable;
+          option.Subtable.forEach(subOption => {
+            subOption.Description = subOption.Result;
+          })
+        }
+      })
+    })
+    truths.Starforged['Setting Truths'].push({Name: 'Custom', Options: []});
+    return new Promise((resolve, reject) => {
+      resolve(truths.Starforged['Setting Truths']);
+    })
+  } else {
+    truths.Ironsworn['Setting Truths'].push({Name: 'Custom', Options: []});
+    return new Promise((resolve, reject) => {
+      resolve(truths.Ironsworn['Setting Truths']);
+    });
+  };
+}
+
 export default {
   getMoves,
   getAssets,
   getOracles,
-  getFoes
+  getFoes,
+  getWorldTruths
 }

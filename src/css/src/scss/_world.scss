@@ -34,7 +34,7 @@ nav a:hover {
 }
 
 .truth {
-  padding: 1em;
+  padding: 1em 1em 0 1em;
 }
 
 .quest-starter {
@@ -59,6 +59,15 @@ nav a:hover {
   -webkit-transition: border 0.3s;
   -o-transition: border 0.3s;
   transition: border 0.3s;
+}
+
+.card-input-element + span {
+  padding: 4px;
+}
+
+.card-input-element:checked + span {
+  background: lightgray;
+  padding: 4px;
 }
 
 .card-input-element:checked + .card::after {
