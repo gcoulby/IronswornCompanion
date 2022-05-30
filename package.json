@@ -61,6 +61,9 @@
     "clean": "git checkout -- .;git clean -dfx;git status",
     "setup": "npm i --legacy-peer-deps"
   },
+  "engines": {
+    "node": "18.x"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
