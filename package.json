@@ -21,6 +21,7 @@
     "gh-pages": "^3.1.0",
     "html-react-parser": "^1.2.4",
     "htmlparser2": "^3.10.1",
+    "http-server": "^14.1.0",
     "iconify": "^1.3.0",
     "jquery": "^3.5.1",
     "jszip": "^3.6.0",
@@ -59,7 +60,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "clean": "git checkout -- .;git clean -dfx;git status",
-    "setup": "npm i --legacy-peer-deps"
+    "setup": "npm i --legacy-peer-deps",
+    "http-serve": "http-server -p $PORT build"
   },
   "engines": {
     "node": "18.x"
