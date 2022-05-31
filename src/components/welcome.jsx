@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import gclogo from "../img/gc_logoai.svg";
 import KoFi from "../scripts/KoFi";
+import config from "../config/config";
+
 class Welcome extends Component {
   state = {};
 
@@ -11,13 +13,27 @@ class Welcome extends Component {
   render() {
     return (
       <React.Fragment>
-        <h3 id="site-title">IRONSWORN</h3>
-        <h1 id="site-subtitle">COMPANION</h1>
-        <h6 className="text-light">Version {this.props.version}</h6>
+        <div className="row">
+          <div className="col-12 col-lg-4">
+            <div className={config.SITE_TITLE_CLASS}>
+              <div className="site-title-block-top">
+                  <h3 id="site-title">
+                    &nbsp;STARFORGED&nbsp;
+                  </h3>
+              </div>
+              <h1 id="site-subtitle">
+                COMPANION
+              </h1>
+            </div>
+          </div>
+        </div>
+
+
+      <h6 className={`text-light ${config.CSS.CLASS.UPPER_CASE_FONT}`}>Version {this.props.version}</h6>
         <React.Fragment>
-          <h6 className="text-light">You've used {this.getQuotaUsage()} of the 5MB storage quota</h6>
+          <h6 className={`text-light ${config.CSS.CLASS.UPPER_CASE_FONT}`}>You've used {this.getQuotaUsage()} of the 5MB storage quota</h6>
           <div className="row">
-            <div className="col-12 col-lg-4">
+            <div className="col-12 col-lg-6">
               <div className="progress">
                 <div
                   className="progress-bar bg-dark"

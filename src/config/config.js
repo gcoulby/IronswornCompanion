@@ -3,9 +3,9 @@
 const configs = {
   default: {
     // undefined GAME_RULES will use the datasworn data set
-    // GAME_RULES: process.env.REACT_APP_GAME_RULES,
+    GAME_RULES: process.env.REACT_APP_GAME_RULES,
     // GAME_RULES: 'Ironsworn',
-    GAME_RULES: 'STARFORGED',
+    // GAME_RULES: 'STARFORGED',
     // GAME_RULES: undefined,
     NAME_TABLE: 'Ironlander Names',
     ROLE_TABLE: 'Character Role',

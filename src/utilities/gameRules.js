@@ -6,16 +6,16 @@ import config from "../config/config";
 import truths from "../data/world-truths.json";
 
 let gameRules;
-if (config.GAME_RULES === 'Ironsworn') {
+if (config.GAME_RULES === 'IRONSWORN') {
   gameRules = dataforged.ironsworn;
 }
-if (config.GAME_RULES === 'Starforged') {
+if (config.GAME_RULES === 'STARFORGED') {
   gameRules = dataforged.starforged;
 }
 
 async function getMoves() {
   if (!gameRules)
-    return fetch("https:raw.githubusercontent.com/rsek/datasworn/master/ironsworn_moves.json").then((response) => response.json());
+    return fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_moves.json").then((response) => response.json());
   return new Promise((resolve, reject) => { // Just wrapping this as a promise for backwards compatibiility with existing code...
     const moves = { Categories: gameRules["Move Categories"] };
     resolve(moves);
@@ -95,7 +95,7 @@ function getOracles() {
   });
 
   // Combine the two names tables for Ironsworn
-  if (config.GAME_RULES === 'Ironsworn') {
+  if (config.GAME_RULES === 'IRONSWORN') {
     const names = structuredClone(reformattedOracles.find(o => o.title === 'A'));
     names.prompts = [...names.prompts, ...reformattedOracles.find(o => o.title === 'B').prompts];
     names.title = "Ironlander Names";
@@ -107,14 +107,13 @@ function getOracles() {
 }
 
 function getFoes() {
-  const x = config;
   if (!gameRules)
     return fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_foes.json").then((response) => response.json());
 
   let foes = [];
 
   // Stargorged doesn't have these mapped into categories for some reason...
-  if (config.GAME_RULES === "Starforged") {
+  if (config.GAME_RULES === "STARFORGED") {
     [...new Set(gameRules.Encounters.map(e => e.Nature))].map(c => {
       foes.push({
         Name: c + 's',
@@ -136,7 +135,7 @@ function getFoes() {
 }
 
 function getWorldTruths() {
-  if (config.GAME_RULES === "Starforged") {
+  if (config.GAME_RULES === "STARFORGED") {
     truths.Starforged['Setting Truths'].forEach(truth => {
       truth.Options = truth.Table;
       truth.Options.forEach(option => {
