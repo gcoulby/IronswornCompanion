@@ -3,9 +3,11 @@ services:
   build:
     build: .
     container_name: IronswornCompanion
-    entrypoint: sh -c 'cd /app && npm run build'
+    entrypoint: sh -c "cd /app && npm run build"
     volumes:
       - ./:/app
+    environment:
+      - PUBLIC_URL=${PUBLIC_URL:-}
   start:
     build: .
     container_name: IronswornCompanion
