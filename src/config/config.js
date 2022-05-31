@@ -3,37 +3,38 @@
 const configs = {
   default: {
     // undefined GAME_RULES will use the datasworn data set
-    GAME_RULES: process.env.REACT_APP_GAME_RULES,
+    // GAME_RULES: process.env.REACT_APP_GAME_RULES,
     // GAME_RULES: 'Ironsworn',
-    // GAME_RULES: 'Starforged',
+    GAME_RULES: 'STARFORGED',
     // GAME_RULES: undefined,
-    get NAME_TABLE () {
-      if (config.GAME_RULES === 'Starforged')
-        return 'Given Name';
-      return 'Ironlander Names';
-    },
-    get ROLE_TABLE () {
-      if (config.GAME_RULES)
-        return 'Role';
-      return 'Character Role';
-    },
-    get GOAL_TABLE () {
-      if (config.GAME_RULES)
-        return 'Goal';
-      return 'Character Goal';
-    },
-    get CHARACTER_DESCRIPTOR_TABLE () {
-      if (config.GAME_RULES === 'Ironsworn')
-        return 'Descriptor';
-      if (config.GAME_RULES === 'Starforged')
-        return 'Revealed Aspect';
-      return 'Character Descriptor';
+    NAME_TABLE: 'Ironlander Names',
+    ROLE_TABLE: 'Character Role',
+    GOAL_TABLE: 'Character Goal',
+    CHARACTER_DESCRIPTOR_TABLE: 'Character Descriptor',
+  },
+  STARFORGED: {
+    NAME_TABLE: 'Given Name',
+    ROLE_TABLE: 'Role',
+    GOAL_TABLE: 'Goal',
+    CHARACTER_DESCRIPTOR_TABLE: 'Revealed Aspect',
+    SITE_TITLE_CLASS: 'site-title-block starforged',
+    CSS: {
+      CLASS: {
+        SITE_TITLE_CLASS: 'site-title-block starforged',
+        UPPER_CASE_FONT: 'starforged upper-case'
+      }
     }
+  },
+  IRONSWORN: {
+    ROLE_TABLE: 'Role',
+    GOAL_TABLE: 'Goal',
+    CHARACTER_DESCRIPTOR_TABLE: 'Descriptor',
   }
 };
 
 let config = configs.default;
 
 if (process.env.NODE_ENV) config = Object.assign(configs.default, configs[process.env.NODE_ENV]);
+if (configs.default.GAME_RULES) config = Object.assign(configs.default, configs[configs.default.GAME_RULES]);
 
 module.exports = config;
