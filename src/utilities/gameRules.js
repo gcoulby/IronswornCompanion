@@ -24,7 +24,7 @@ async function getMoves() {
 
 async function getAssets() {
   if (!gameRules)
-    return fetch("https:raw.githubusercontent.com/rsek/datasworn/master/ironsworn_assets.json").then((response) => response.json());
+    return fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_assets.json").then((response) => response.json());
   return new Promise((resolve, reject) => { // Just wrapping this as a promise for backwards compatibiility with existing code...
     const assets = gameRules['Asset Types'].map(at => at.Assets).flat();
     assets.map(a => {
