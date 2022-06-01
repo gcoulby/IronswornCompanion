@@ -49,9 +49,9 @@ h6 {
   margin: 0;
 }
 
-#bg-image::before {
+#bg-image {
   content: "";
-  background: url("/src/img/viking-with-axes-hands-rocky-mountains.jpg");
+  background: url("/src/img/starforged-background.jpg");
   width: 100%;
   height: 100%;
   display: block;
@@ -61,7 +61,7 @@ h6 {
   left: 0;
   z-index: -1000;
   -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-  filter: brightness(40%) grayscale(100%);
+  filter: brightness(40%);
 }
 
 #site-title,
