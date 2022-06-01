@@ -15,10 +15,10 @@ class Welcome extends Component {
       <React.Fragment>
         <div className="row">
           <div className="col-12 col-lg-4">
-            <div className={config.SITE_TITLE_CLASS || ''}>
+            <div className="site-title-block">
               <div className="site-title-block-top">
                   <h3 id="site-title">
-                    &nbsp;STARFORGED&nbsp;
+                    &nbsp;{config.SITE_TITLE}&nbsp;
                   </h3>
               </div>
               <h1 id="site-subtitle">
@@ -27,13 +27,11 @@ class Welcome extends Component {
             </div>
           </div>
         </div>
-
-
-      <h6 className={`text-light ${config.CSS?.CLASS?.UPPER_CASE_FONT || ''}`}>Version {this.props.version}</h6>
+        <h6 className="text-light">Version {this.props.version}</h6>
         <React.Fragment>
-          <h6 className={`text-light ${config.CSS?.CLASS?.UPPER_CASE_FONT || ''}`}>You've used {this.getQuotaUsage()} of the 5MB storage quota</h6>
+          <h6 className="text-light">You've used {this.getQuotaUsage()} of the 5MB storage quota</h6>
           <div className="row">
-            <div className="col-12 col-lg-6">
+            <div className="col-12 col-lg-4">
               <div className="progress">
                 <div
                   className="progress-bar bg-dark"

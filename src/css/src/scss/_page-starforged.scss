@@ -9,9 +9,21 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Modesto";
-  font-weight: 100;
-  font-variant: small-caps;
+  font-family: "Orbitron", sans-serif;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 900 !important;
+}
+h4,
+h5 {
+  font-weight: 800 !important;
+}
+h6 {
+  font-weight: 700 !important;
 }
 
 #page-container {
@@ -198,6 +210,54 @@ input[type="file"] {
 
 .header-nav .nav-item {
   background: none;
+}
+
+.site-title-block {
+  position: relative;
+  border: 4px solid white;
+  border-top-width: 0;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  text-align: center;
+
+  #site-title {
+    margin-top: -0.5em;
+  }
+
+  #site-subtitle {
+    margin-top: -0.2em;
+    padding-top: 10px;
+  }
+  .site-title-block-top {
+    cursor: move;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    position: absolute;
+    top: -2px;
+    left: 0;
+
+    &:before {
+      border-radius: 20px 0 0 0;
+      display: block;
+      content: "";
+      flex: 2 0 0;
+      height: 20px;
+      border-top: 4px solid white;
+    }
+    &:after {
+      border-radius: 0 20px 0 0;
+      display: block;
+      content: "";
+      flex: 2 0 0;
+      height: 20px;
+      border-top: 4px solid white;
+    }
+  }
 }
 
 // table {

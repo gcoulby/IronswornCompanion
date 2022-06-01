@@ -11,19 +11,14 @@ const configs = {
     ROLE_TABLE: 'Character Role',
     GOAL_TABLE: 'Character Goal',
     CHARACTER_DESCRIPTOR_TABLE: 'Character Descriptor',
+    SITE_TITLE: 'STARFORGED'
   },
   STARFORGED: {
     NAME_TABLE: 'Given Name',
     ROLE_TABLE: 'Role',
     GOAL_TABLE: 'Goal',
     CHARACTER_DESCRIPTOR_TABLE: 'Revealed Aspect',
-    SITE_TITLE_CLASS: 'site-title-block starforged',
-    CSS: {
-      CLASS: {
-        SITE_TITLE_CLASS: 'site-title-block starforged',
-        UPPER_CASE_FONT: 'starforged upper-case'
-      }
-    }
+    SITE_TITLE: 'STARFORGED'
   },
   IRONSWORN: {
     ROLE_TABLE: 'Role',

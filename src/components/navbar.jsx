@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { HashRouter, Link } from "react-router-dom";
 import NavMenu from "./nav_menu";
 import UniqueKeyGenerator from "./uniqueKeyGenerator";
+import config from "../config/config";
+
 class Navbar extends Component {
   state = {
     showColapsedMenu: false,
@@ -23,7 +25,7 @@ class Navbar extends Component {
             <div className="col-auto">
               <h1 className="navbar-brand">
                 <HashRouter basename="/">
-                  <Link to="/">IRONSWORN</Link>
+                  <Link to="/">{config.SITE_TITLE}</Link>
                 </HashRouter>
               </h1>
             </div>
