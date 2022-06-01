@@ -11,7 +11,7 @@ const configs = {
     ROLE_TABLE: 'Character Role',
     GOAL_TABLE: 'Character Goal',
     CHARACTER_DESCRIPTOR_TABLE: 'Character Descriptor',
-    SITE_TITLE: 'STARFORGED'
+    SITE_TITLE: 'IRONSWORN'
   },
   STARFORGED: {
     NAME_TABLE: 'Given Name',
