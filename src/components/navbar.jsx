@@ -20,7 +20,7 @@ class Navbar extends Component {
   render() {
     return (
       <React.Fragment>
-        <nav className="navbar navbar-fixed-top  navbar-expand navbar-dark bg-dark print-hide desktop-menu">
+        <nav className="navbar navbar-fixed-top  navbar-expand navbar-dark bg-dark print-hide desktop-menu bg-honeycomb">
           <div className="row">
             <div className="col-auto">
               <h1 className="navbar-brand">
@@ -84,7 +84,7 @@ class Navbar extends Component {
           </div>
         </nav>
 
-        <nav className="navbar navbar-dark bg-dark mobile-menu">
+        <nav className="navbar navbar-dark bg-dark mobile-menu bg-honeycomb">
           <div className="row">
             <div className="col-auto">
               <HashRouter basename="/stats">

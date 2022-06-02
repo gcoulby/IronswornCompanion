@@ -848,7 +848,7 @@ class App extends Component {
           burnMomentum={this.burnMomentum}
         />
         <div id="root-fragment" className="row">
-          <div className="sidebar-wrapper print-hide">
+          <div className="sidebar-wrapper print-hide bg-honeycomb">
             <Sidebar
               // totalCounters={
               //   this.state.counters.filter((c) => c.value > 0).length

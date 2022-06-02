@@ -15,7 +15,7 @@ class Footer extends Component {
     return (
       <React.Fragment>
         <div className="footer-pre print-hide"></div>
-        <div className="navbar fixed-bottom bg-dark text-light">
+        <div className="navbar fixed-bottom bg-dark text-light bg-honeycomb">
           <div className="col-12">
             <div className="row modesto">
               <Roller

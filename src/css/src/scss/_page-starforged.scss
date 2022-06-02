@@ -260,6 +260,14 @@ input[type="file"] {
   }
 }
 
+.bg-honeycomb {
+  background: center url("/src/img/honey.svg");
+  background-size: 16px;
+  background-color: black !important;
+  background-position: top left;
+  background-attachment: fixed;
+}
+
 // table {
 //   width: 100%;
 //   margin-bottom: 1rem;
