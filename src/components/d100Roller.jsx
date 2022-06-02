@@ -26,7 +26,7 @@ class D100Roller extends Component {
     return (
       <React.Fragment>
         <div className="text-center">
-          <button className="btn btn-dark d100-roller" onClick={() => this.handleRollD100()}>
+          <button className="btn btn-dark transparent d100-roller" onClick={() => this.handleRollD100()}>
             <ChallengeDie value={this.getD100DieValue(true)} d100={this.state.d100 > 9} />
           </button>
         </div>
