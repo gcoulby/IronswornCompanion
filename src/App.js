@@ -324,7 +324,7 @@ class App extends Component {
   };
 
   updateCoreAssets = () => {
-    fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_assets.json")
+    fetch("https://raw.githubusercontent.com/rsek/datasworn/legacy/ironsworn_assets.json")
       .then((response) => response.json())
       .then((data) => {
         const assets = this.state.assets;
@@ -391,7 +391,7 @@ class App extends Component {
   };
 
   updateFoes() {
-    fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_foes.json")
+    fetch("https://raw.githubusercontent.com/rsek/datasworn/legacy/ironsworn_foes.json")
       .then((response) => response.json())
       .then((data) => {
         const foes = [];
@@ -443,7 +443,7 @@ class App extends Component {
   }
 
   updateDelveCards() {
-    fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_delve_themes.json")
+    fetch("https://raw.githubusercontent.com/rsek/datasworn/legacy/ironsworn_delve_themes.json")
       .then((r1) => r1.json())
       .then((d1) => {
         let themeCards = d1.Themes.map((t) => {
@@ -467,7 +467,7 @@ class App extends Component {
         });
         // _.merge(this.state.delveCards, themeCards);
 
-        fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_delve_domains.json")
+        fetch("https://raw.githubusercontent.com/rsek/datasworn/legacy/ironsworn_delve_domains.json")
           .then((r2) => r2.json())
           .then((d2) => {
             let domainCards = d2.Domains.map((d) => {
@@ -503,7 +503,7 @@ class App extends Component {
   }
 
   updateMoves() {
-    fetch("https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_moves.json")
+    fetch("https://raw.githubusercontent.com/rsek/datasworn/legacy/ironsworn_moves.json")
       .then((r1) => r1.json())
       .then((d1) => {
         let moves = [];
