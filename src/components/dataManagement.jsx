@@ -1,21 +1,21 @@
-import React, { Component } from "react";
-import DangerButton from "./dangerButton";
-import TitleBlock from "./titleBlock";
-import JSZip from "jszip/dist/jszip.js";
-import { gapi } from "gapi-script";
-import google_btn from "../img/btn_google_light_normal_ios.svg";
+import React, { Component } from 'react'
+import DangerButton from './dangerButton'
+import TitleBlock from './titleBlock'
+import JSZip from 'jszip/dist/jszip.js'
+import { gapi } from 'gapi-script'
+import google_btn from '../img/btn_google_light_normal_ios.svg'
 
 //TODO Region roll
 //TODO delve threats
 //TODO burn mom on delve - revert progress
 // Client ID and API key from the Developer Console
-const CLIENT_ID = process.env.REACT_APP_GOOGLE_DRIVE_CLIENT_ID;
-const API_KEY = process.env.REACT_APP_GOOGLE_DRIVE_API_KEY;
+const CLIENT_ID = process.env.REACT_APP_GOOGLE_DRIVE_CLIENT_ID
+const API_KEY = process.env.REACT_APP_GOOGLE_DRIVE_API_KEY
 
-var SCOPE = "https://www.googleapis.com/auth/drive.file";
-var discoveryUrl = "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest";
+var SCOPE = 'https://www.googleapis.com/auth/drive.file'
+var discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'
 
-var dataManager = {};
+var dataManager = {}
 class DataManager extends Component {
   state = {
     data: {},
@@ -53,26 +53,26 @@ class DataManager extends Component {
     },
     googleAuth: null,
     googleDriveFiles: [],
-    gDriveFolderId: "",
-    gDriveSelectedFileId: "",
-  };
+    gDriveFolderId: '',
+    gDriveSelectedFileId: '',
+  }
   constructor(props) {
-    super();
-    dataManager = this;
+    super()
+    dataManager = this
     // this.state.data.all = props.gamestate;
-    this.state.data.activeFoes = props.gamestate.activeFoes;
-    this.state.data.assets = props.gamestate.assets;
-    this.state.data.customMap = props.gamestate.customMap;
-    this.state.data.delveCards = props.gamestate.delveCards;
-    this.state.data.delves = props.gamestate.delves;
-    this.state.data.foes = props.gamestate.foes;
-    this.state.data.journalData = props.gamestate.journalData;
-    this.state.data.locations = props.gamestate.locations;
-    this.state.data.logs = props.gamestate.logs;
-    this.state.data.npcs = props.gamestate.npcs;
-    this.state.data.players = props.gamestate.players;
-    this.state.data.oracles = props.gamestate.oracles;
-    this.state.data.world = props.gamestate.world;
+    this.state.data.activeFoes = props.gamestate.activeFoes
+    this.state.data.assets = props.gamestate.assets
+    this.state.data.customMap = props.gamestate.customMap
+    this.state.data.delveCards = props.gamestate.delveCards
+    this.state.data.delves = props.gamestate.delves
+    this.state.data.foes = props.gamestate.foes
+    this.state.data.journalData = props.gamestate.journalData
+    this.state.data.locations = props.gamestate.locations
+    this.state.data.logs = props.gamestate.logs
+    this.state.data.npcs = props.gamestate.npcs
+    this.state.data.players = props.gamestate.players
+    this.state.data.oracles = props.gamestate.oracles
+    this.state.data.world = props.gamestate.world
   }
 
   /*=================================*/
@@ -80,12 +80,12 @@ class DataManager extends Component {
   /*=================================*/
 
   componentDidMount() {
-    if (!this.props.loadGoogle) return;
-    console.log("TE");
-    var script = document.createElement("script");
-    script.onload = this.handleClientLoad;
-    script.src = "https://apis.google.com/js/api.js";
-    document.body.appendChild(script);
+    if (!this.props.loadGoogle) return
+    console.log('TE')
+    var script = document.createElement('script')
+    script.onload = this.handleClientLoad
+    script.src = 'https://apis.google.com/js/api.js'
+    document.body.appendChild(script)
   }
 
   initClient = () => {
@@ -98,371 +98,375 @@ class DataManager extends Component {
           discoveryDocs: [discoveryUrl],
         })
         .then(() => {
-          let auth = gapi.auth2.getAuthInstance();
+          let auth = gapi.auth2.getAuthInstance()
           this.setState({
             googleAuth: auth,
-          });
-          this.state.googleAuth.isSignedIn.listen(this.updateSigninStatus);
-          this.createGoogleDriveFolderIfNonExist();
-          this.getAuthorisedGoogleDriveFiles();
-        });
+          })
+          console.log('AUTH', auth)
+          console.log('AUTH', this.state.googleAuth)
+
+          this.state.googleAuth.isSignedIn.listen(this.updateSigninStatus)
+          this.createGoogleDriveFolderIfNonExist()
+          this.getAuthorisedGoogleDriveFiles()
+        })
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
-  };
+  }
 
   signInFunction = () => {
-    this.state.googleAuth.signIn();
-    this.updateSigninStatus();
-  };
+    this.state.googleAuth.signIn()
+    this.updateSigninStatus()
+  }
 
   signOutFunction = () => {
-    this.state.googleAuth.signOut();
-    this.updateSigninStatus();
-  };
+    this.state.googleAuth.signOut()
+    this.updateSigninStatus()
+  }
 
   isSignedIn = () => {
-    return this.state.googleAuth & this.state.googleAuth.isSignedIn.le;
-  };
+    return this.state.googleAuth & this.state.googleAuth.isSignedIn.le
+  }
 
   updateSigninStatus = () => {
-    this.setSigninStatus();
-  };
+    this.setSigninStatus()
+  }
 
   setSigninStatus = async () => {
-    var user = this.state.googleAuth.currentUser.get();
-    console.log("USER:", user);
+    var user = this.state.googleAuth.currentUser.get()
+    console.log('USER:', user)
     if (user.wt == null) {
       this.setState({
-        name: "",
-      });
+        name: '',
+      })
     } else {
-      var isAuthorized = user.hasGrantedScopes(SCOPE);
-      console.log(isAuthorized);
+      var isAuthorized = user.hasGrantedScopes(SCOPE)
+      console.log(isAuthorized)
       if (isAuthorized) {
         this.setState({
           name: user.wt.Ad,
-        });
-        this.createGoogleDriveFolderIfNonExist();
-        this.getAuthorisedGoogleDriveFiles();
+        })
+        this.createGoogleDriveFolderIfNonExist()
+        this.getAuthorisedGoogleDriveFiles()
       }
     }
-  };
+  }
 
   getAuthorisedGoogleDriveFiles = () => {
-    if (!this.state.googleAuth || !this.state.googleAuth.isSignedIn.le) return;
+    if (!this.state.googleAuth || !this.state.googleAuth.isSignedIn.le) return
     var request = gapi.client.request({
-      path: "https://www.googleapis.com/drive/v3/files",
-      method: "GET",
-    });
+      path: 'https://www.googleapis.com/drive/v3/files',
+      method: 'GET',
+    })
     return request.execute((files) => {
-      let fileArr = files.files.filter((f) => f.mimeType === "application/json");
-      const gDriveFiles = fileArr;
-      this.setState({ gDriveFiles });
-    });
-  };
+      console.log('FILES', files)
+      let fileArr = files.files.filter((f) => f.mimeType === 'application/json')
+      const gDriveFiles = fileArr
+      this.setState({ gDriveFiles })
+    })
+  }
 
   createGoogleDriveFolderIfNonExist = () => {
     var request = gapi.client.request({
       // params: { q: "name=Ironsworn Companion Data" },
-      path: "https://www.googleapis.com/drive/v3/files?q=",
-      method: "GET",
-    });
+      path: 'https://www.googleapis.com/drive/v3/files?q=',
+      method: 'GET',
+    })
     request.execute((r) => {
       //check failed request
-      if (!r) return;
+      if (!r) return
 
       //check to see if the Ironsworn Companion Data directory exists
-      let dir = r?.files?.find((f) => f.name == "Ironsworn Companion Data");
+      let dir = r?.files?.find((f) => f.name == 'Ironsworn Companion Data')
 
       if (dir !== undefined) {
         // console.log("DIR", dir.id);
-        this.setState({ gDriveFolderId: dir.id });
-        return;
+        this.setState({ gDriveFolderId: dir.id })
+        return
       }
       //If it does not exist create a directory called Ironsworn Companion Data
-      const boundary = "ironsworn";
-      const delimiter = "\r\n--" + boundary + "\r\n";
-      const close_delim = "\r\n--" + boundary + "--";
+      const boundary = 'ironsworn'
+      const delimiter = '\r\n--' + boundary + '\r\n'
+      const close_delim = '\r\n--' + boundary + '--'
 
-      var fileName = "Ironsworn Companion Data";
-      var contentType = "application/vnd.google-apps.folder";
+      var fileName = 'Ironsworn Companion Data'
+      var contentType = 'application/vnd.google-apps.folder'
       var metadata = {
         name: fileName,
         mimeType: contentType,
-      };
+      }
 
       var multipartRequestBody =
         delimiter +
-        "Content-Type: application/json; charset=UTF-8\r\n\r\n" +
+        'Content-Type: application/json; charset=UTF-8\r\n\r\n' +
         JSON.stringify(metadata) +
         delimiter +
-        "Content-Type: " +
+        'Content-Type: ' +
         contentType +
-        "\r\n\r\n" +
-        close_delim;
+        '\r\n\r\n' +
+        close_delim
       var request = gapi.client.request({
-        path: "https://www.googleapis.com/upload/drive/v3/files",
-        method: "POST",
-        params: { uploadType: "multipart" },
+        path: 'https://www.googleapis.com/upload/drive/v3/files',
+        method: 'POST',
+        params: { uploadType: 'multipart' },
         headers: {
-          "Content-Type": "multipart/related; boundary=" + boundary + "",
+          'Content-Type': 'multipart/related; boundary=' + boundary + '',
         },
         body: multipartRequestBody,
-      });
+      })
       request.execute(function (file) {
         // console.log(file.id);
-        dataManager.setState({ gDriveFolderId: file.id });
-      });
-    });
-  };
+        dataManager.setState({ gDriveFolderId: file.id })
+      })
+    })
+  }
 
-  saveToGoogleDrive = (data, fileName, contentType = "application/json") => {
-    let folderId = this.state.gDriveFolderId ?? "";
-    if (folderId === "") {
-      console.log("Error: no drive folder found");
-      return;
+  saveToGoogleDrive = (data, fileName, contentType = 'application/json') => {
+    let folderId = this.state.gDriveFolderId ?? ''
+    if (folderId === '') {
+      console.log('Error: no drive folder found')
+      return
     }
-    const boundary = "ironsworn";
-    const delimiter = "\r\n--" + boundary + "\r\n";
-    const close_delim = "\r\n--" + boundary + "--";
+    const boundary = 'ironsworn'
+    const delimiter = '\r\n--' + boundary + '\r\n'
+    const close_delim = '\r\n--' + boundary + '--'
 
     // let d = new Date();
     // var fileName = `isc_${d.toLocaleDateString()}_${d.toLocaleTimeString()}.isgs`;
     // var fileName = "mychat123.json";
-    var fileData = contentType === "application/json" ? JSON.stringify(data) : data;
+    var fileData = contentType === 'application/json' ? JSON.stringify(data) : data
     var metadata = {
       name: fileName,
       parents: [folderId],
       mimeType: contentType,
-    };
+    }
     // var contentType = "application/json";
 
-    var multipartRequestBody = "";
-    if (contentType === "application/zip") {
+    var multipartRequestBody = ''
+    if (contentType === 'application/zip') {
       multipartRequestBody =
         delimiter +
-        "Content-Type: application/json\r\n\r\n" +
+        'Content-Type: application/json\r\n\r\n' +
         JSON.stringify(metadata) +
         delimiter +
-        "Content-Type: " +
+        'Content-Type: ' +
         contentType +
-        "\r\n" +
-        "Content-Transfer-Encoding: base64\r\n" +
-        "\r\n" +
+        '\r\n' +
+        'Content-Transfer-Encoding: base64\r\n' +
+        '\r\n' +
         fileData +
-        close_delim;
+        close_delim
     } else {
       multipartRequestBody =
         delimiter +
-        "Content-Type: application/json; charset=UTF-8\r\n\r\n" +
+        'Content-Type: application/json; charset=UTF-8\r\n\r\n' +
         JSON.stringify(metadata) +
         delimiter +
-        "Content-Type: " +
+        'Content-Type: ' +
         contentType +
-        "\r\n\r\n" +
+        '\r\n\r\n' +
         fileData +
-        "\r\n" +
-        close_delim;
+        '\r\n' +
+        close_delim
     }
 
     var request = gapi.client.request({
-      path: "https://www.googleapis.com/upload/drive/v3/files",
-      method: "POST",
-      params: { uploadType: "multipart" },
+      path: 'https://www.googleapis.com/upload/drive/v3/files',
+      method: 'POST',
+      params: { uploadType: 'multipart' },
       headers: {
-        "Content-Type": "multipart/related; boundary=" + boundary + "",
+        'Content-Type': 'multipart/related; boundary=' + boundary + '',
       },
       body: multipartRequestBody,
-    });
+    })
     request.execute((file) => {
       // console.log(file);
-      this.createGoogleDriveFolderIfNonExist();
-      this.getAuthorisedGoogleDriveFiles();
-    });
-  };
+      this.createGoogleDriveFolderIfNonExist()
+      this.getAuthorisedGoogleDriveFiles()
+    })
+  }
 
   handleClientLoad = () => {
-    gapi.load("client:auth2", this.initClient);
-  };
+    gapi.load('client:auth2', this.initClient)
+  }
 
   handleGoogleLoadClick = () => {
-    if (this.state.gDriveSelectedFileId === "") return;
-    let fileId = this.state.gDriveSelectedFileId;
+    if (this.state.gDriveSelectedFileId === '') return
+    let fileId = this.state.gDriveSelectedFileId
     var request = gapi.client.drive.files.get({
       fileId: fileId,
-      alt: "media",
-    });
+      alt: 'media',
+    })
     request.then(
       (response) => {
-        this.buildAndLoadData(response.body);
+        this.buildAndLoadData(response.body)
       },
       function (error) {
-        console.error(error);
+        console.error(error)
       }
-    );
-  };
+    )
+  }
 
   /*=================================*/
   /*    General
   /*=================================*/
 
   onGoogleDriveFileSelectChange = (evt) => {
-    this.setState({ gDriveSelectedFileId: evt.target.value });
-  };
+    this.setState({ gDriveSelectedFileId: evt.target.value })
+  }
 
   saveCheckChange = (name) => {
-    const saveSelectors = this.state.saveSelectors;
-    saveSelectors[`${name}DataSelected`] = !saveSelectors[`${name}DataSelected`];
+    const saveSelectors = this.state.saveSelectors
+    saveSelectors[`${name}DataSelected`] = !saveSelectors[`${name}DataSelected`]
 
     for (const [key, value] of Object.entries(this.state.saveSelectors)) {
-      if (name === "all" && saveSelectors[`${name}DataSelected`]) {
-        saveSelectors[`${key.replace("DataSelected", "")}DataSelected`] = true;
-      } else if (name === "all" && !saveSelectors[`${name}DataSelected`]) {
-        saveSelectors[`${key.replace("DataSelected", "")}DataSelected`] = false;
+      if (name === 'all' && saveSelectors[`${name}DataSelected`]) {
+        saveSelectors[`${key.replace('DataSelected', '')}DataSelected`] = true
+      } else if (name === 'all' && !saveSelectors[`${name}DataSelected`]) {
+        saveSelectors[`${key.replace('DataSelected', '')}DataSelected`] = false
       } else if (value == false) {
-        saveSelectors.allDataSelected = false;
-        break;
+        saveSelectors.allDataSelected = false
+        break
       }
     }
     // if (!selectors[`${name}DataSelected`] )
-    this.setState({ saveSelectors });
-  };
+    this.setState({ saveSelectors })
+  }
 
   saveJournals = (obj) => {
-    var a = document.createElement("a");
-    document.body.appendChild(a);
-    a.setAttribute("style", "display:none");
+    var a = document.createElement('a')
+    document.body.appendChild(a)
+    a.setAttribute('style', 'display:none')
 
     var json = JSON.stringify(JSON.stringify(obj)),
-      blob = new Blob([json], { type: "octet/stream" }),
-      url = window.URL.createObjectURL(blob);
-    a.href = url;
-    let d = new Date();
-    a.download = `isc_${d.toLocaleDateString()}_${d.toLocaleTimeString()}.isgs`;
-    a.click();
-    window.URL.revokeObjectURL(url);
-  };
+      blob = new Blob([json], { type: 'octet/stream' }),
+      url = window.URL.createObjectURL(blob)
+    a.href = url
+    let d = new Date()
+    a.download = `isc_${d.toLocaleDateString()}_${d.toLocaleTimeString()}.isgs`
+    a.click()
+    window.URL.revokeObjectURL(url)
+  }
 
   createZipFile = (local = true) => {
-    let zip = new JSZip();
+    let zip = new JSZip()
 
-    let d = new Date();
-    var fileName = `isc_journals_${d.toLocaleDateString()}_${d.toLocaleTimeString()}.zip`;
+    let d = new Date()
+    var fileName = `isc_journals_${d.toLocaleDateString()}_${d.toLocaleTimeString()}.zip`
 
-    zip = this.addFilesToZip(zip, this.props.gamestate.journalData.files, null);
+    zip = this.addFilesToZip(zip, this.props.gamestate.journalData.files, null)
 
     if (local) {
-      zip.generateAsync({ type: "blob" }).then((content) => {
-        this.saveData(content, fileName);
-      });
+      zip.generateAsync({ type: 'blob' }).then((content) => {
+        this.saveData(content, fileName)
+      })
     } else {
-      zip.generateAsync({ type: "base64", mimeType: "application/zip" }).then((content) => {
-        this.saveToGoogleDrive(content, fileName, "application/zip");
-      });
+      zip.generateAsync({ type: 'base64', mimeType: 'application/zip' }).then((content) => {
+        this.saveToGoogleDrive(content, fileName, 'application/zip')
+      })
     }
-  };
+  }
 
   addFilesToZip(zip, files, parentTitle) {
-    let file = undefined;
+    let file = undefined
     for (let i = 0; i < files.length; i++) {
-      const f = files[i];
-      zip.file(`${parentTitle ? `${parentTitle}/` : `${f.title}/`}${f.id}_${f.title}.md`, f.content);
-      zip = this.addFilesToZip(zip, f.children, f.title);
+      const f = files[i]
+      zip.file(`${parentTitle ? `${parentTitle}/` : `${f.title}/`}${f.id}_${f.title}.md`, f.content)
+      zip = this.addFilesToZip(zip, f.children, f.title)
     }
-    return zip;
+    return zip
   }
 
   saveData = (blob, filename) => {
-    var a = document.createElement("a");
-    document.body.appendChild(a);
-    a.setAttribute("style", "display:none");
-    let url = window.URL.createObjectURL(blob);
-    a.href = url;
-    a.download = filename;
-    a.click();
-    window.URL.revokeObjectURL(url);
-  };
+    var a = document.createElement('a')
+    document.body.appendChild(a)
+    a.setAttribute('style', 'display:none')
+    let url = window.URL.createObjectURL(blob)
+    a.href = url
+    a.download = filename
+    a.click()
+    window.URL.revokeObjectURL(url)
+  }
 
   loadCheckChange = (name) => {
-    const loadSelectors = this.state.loadSelectors;
-    loadSelectors[`${name}DataSelected`] = !loadSelectors[`${name}DataSelected`];
+    const loadSelectors = this.state.loadSelectors
+    loadSelectors[`${name}DataSelected`] = !loadSelectors[`${name}DataSelected`]
 
     for (const [key, value] of Object.entries(this.state.loadSelectors)) {
-      if (name === "all" && loadSelectors[`${name}DataSelected`]) {
-        loadSelectors[`${key.replace("DataSelected", "")}DataSelected`] = true;
-      } else if (name === "all" && !loadSelectors[`${name}DataSelected`]) {
-        loadSelectors[`${key.replace("DataSelected", "")}DataSelected`] = false;
+      if (name === 'all' && loadSelectors[`${name}DataSelected`]) {
+        loadSelectors[`${key.replace('DataSelected', '')}DataSelected`] = true
+      } else if (name === 'all' && !loadSelectors[`${name}DataSelected`]) {
+        loadSelectors[`${key.replace('DataSelected', '')}DataSelected`] = false
       } else if (value == false) {
-        loadSelectors.allDataSelected = false;
-        break;
+        loadSelectors.allDataSelected = false
+        break
       }
     }
     // if (!selectors[`${name}DataSelected`] )
-    this.setState({ loadSelectors });
-  };
+    this.setState({ loadSelectors })
+  }
 
   buildSaveObject = (local = true) => {
-    let save = {};
+    let save = {}
     Object.keys(this.state.saveSelectors).map((k) => {
       if (k) {
-        let key = k.replace("DataSelected", "");
-        if (key != "all" && this.state.saveSelectors[k]) {
-          save[key] = this.state.data[key];
+        let key = k.replace('DataSelected', '')
+        if (key != 'all' && this.state.saveSelectors[k]) {
+          save[key] = this.state.data[key]
         }
       }
-    });
-    save.nextLogId = this.props.gamestate.nextLogId;
-    save.nextBackgroundId = this.props.gamestate.nextBackgroundId;
-    save.nextNPCId = this.props.gamestate.nextNPCId;
-    save.newNPC = this.props.gamestate.newNPC;
-    save.newItem = this.props.gamestate.newItem;
-    save.newProgressions = this.props.gamestate.newProgressions;
+    })
+    save.nextLogId = this.props.gamestate.nextLogId
+    save.nextBackgroundId = this.props.gamestate.nextBackgroundId
+    save.nextNPCId = this.props.gamestate.nextNPCId
+    save.newNPC = this.props.gamestate.newNPC
+    save.newItem = this.props.gamestate.newItem
+    save.newProgressions = this.props.gamestate.newProgressions
     if (local) {
-      this.props.onDownloadObjectClick(save);
+      this.props.onDownloadObjectClick(save)
     } else {
-      let d = new Date();
-      var fileName = `isc_${d.toLocaleDateString()}_${d.toLocaleTimeString()}.isgs`;
-      this.saveToGoogleDrive(save, fileName);
+      let d = new Date()
+      var fileName = `isc_${d.toLocaleDateString()}_${d.toLocaleTimeString()}.isgs`
+      this.saveToGoogleDrive(save, fileName)
     }
-  };
+  }
 
   handleLoadClick = (evt) => {
-    let file = evt.target.files[0];
-    const reader = new FileReader();
-    reader.readAsText(file);
+    let file = evt.target.files[0]
+    const reader = new FileReader()
+    reader.readAsText(file)
     reader.onload = () => {
-      let json = JSON.parse(reader.result);
-      this.buildAndLoadData(json);
-    };
-  };
+      let json = JSON.parse(reader.result)
+      this.buildAndLoadData(json)
+    }
+  }
 
   buildAndLoadData = (json) => {
-    let obj = JSON.parse(json);
+    let obj = JSON.parse(json)
 
-    let keys = [];
+    let keys = []
     for (const [key, value] of Object.entries(this.state.loadSelectors)) {
       if (value) {
-        keys.push(key.replace("DataSelected", ""));
+        keys.push(key.replace('DataSelected', ''))
       }
     }
-    keys.push("nextLogId");
-    keys.push("nextBackgroundId");
-    keys.push("nextNPCId");
-    keys.push("newNPC");
-    keys.push("newItem");
-    keys.push("newProgressions");
+    keys.push('nextLogId')
+    keys.push('nextBackgroundId')
+    keys.push('nextNPCId')
+    keys.push('newNPC')
+    keys.push('newItem')
+    keys.push('newProgressions')
 
     Object.keys(obj).map((k) => {
       if (!keys.includes(k)) {
-        delete obj[k];
+        delete obj[k]
       }
-    });
-    this.props.onLoadClick(obj);
-  };
+    })
+    this.props.onLoadClick(obj)
+  }
 
   componentDidUpdate() {
-    this.props.onComponentUpdate();
+    this.props.onComponentUpdate()
   }
 
   render() {
@@ -489,7 +493,7 @@ class DataManager extends Component {
                     Google Drive functionality is being tested for a future release. This button has been disabled
                     intentionally. Do not report anything to do with Google as a bug! Manually enabling this button
                     could break your game, do NOT do this.
-                  </p> */}{" "}
+                  </p> */}{' '}
                       <button
                         className="btn btn-sm btn-light btn-google"
                         id="signin-btn"
@@ -507,7 +511,7 @@ class DataManager extends Component {
                   <div className="col-12 col-lg-4">
                     <div className="alert alert-secondary">
                       <p>
-                        Welcome {this.state.googleAuth ? this.state.googleAuth.currentUser.le.wt.rV : ""}. The Ironlands
+                        Welcome {this.state.googleAuth ? this.state.googleAuth.currentUser.le.wt.rV : ''}. The Ironlands
                         await you!
                       </p>
                       <button
@@ -562,7 +566,7 @@ class DataManager extends Component {
         </div>
         <div className="row">
           {Object.keys(this.state.loadSelectors).map((d) => {
-            d = d.replace("DataSelected", "");
+            d = d.replace('DataSelected', '')
             return (
               <div className="col">
                 <div className="cross-check">
@@ -577,7 +581,7 @@ class DataManager extends Component {
                   </label>
                 </div>
               </div>
-            );
+            )
           })}
         </div>
         <label for="file-upload" className="custom-file-upload btn btn-dark">
@@ -617,7 +621,7 @@ class DataManager extends Component {
                     </React.Fragment>
                   )}
                 </div>
-                {this.state.gDriveSelectedFileId !== "" ? (
+                {this.state.gDriveSelectedFileId !== '' ? (
                   <React.Fragment>
                     <button className="btn btn-sm btn-google" onClick={() => this.handleGoogleLoadClick()}>
                       <img src={google_btn} width="20px"></img>&emsp;Load from Google Drive
@@ -644,7 +648,7 @@ class DataManager extends Component {
         </div>
         <div className="row my-3">
           {Object.keys(this.state.saveSelectors).map((d) => {
-            d = d.replace("DataSelected", "");
+            d = d.replace('DataSelected', '')
             return (
               <div className="col">
                 <div className="cross-check">
@@ -659,7 +663,7 @@ class DataManager extends Component {
                   </label>
                 </div>
               </div>
-            );
+            )
           })}
         </div>
         <div className="row">
@@ -721,8 +725,8 @@ class DataManager extends Component {
           <i className="fas fa-refresh"></i>&nbsp;Update Datasworn
         </button>
       </React.Fragment>
-    );
+    )
   }
 }
 
-export default DataManager;
+export default DataManager
