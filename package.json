@@ -33,7 +33,7 @@
     "react-dom": "^17.0.2",
     "react-markdown": "^5.0.3",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.2",
+    "react-scripts": "^5.0.1",
     "react-sortable-tree": "^1.8.1",
     "remark-gfm": "^1.0.0",
     "remark-toc": "^7.2.0",

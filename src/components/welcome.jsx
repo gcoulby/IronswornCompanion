@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import gclogo from "../img/gc_logoai.svg";
-import KoFi from "../scripts/KoFi";
+import React, { Component } from 'react'
+import gclogo from '../img/gc_logoai.svg'
+import KoFi from '../scripts/KoFi'
 class Welcome extends Component {
-  state = {};
+  state = {}
 
   getQuotaUsage = () => {
-    return `${(this.props.dataSize / 5000000).toFixed(2)}%`;
-  };
+    return `${(this.props.dataSize / 5000000).toFixed(2)}%`
+  }
 
   render() {
     return (
@@ -17,7 +17,7 @@ class Welcome extends Component {
         <React.Fragment>
           <h6 className="text-light">You've used {this.getQuotaUsage()} of the 5MB storage quota</h6>
           <div className="row">
-            <div className="col-12 col-lg-4">
+            <div className="col-12 col-lg-6">
               <div className="progress">
                 <div
                   className="progress-bar bg-dark"
@@ -58,6 +58,20 @@ class Welcome extends Component {
                     <div className="text-left my-3">
                       {/* <KoFi buttonColor="dark" color="#000" id="X8X64ELNE" label="Thank Graham with KoFi*" /> */}
                       <p>
+                        <b>Acknowledgements:</b> Thanks to{' '}
+                        <a
+                          // href="https://docs.google.com/spreadsheets/d/1GXvsk8f_Kx_lVNN78J1027Np0T7-pF1pLZsqnJA6-fE/edit#gid=1386834576"
+                          href="https://github.com/5ucur"
+                          rel="noreferrer noopener"
+                          target="_blank"
+                        >
+                          5ucur
+                        </a>{' '}
+                        for providing the fix for RSEK's changes. I was unable to merge their changes so I am providing
+                        a recognition here.
+                      </p>
+
+                      <p>
                         <b>Apologies:</b> While I would love to be in a position to give this app my full attention. I
                         am currently working full-time while completing a Ph.D. part-time. Thus, my ability to maintain
                         this app is ever waning. If anyone would like to support this project please consider forking
@@ -90,8 +104,8 @@ class Welcome extends Component {
         {/* )} */}
         <div id="bg-image"></div>
       </React.Fragment>
-    );
+    )
   }
 }
 
-export default Welcome;
+export default Welcome
